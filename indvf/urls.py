@@ -18,6 +18,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^import/', include('importdvf.urls')),
+    url(r'^import/', include('importdvf.urls', namespace='import')),
+    url(r'^main/', include('main.urls', namespace='main')),
     url(r'^admin/', admin.site.urls),
 ]

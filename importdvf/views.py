@@ -1,28 +1,31 @@
 from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render
-from django.http import HttpResponse
+from importdvf.forms import ConfigForm
 import time
 
+from django.http import HttpResponse
+
 # Create your views here.
 
-
-def step1(request):
-    context = {'numero' : '0', 'pourcentage' : '15', 'numero_suivant':'1'}
-    return render(request, 'templates/template.html', context)
+def formulaire_configuration(request):
+    formulaire = ConfigForm()
+    context = {'etape':'1', 'formulaire':formulaire}
+    return render(request, 'formulaire_configuration.html', context)
     
-def step(request, etape):
-
+def etape_import(request, etape):
     context = None
     print('Etape ', etape)
     if etape =='1':
-        time.sleep(5)
-        context = {'numero' : '1', 'pourcentage' :'26', 'numero_suivant':'2'}
+        formulaire  = ConfigForm(request.POST)
+        if formulaire.is_valid():
+            print(formulaire.cleaned_data)
+            context = {'numero' : '1', 'pourcentage' :'10', 'numero_suivant':'2'}
+        else:
+            context = {'etape':'1', 'formulaire':formulaire}
+            return render(request, 'formulaire_configuration.html', context)
     if etape =='2':
-        time.sleep(25)
+        time.sleep(2)
         context = {'numero' : '2', 'pourcentage' :'40', 'numero_suivant':'3'}
     if etape =='3':
-        time.sleep(0)
+        time.sleep(5)
         return HttpResponse("OK")
-    return render(request, 'templates/template.html', context)
+    return render(request, 'etapes_import.html', context)
