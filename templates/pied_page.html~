@@ -1,0 +1,8 @@
+{% block pied_page %}
+    <footer class="footer">
+      <div class="container">
+          <p class="text-muted text-center espace-pied">InDVF - Cerema - <i class="fa fa-creative-commons"></i> CC-BY-SA<br/>
+          <i class="fa fa-at"></i>: dv3f@cerema.fr</p>
+      </div>
+    </footer>
+{% pied_page %}

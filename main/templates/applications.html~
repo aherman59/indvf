@@ -1,0 +1,102 @@
+{% extends "principal.html" %}
+{% load staticfiles %}
+ 
+{% block body %}
+<div class="container">
+    <div class="page-header text-center espace-titre">
+        <h1><i class="fa fa-home"></i> InDVF</h1>
+        <p class = "lead"> Applications pour l'utilisation de DVF</p>
+    </div>
+    
+    <div class="row">
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">                  
+                <img src="{% static 'img/import.jpg' %}" alt="ImportDVF" class="img-responsive img-rounded image-application">
+                <div class="caption">
+                    <h3>
+                        <i class="fa fa-database"></i> ImportDVF+<small> v2.0</small>
+                    </h3>
+                    <p class="text-justify">Application permettant d'importer des données sources DVF dans une base de données PostgreSQL 9.x</p>
+                    <p class="text-center"><a href="#" class="btn btn-primary" role="button">Accéder</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">                  
+                <img src="{% static 'img/indicateur.jpg' %}" alt="InDVF-Indicateurs" class="img-responsive img-rounded image-application">                 
+                <div class="caption">
+                    <h3>
+                        <i class="fa fa-bar-chart"></i> InDVF-Indicateurs<small> v1.0</small>
+                    </h3>
+                    <p class="text-justify">Application permettant de produire, à partir de DVF+ ou DV3F, des indicateurs agrégés pour différentes échelles géographiques</p>
+                    <p class="text-center"><a href="#" class="btn btn-primary" role="button">Accéder</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">                  
+                <img src="{% static 'img/geo.jpg' %}" alt="GeoDVF" class="img-responsive img-rounded image-application">
+                <div class="caption">
+                    <h3>
+                        <i class="fa fa-map"></i> GeoDVF<small> v1.0</small>
+                    </h3>
+                    <p class="text-justify">Application permettant de faciliter la production de cartographies à partir de DVF (projet QGis, export shp, etc)</p>
+                    <p class="text-center"><a href="#" class="btn btn-primary" role="button">Accéder</a></p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    
+    <div class="row">
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">                  
+                <img src="{% static 'img/import.jpg' %}" alt="ImportDVF" class="img-responsive img-rounded image-application">
+                <div class="caption">
+                    <h3>
+                        <i class="fa fa-book"></i> DocDV3F<small> v1.0</small>
+                    </h3>
+                    <p class="text-justify">Application donnant accès aux documentations DVF+ et DV3F</p>
+                    <p class="text-center"><a href="#" class="btn btn-primary" role="button">Accéder</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">                  
+                <img src="{% static 'img/import.jpg' %}" alt="ImportDVF" class="img-responsive img-rounded image-application">                 
+                <div class="caption">
+                    <h3>
+                        <i class="fa fa-info-circle"></i> UseDV3F<small> v1.0</small>
+                    </h3>
+                    <p class="text-justify">Application pour mieux comprendre et travailler avec les bases de données DVF+ et DV3F</p>
+                    <p class="text-center"><a href="#" class="btn btn-primary" role="button">Accéder</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">                  
+                <img src="{% static 'img/import.jpg' %}" alt="ImportDVF" class="img-responsive img-rounded image-application">
+                <div class="caption">
+                    <h3>
+                        <i class="fa fa-graduation-cap"></i> TutoDVF<small> v1.0</small>
+                      </h3
+                      <p class="text-justify">Application tutorielle pour démarrer avec DVF et les bases de données DVF+ et DV3F</p>
+                      <p class="text-center"><a href="#" class="btn btn-primary" role="button">Accéder</a></p>
+                  </div>
+              </div>
+          </div>
+
+
+      </div>
+
+    </div><!-- /.container -->
+{% endblock %}

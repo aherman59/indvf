@@ -1,0 +1,29 @@
+{% extends "principal.html" %}
+{% load staticfiles %}
+ 
+{% block body %}
+<div class="container">
+    <div class="page-header text-center espace-titre">
+        <h1><i class="fa fa-home"></i> InDVF</h1>
+        <p class = "lead"> Applications pour l'utilisation de DVF</p>
+    </div>
+    
+    <div class="row">
+        {% for appli in applis %}
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">                  
+                <img src="{% static appli.image %}" alt="{{appli.image}}" class="img-responsive img-rounded image-application">
+                <div class="caption">
+                    <h3>
+                        <i class="{{appli.classe_fa}}"></i> {{appli.nom}}<small> v{{appli.version}}</small>
+                    </h3>
+                    <p class="text-justify">{{appli.description}}</p>
+                    <p class="text-center"><a href="{% url appli.url %}" class="btn btn-primary" role="button">Accéder</a></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div><!-- /.container -->
+{% endblock %}

@@ -1,0 +1,14 @@
+from django.db import models
+
+# Create your models here.
+
+class ConfigurationBDD(models.Model):
+    CHOIX_TYPE_BDD = ('DVF+', 'DV3F')
+    hote = models.CharField(max_length=255)
+    bdd = models.CharField()
+    utilisateur = models.CharField()
+    mdp = models.CharField()
+    port = models.CharField()
+    type_bdd = models.CharField(max_length=4, choices=CHOIX_TYPE_BDD)
+    active = models.BooleanField()
+    date_creation = models.DateField(auto_now_add=True)

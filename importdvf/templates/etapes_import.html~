@@ -1,0 +1,28 @@
+{% extends "base_import.html" %}
+{% load staticfiles %}
+ 
+{% block contenu %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Création de la base de données DVF+</h3>
+        </div>
+        <div class="panel-body">
+            <h3>Etape {{numero}}</h3>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{pourcentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{pourcentage}}%;">
+                    <span class="sr-only">{{pourcentage}} %</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+window.setTimeout(function() {
+    window.location.href = "{% url 'etape_import' numero_suivant %}";
+}, 100);
+</script>
+
+{% endblock %}
+
+
+
