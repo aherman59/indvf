@@ -1,9 +1,0 @@
-import psycopg2
-
-def connection_exists(hote, bdd, utilisateur, mdp, port):
-    try:
-        conn = psycopg2.connect(host=hote, database=bdd, port=port, user=utilisateur, password=mdp)
-        return True
-    except Exception as e:
-        print(e)
-        return False

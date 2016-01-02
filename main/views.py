@@ -1,6 +1,8 @@
+
 from django.shortcuts import render
 import main.configuration as configuration
 from collections import namedtuple
+from main.forms import ConfigBDDForm
 
 # Create your views here.
 
@@ -17,13 +19,15 @@ def applications(request):
               appli_nt(nom='UseDV3F', description='Application pour mieux comprendre et travailler avec les bases de données DVF+ et DV3F', 
                        version='1.0', classe_fa='fa fa-info-circle', image = 'img/usedvf.jpg', url='import:formulaire_configuration'),
               appli_nt(nom='TutoDVF', description='Application tutorielle pour démarrer avec DVF et les bases de données DVF+ et DV3F', 
-                       version='1.0', classe_fa='fa fa-graduation-cap', image = 'img/tutoriel.jpg', url='import:formulaire_configuration'),
-              ]
+                       version='1.0', classe_fa='fa fa-graduation-cap', image = 'img/tutoriel.jpg', url='import:formulaire_configuration'),]
     
     context = {'applis':applis}
     return render(request, 'applications.html', context)
 
-
+def configuration_bdd(request):
+    formulaire = ConfigBDDForm()
+    context = {'formulaire':formulaire}
+    return render(request, 'configuration_bdd.html', context)
 
 
 
