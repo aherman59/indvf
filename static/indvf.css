@@ -1,0 +1,16 @@
+.espace-titre {
+    padding-top:45px;
+}
+
+.espace-pied {
+    padding-top:20px;
+}
+
+.image-application {
+    max-width:200px;
+    max-height:200px;
+}
+
+.fichier > input {
+    display:none;
+}
