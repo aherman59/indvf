@@ -1,8 +1,8 @@
-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import main.configuration as configuration
 from collections import namedtuple
-from main.forms import ConfigBDDForm
+from main.forms import ConfigBDDForm, SelectConfigBDDForm
+from main.models import ConfigurationBDD
 
 # Create your views here.
 
@@ -25,9 +25,52 @@ def applications(request):
     return render(request, 'applications.html', context)
 
 def configuration_bdd(request):
-    formulaire = ConfigBDDForm()
-    context = {'formulaire':formulaire}
-    return render(request, 'configuration_bdd.html', context)
+    # premier chargement de la page
+    if request.method != 'POST' or ('selection' in request.POST and request.POST['selection'] == ''):
+        formulaire = ConfigBDDForm()
+        formulaire_selection = SelectConfigBDDForm()
+        context = {'formulaire':formulaire, 'formulaire_selection' : formulaire_selection, 'id_config' : 0}
+        return render(request, 'configuration_bdd.html', context)
+    # annulation 
+    elif 'annulation' in request.POST:
+        return redirect('main:applications')  
+    # modification de la selection
+    elif 'selection' in request.POST:
+        id_config = int(request.POST['selection'])
+        configuration = ConfigurationBDD.objects.get(pk = id_config)
+        formulaire = ConfigBDDForm(instance = configuration)
+        formulaire_selection = SelectConfigBDDForm(initial = {'selection' : id_config })
+        context = {'formulaire':formulaire, 'formulaire_selection' : formulaire_selection, 'id_config' : id_config}
+        return render(request, 'configuration_bdd.html', context)
+    # activation de la nouvelle configuration
+    if 'nom_config' in request.POST:
+        id_config = int(request.POST['selection_config'])
+        if id_config == 0: # nouvelle entree
+            configform = ConfigBDDForm(request.POST)
+            if configform.is_valid():
+                configuration.desactiver_connexions()
+                nvelle_config = configform.save(commit=False)
+                nvelle_config.active = True
+                nvelle_config.save()
+            else:
+                formulaire = configform
+                formulaire_selection = SelectConfigBDDForm()
+                context = {'formulaire':formulaire, 'formulaire_selection' : formulaire_selection, 'id_config' : 0}
+                return render(request, 'configuration_bdd.html', context)
+        else: # mise à jour
+            config_choisie = ConfigurationBDD.objects.get(pk = id_config)
+            configform = ConfigBDDForm(request.POST, instance = config_choisie)
+            if configform.is_valid():
+                configuration.desactiver_connexions()
+                configform.save()
+                config_choisie.active = True
+                config_choisie.save()
+            else:
+                formulaire = configform
+                formulaire_selection = SelectConfigBDDForm()
+                context = {'formulaire':formulaire, 'formulaire_selection' : formulaire_selection, 'id_config' : 0}
+                return render(request, 'configuration_bdd.html', context)
+        return redirect('main:applications') 
 
 
 

@@ -20,5 +20,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^import/', include('importdvf.urls', namespace='import')),
     url(r'^main/', include('main.urls', namespace='main')),
+    url(r'^indicateur/', include('indicateur.urls', namespace='indicateur')),
     url(r'^admin/', admin.site.urls),
 ]

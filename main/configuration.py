@@ -1,4 +1,5 @@
 import psycopg2
+from main.models import ConfigurationBDD
 
 def tentative_connexion(hote, bdd, utilisateur, mdp, port):
     try:
@@ -6,4 +7,9 @@ def tentative_connexion(hote, bdd, utilisateur, mdp, port):
         return True, 'OK'
     except Exception as e:
         return False, str(e)
+
+def desactiver_connexions():
+    for config in ConfigurationBDD.objects.all():
+        config.active = False
+        config.save()
 
