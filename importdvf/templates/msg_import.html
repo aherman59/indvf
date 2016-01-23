@@ -1,0 +1,22 @@
+{% extends "base_import.html" %}
+{% load staticfiles %}
+ 
+{% block contenu %}
+
+{% if err %}
+<div class="panel panel-danger">
+    <div class="panel-heading">Erreur</div>
+{% else %}
+<div class="panel panel-success">
+    <div class="panel-heading">Opération terminée</div>
+{% endif %}
+    <div class="panel-body">
+        <p>{{msg}}</p>
+        <p>
+            <a href="{% url 'import:formulaire_configuration' %}"><i class="fa fa-database"></i> Retour</a>
+            - <a href="{% url 'main:applications' %}"><i class="fa fa-home"></i> Retour InDVF</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}

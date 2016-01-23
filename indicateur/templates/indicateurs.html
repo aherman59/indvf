@@ -1,0 +1,66 @@
+{% extends "base_indicateur.html" %}
+{% load staticfiles %}
+
+{% block contenu %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"></button>
+          <a class="navbar-brand" href="#">Territoire</a>
+      </div>
+	  
+	  <form class="navbar-form navbar-left" role="Departement" method="post">
+          <div class="form-group">
+              <i class="fa fa-circle-o-notch fa-lg"></i>
+              <select class="form-control" name='departement' onChange="submit()">
+                  <option>Ain (01)</option>
+                  <option>Aisne (02)</option>
+                  <option>Nord (59)</option>
+                  <option>Pas-de-Calais (62)</option>
+                  <option>Marne (51)</option>
+			  </select> 
+          </div>
+		  <button type="submit" class="btn btn-default" name="voir_departement">Voir</button>
+      </form>
+	  
+	  <form class="navbar-form navbar-left" role="EPCI"  method="post">
+          <div class="form-group">
+              <i class="fa fa-map-signs fa-lg"></i>
+              <select class="form-control" name='epci'>
+                  <option>Ain (01)</option>
+                  <option>Aisne (02)</option>
+                  <option>Nord (59)</option>
+                  <option>Pas-de-Calais (62)</option>
+                  <option>Marne (51)</option>
+			  </select>
+          </div>
+          <button type="submit" class="btn btn-default" name="voir_epci">Voir</button>
+      </form>
+	  
+      <form class="navbar-form navbar-left" role="Commune" method="post">
+          <div class="form-group">
+              <i class="fa fa-building-o fa-lg"></i>
+              <select class="form-control" name='commune'>
+                  <option>Ain (01)</option>
+                  <option>Aisne (02)</option>
+                  <option>Nord (59)</option>
+                  <option>Pas-de-Calais (62)</option>
+                  <option>Marne (51)</option>
+			  </select>
+          </div>
+          <button type="submit" class="btn btn-default" name="voir_commune">Voir</button>
+      </form>
+	  <ul class="nav navbar-nav">
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Charger <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+			      <li><a href="/creation_territoire">Nouveau territoire...</a></li>
+			      <li role="separator" class="divider"></li>
+              </ul>
+          </li>
+      </ul>
+  </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+ 
+{% endblock %}
