@@ -8,7 +8,7 @@ from django.http import HttpResponse
 
 from importdvf.forms import ConfigForm
 
-from .creation_dvf.dvfclass import DVF
+from .creation_dvf.dvfclass import DVF, DVF_PLUS
 from .creation_dvf import etapes
 
 # Create your views here.
@@ -28,7 +28,7 @@ def etape_import(request, etape):
                         os.path.join(repertoire_ressources,'natcultspe.csv'))
     #description d'une étape
     etape_nt = namedtuple('Etape', ['numero','numero_suivant', 'pourcentage', 'fonction_a_executer', 'params', 'description_prochaine_etape'])
-    # reconstitution des étapes enregistrées dans la session (json > namedtuple)
+    # reconstitution des étapes enregistrées dans la session (json -> namedtuple)
     if 'etapes' in request.session:
         request.session['etapes'] = [etape_nt(*etape) for etape in request.session['etapes']]
         
@@ -68,8 +68,13 @@ def etape_import(request, etape):
             l = len(fichiers_ordonnes)
             for index in range(l): 
                 request.session['etapes'].append(etape_nt(300 + 2*index, 301 + 2*index , str(15 + int(85*(index + (1/2))/l)) , 'import', ('DVF', fichiers_ordonnes[index], 'tmp_0'), 'Intégration dans DVF du fichier {0}'.format(fichiers_ordonnes[index])))
-                txt_descriptif = 'Import des données sources DVF - Fichier {0}'.format(fichiers_ordonnes[index + 1]) if index + 1 < l else 'Création DVF+'
+                txt_descriptif = 'Import des données sources DVF - Fichier {0}'.format(fichiers_ordonnes[index + 1]) if index + 1 < l else 'Création des tables DVF+'
                 request.session['etapes'].append(etape_nt(301 + 2*index, 302 + 2*index, str(15 + int(85*(index + 1)/l)), 'integration', ('DVF', 'tmp_0', fichiers_ordonnes[index]), txt_descriptif))
+            # creation des etapes DVF+
+            request.session['etapes'].append(etape_nt(302 + 2*(l-1), 4 , '30', 'creation_table_dvf_plus', ('DVF+', fichier_gestion_csv), 'Calculs de la table local'))
+            request.session['etapes'].append(etape_nt(4, 5, '65', 'transformation', ('DVF+', fichier_gestion_csv, 'local'), 'Calculs de la table disposition_parcelle'))
+            request.session['etapes'].append(etape_nt(5, 6, '85', 'transformation', ('DVF+', fichier_gestion_csv, 'disposition_parcelle'), 'Calculs de la table mutation'))
+            request.session['etapes'].append(etape_nt(6, 7, '100', 'transformation', ('DVF+', fichier_gestion_csv, 'mutation'), 'Fin des opérations'))
             
             for erreur in erreurs:
                 messages.add_message(request, messages.WARNING, erreur)
@@ -91,17 +96,19 @@ def etape_import(request, etape):
         if etape_courante:
             if etape_courante.params[0] == 'DVF':
                 dvf = DVF(*request.session['parametres_connexion'], departements = request.session['departements'])
-                reussite, msg_err = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
-                if reussite:
-                    messages.add_message(request, messages.SUCCESS, msg_err)
-                    request.session['notifications'] = [(m.message, m.level) for m in messages.get_messages(request)]
-                    context = {'desc_etape':etape_courante.description_prochaine_etape, 
-                               'pourcentage':etape_courante.pourcentage, 
-                               'numero_suivant':str(etape_courante.numero_suivant)}
-                    return render(request, 'etapes_import.html', context)
-                else:
-                    context = {'msg': msg_err, 'err': True}
-                    return render(request, 'msg_import.html', context)
+            elif etape_courante.params[0] == 'DVF+':
+                dvf = DVF_PLUS(*request.session['parametres_connexion'], departements = request.session['departements']) 
+            reussite, msg_err = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
+            if reussite:
+                messages.add_message(request, messages.SUCCESS, msg_err)
+                request.session['notifications'] = [(m.message, m.level) for m in messages.get_messages(request)]
+                context = {'desc_etape':etape_courante.description_prochaine_etape, 
+                           'pourcentage':etape_courante.pourcentage, 
+                           'numero_suivant':str(etape_courante.numero_suivant)}
+                return render(request, 'etapes_import.html', context)
+            else:
+                context = {'msg': msg_err, 'err': True}
+                return render(request, 'msg_import.html', context)
         else:
             context = {'msg': '''L'import des données s'est achevé avec succès. La base DVF+ est prête.''', 'err': False}
             return render(request, 'msg_import.html', context)

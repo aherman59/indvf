@@ -1,0 +1,5 @@
+LOG - INTEGRATION DES DONNEES BRUTES DVF
+tmp_0|Nombre de lignes avant intégration|Nombre de lignes après intégration|Nombre de lignes intégrées
+Table mutation : 0|59926|59926
+Table mutation_article_cgi : 0|53711|53711
+Table disposition : 0|60740|60740
