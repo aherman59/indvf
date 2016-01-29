@@ -70,7 +70,7 @@ def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes):
         dvf.effacer_et_creer_schemas_dvf()
         dvf.creation_tables_annexes(*fichiers_annexes)    
         dvf.creation_tables()
-        dvf.ecrire_entete_log()               
+        dvf.ecrire_entete_log()
         return True, 'Création des schémas et des tables DVF effectuée.'
     except Exception as e:
         return False, str(e)
@@ -111,7 +111,7 @@ def transformation(dvf_plus, fichier_gestion_csv, nom_table_dvf):
             dvf_plus.effectuer_calculs_mutation()
         dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)        
         dvf_plus.construire_tables_dvf_plus(nom_table_dvf, variables_jointure[nom_table_dvf])            
-        dvf_plus.renommage_tables(nom_table_dvf + '_plus')            
+        dvf_plus.renommage_tables(nom_table_dvf + '_plus')
         return True, 'Modifications de la table {0} effectuées.'.format(nom_table_dvf)
     except Exception as e:
         return False, str(e)

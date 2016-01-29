@@ -147,7 +147,7 @@ class PgOutils():
         while(tentative <= max_tentative and not reussite):
             try:
                 resultat = self.pgconn.execute_recupere(sql)                
-                print(sql)                
+               # print(sql)                
                 reussite = True                
             except Exception as e:
                 print(e)
@@ -172,7 +172,7 @@ class PgOutils():
             try:
                 nb_lignes_modifiees = self.pgconn.execute_commit(sql)
                 self.redaction_script(self.script, sql, False)
-                print(sql)                
+                #print(sql)                
                 reussite = True                
             except Exception as e:
                 print(e)

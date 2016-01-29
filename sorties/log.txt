@@ -3,3 +3,25 @@ tmp_0|Nombre de lignes avant intégration|Nombre de lignes après intégration|N
 Table mutation : 0|59926|59926
 Table mutation_article_cgi : 0|53711|53711
 Table disposition : 0|60740|60740
+Table parcelle : 0|82302|82302
+Table disposition_parcelle : 0|91956|91956
+Table adresse : 0|59029|59029
+Table local : 0|69979|69979
+Table volume : 0|499|499
+Table suf : 0|83729|83729
+Table lot : 0|26957|26957
+Table adresse_dispoparc : 0|93244|93244
+Table adresse_local : 0|69979|69979
+tmp_0|Nombre de lignes avant intégration|Nombre de lignes après intégration|Nombre de lignes intégrées
+Table mutation : 59926|59926|0
+Table mutation_article_cgi : 53711|53711|0
+Table disposition : 60740|60740|0
+Table parcelle : 82302|82302|0
+Table disposition_parcelle : 91956|91956|0
+Table adresse : 59029|59029|0
+Table local : 69979|69979|0
+Table volume : 499|499|0
+Table suf : 83729|83729|0
+Table lot : 26957|26957|0
+Table adresse_dispoparc : 93244|93244|0
+Table adresse_local : 69979|69979|0

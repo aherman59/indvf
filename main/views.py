@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-import main.configuration as configuration
+from main import configuration
 from collections import namedtuple
 from main.forms import ConfigBDDForm, SelectConfigBDDForm
 from main.models import ConfigurationBDD
@@ -37,13 +37,13 @@ def configuration_bdd(request):
     # modification de la selection
     elif 'selection' in request.POST:
         id_config = int(request.POST['selection'])
-        configuration = ConfigurationBDD.objects.get(pk = id_config)
-        formulaire = ConfigBDDForm(instance = configuration)
+        config = ConfigurationBDD.objects.get(pk = id_config)
+        formulaire = ConfigBDDForm(instance = config)
         formulaire_selection = SelectConfigBDDForm(initial = {'selection' : id_config })
         context = {'formulaire':formulaire, 'formulaire_selection' : formulaire_selection, 'id_config' : id_config}
         return render(request, 'configuration_bdd.html', context)
     # activation de la nouvelle configuration
-    if 'nom_config' in request.POST:
+    if 'activation' in request.POST:
         id_config = int(request.POST['selection_config'])
         if id_config == 0: # nouvelle entree
             configform = ConfigBDDForm(request.POST)

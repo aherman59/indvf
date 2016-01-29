@@ -99,6 +99,7 @@ def etape_import(request, etape):
             elif etape_courante.params[0] == 'DVF+':
                 dvf = DVF_PLUS(*request.session['parametres_connexion'], departements = request.session['departements']) 
             reussite, msg_err = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
+            dvf.pgconn.deconnection_postgres()
             if reussite:
                 messages.add_message(request, messages.SUCCESS, msg_err)
                 request.session['notifications'] = [(m.message, m.level) for m in messages.get_messages(request)]

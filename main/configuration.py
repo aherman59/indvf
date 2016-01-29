@@ -13,3 +13,10 @@ def desactiver_connexions():
         config.active = False
         config.save()
 
+def configuration_active():
+    try: 
+        config = ConfigurationBDD.objects.get(active=True)
+        return config
+    except Exception as e:
+        return None
+
