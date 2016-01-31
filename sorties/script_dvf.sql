@@ -10,20 +10,20 @@
 --
 -- Ce script est fourni sous licence Creative Commons 3.0 CC-BY-SA
 --
--- Début d'exécution le 29/01/2016 à 21:37:10
+-- Début d'exécution le 31/01/2016 à 19:17:45
 ---
-
-DROP SCHEMA IF EXISTS dvf_d62 CASCADE;
 
 DROP SCHEMA IF EXISTS dvf_d59 CASCADE;
 
 DROP SCHEMA IF EXISTS dvf_d62 CASCADE;
-
-CREATE SCHEMA dvf_d62;
 
 DROP SCHEMA IF EXISTS dvf_d59 CASCADE;
 
 CREATE SCHEMA dvf_d59;
+
+DROP SCHEMA IF EXISTS dvf_d62 CASCADE;
+
+CREATE SCHEMA dvf_d62;
 
 DROP SCHEMA IF EXISTS dvf CASCADE;
 
@@ -59,9 +59,9 @@ libnatcusp varchar(254)
 
 COMMENT ON TABLE dvf_annexe.ann_nature_culture_speciale IS 'table contenant les différentes natures de culture spéciale';
 
-COMMENT ON COLUMN dvf_annexe.ann_nature_culture_speciale.natcultspe IS '';
-
 COMMENT ON COLUMN dvf_annexe.ann_nature_culture_speciale.libnatcusp IS '';
+
+COMMENT ON COLUMN dvf_annexe.ann_nature_culture_speciale.natcultspe IS '';
 
 DROP TABLE IF EXISTS dvf_annexe.ann_cgi CASCADE;
 
@@ -75,11 +75,11 @@ libartcgi varchar(254)
 
 COMMENT ON TABLE dvf_annexe.ann_cgi IS 'table contenant les différents articles CGI';
 
+COMMENT ON COLUMN dvf_annexe.ann_cgi.libartcgi IS '';
+
 COMMENT ON COLUMN dvf_annexe.ann_cgi.artcgi IS '';
 
 COMMENT ON COLUMN dvf_annexe.ann_cgi.idartcgi IS '';
-
-COMMENT ON COLUMN dvf_annexe.ann_cgi.libartcgi IS '';
 
 DROP TABLE IF EXISTS dvf_annexe.ann_nature_mutation CASCADE;
 
@@ -222,23 +222,23 @@ coddep varchar(3)
 
 COMMENT ON TABLE dvf.mutation IS 'table des mutations';
 
-COMMENT ON COLUMN dvf.mutation.refdoc IS 'référence d''enregistrement du document (acte de vente)';
-
-COMMENT ON COLUMN dvf.mutation.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
+COMMENT ON COLUMN dvf.mutation.anneemut IS 'annee de signature du document';
 
 COMMENT ON COLUMN dvf.mutation.codservch IS 'code du service de conservation des hypothèques';
 
-COMMENT ON COLUMN dvf.mutation.moismut IS 'mois de signature du document';
+COMMENT ON COLUMN dvf.mutation.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf.mutation.idmutinvar IS 'identifiant invariant de la mutation';
+COMMENT ON COLUMN dvf.mutation.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf.mutation.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
 
 COMMENT ON COLUMN dvf.mutation.idmutation IS 'identifiant de clef primaire de la table mutation';
 
-COMMENT ON COLUMN dvf.mutation.coddep IS 'code du département';
+COMMENT ON COLUMN dvf.mutation.idmutinvar IS 'identifiant invariant de la mutation';
 
-COMMENT ON COLUMN dvf.mutation.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf.mutation.refdoc IS 'référence d''enregistrement du document (acte de vente)';
 
-COMMENT ON COLUMN dvf.mutation.datemut IS 'date de signature du document (acte de vente)';
+COMMENT ON COLUMN dvf.mutation.moismut IS 'mois de signature du document';
 
 DROP TABLE IF EXISTS dvf.mutation_article_cgi CASCADE;
 
@@ -253,13 +253,13 @@ coddep varchar(3)
 
 COMMENT ON TABLE dvf.mutation_article_cgi IS 'table des articles du code général des impôts (CGI) attachés à la mutation';
 
-COMMENT ON COLUMN dvf.mutation_article_cgi.idmutation IS 'identifiant de clef primaire de la table mutation';
+COMMENT ON COLUMN dvf.mutation_article_cgi.ordarticgi IS 'numéro de l''ordre de l''article cgi';
 
-COMMENT ON COLUMN dvf.mutation_article_cgi.idartcgi IS 'identifiant de la table annexe ann_cgi';
+COMMENT ON COLUMN dvf.mutation_article_cgi.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf.mutation_article_cgi.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf.mutation_article_cgi.ordarticgi IS 'numéro de l''ordre de l''article cgi';
+COMMENT ON COLUMN dvf.mutation_article_cgi.idartcgi IS 'identifiant de la table annexe ann_cgi';
 
 DROP TABLE IF EXISTS dvf.disposition CASCADE;
 
@@ -278,15 +278,15 @@ COMMENT ON TABLE dvf.disposition IS 'table des dispositions';
 
 COMMENT ON COLUMN dvf.disposition.nodispo IS 'numéro de disposition';
 
-COMMENT ON COLUMN dvf.disposition.iddispo IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf.disposition.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
-
-COMMENT ON COLUMN dvf.disposition.idmutation IS 'identifiant de clef primaire de la table mutation';
-
 COMMENT ON COLUMN dvf.disposition.coddep IS 'code du département';
 
 COMMENT ON COLUMN dvf.disposition.nblot IS 'nombre total de lots dans la disposition';
+
+COMMENT ON COLUMN dvf.disposition.iddispo IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf.disposition.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf.disposition.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
 
 DROP TABLE IF EXISTS dvf.disposition_parcelle CASCADE;
 
@@ -305,21 +305,21 @@ moismut integer
 
 COMMENT ON TABLE dvf.disposition_parcelle IS 'table des parcelles attachées à une disposition';
 
-COMMENT ON COLUMN dvf.disposition_parcelle.iddispo IS 'identifiant de la table disposition';
-
-COMMENT ON COLUMN dvf.disposition_parcelle.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf.disposition_parcelle.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf.disposition_parcelle.datemut IS 'date de signature du document (acte de vente)';
+COMMENT ON COLUMN dvf.disposition_parcelle.iddispopar IS 'identifiant pour clef primaire';
 
 COMMENT ON COLUMN dvf.disposition_parcelle.anneemut IS 'annee de signature du document';
 
+COMMENT ON COLUMN dvf.disposition_parcelle.datemut IS 'date de signature du document (acte de vente)';
+
 COMMENT ON COLUMN dvf.disposition_parcelle.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf.disposition_parcelle.idparcelle IS 'identifiant de la table parcelle';
+COMMENT ON COLUMN dvf.disposition_parcelle.moismut IS 'mois de signature du document';
 
-COMMENT ON COLUMN dvf.disposition_parcelle.iddispopar IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf.disposition_parcelle.iddispo IS 'identifiant de la table disposition';
+
+COMMENT ON COLUMN dvf.disposition_parcelle.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf.disposition_parcelle.idparcelle IS 'identifiant de la table parcelle';
 
 DROP TABLE IF EXISTS dvf.parcelle CASCADE;
 
@@ -337,19 +337,19 @@ noplan varchar(4)
 
 COMMENT ON TABLE dvf.parcelle IS 'table des parcelles';
 
-COMMENT ON COLUMN dvf.parcelle.prefsect IS 'prefixe de section de la parcelle';
-
-COMMENT ON COLUMN dvf.parcelle.idparcelle IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf.parcelle.noplan IS 'numéro de la parcelle';
+COMMENT ON COLUMN dvf.parcelle.codcomm IS 'code insee de la commune';
 
 COMMENT ON COLUMN dvf.parcelle.coddep IS 'code du département';
 
+COMMENT ON COLUMN dvf.parcelle.prefsect IS 'prefixe de section de la parcelle';
+
 COMMENT ON COLUMN dvf.parcelle.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
 
-COMMENT ON COLUMN dvf.parcelle.codcomm IS 'code insee de la commune';
-
 COMMENT ON COLUMN dvf.parcelle.nosect IS 'numéro de section de la parcelle';
+
+COMMENT ON COLUMN dvf.parcelle.noplan IS 'numéro de la parcelle';
+
+COMMENT ON COLUMN dvf.parcelle.idparcelle IS 'identifiant pour clef primaire';
 
 DROP TABLE IF EXISTS dvf.local CASCADE;
 
@@ -374,33 +374,33 @@ moismut integer
 
 COMMENT ON TABLE dvf.local IS 'table des locaux';
 
-COMMENT ON COLUMN dvf.local.idloc IS 'identifiant du local (Fichier Fonciers)';
-
-COMMENT ON COLUMN dvf.local.libtyploc IS 'libellé du type de local';
-
-COMMENT ON COLUMN dvf.local.sbati IS 'surface réelle attachée à l''identifiant local';
-
-COMMENT ON COLUMN dvf.local.nbpprinc IS 'nombre de pièces principales';
-
-COMMENT ON COLUMN dvf.local.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf.local.iddispoloc IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf.local.coddep IS 'code du département';
-
 COMMENT ON COLUMN dvf.local.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-COMMENT ON COLUMN dvf.local.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf.local.codtyploc IS 'code du type de local';
-
-COMMENT ON COLUMN dvf.local.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
-
-COMMENT ON COLUMN dvf.local.identloc IS 'identifiant du local';
 
 COMMENT ON COLUMN dvf.local.anneemut IS 'annee de signature du document';
 
 COMMENT ON COLUMN dvf.local.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf.local.identloc IS 'identifiant du local';
+
+COMMENT ON COLUMN dvf.local.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf.local.nbpprinc IS 'nombre de pièces principales';
+
+COMMENT ON COLUMN dvf.local.sbati IS 'surface réelle attachée à l''identifiant local';
+
+COMMENT ON COLUMN dvf.local.idloc IS 'identifiant du local (Fichier Fonciers)';
+
+COMMENT ON COLUMN dvf.local.moismut IS 'mois de signature du document';
+
+COMMENT ON COLUMN dvf.local.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
+
+COMMENT ON COLUMN dvf.local.codtyploc IS 'code du type de local';
+
+COMMENT ON COLUMN dvf.local.iddispoloc IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf.local.libtyploc IS 'libellé du type de local';
+
+COMMENT ON COLUMN dvf.local.coddep IS 'code du département';
 
 DROP TABLE IF EXISTS dvf.adresse CASCADE;
 
@@ -423,21 +423,21 @@ COMMENT ON TABLE dvf.adresse IS 'table contenant les adresses (provenant des par
 
 COMMENT ON COLUMN dvf.adresse.voie IS 'libellé de la voie';
 
-COMMENT ON COLUMN dvf.adresse.codepostal IS 'code postal';
-
-COMMENT ON COLUMN dvf.adresse.commune IS 'libellé de la commune';
-
-COMMENT ON COLUMN dvf.adresse.codvoie IS 'code de la voie';
-
 COMMENT ON COLUMN dvf.adresse.typvoie IS 'type de voie';
-
-COMMENT ON COLUMN dvf.adresse.idadrinvar IS 'identifiant invariant de la table adresse';
 
 COMMENT ON COLUMN dvf.adresse.novoie IS 'numéro de la voie';
 
-COMMENT ON COLUMN dvf.adresse.idadresse IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf.adresse.codepostal IS 'code postal';
 
 COMMENT ON COLUMN dvf.adresse.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf.adresse.codvoie IS 'code de la voie';
+
+COMMENT ON COLUMN dvf.adresse.commune IS 'libellé de la commune';
+
+COMMENT ON COLUMN dvf.adresse.idadrinvar IS 'identifiant invariant de la table adresse';
+
+COMMENT ON COLUMN dvf.adresse.idadresse IS 'identifiant pour clef primaire';
 
 COMMENT ON COLUMN dvf.adresse.btq IS 'indice de répétition';
 
@@ -460,25 +460,25 @@ nodcnt integer
 
 COMMENT ON TABLE dvf.suf IS 'table des subdivisions fiscales';
 
-COMMENT ON COLUMN dvf.suf.iddisposuf IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf.suf.sterr IS 'surface de terrain ayant muté';
+COMMENT ON COLUMN dvf.suf.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 COMMENT ON COLUMN dvf.suf.nbsufidt IS 'nombre de suf identiques';
 
+COMMENT ON COLUMN dvf.suf.iddisposuf IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf.suf.coddep IS 'code du département';
+
 COMMENT ON COLUMN dvf.suf.idsufinvar IS 'identifiant invariant de la table suf';
+
+COMMENT ON COLUMN dvf.suf.nodcnt IS 'type de la suf';
 
 COMMENT ON COLUMN dvf.suf.natcult IS 'libellé de nature de culture';
 
 COMMENT ON COLUMN dvf.suf.idmutation IS 'identifiant de clef primaire de la table mutation';
 
-COMMENT ON COLUMN dvf.suf.nodcnt IS 'type de la suf';
-
-COMMENT ON COLUMN dvf.suf.coddep IS 'code du département';
+COMMENT ON COLUMN dvf.suf.sterr IS 'surface de terrain ayant muté';
 
 COMMENT ON COLUMN dvf.suf.natcultspe IS 'groupe de nature de culture spéciale';
-
-COMMENT ON COLUMN dvf.suf.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 DROP TABLE IF EXISTS dvf.volume CASCADE;
 
@@ -494,15 +494,15 @@ coddep varchar(3)
 
 COMMENT ON TABLE dvf.volume IS 'table des volumes (division de l''espace dans la hauteur pour certaines co-propriétés verticales';
 
+COMMENT ON COLUMN dvf.volume.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf.volume.iddispovol IS 'identifiant pour clef primaire';
+
 COMMENT ON COLUMN dvf.volume.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf.volume.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf.volume.iddispovol IS 'identifiant pour clef primaire';
-
 COMMENT ON COLUMN dvf.volume.novolume IS 'numéro de volume';
-
-COMMENT ON COLUMN dvf.volume.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 DROP TABLE IF EXISTS dvf.lot CASCADE;
 
@@ -520,19 +520,19 @@ coddep varchar(3)
 
 COMMENT ON TABLE dvf.lot IS 'table des lots (seuls les 5 premiers lots sont mentionnés)';
 
-COMMENT ON COLUMN dvf.lot.iddispolot IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf.lot.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 COMMENT ON COLUMN dvf.lot.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf.lot.iddispoloc IS 'identifiant de la table local';
-
-COMMENT ON COLUMN dvf.lot.coddep IS 'code du département';
 
 COMMENT ON COLUMN dvf.lot.scarrez IS 'surface Loi Carrez du lot';
 
 COMMENT ON COLUMN dvf.lot.nolot IS 'numéro du lot';
 
-COMMENT ON COLUMN dvf.lot.iddispopar IS 'identifiant de la table disposition_parcelle';
+COMMENT ON COLUMN dvf.lot.iddispoloc IS 'identifiant de la table local';
+
+COMMENT ON COLUMN dvf.lot.iddispolot IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf.lot.coddep IS 'code du département';
 
 DROP TABLE IF EXISTS dvf.adresse_dispoparc CASCADE;
 
@@ -547,13 +547,13 @@ idmutation integer
 
 COMMENT ON TABLE dvf.adresse_dispoparc IS 'table de liaison entre la table adresse et la table disposition_parcelle';
 
-COMMENT ON COLUMN dvf.adresse_dispoparc.idmutation IS 'identifiant de clef primaire de la table mutation';
+COMMENT ON COLUMN dvf.adresse_dispoparc.iddispopar IS 'identifiant de la table disposition_parcelle';
 
-COMMENT ON COLUMN dvf.adresse_dispoparc.idadresse IS 'identifiant de la table adresse';
+COMMENT ON COLUMN dvf.adresse_dispoparc.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf.adresse_dispoparc.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf.adresse_dispoparc.iddispopar IS 'identifiant de la table disposition_parcelle';
+COMMENT ON COLUMN dvf.adresse_dispoparc.idadresse IS 'identifiant de la table adresse';
 
 DROP TABLE IF EXISTS dvf.adresse_local CASCADE;
 
@@ -572,386 +572,9 @@ COMMENT ON COLUMN dvf.adresse_local.idmutation IS 'identifiant de clef primaire 
 
 COMMENT ON COLUMN dvf.adresse_local.iddispoloc IS 'identifiant de la table local';
 
-COMMENT ON COLUMN dvf.adresse_local.idadresse IS 'identifiant de la table adresse';
-
 COMMENT ON COLUMN dvf.adresse_local.coddep IS 'code du département';
 
-DROP TABLE IF EXISTS dvf_d62.mutation CASCADE;
-
--- table fille dvf_d62.mutation
-CREATE TABLE dvf_d62.mutation
-(   
-)INHERITS (dvf.mutation);        
-
-ALTER TABLE dvf_d62.mutation 
-ADD CONSTRAINT mutation_pkey PRIMARY KEY (idmutation);
-
-ALTER TABLE dvf_d62.mutation 
-ADD CONSTRAINT mutation_unique UNIQUE (codservch, refdoc);
-
-ALTER TABLE dvf_d62.mutation 
-ADD CONSTRAINT mutation_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.mutation IS 'table des mutations';
-
-COMMENT ON COLUMN dvf_d62.mutation.refdoc IS 'référence d''enregistrement du document (acte de vente)';
-
-COMMENT ON COLUMN dvf_d62.mutation.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation.codservch IS 'code du service de conservation des hypothèques';
-
-COMMENT ON COLUMN dvf_d62.mutation.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d62.mutation.idmutinvar IS 'identifiant invariant de la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.mutation.anneemut IS 'annee de signature du document';
-
-COMMENT ON COLUMN dvf_d62.mutation.datemut IS 'date de signature du document (acte de vente)';
-
-DROP TABLE IF EXISTS dvf_d62.mutation_article_cgi CASCADE;
-
--- table fille dvf_d62.mutation_article_cgi
-CREATE TABLE dvf_d62.mutation_article_cgi
-(   
-)INHERITS (dvf.mutation_article_cgi);        
-
-ALTER TABLE dvf_d62.mutation_article_cgi 
-ADD CONSTRAINT mutation_article_cgi_pkey PRIMARY KEY (idmutation, idartcgi);
-
-ALTER TABLE dvf_d62.mutation_article_cgi 
-ADD CONSTRAINT mutation_article_cgi_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.mutation_article_cgi IS 'table des articles du code général des impôts (CGI) attachés à la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_article_cgi.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_article_cgi.idartcgi IS 'identifiant de la table annexe ann_cgi';
-
-COMMENT ON COLUMN dvf_d62.mutation_article_cgi.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.mutation_article_cgi.ordarticgi IS 'numéro de l''ordre de l''article cgi';
-
-DROP TABLE IF EXISTS dvf_d62.disposition CASCADE;
-
--- table fille dvf_d62.disposition
-CREATE TABLE dvf_d62.disposition
-(   
-)INHERITS (dvf.disposition);        
-
-ALTER TABLE dvf_d62.disposition 
-ADD CONSTRAINT disposition_pkey PRIMARY KEY (iddispo);
-
-ALTER TABLE dvf_d62.disposition 
-ADD CONSTRAINT disposition_unique UNIQUE (idmutation, nodispo);
-
-ALTER TABLE dvf_d62.disposition 
-ADD CONSTRAINT disposition_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.disposition IS 'table des dispositions';
-
-COMMENT ON COLUMN dvf_d62.disposition.nodispo IS 'numéro de disposition';
-
-COMMENT ON COLUMN dvf_d62.disposition.iddispo IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.disposition.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
-
-COMMENT ON COLUMN dvf_d62.disposition.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.disposition.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.disposition.nblot IS 'nombre total de lots dans la disposition';
-
-DROP TABLE IF EXISTS dvf_d62.disposition_parcelle CASCADE;
-
--- table fille dvf_d62.disposition_parcelle
-CREATE TABLE dvf_d62.disposition_parcelle
-(   
-)INHERITS (dvf.disposition_parcelle);        
-
-ALTER TABLE dvf_d62.disposition_parcelle 
-ADD CONSTRAINT disposition_parcelle_pkey PRIMARY KEY (iddispopar);
-
-ALTER TABLE dvf_d62.disposition_parcelle 
-ADD CONSTRAINT disposition_parcelle_unique UNIQUE (iddispo, idparcelle);
-
-ALTER TABLE dvf_d62.disposition_parcelle 
-ADD CONSTRAINT disposition_parcelle_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.disposition_parcelle IS 'table des parcelles attachées à une disposition';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.iddispo IS 'identifiant de la table disposition';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.datemut IS 'date de signature du document (acte de vente)';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.anneemut IS 'annee de signature du document';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.idparcelle IS 'identifiant de la table parcelle';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle.iddispopar IS 'identifiant pour clef primaire';
-
-DROP TABLE IF EXISTS dvf_d62.parcelle CASCADE;
-
--- table fille dvf_d62.parcelle
-CREATE TABLE dvf_d62.parcelle
-(   
-)INHERITS (dvf.parcelle);        
-
-ALTER TABLE dvf_d62.parcelle 
-ADD CONSTRAINT parcelle_pkey PRIMARY KEY (idparcelle);
-
-ALTER TABLE dvf_d62.parcelle 
-ADD CONSTRAINT parcelle_unique UNIQUE (idpar);
-
-ALTER TABLE dvf_d62.parcelle 
-ADD CONSTRAINT parcelle_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.parcelle IS 'table des parcelles';
-
-COMMENT ON COLUMN dvf_d62.parcelle.prefsect IS 'prefixe de section de la parcelle';
-
-COMMENT ON COLUMN dvf_d62.parcelle.idparcelle IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.parcelle.noplan IS 'numéro de la parcelle';
-
-COMMENT ON COLUMN dvf_d62.parcelle.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.parcelle.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
-
-COMMENT ON COLUMN dvf_d62.parcelle.codcomm IS 'code insee de la commune';
-
-COMMENT ON COLUMN dvf_d62.parcelle.nosect IS 'numéro de section de la parcelle';
-
-DROP TABLE IF EXISTS dvf_d62.local CASCADE;
-
--- table fille dvf_d62.local
-CREATE TABLE dvf_d62.local
-(   
-)INHERITS (dvf.local);        
-
-ALTER TABLE dvf_d62.local 
-ADD CONSTRAINT local_pkey PRIMARY KEY (iddispoloc);
-
-ALTER TABLE dvf_d62.local 
-ADD CONSTRAINT local_unique UNIQUE (iddispopar, identloc);
-
-ALTER TABLE dvf_d62.local 
-ADD CONSTRAINT local_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.local IS 'table des locaux';
-
-COMMENT ON COLUMN dvf_d62.local.idloc IS 'identifiant du local (Fichier Fonciers)';
-
-COMMENT ON COLUMN dvf_d62.local.libtyploc IS 'libellé du type de local';
-
-COMMENT ON COLUMN dvf_d62.local.sbati IS 'surface réelle attachée à l''identifiant local';
-
-COMMENT ON COLUMN dvf_d62.local.nbpprinc IS 'nombre de pièces principales';
-
-COMMENT ON COLUMN dvf_d62.local.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.local.iddispoloc IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.local.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.local.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-COMMENT ON COLUMN dvf_d62.local.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d62.local.codtyploc IS 'code du type de local';
-
-COMMENT ON COLUMN dvf_d62.local.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
-
-COMMENT ON COLUMN dvf_d62.local.identloc IS 'identifiant du local';
-
-COMMENT ON COLUMN dvf_d62.local.anneemut IS 'annee de signature du document';
-
-COMMENT ON COLUMN dvf_d62.local.datemut IS 'date de signature du document (acte de vente)';
-
-DROP TABLE IF EXISTS dvf_d62.adresse CASCADE;
-
--- table fille dvf_d62.adresse
-CREATE TABLE dvf_d62.adresse
-(   
-)INHERITS (dvf.adresse);        
-
-ALTER TABLE dvf_d62.adresse 
-ADD CONSTRAINT adresse_pkey PRIMARY KEY (idadresse);
-
-ALTER TABLE dvf_d62.adresse 
-ADD CONSTRAINT adresse_unique UNIQUE (idadrinvar);
-
-ALTER TABLE dvf_d62.adresse 
-ADD CONSTRAINT adresse_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.adresse IS 'table contenant les adresses (provenant des parcelles et des locaux';
-
-COMMENT ON COLUMN dvf_d62.adresse.voie IS 'libellé de la voie';
-
-COMMENT ON COLUMN dvf_d62.adresse.codepostal IS 'code postal';
-
-COMMENT ON COLUMN dvf_d62.adresse.commune IS 'libellé de la commune';
-
-COMMENT ON COLUMN dvf_d62.adresse.codvoie IS 'code de la voie';
-
-COMMENT ON COLUMN dvf_d62.adresse.typvoie IS 'type de voie';
-
-COMMENT ON COLUMN dvf_d62.adresse.idadrinvar IS 'identifiant invariant de la table adresse';
-
-COMMENT ON COLUMN dvf_d62.adresse.novoie IS 'numéro de la voie';
-
-COMMENT ON COLUMN dvf_d62.adresse.idadresse IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.adresse.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.adresse.btq IS 'indice de répétition';
-
-DROP TABLE IF EXISTS dvf_d62.suf CASCADE;
-
--- table fille dvf_d62.suf
-CREATE TABLE dvf_d62.suf
-(   
-)INHERITS (dvf.suf);        
-
-ALTER TABLE dvf_d62.suf 
-ADD CONSTRAINT suf_pkey PRIMARY KEY (iddisposuf);
-
-ALTER TABLE dvf_d62.suf 
-ADD CONSTRAINT suf_unique UNIQUE (iddispopar, nbsufidt, idsufinvar);
-
-ALTER TABLE dvf_d62.suf 
-ADD CONSTRAINT suf_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.suf IS 'table des subdivisions fiscales';
-
-COMMENT ON COLUMN dvf_d62.suf.iddisposuf IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.suf.sterr IS 'surface de terrain ayant muté';
-
-COMMENT ON COLUMN dvf_d62.suf.nbsufidt IS 'nombre de suf identiques';
-
-COMMENT ON COLUMN dvf_d62.suf.idsufinvar IS 'identifiant invariant de la table suf';
-
-COMMENT ON COLUMN dvf_d62.suf.natcult IS 'libellé de nature de culture';
-
-COMMENT ON COLUMN dvf_d62.suf.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.suf.nodcnt IS 'type de la suf';
-
-COMMENT ON COLUMN dvf_d62.suf.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.suf.natcultspe IS 'groupe de nature de culture spéciale';
-
-COMMENT ON COLUMN dvf_d62.suf.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-DROP TABLE IF EXISTS dvf_d62.volume CASCADE;
-
--- table fille dvf_d62.volume
-CREATE TABLE dvf_d62.volume
-(   
-)INHERITS (dvf.volume);        
-
-ALTER TABLE dvf_d62.volume 
-ADD CONSTRAINT volume_pkey PRIMARY KEY (iddispovol);
-
-ALTER TABLE dvf_d62.volume 
-ADD CONSTRAINT volume_unique UNIQUE (iddispopar, novolume);
-
-ALTER TABLE dvf_d62.volume 
-ADD CONSTRAINT volume_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.volume IS 'table des volumes (division de l''espace dans la hauteur pour certaines co-propriétés verticales';
-
-COMMENT ON COLUMN dvf_d62.volume.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.volume.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.volume.iddispovol IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.volume.novolume IS 'numéro de volume';
-
-COMMENT ON COLUMN dvf_d62.volume.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-DROP TABLE IF EXISTS dvf_d62.lot CASCADE;
-
--- table fille dvf_d62.lot
-CREATE TABLE dvf_d62.lot
-(   
-)INHERITS (dvf.lot);        
-
-ALTER TABLE dvf_d62.lot 
-ADD CONSTRAINT lot_pkey PRIMARY KEY (iddispolot);
-
-ALTER TABLE dvf_d62.lot 
-ADD CONSTRAINT lot_unique UNIQUE (iddispopar, iddispoloc, nolot, scarrez);
-
-ALTER TABLE dvf_d62.lot 
-ADD CONSTRAINT lot_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.lot IS 'table des lots (seuls les 5 premiers lots sont mentionnés)';
-
-COMMENT ON COLUMN dvf_d62.lot.iddispolot IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.lot.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.lot.iddispoloc IS 'identifiant de la table local';
-
-COMMENT ON COLUMN dvf_d62.lot.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.lot.scarrez IS 'surface Loi Carrez du lot';
-
-COMMENT ON COLUMN dvf_d62.lot.nolot IS 'numéro du lot';
-
-COMMENT ON COLUMN dvf_d62.lot.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-DROP TABLE IF EXISTS dvf_d62.adresse_dispoparc CASCADE;
-
--- table fille dvf_d62.adresse_dispoparc
-CREATE TABLE dvf_d62.adresse_dispoparc
-(   
-)INHERITS (dvf.adresse_dispoparc);        
-
-ALTER TABLE dvf_d62.adresse_dispoparc 
-ADD CONSTRAINT adresse_dispoparc_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.adresse_dispoparc IS 'table de liaison entre la table adresse et la table disposition_parcelle';
-
-COMMENT ON COLUMN dvf_d62.adresse_dispoparc.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.adresse_dispoparc.idadresse IS 'identifiant de la table adresse';
-
-COMMENT ON COLUMN dvf_d62.adresse_dispoparc.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.adresse_dispoparc.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-DROP TABLE IF EXISTS dvf_d62.adresse_local CASCADE;
-
--- table fille dvf_d62.adresse_local
-CREATE TABLE dvf_d62.adresse_local
-(   
-)INHERITS (dvf.adresse_local);        
-
-ALTER TABLE dvf_d62.adresse_local 
-ADD CONSTRAINT adresse_local_check CHECK (coddep = '62');
-
-COMMENT ON TABLE dvf_d62.adresse_local IS 'table de liaison entre la table adresse et la table local';
-
-COMMENT ON COLUMN dvf_d62.adresse_local.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.adresse_local.iddispoloc IS 'identifiant de la table local';
-
-COMMENT ON COLUMN dvf_d62.adresse_local.idadresse IS 'identifiant de la table adresse';
-
-COMMENT ON COLUMN dvf_d62.adresse_local.coddep IS 'code du département';
+COMMENT ON COLUMN dvf.adresse_local.idadresse IS 'identifiant de la table adresse';
 
 DROP TABLE IF EXISTS dvf_d59.mutation CASCADE;
 
@@ -971,23 +594,23 @@ ADD CONSTRAINT mutation_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.mutation IS 'table des mutations';
 
-COMMENT ON COLUMN dvf_d59.mutation.refdoc IS 'référence d''enregistrement du document (acte de vente)';
-
-COMMENT ON COLUMN dvf_d59.mutation.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
+COMMENT ON COLUMN dvf_d59.mutation.anneemut IS 'annee de signature du document';
 
 COMMENT ON COLUMN dvf_d59.mutation.codservch IS 'code du service de conservation des hypothèques';
 
-COMMENT ON COLUMN dvf_d59.mutation.moismut IS 'mois de signature du document';
+COMMENT ON COLUMN dvf_d59.mutation.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf_d59.mutation.idmutinvar IS 'identifiant invariant de la mutation';
+COMMENT ON COLUMN dvf_d59.mutation.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d59.mutation.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
 
 COMMENT ON COLUMN dvf_d59.mutation.idmutation IS 'identifiant de clef primaire de la table mutation';
 
-COMMENT ON COLUMN dvf_d59.mutation.coddep IS 'code du département';
+COMMENT ON COLUMN dvf_d59.mutation.idmutinvar IS 'identifiant invariant de la mutation';
 
-COMMENT ON COLUMN dvf_d59.mutation.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf_d59.mutation.refdoc IS 'référence d''enregistrement du document (acte de vente)';
 
-COMMENT ON COLUMN dvf_d59.mutation.datemut IS 'date de signature du document (acte de vente)';
+COMMENT ON COLUMN dvf_d59.mutation.moismut IS 'mois de signature du document';
 
 DROP TABLE IF EXISTS dvf_d59.mutation_article_cgi CASCADE;
 
@@ -1004,13 +627,13 @@ ADD CONSTRAINT mutation_article_cgi_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.mutation_article_cgi IS 'table des articles du code général des impôts (CGI) attachés à la mutation';
 
-COMMENT ON COLUMN dvf_d59.mutation_article_cgi.idmutation IS 'identifiant de clef primaire de la table mutation';
+COMMENT ON COLUMN dvf_d59.mutation_article_cgi.ordarticgi IS 'numéro de l''ordre de l''article cgi';
 
-COMMENT ON COLUMN dvf_d59.mutation_article_cgi.idartcgi IS 'identifiant de la table annexe ann_cgi';
+COMMENT ON COLUMN dvf_d59.mutation_article_cgi.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf_d59.mutation_article_cgi.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf_d59.mutation_article_cgi.ordarticgi IS 'numéro de l''ordre de l''article cgi';
+COMMENT ON COLUMN dvf_d59.mutation_article_cgi.idartcgi IS 'identifiant de la table annexe ann_cgi';
 
 DROP TABLE IF EXISTS dvf_d59.disposition CASCADE;
 
@@ -1032,15 +655,15 @@ COMMENT ON TABLE dvf_d59.disposition IS 'table des dispositions';
 
 COMMENT ON COLUMN dvf_d59.disposition.nodispo IS 'numéro de disposition';
 
-COMMENT ON COLUMN dvf_d59.disposition.iddispo IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d59.disposition.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
-
-COMMENT ON COLUMN dvf_d59.disposition.idmutation IS 'identifiant de clef primaire de la table mutation';
-
 COMMENT ON COLUMN dvf_d59.disposition.coddep IS 'code du département';
 
 COMMENT ON COLUMN dvf_d59.disposition.nblot IS 'nombre total de lots dans la disposition';
+
+COMMENT ON COLUMN dvf_d59.disposition.iddispo IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d59.disposition.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d59.disposition.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
 
 DROP TABLE IF EXISTS dvf_d59.disposition_parcelle CASCADE;
 
@@ -1060,21 +683,21 @@ ADD CONSTRAINT disposition_parcelle_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.disposition_parcelle IS 'table des parcelles attachées à une disposition';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle.iddispo IS 'identifiant de la table disposition';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle.datemut IS 'date de signature du document (acte de vente)';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.iddispopar IS 'identifiant pour clef primaire';
 
 COMMENT ON COLUMN dvf_d59.disposition_parcelle.anneemut IS 'annee de signature du document';
 
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.datemut IS 'date de signature du document (acte de vente)';
+
 COMMENT ON COLUMN dvf_d59.disposition_parcelle.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle.idparcelle IS 'identifiant de la table parcelle';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.moismut IS 'mois de signature du document';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle.iddispopar IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.iddispo IS 'identifiant de la table disposition';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.idparcelle IS 'identifiant de la table parcelle';
 
 DROP TABLE IF EXISTS dvf_d59.parcelle CASCADE;
 
@@ -1094,19 +717,19 @@ ADD CONSTRAINT parcelle_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.parcelle IS 'table des parcelles';
 
-COMMENT ON COLUMN dvf_d59.parcelle.prefsect IS 'prefixe de section de la parcelle';
-
-COMMENT ON COLUMN dvf_d59.parcelle.idparcelle IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d59.parcelle.noplan IS 'numéro de la parcelle';
+COMMENT ON COLUMN dvf_d59.parcelle.codcomm IS 'code insee de la commune';
 
 COMMENT ON COLUMN dvf_d59.parcelle.coddep IS 'code du département';
 
+COMMENT ON COLUMN dvf_d59.parcelle.prefsect IS 'prefixe de section de la parcelle';
+
 COMMENT ON COLUMN dvf_d59.parcelle.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
 
-COMMENT ON COLUMN dvf_d59.parcelle.codcomm IS 'code insee de la commune';
-
 COMMENT ON COLUMN dvf_d59.parcelle.nosect IS 'numéro de section de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.parcelle.noplan IS 'numéro de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.parcelle.idparcelle IS 'identifiant pour clef primaire';
 
 DROP TABLE IF EXISTS dvf_d59.local CASCADE;
 
@@ -1126,33 +749,33 @@ ADD CONSTRAINT local_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.local IS 'table des locaux';
 
-COMMENT ON COLUMN dvf_d59.local.idloc IS 'identifiant du local (Fichier Fonciers)';
-
-COMMENT ON COLUMN dvf_d59.local.libtyploc IS 'libellé du type de local';
-
-COMMENT ON COLUMN dvf_d59.local.sbati IS 'surface réelle attachée à l''identifiant local';
-
-COMMENT ON COLUMN dvf_d59.local.nbpprinc IS 'nombre de pièces principales';
-
-COMMENT ON COLUMN dvf_d59.local.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d59.local.iddispoloc IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d59.local.coddep IS 'code du département';
-
 COMMENT ON COLUMN dvf_d59.local.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-COMMENT ON COLUMN dvf_d59.local.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d59.local.codtyploc IS 'code du type de local';
-
-COMMENT ON COLUMN dvf_d59.local.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
-
-COMMENT ON COLUMN dvf_d59.local.identloc IS 'identifiant du local';
 
 COMMENT ON COLUMN dvf_d59.local.anneemut IS 'annee de signature du document';
 
 COMMENT ON COLUMN dvf_d59.local.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d59.local.identloc IS 'identifiant du local';
+
+COMMENT ON COLUMN dvf_d59.local.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d59.local.nbpprinc IS 'nombre de pièces principales';
+
+COMMENT ON COLUMN dvf_d59.local.sbati IS 'surface réelle attachée à l''identifiant local';
+
+COMMENT ON COLUMN dvf_d59.local.idloc IS 'identifiant du local (Fichier Fonciers)';
+
+COMMENT ON COLUMN dvf_d59.local.moismut IS 'mois de signature du document';
+
+COMMENT ON COLUMN dvf_d59.local.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
+
+COMMENT ON COLUMN dvf_d59.local.codtyploc IS 'code du type de local';
+
+COMMENT ON COLUMN dvf_d59.local.iddispoloc IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d59.local.libtyploc IS 'libellé du type de local';
+
+COMMENT ON COLUMN dvf_d59.local.coddep IS 'code du département';
 
 DROP TABLE IF EXISTS dvf_d59.adresse CASCADE;
 
@@ -1174,21 +797,21 @@ COMMENT ON TABLE dvf_d59.adresse IS 'table contenant les adresses (provenant des
 
 COMMENT ON COLUMN dvf_d59.adresse.voie IS 'libellé de la voie';
 
-COMMENT ON COLUMN dvf_d59.adresse.codepostal IS 'code postal';
-
-COMMENT ON COLUMN dvf_d59.adresse.commune IS 'libellé de la commune';
-
-COMMENT ON COLUMN dvf_d59.adresse.codvoie IS 'code de la voie';
-
 COMMENT ON COLUMN dvf_d59.adresse.typvoie IS 'type de voie';
-
-COMMENT ON COLUMN dvf_d59.adresse.idadrinvar IS 'identifiant invariant de la table adresse';
 
 COMMENT ON COLUMN dvf_d59.adresse.novoie IS 'numéro de la voie';
 
-COMMENT ON COLUMN dvf_d59.adresse.idadresse IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf_d59.adresse.codepostal IS 'code postal';
 
 COMMENT ON COLUMN dvf_d59.adresse.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d59.adresse.codvoie IS 'code de la voie';
+
+COMMENT ON COLUMN dvf_d59.adresse.commune IS 'libellé de la commune';
+
+COMMENT ON COLUMN dvf_d59.adresse.idadrinvar IS 'identifiant invariant de la table adresse';
+
+COMMENT ON COLUMN dvf_d59.adresse.idadresse IS 'identifiant pour clef primaire';
 
 COMMENT ON COLUMN dvf_d59.adresse.btq IS 'indice de répétition';
 
@@ -1210,25 +833,25 @@ ADD CONSTRAINT suf_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.suf IS 'table des subdivisions fiscales';
 
-COMMENT ON COLUMN dvf_d59.suf.iddisposuf IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d59.suf.sterr IS 'surface de terrain ayant muté';
+COMMENT ON COLUMN dvf_d59.suf.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 COMMENT ON COLUMN dvf_d59.suf.nbsufidt IS 'nombre de suf identiques';
 
+COMMENT ON COLUMN dvf_d59.suf.iddisposuf IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d59.suf.coddep IS 'code du département';
+
 COMMENT ON COLUMN dvf_d59.suf.idsufinvar IS 'identifiant invariant de la table suf';
+
+COMMENT ON COLUMN dvf_d59.suf.nodcnt IS 'type de la suf';
 
 COMMENT ON COLUMN dvf_d59.suf.natcult IS 'libellé de nature de culture';
 
 COMMENT ON COLUMN dvf_d59.suf.idmutation IS 'identifiant de clef primaire de la table mutation';
 
-COMMENT ON COLUMN dvf_d59.suf.nodcnt IS 'type de la suf';
-
-COMMENT ON COLUMN dvf_d59.suf.coddep IS 'code du département';
+COMMENT ON COLUMN dvf_d59.suf.sterr IS 'surface de terrain ayant muté';
 
 COMMENT ON COLUMN dvf_d59.suf.natcultspe IS 'groupe de nature de culture spéciale';
-
-COMMENT ON COLUMN dvf_d59.suf.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 DROP TABLE IF EXISTS dvf_d59.volume CASCADE;
 
@@ -1248,15 +871,15 @@ ADD CONSTRAINT volume_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.volume IS 'table des volumes (division de l''espace dans la hauteur pour certaines co-propriétés verticales';
 
+COMMENT ON COLUMN dvf_d59.volume.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d59.volume.iddispovol IS 'identifiant pour clef primaire';
+
 COMMENT ON COLUMN dvf_d59.volume.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf_d59.volume.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf_d59.volume.iddispovol IS 'identifiant pour clef primaire';
-
 COMMENT ON COLUMN dvf_d59.volume.novolume IS 'numéro de volume';
-
-COMMENT ON COLUMN dvf_d59.volume.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 DROP TABLE IF EXISTS dvf_d59.lot CASCADE;
 
@@ -1276,19 +899,19 @@ ADD CONSTRAINT lot_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.lot IS 'table des lots (seuls les 5 premiers lots sont mentionnés)';
 
-COMMENT ON COLUMN dvf_d59.lot.iddispolot IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf_d59.lot.iddispopar IS 'identifiant de la table disposition_parcelle';
 
 COMMENT ON COLUMN dvf_d59.lot.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d59.lot.iddispoloc IS 'identifiant de la table local';
-
-COMMENT ON COLUMN dvf_d59.lot.coddep IS 'code du département';
 
 COMMENT ON COLUMN dvf_d59.lot.scarrez IS 'surface Loi Carrez du lot';
 
 COMMENT ON COLUMN dvf_d59.lot.nolot IS 'numéro du lot';
 
-COMMENT ON COLUMN dvf_d59.lot.iddispopar IS 'identifiant de la table disposition_parcelle';
+COMMENT ON COLUMN dvf_d59.lot.iddispoloc IS 'identifiant de la table local';
+
+COMMENT ON COLUMN dvf_d59.lot.iddispolot IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d59.lot.coddep IS 'code du département';
 
 DROP TABLE IF EXISTS dvf_d59.adresse_dispoparc CASCADE;
 
@@ -1302,13 +925,13 @@ ADD CONSTRAINT adresse_dispoparc_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.adresse_dispoparc IS 'table de liaison entre la table adresse et la table disposition_parcelle';
 
-COMMENT ON COLUMN dvf_d59.adresse_dispoparc.idmutation IS 'identifiant de clef primaire de la table mutation';
+COMMENT ON COLUMN dvf_d59.adresse_dispoparc.iddispopar IS 'identifiant de la table disposition_parcelle';
 
-COMMENT ON COLUMN dvf_d59.adresse_dispoparc.idadresse IS 'identifiant de la table adresse';
+COMMENT ON COLUMN dvf_d59.adresse_dispoparc.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf_d59.adresse_dispoparc.coddep IS 'code du département';
 
-COMMENT ON COLUMN dvf_d59.adresse_dispoparc.iddispopar IS 'identifiant de la table disposition_parcelle';
+COMMENT ON COLUMN dvf_d59.adresse_dispoparc.idadresse IS 'identifiant de la table adresse';
 
 DROP TABLE IF EXISTS dvf_d59.adresse_local CASCADE;
 
@@ -1326,16 +949,393 @@ COMMENT ON COLUMN dvf_d59.adresse_local.idmutation IS 'identifiant de clef prima
 
 COMMENT ON COLUMN dvf_d59.adresse_local.iddispoloc IS 'identifiant de la table local';
 
+COMMENT ON COLUMN dvf_d59.adresse_local.coddep IS 'code du département';
+
 COMMENT ON COLUMN dvf_d59.adresse_local.idadresse IS 'identifiant de la table adresse';
 
-COMMENT ON COLUMN dvf_d59.adresse_local.coddep IS 'code du département';
+DROP TABLE IF EXISTS dvf_d62.mutation CASCADE;
+
+-- table fille dvf_d62.mutation
+CREATE TABLE dvf_d62.mutation
+(   
+)INHERITS (dvf.mutation);        
+
+ALTER TABLE dvf_d62.mutation 
+ADD CONSTRAINT mutation_pkey PRIMARY KEY (idmutation);
+
+ALTER TABLE dvf_d62.mutation 
+ADD CONSTRAINT mutation_unique UNIQUE (codservch, refdoc);
+
+ALTER TABLE dvf_d62.mutation 
+ADD CONSTRAINT mutation_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.mutation IS 'table des mutations';
+
+COMMENT ON COLUMN dvf_d62.mutation.anneemut IS 'annee de signature du document';
+
+COMMENT ON COLUMN dvf_d62.mutation.codservch IS 'code du service de conservation des hypothèques';
+
+COMMENT ON COLUMN dvf_d62.mutation.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.mutation.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d62.mutation.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation.idmutinvar IS 'identifiant invariant de la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation.refdoc IS 'référence d''enregistrement du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d62.mutation.moismut IS 'mois de signature du document';
+
+DROP TABLE IF EXISTS dvf_d62.mutation_article_cgi CASCADE;
+
+-- table fille dvf_d62.mutation_article_cgi
+CREATE TABLE dvf_d62.mutation_article_cgi
+(   
+)INHERITS (dvf.mutation_article_cgi);        
+
+ALTER TABLE dvf_d62.mutation_article_cgi 
+ADD CONSTRAINT mutation_article_cgi_pkey PRIMARY KEY (idmutation, idartcgi);
+
+ALTER TABLE dvf_d62.mutation_article_cgi 
+ADD CONSTRAINT mutation_article_cgi_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.mutation_article_cgi IS 'table des articles du code général des impôts (CGI) attachés à la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_article_cgi.ordarticgi IS 'numéro de l''ordre de l''article cgi';
+
+COMMENT ON COLUMN dvf_d62.mutation_article_cgi.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_article_cgi.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.mutation_article_cgi.idartcgi IS 'identifiant de la table annexe ann_cgi';
+
+DROP TABLE IF EXISTS dvf_d62.disposition CASCADE;
+
+-- table fille dvf_d62.disposition
+CREATE TABLE dvf_d62.disposition
+(   
+)INHERITS (dvf.disposition);        
+
+ALTER TABLE dvf_d62.disposition 
+ADD CONSTRAINT disposition_pkey PRIMARY KEY (iddispo);
+
+ALTER TABLE dvf_d62.disposition 
+ADD CONSTRAINT disposition_unique UNIQUE (idmutation, nodispo);
+
+ALTER TABLE dvf_d62.disposition 
+ADD CONSTRAINT disposition_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.disposition IS 'table des dispositions';
+
+COMMENT ON COLUMN dvf_d62.disposition.nodispo IS 'numéro de disposition';
+
+COMMENT ON COLUMN dvf_d62.disposition.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.disposition.nblot IS 'nombre total de lots dans la disposition';
+
+COMMENT ON COLUMN dvf_d62.disposition.iddispo IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.disposition.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.disposition.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
+
+DROP TABLE IF EXISTS dvf_d62.disposition_parcelle CASCADE;
+
+-- table fille dvf_d62.disposition_parcelle
+CREATE TABLE dvf_d62.disposition_parcelle
+(   
+)INHERITS (dvf.disposition_parcelle);        
+
+ALTER TABLE dvf_d62.disposition_parcelle 
+ADD CONSTRAINT disposition_parcelle_pkey PRIMARY KEY (iddispopar);
+
+ALTER TABLE dvf_d62.disposition_parcelle 
+ADD CONSTRAINT disposition_parcelle_unique UNIQUE (iddispo, idparcelle);
+
+ALTER TABLE dvf_d62.disposition_parcelle 
+ADD CONSTRAINT disposition_parcelle_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.disposition_parcelle IS 'table des parcelles attachées à une disposition';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.iddispopar IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.anneemut IS 'annee de signature du document';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.moismut IS 'mois de signature du document';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.iddispo IS 'identifiant de la table disposition';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle.idparcelle IS 'identifiant de la table parcelle';
+
+DROP TABLE IF EXISTS dvf_d62.parcelle CASCADE;
+
+-- table fille dvf_d62.parcelle
+CREATE TABLE dvf_d62.parcelle
+(   
+)INHERITS (dvf.parcelle);        
+
+ALTER TABLE dvf_d62.parcelle 
+ADD CONSTRAINT parcelle_pkey PRIMARY KEY (idparcelle);
+
+ALTER TABLE dvf_d62.parcelle 
+ADD CONSTRAINT parcelle_unique UNIQUE (idpar);
+
+ALTER TABLE dvf_d62.parcelle 
+ADD CONSTRAINT parcelle_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.parcelle IS 'table des parcelles';
+
+COMMENT ON COLUMN dvf_d62.parcelle.codcomm IS 'code insee de la commune';
+
+COMMENT ON COLUMN dvf_d62.parcelle.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.parcelle.prefsect IS 'prefixe de section de la parcelle';
+
+COMMENT ON COLUMN dvf_d62.parcelle.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
+
+COMMENT ON COLUMN dvf_d62.parcelle.nosect IS 'numéro de section de la parcelle';
+
+COMMENT ON COLUMN dvf_d62.parcelle.noplan IS 'numéro de la parcelle';
+
+COMMENT ON COLUMN dvf_d62.parcelle.idparcelle IS 'identifiant pour clef primaire';
+
+DROP TABLE IF EXISTS dvf_d62.local CASCADE;
+
+-- table fille dvf_d62.local
+CREATE TABLE dvf_d62.local
+(   
+)INHERITS (dvf.local);        
+
+ALTER TABLE dvf_d62.local 
+ADD CONSTRAINT local_pkey PRIMARY KEY (iddispoloc);
+
+ALTER TABLE dvf_d62.local 
+ADD CONSTRAINT local_unique UNIQUE (iddispopar, identloc);
+
+ALTER TABLE dvf_d62.local 
+ADD CONSTRAINT local_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.local IS 'table des locaux';
+
+COMMENT ON COLUMN dvf_d62.local.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d62.local.anneemut IS 'annee de signature du document';
+
+COMMENT ON COLUMN dvf_d62.local.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d62.local.identloc IS 'identifiant du local';
+
+COMMENT ON COLUMN dvf_d62.local.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.local.nbpprinc IS 'nombre de pièces principales';
+
+COMMENT ON COLUMN dvf_d62.local.sbati IS 'surface réelle attachée à l''identifiant local';
+
+COMMENT ON COLUMN dvf_d62.local.idloc IS 'identifiant du local (Fichier Fonciers)';
+
+COMMENT ON COLUMN dvf_d62.local.moismut IS 'mois de signature du document';
+
+COMMENT ON COLUMN dvf_d62.local.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
+
+COMMENT ON COLUMN dvf_d62.local.codtyploc IS 'code du type de local';
+
+COMMENT ON COLUMN dvf_d62.local.iddispoloc IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.local.libtyploc IS 'libellé du type de local';
+
+COMMENT ON COLUMN dvf_d62.local.coddep IS 'code du département';
+
+DROP TABLE IF EXISTS dvf_d62.adresse CASCADE;
+
+-- table fille dvf_d62.adresse
+CREATE TABLE dvf_d62.adresse
+(   
+)INHERITS (dvf.adresse);        
+
+ALTER TABLE dvf_d62.adresse 
+ADD CONSTRAINT adresse_pkey PRIMARY KEY (idadresse);
+
+ALTER TABLE dvf_d62.adresse 
+ADD CONSTRAINT adresse_unique UNIQUE (idadrinvar);
+
+ALTER TABLE dvf_d62.adresse 
+ADD CONSTRAINT adresse_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.adresse IS 'table contenant les adresses (provenant des parcelles et des locaux';
+
+COMMENT ON COLUMN dvf_d62.adresse.voie IS 'libellé de la voie';
+
+COMMENT ON COLUMN dvf_d62.adresse.typvoie IS 'type de voie';
+
+COMMENT ON COLUMN dvf_d62.adresse.novoie IS 'numéro de la voie';
+
+COMMENT ON COLUMN dvf_d62.adresse.codepostal IS 'code postal';
+
+COMMENT ON COLUMN dvf_d62.adresse.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.adresse.codvoie IS 'code de la voie';
+
+COMMENT ON COLUMN dvf_d62.adresse.commune IS 'libellé de la commune';
+
+COMMENT ON COLUMN dvf_d62.adresse.idadrinvar IS 'identifiant invariant de la table adresse';
+
+COMMENT ON COLUMN dvf_d62.adresse.idadresse IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.adresse.btq IS 'indice de répétition';
+
+DROP TABLE IF EXISTS dvf_d62.suf CASCADE;
+
+-- table fille dvf_d62.suf
+CREATE TABLE dvf_d62.suf
+(   
+)INHERITS (dvf.suf);        
+
+ALTER TABLE dvf_d62.suf 
+ADD CONSTRAINT suf_pkey PRIMARY KEY (iddisposuf);
+
+ALTER TABLE dvf_d62.suf 
+ADD CONSTRAINT suf_unique UNIQUE (iddispopar, nbsufidt, idsufinvar);
+
+ALTER TABLE dvf_d62.suf 
+ADD CONSTRAINT suf_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.suf IS 'table des subdivisions fiscales';
+
+COMMENT ON COLUMN dvf_d62.suf.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d62.suf.nbsufidt IS 'nombre de suf identiques';
+
+COMMENT ON COLUMN dvf_d62.suf.iddisposuf IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.suf.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.suf.idsufinvar IS 'identifiant invariant de la table suf';
+
+COMMENT ON COLUMN dvf_d62.suf.nodcnt IS 'type de la suf';
+
+COMMENT ON COLUMN dvf_d62.suf.natcult IS 'libellé de nature de culture';
+
+COMMENT ON COLUMN dvf_d62.suf.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.suf.sterr IS 'surface de terrain ayant muté';
+
+COMMENT ON COLUMN dvf_d62.suf.natcultspe IS 'groupe de nature de culture spéciale';
+
+DROP TABLE IF EXISTS dvf_d62.volume CASCADE;
+
+-- table fille dvf_d62.volume
+CREATE TABLE dvf_d62.volume
+(   
+)INHERITS (dvf.volume);        
+
+ALTER TABLE dvf_d62.volume 
+ADD CONSTRAINT volume_pkey PRIMARY KEY (iddispovol);
+
+ALTER TABLE dvf_d62.volume 
+ADD CONSTRAINT volume_unique UNIQUE (iddispopar, novolume);
+
+ALTER TABLE dvf_d62.volume 
+ADD CONSTRAINT volume_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.volume IS 'table des volumes (division de l''espace dans la hauteur pour certaines co-propriétés verticales';
+
+COMMENT ON COLUMN dvf_d62.volume.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d62.volume.iddispovol IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.volume.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.volume.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.volume.novolume IS 'numéro de volume';
+
+DROP TABLE IF EXISTS dvf_d62.lot CASCADE;
+
+-- table fille dvf_d62.lot
+CREATE TABLE dvf_d62.lot
+(   
+)INHERITS (dvf.lot);        
+
+ALTER TABLE dvf_d62.lot 
+ADD CONSTRAINT lot_pkey PRIMARY KEY (iddispolot);
+
+ALTER TABLE dvf_d62.lot 
+ADD CONSTRAINT lot_unique UNIQUE (iddispopar, iddispoloc, nolot, scarrez);
+
+ALTER TABLE dvf_d62.lot 
+ADD CONSTRAINT lot_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.lot IS 'table des lots (seuls les 5 premiers lots sont mentionnés)';
+
+COMMENT ON COLUMN dvf_d62.lot.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d62.lot.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.lot.scarrez IS 'surface Loi Carrez du lot';
+
+COMMENT ON COLUMN dvf_d62.lot.nolot IS 'numéro du lot';
+
+COMMENT ON COLUMN dvf_d62.lot.iddispoloc IS 'identifiant de la table local';
+
+COMMENT ON COLUMN dvf_d62.lot.iddispolot IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.lot.coddep IS 'code du département';
+
+DROP TABLE IF EXISTS dvf_d62.adresse_dispoparc CASCADE;
+
+-- table fille dvf_d62.adresse_dispoparc
+CREATE TABLE dvf_d62.adresse_dispoparc
+(   
+)INHERITS (dvf.adresse_dispoparc);        
+
+ALTER TABLE dvf_d62.adresse_dispoparc 
+ADD CONSTRAINT adresse_dispoparc_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.adresse_dispoparc IS 'table de liaison entre la table adresse et la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d62.adresse_dispoparc.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d62.adresse_dispoparc.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.adresse_dispoparc.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.adresse_dispoparc.idadresse IS 'identifiant de la table adresse';
+
+DROP TABLE IF EXISTS dvf_d62.adresse_local CASCADE;
+
+-- table fille dvf_d62.adresse_local
+CREATE TABLE dvf_d62.adresse_local
+(   
+)INHERITS (dvf.adresse_local);        
+
+ALTER TABLE dvf_d62.adresse_local 
+ADD CONSTRAINT adresse_local_check CHECK (coddep = '62');
+
+COMMENT ON TABLE dvf_d62.adresse_local IS 'table de liaison entre la table adresse et la table local';
+
+COMMENT ON COLUMN dvf_d62.adresse_local.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.adresse_local.iddispoloc IS 'identifiant de la table local';
+
+COMMENT ON COLUMN dvf_d62.adresse_local.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.adresse_local.idadresse IS 'identifiant de la table adresse';
 
 -- création du trigger de la table %(table)s 
 CREATE OR REPLACE FUNCTION dvf.mutation_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.mutation VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.mutation VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.mutation VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.mutation VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1349,8 +1349,8 @@ CREATE TRIGGER insert_mutation_trigger
 CREATE OR REPLACE FUNCTION dvf.mutation_article_cgi_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.mutation_article_cgi VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.mutation_article_cgi VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.mutation_article_cgi VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.mutation_article_cgi VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1364,8 +1364,8 @@ CREATE TRIGGER insert_mutation_article_cgi_trigger
 CREATE OR REPLACE FUNCTION dvf.disposition_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.disposition VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.disposition VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.disposition VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.disposition VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1379,8 +1379,8 @@ CREATE TRIGGER insert_disposition_trigger
 CREATE OR REPLACE FUNCTION dvf.disposition_parcelle_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.disposition_parcelle VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.disposition_parcelle VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.disposition_parcelle VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.disposition_parcelle VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1394,8 +1394,8 @@ CREATE TRIGGER insert_disposition_parcelle_trigger
 CREATE OR REPLACE FUNCTION dvf.parcelle_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.parcelle VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.parcelle VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.parcelle VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.parcelle VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1409,8 +1409,8 @@ CREATE TRIGGER insert_parcelle_trigger
 CREATE OR REPLACE FUNCTION dvf.local_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.local VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.local VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.local VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.local VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1424,8 +1424,8 @@ CREATE TRIGGER insert_local_trigger
 CREATE OR REPLACE FUNCTION dvf.adresse_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.adresse VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.adresse VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.adresse VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.adresse VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1439,8 +1439,8 @@ CREATE TRIGGER insert_adresse_trigger
 CREATE OR REPLACE FUNCTION dvf.suf_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.suf VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.suf VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.suf VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.suf VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1454,8 +1454,8 @@ CREATE TRIGGER insert_suf_trigger
 CREATE OR REPLACE FUNCTION dvf.volume_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.volume VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.volume VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.volume VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.volume VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1469,8 +1469,8 @@ CREATE TRIGGER insert_volume_trigger
 CREATE OR REPLACE FUNCTION dvf.lot_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.lot VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.lot VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.lot VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.lot VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1484,8 +1484,8 @@ CREATE TRIGGER insert_lot_trigger
 CREATE OR REPLACE FUNCTION dvf.adresse_dispoparc_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.adresse_dispoparc VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.adresse_dispoparc VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.adresse_dispoparc VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.adresse_dispoparc VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
@@ -1499,8 +1499,8 @@ CREATE TRIGGER insert_adresse_dispoparc_trigger
 CREATE OR REPLACE FUNCTION dvf.adresse_local_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
-     IF (NEW.coddep='62') THEN INSERT INTO dvf_d62.adresse_local VALUES(NEW.*); RETURN NULL;
-ELSIF (NEW.coddep='59') THEN INSERT INTO dvf_d59.adresse_local VALUES(NEW.*); RETURN NULL;
+     IF (NEW.coddep='59') THEN INSERT INTO dvf_d59.adresse_local VALUES(NEW.*); RETURN NULL;
+ELSIF (NEW.coddep='62') THEN INSERT INTO dvf_d62.adresse_local VALUES(NEW.*); RETURN NULL;
 ELSE RETURN NULL;END IF;
     
 END;
