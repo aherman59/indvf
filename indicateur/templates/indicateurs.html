@@ -10,11 +10,12 @@
       </div>
 	  
 	  <form class="navbar-form navbar-left" role="Departement" method="post">
+          {% csrf_token %} 
           <div class="form-group">
               <i class="fa fa-circle-o-notch fa-lg"></i>
               <select class="form-control" name='departement' onChange="submit()">
                   {% for departement in departements %}
-                  <option>{{ departement }}</option>
+                  <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
                   {% endfor %}
 			  </select> 
           </div>
@@ -22,20 +23,20 @@
       </form>
 	  
 	  <form class="navbar-form navbar-left" role="EPCI"  method="post">
+          {% csrf_token %} 
           <div class="form-group">
               <i class="fa fa-map-signs fa-lg"></i>
               <select class="form-control" name='epci'>
-                  <option>Ain (01)</option>
-                  <option>Aisne (02)</option>
-                  <option>Nord (59)</option>
-                  <option>Pas-de-Calais (62)</option>
-                  <option>Marne (51)</option>
+                  {% for epci in epcis %}
+                  <option>{{ epci }}</option>
+                  {% endfor %}
 			  </select>
           </div>
           <button type="submit" class="btn btn-default" name="voir_epci">Voir</button>
       </form>
 	  
       <form class="navbar-form navbar-left" role="Commune" method="post">
+          {% csrf_token %}           
           <div class="form-group">
               <i class="fa fa-building-o fa-lg"></i>
               <select class="form-control" name='commune'>
