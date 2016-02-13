@@ -51,6 +51,14 @@ def select_sql_valeur_unique(fonction):
         return resultat[0][0] 
     return interne
 
+def select_sql_avec_modification_args(fonction):    
+    def interne(self, *args, **kwargs):
+        args = fonction(self, *args, **kwargs)        
+        requete = self.requete_sql[fonction.__name__.upper()].format(*args)
+        resultat = self.execution_et_recuperation(requete)
+        return resultat
+    return interne
+
 '''
 
 CLASSES

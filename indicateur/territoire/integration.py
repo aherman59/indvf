@@ -1,6 +1,15 @@
 import csv
+from collections import namedtuple
+from datetime import datetime
 
-from indicateur.models import Departement, Epci, Commune
+from indicateur.models import Departement, Epci, Commune, Indicateur
+
+def integrer_indicateurs():
+    Indicateur.objects.all().delete()
+    i = Indicateur(type_indic = "Médiane", periode = 'a', annee_debut = '2010', annee_fin = '2013', code_typo = '121')
+    i.save()
+    i = Indicateur(type_indic = "Médiane", periode = 'ma', annee_debut = '2010', annee_fin = '2013', code_typo = '121')
+    i.save()
 
 def integrer_departements(fichier_departement_insee):
     Departement.objects.all().delete()
@@ -20,3 +29,87 @@ def integrer_epcis(fichier_epci_insee):
                 code_departement = ligne[0][:3] if str(ligne[0]).startswith('97') else ligne[0][:2].lower()
                 e = Epci(nom=ligne[3], code=ligne[2], departement=Departement.objects.get(code = code_departement))
                 e.save()
+
+def integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier_epci_insee):
+    Commune.objects.all().delete()
+    communes = lister_communes(fichier_commune_insee)
+    fusions_separations = recuperer_fusion_separation_communes(fichier_historique_commune)
+    epci_communes = correspondance_epci_communes(fichier_epci_insee)
+    for commune in communes:
+        if commune.code_actualite != '4': # on exclut les 'anciens' codes communaux
+            fusion_separation = retourner_fusion_separation(commune.code_commune, fusions_separations)
+            epci_comm = retourner_code_epci(commune.code_commune, epci_communes)
+            c = Commune(nom = commune.nom,
+                        code = commune.code_commune,
+                        departement = Departement.objects.get(code = commune.code_departement.lower()),
+                        epci = Epci.objects.get(code = epci_comm),
+                        code_actualite = commune.code_actualite,
+                        commune_absorbante = fusion_separation.commune_absorbante,
+                        commune_emancipee = fusion_separation.commune_emancipee,
+                        date_absorbtion = fusion_separation.date_absorbtion,
+                        date_separation = fusion_separation.date_separation)
+            print(c)
+            c.save()
+
+def lister_communes(fichier_commune_insee):
+    communes = []
+    nt_comm1 = _nt_commune()
+    with open(fichier_commune_insee, 'r') as f:
+        lignes = csv.reader(f, delimiter = '\t')
+        next(lignes) # enlever l'entête
+        for ligne in lignes:
+            code_actualite = ligne[0]
+            nom = ligne[15]
+            if ligne[14] != '':
+                nom += ' ' + ligne[14] 
+            code_departement = ligne[5].zfill(2)
+            code_commune = ligne[6].zfill(3) if not ligne[5].startswith('97') else ligne[6].zfill(2)
+            communes.append(nt_comm1(nom, code_departement, code_departement+code_commune, code_actualite))
+    return communes
+
+def correspondance_epci_communes(fichier_epci_insee):
+    commune_epci = {}
+    with open(fichier_epci_insee, 'r') as f:
+        lignes = csv.reader(f, delimiter = ';')
+        next(lignes) # enlever l'entête
+        for ligne in lignes:
+            commune_epci[ligne[0]] = ligne[2]
+    return commune_epci
+
+def recuperer_fusion_separation_communes(fichier_historique_commune, date_minimale = '01-01-2005'):
+    fusions_separations = {}
+    nt_comm2 = _nt_fusion_separation()
+    with open(fichier_historique_commune, 'r') as f:
+        lignes = csv.reader(f, delimiter = '\t')
+        next(lignes) # enlever l'entête
+        for ligne in lignes:
+            if ligne[6] != '':
+                if datetime.strptime(ligne[6],'%d-%M-%Y')>= datetime.strptime(date_minimale, '%d-%M-%Y'):
+                    if ligne[8] in ('21', '31', '33'):
+                        code_departement = ligne[0].zfill(2)
+                        code_commune = ligne[3].zfill(3) if not ligne[5].startswith('97') else ligne[6].zfill(2)
+                        commune_absorbante = ligne[13].zfill(5) if ligne[8] in ('31','33') else None
+                        commune_emancipee = ligne[13].zfill(5) if ligne[8] == '21' else None 
+                        date_absorbtion = datetime.strptime(ligne[6],'%d-%M-%Y') if ligne[8] in ('31','33') else None
+                        date_separation = datetime.strptime(ligne[6],'%d-%M-%Y') if ligne[8] == '21' else None
+                        fusions_separations[code_departement + code_commune] =  nt_comm2(commune_absorbante, commune_emancipee, date_absorbtion, date_separation)
+    return fusions_separations
+
+def retourner_code_epci(code_commune, epci_communes):
+    try:
+        return epci_communes[code_commune]
+    except KeyError as e:
+        return 'ZZZZZZZZZ' # epci fictive telle que définie dans le fichier de l'Insee
+
+def retourner_fusion_separation(code_commune, fusions_separations):
+    try:
+        return fusions_separations[code_commune]
+    except KeyError as e:
+        nt_comm2 = _nt_fusion_separation()
+        return nt_comm2(None, None, None, None)
+
+def _nt_commune():
+    return namedtuple('Comm_insee', ['nom', 'code_departement', 'code_commune', 'code_actualite'])
+
+def _nt_fusion_separation():
+    return namedtuple('FusionSeparation', ['commune_absorbante', 'commune_emancipee', 'date_absorbtion', 'date_separation'])
