@@ -6,6 +6,7 @@ import psycopg2
 import csv
 import os
 import sys
+import time
 from datetime import datetime
 
 
@@ -129,6 +130,7 @@ class PgOutils():
             except Exception as e:
                 print(e)
                 print('Tentative ' + str(tentative) + ' échouée...')                
+                time.sleep(5)
                 if tentative == max_tentative:
                     sys.exit('FIN PREMATUREE - TRAITEMENT NON ABOUTI')
                 tentative += 1
@@ -152,6 +154,7 @@ class PgOutils():
             except Exception as e:
                 print(e)
                 print('Tentative ' + str(tentative) + ' échouée...')
+                time.sleep(5)
                 if tentative == max_tentative:
                     sys.exit('FIN PREMATUREE - TRAITEMENT NON ABOUTI')
                 tentative += 1
@@ -177,6 +180,7 @@ class PgOutils():
             except Exception as e:
                 print(e)
                 print('Tentative ' + str(tentative) + ' échouée...')
+                time.sleep(5)
                 if tentative == max_tentative:
                     sys.exit('FIN PREMATUREE - TRAITEMENT NON ABOUTI')
                 tentative += 1

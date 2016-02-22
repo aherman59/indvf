@@ -249,9 +249,6 @@ class GestionVariablesDVF():
                 if variable.table == table.nom:
                     table.ajouter_variable(variable)
         self.tables = tables
-        for table in self.tables:
-            print(table)
-            
 
     def creer_csv(self, fichier, separateur = '|', encodage = 'utf-8'):
         '''

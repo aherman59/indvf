@@ -30,9 +30,10 @@
     </div>
         {% endif %}
 <script>
-window.setTimeout(function() {
-    window.location.href = "{% url 'import:etape_import' numero_suivant %}";
-}, 4000);
+$(document).ready(function() {
+      window.location.href = "{% url 'import:etape_import' numero_suivant %}";   
+ });
+
 </script>
 
 {% endblock %}

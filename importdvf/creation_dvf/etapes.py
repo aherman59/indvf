@@ -15,7 +15,8 @@ def fonction_a_executer(description):
                  'import': import_donnees, 
                  'integration': integration_dans_dvf,
                  'creation_table_dvf_plus':creation_tables_dvf_plus,
-                 'transformation': transformation,}
+                 'transformation': transformation,
+                 }
     return fonctions[description]
 
 def verification_donnees(repertoire):
@@ -115,4 +116,3 @@ def transformation(dvf_plus, fichier_gestion_csv, nom_table_dvf):
         return True, 'Modifications de la table {0} effectuées.'.format(nom_table_dvf)
     except Exception as e:
         return False, str(e)
-

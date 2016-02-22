@@ -51,7 +51,7 @@ class IndicateurDVF():
         elif (self.type_indic == 'compte' and self.periode == 'a'):
             for t in self.territoires:
                 self.donnees.append(self.formatter(self.calculateur.compter_par_annee(self.variable, self.code_insee(t))))
-         elif (self.type_indic == 'compte' and self.periode == 'ma'):
+        elif (self.type_indic == 'compte' and self.periode == 'ma'):
             for t in self.territoires:
                 self.donnees.append(self.formatter(self.calculateur.compter_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin)))
 

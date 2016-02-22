@@ -434,7 +434,7 @@ class DVF_PLUS(DVFMere):
                 self.effectuer_calculs_mutation()
             self.construire_tables_dvf_plus(nom_table_dvf, variables_jointure[nom_table_dvf])            
             self.renommage_tables(table)            
-    
+
     '''
     
     DVF+ - CALCULS TEMPORAIRES

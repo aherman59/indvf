@@ -2,24 +2,28 @@ from collections import namedtuple
 from django.contrib import messages
 from .creation_dvf.dvfclass import DVF, DVF_PLUS
 
+def constituer_etapes(request):
+    #description d'une étape
+    etape_nt = _definition_etape()
+    # creation des deux premières étapes
+    request.session['etapes'] = [etape_nt(0, 1, '5', '', (None,),'Vérification des fichiers sources'),
+                    etape_nt(1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF')]
+
 def reconstituer_etapes(request):
     #description d'une étape
     etape_nt = _definition_etape()
     # reconstitution des étapes enregistrées dans la session (json -> namedtuple)
     if 'etapes' in request.session:
-        return [etape_nt(*etape) for etape in request.session['etapes']]
+        request.session['etapes'] = [etape_nt(*etape) for etape in request.session['etapes']]
     else:
-        # creation des deux premières étapes
-        request.session.flush()
-        return [etape_nt(0, 1, '5', '', (None,),'Vérification des fichiers sources'),
-                etape_nt(1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF'),]
+        constituer_etapes(request)
 
 def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers_ordonnes):
     etape_nt = _definition_etape()
-    request.session['etapes'].append(etape_nt(2, 300, '15', 
+    request.session['etapes'] = [etape_nt(2, 300, '15', 
                                               'creation', 
                                               ('DVF', fichier_gestion_csv, fichiers_annexes), 
-                                              'Import des données sources DVF - Fichier {0}'.format(fichiers_ordonnes[0])))
+                                              'Import des données sources DVF - Fichier {0}'.format(fichiers_ordonnes[0]))]
     l = len(fichiers_ordonnes)
     for index in range(l): 
         request.session['etapes'].append(etape_nt(300 + 2*index, 
@@ -64,7 +68,6 @@ def recuperer_donnees_connexion(formulaire):
     port = formulaire.cleaned_data['port']
     utilisateur = formulaire.cleaned_data['utilisateur']
     mdp = formulaire.cleaned_data['mdp']
-    # enregistrement dans la session
     return (hote, bdd, port, utilisateur, mdp)
 
 def dvf_objet(request, etape_courante):
