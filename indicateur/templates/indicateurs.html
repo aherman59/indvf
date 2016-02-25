@@ -2,95 +2,92 @@
 {% load staticfiles %}
 
 {% block contenu %}
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
 
-        <div class = "row">
-            <div class = "col-sm-2">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"></button>
-                    <a class="navbar-brand" href="#"><i class="fa fa-circle-o-notch fa-lg"></i> Département</a>
-                </div>
-	        </div>
-            <div class = "col-sm-8">
-	            <form role="Departement" method="post">
-                    {% csrf_token %} 
-                    <div class="form-group">
-                         <div class = "col-sm-10">
-                        <select class="form-control selecteur" name='departement' onChange="submit()">
-                            {% for departement in departements %}
-                            <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
-                            {% endfor %}
-			            </select> 
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-search"></i> Territoire</h3>
+    </div>
+    <div class="panel-body">
+
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-circle-o-notch fa-lg"></i> Département</label>
+                <div class="col-sm-8">
+                    <form role="Departement" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='departement' onChange="submit()">
+                                    {% for departement in departements %}
+                                    <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
+                                    {% endfor %}
+			                    </select> 
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_departement"><i class="fa fa-search fa-lg"></i></button>
+                            </div>
                         </div>
-                          <div class = "col-sm-2">
-		                      <button type="submit" class="btn btn-default" name="voir_departement">Voir</button>
-                          </div>
-                    </div>
-                </form>
-            </div>
-            <div class ="col-sm-2">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Charger <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-			                <li><a href="/creation_territoire">Nouveau territoire...</a></li>
-			                <li role="separator" class="divider"></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class = "row">
-            <div class = "col-sm-2">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"></button>
-                    <a class="navbar-brand" href="#"><i class="fa fa-map-signs fa-lg"></i> Epci</a>
+                    </form>
                 </div>
-	        </div>
-            <div class = "col-sm-10">
-	            <form class="navbar-form navbar-left" role="EPCI"  method="post">
-                    {% csrf_token %} 
-                    <div class="form-group">
-                        <select class="form-control selecteur" name='epci'>
-                            {% for epci in epcis %}
-                            <option value="{{ epci.pk }}" {% if request.session.epci == epci.pk %}selected{% endif %}>{{ epci }}</option>
-                            {% endfor %}
-			            </select>
-                        <button type="submit" class="btn btn-default" name="voir_epci">Voir</button>
-                    </div>
-                </form>
-	        </div>
-        </div>
-        <div class = "row">
-            <div class = "col-sm-2">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"></button>
-                    <a class="navbar-brand" href="#"><i class="fa fa-building-o fa-lg"></i> Commune</a>
+                <div class ="col-sm-2">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Charger <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+			                    <li><a href="/creation_territoire">Nouveau territoire...</a></li>
+			                    <li role="separator" class="divider"></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-	        </div>
-            <div class = "col-sm-10">
-
-                <form class="navbar-form navbar-left" role="Commune" method="post">
-                    {% csrf_token %}           
-                    <div class="form-group">
-                        <select class="form-control selecteur" name='commune'>
-                            {% for commune in communes %}
-                            <option value="{{ commune.pk }}" {% if request.session.commune == commune.pk %}selected{% endif %}>{{ commune }}</option>
-                            {% endfor %}
-			            </select>
-                    </div>
-                    <button type="submit" class="btn btn-default" name="voir_commune">Voir</button>
-                </form>
-	            
-            </div><!-- /.navbar-collapse -->
-        </div>     
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-map-signs fa-lg"></i> Epci</label>
+                <div class="col-sm-8">
+                    <form role="Epci" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='epci'>
+                                    {% for epci in epcis %}
+                                    <option value="{{ epci.pk }}" {% if request.session.epci == epci.pk %}selected{% endif %}>{{ epci }}</option>
+                                    {% endfor %}
+			                    </select>
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_epci"><i class="fa fa-search fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-building fa-lg"></i> Commune</label>
+                <div class="col-sm-8">
+                    <form role="Commune" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='commune'>
+                                    {% for commune in communes %}
+                                    <option value="{{ commune.pk }}" {% if request.session.commune == commune.pk %}selected{% endif %}>{{ commune }}</option>
+                                    {% endfor %}
+			                    </select>
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_commune"><i class="fa fa-search fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
     </div>
 
-</div><!-- /.container-fluid -->
-</nav>
-
-<div class = "container">
+</div>
 
 {% for i in indicateursDVF %}
     <div class="panel panel-default">
@@ -109,11 +106,13 @@
     	  var chart = new xChart('{{i.type_graph}}', data, '#{{i.idgraph}}');
 		  </script>
 {% endfor %}
-</div>
+
 
 <script type="text/javascript">
 $(document).ready(function() {
-  $(".selecteur").select2();
+  $(".selecteur").select2({
+  theme: "classic"
+});
 });
 </script>
 
