@@ -1,4 +1,4 @@
-from .pg import *
+from pg.pgbasics import *
 from indicateur.models import Departement, Epci, Commune, Territoire
 
 class IndicateurDVF():

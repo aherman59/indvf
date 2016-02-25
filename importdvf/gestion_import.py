@@ -53,10 +53,15 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
                                               'transformation', 
                                               ('DVF+', fichier_gestion_csv, 'disposition_parcelle'), 
                                               'Calculs de la table mutation'))
-    request.session['etapes'].append(etape_nt(6, 7, '100', 
+    request.session['etapes'].append(etape_nt(6, 7, '95', 
                                               'transformation', 
                                               ('DVF+', fichier_gestion_csv, 'mutation'), 
+                                              'Renommmage des tables'))
+    request.session['etapes'].append(etape_nt(7, 8, '100', 
+                                              'renommage', 
+                                              ('DVF+', fichier_gestion_csv, ['local', 'disposition_parcelle', 'mutation']), 
                                               'Fin des opérations'))
+
 
 def _definition_etape():
     return namedtuple('Etape', ['numero','numero_suivant', 'pourcentage', 'fonction_a_executer', 'params', 'description_prochaine_etape'])

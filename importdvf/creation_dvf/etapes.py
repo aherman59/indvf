@@ -16,7 +16,7 @@ def fonction_a_executer(description):
                  'integration': integration_dans_dvf,
                  'creation_table_dvf_plus':creation_tables_dvf_plus,
                  'transformation': transformation,
-                 }
+                 'renommage': renommage,}
     return fonctions[description]
 
 def verification_donnees(repertoire):
@@ -48,6 +48,7 @@ def _controler_fichier_txt(fichier):
     date_max = datetime(1,1,1,0,0)
     with open(fichier, 'r') as f:
         csv_reader = csv.reader(f, delimiter = '|')
+        next(csv_reader)
         for n, ligne in enumerate(csv_reader):
             if len(ligne) != 43:
                 return False, [], None, 'La ligne {0} du fichier {1} ne possède pas le bon nombre de champs. Le fichier est ignoré.'.format(str(n+1), fichier)
@@ -112,7 +113,16 @@ def transformation(dvf_plus, fichier_gestion_csv, nom_table_dvf):
             dvf_plus.effectuer_calculs_mutation()
         dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)        
         dvf_plus.construire_tables_dvf_plus(nom_table_dvf, variables_jointure[nom_table_dvf])            
-        dvf_plus.renommage_tables(nom_table_dvf + '_plus')
         return True, 'Modifications de la table {0} effectuées.'.format(nom_table_dvf)
     except Exception as e:
         return False, str(e)
+
+def renommage(dvf_plus, fichier_gestion_csv, tables):
+    try:
+        dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
+        for nom_table_dvf in tables:
+            dvf_plus.renommage_tables(nom_table_dvf + '_plus', 2)
+        return True, 'Renommage des tables.'
+    except Exception as e:
+        return False, str(e)
+    

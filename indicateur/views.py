@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from main import configuration
-from .calcul.pg import *
+from pg.pgbasics import *
 from .calcul.indicateurs import IndicateurDVF, CalculIndicateur
 from .territoire import integration 
 from indicateur.models import Departement, Epci, Commune, Territoire, Indicateur

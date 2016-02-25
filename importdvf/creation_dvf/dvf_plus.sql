@@ -233,8 +233,8 @@ CREATE TABLE  {0}.tmp_calcul_disposition_parcelle_idmutation AS(
         --
         -- A partir de la version 9.3 de PostgreSQL:
         -- array_remove(array_agg(DISTINCT tt.idpar), NULL) AS l_idparmut
-    FROM  {0}.disposition_parcelle t
-    LEFT JOIN (SELECT idmutation, iddispopar, idpar FROM {0}.disposition_parcelle WHERE parcvendue = TRUE) tt
+    FROM  {0}.disposition_parcelle{1} t
+    LEFT JOIN (SELECT idmutation, iddispopar, idpar FROM {0}.disposition_parcelle{1} WHERE parcvendue = TRUE) tt
     ON t.iddispopar = tt.iddispopar
     GROUP BY t.idmutation                    
 
@@ -317,8 +317,3 @@ CREATE TABLE {0}.tmp_calcul_local_idmutation AS(
     GROUP BY idmutation
 ); 
 
-## SUPPRIMER_TRIGGER
-DROP TRIGGER insert_{1}_plus_trigger ON {0}.{1};
---CREATE TRIGGER insert_{1}_trigger
---BEFORE INSERT ON {0}.{1}
---FOR EACH ROW EXECUTE PROCEDURE {0}.{1}_insert_trigger();

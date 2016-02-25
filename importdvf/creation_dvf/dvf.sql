@@ -312,6 +312,13 @@ CREATE TABLE source.{0} AS
     WHERE tt.idmutinvar IS NULL
 );
 
+## CREER_TABLE_SOURCE_DEPARTEMENTALE
+DROP TABLE IF EXISTS source.{0}_d{1};
+CREATE TABLE source.{0}_d{1} AS
+(
+	SELECT * FROM source.{0} WHERE code_departement = '{1}'
+);
+
 ## CREER_TABLE_CALCUL_LOT
 CREATE TABLE source.tmp_calcul_lot AS(
 

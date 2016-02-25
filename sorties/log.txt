@@ -1,1 +1,40 @@
 LOG - INTEGRATION DES DONNEES BRUTES DVF
+tmp_0|Nombre de lignes avant intégration|Nombre de lignes après intégration|Nombre de lignes intégrées
+Table mutation : 0|59926|59926
+Table mutation_article_cgi : 0|53711|53711
+Table disposition : 0|60740|60740
+Table parcelle : 0|82302|82302
+Table disposition_parcelle : 0|91956|91956
+Table adresse : 0|59029|59029
+Table local : 0|69979|69979
+Table volume : 0|499|499
+Table suf : 0|83729|83729
+Table lot : 0|26957|26957
+Table adresse_dispoparc : 0|93244|93244
+Table adresse_local : 0|69979|69979
+tmp_0|Nombre de lignes avant intégration|Nombre de lignes après intégration|Nombre de lignes intégrées
+Table mutation : 59926|124662|64736
+Table mutation_article_cgi : 53711|112059|58348
+Table disposition : 60740|126234|65494
+Table parcelle : 82302|162230|79928
+Table disposition_parcelle : 91956|188320|96364
+Table adresse : 59029|111056|52027
+Table local : 69979|142066|72087
+Table volume : 499|952|453
+Table suf : 83729|169977|86248
+Table lot : 26957|57692|30735
+Table adresse_dispoparc : 93244|190980|97736
+Table adresse_local : 69979|142066|72087
+tmp_0|Nombre de lignes avant intégration|Nombre de lignes après intégration|Nombre de lignes intégrées
+Table mutation : 124662|193349|68687
+Table mutation_article_cgi : 112059|176565|64506
+Table disposition : 126234|196409|70175
+Table parcelle : 162230|242028|79798
+Table disposition_parcelle : 188320|288602|100282
+Table adresse : 111056|160896|49840
+Table local : 142066|221105|79039
+Table volume : 952|1347|395
+Table suf : 169977|258901|88924
+Table lot : 57692|91241|33549
+Table adresse_dispoparc : 190980|292709|101729
+Table adresse_local : 142066|221105|79039

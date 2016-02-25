@@ -1,9 +1,7 @@
 '''
-Created on 9 oct. 2015
-
 @author: antoine.herman
 '''
-from .pg import PgConn
+from pg.pgbasics import *
 
 import csv
 
@@ -13,6 +11,7 @@ TABLES[''] = ''
 TABLES['mutation'] = 'table des mutations'
 TABLES['disposition_parcelle' ] = 'table des parcelles attachées à une disposition'
 TABLES['local'] = 'table des locaux'
+TABLES['acheteur_vendeur'] = 'table anonymisée des acheteurs et des vendeurs'
 TABLES['adresse'] = 'table contenant les adresses (provenant des parcelles et des locaux'
 TABLES['adresse_dispoparc'] = 'table de liaison entre la table adresse et la table disposition_parcelle'
 TABLES['adresse_local'] = 'table de liaison entre la table adresse et la table local'
@@ -249,6 +248,9 @@ class GestionVariablesDVF():
                 if variable.table == table.nom:
                     table.ajouter_variable(variable)
         self.tables = tables
+        for table in self.tables:
+            print(table)
+            
 
     def creer_csv(self, fichier, separateur = '|', encodage = 'utf-8'):
         '''
