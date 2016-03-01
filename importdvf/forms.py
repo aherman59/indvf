@@ -1,15 +1,6 @@
 from django import forms
 import os
-
-import psycopg2
-
-def tentative_connexion(hote, bdd, utilisateur, mdp, port):
-    try:
-        conn = psycopg2.connect(host=hote, database=bdd, port=port, user=utilisateur, password=mdp)
-        return True, 'OK'
-    except Exception as e:
-        return False, str(e)
-
+from main import controle_bdd
 
 class ConfigForm(forms.Form):
     hote = forms.CharField(label='Hôte', max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"localhost"}))
@@ -28,7 +19,7 @@ class ConfigForm(forms.Form):
         port = cleaned_data.get('port') or ''
         chemin_dossier = cleaned_data.get('chemin_dossier') or '' 
 
-        test_connexion, msg_erreur = tentative_connexion(hote, bdd, utilisateur, mdp, port)
+        test_connexion, msg_erreur = controle_bdd.tentative_connexion(hote, bdd, utilisateur, mdp, port)
         if not test_connexion:
             self.add_error('__all__', msg_erreur)
             

@@ -1,14 +1,6 @@
 from django import forms
 from main.models import ConfigurationBDD
-
-import psycopg2
-
-def tentative_connexion(hote, bdd, utilisateur, mdp, port):
-    try:
-        conn = psycopg2.connect(host=hote, database=bdd, port=port, user=utilisateur, password=mdp)
-        return True, 'OK'
-    except Exception as e:
-        return False, str(e)
+from main import controle_bdd
 
 
 class ConfigBDDForm(forms.ModelForm):
@@ -42,7 +34,7 @@ class ConfigBDDForm(forms.ModelForm):
         mdp = cleaned_data.get('mdp') or ''
         port = cleaned_data.get('port') or ''
 
-        test_connexion, msg_erreur = tentative_connexion(hote, bdd, utilisateur, mdp, port)
+        test_connexion, msg_erreur = controle_bdd.tentative_connexion(hote, bdd, utilisateur, mdp, port)
         if not test_connexion:
             self.add_error('__all__', msg_erreur)
 

@@ -56,6 +56,7 @@ def configuration_bdd(request):
     # annulation 
     elif 'annulation' in request.POST:
         return redirect('main:applications')
+    # suppression
     elif 'suppression' in request.POST:
         id_config = int(request.POST['selection_config'])
         config_choisie = ConfigurationBDD.objects.get(pk = id_config)
@@ -68,12 +69,12 @@ def configuration_bdd(request):
     if 'activation' in request.POST:
         id_config = int(request.POST['selection_config'])
         if id_config == 0: # nouvelle entree
-            actif = configuration.creer_et_activer_nouvelle_configuration(request.POST)
+            actif, configform = configuration.creer_et_activer_nouvelle_configuration(request.POST)
             if not actif:
                 return _charger_formulaire(request, configform)
         else: # mise à jour
             config_choisie = ConfigurationBDD.objects.get(pk = id_config)
-            actif = configuration.maj_et_activer_configuration(request.POST, config_choisie)
+            actif, configform = configuration.maj_et_activer_configuration(request.POST, config_choisie)
             if not actif:
                 return _charger_formulaire(request, configform)
         return redirect('main:applications') 

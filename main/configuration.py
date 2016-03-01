@@ -23,9 +23,9 @@ def creer_et_activer_nouvelle_configuration(valeurs_configform):
         desactiver_connexions()
         nvelle_config = configform.save(commit=False)
         activer(nvelle_config)
-        return True
+        return True, configform
     else:
-        return False
+        return False, configform
 
 def maj_et_activer_configuration(valeurs_configform, config_choisie):
     configform = ConfigBDDForm(valeurs_configform, instance = config_choisie)
@@ -33,8 +33,8 @@ def maj_et_activer_configuration(valeurs_configform, config_choisie):
         desactiver_connexions()
         configform.save() 
         activer(config_choisie)
-        return True
+        return True, configform
     else:
-        return False
+        return False, configform
 
         
