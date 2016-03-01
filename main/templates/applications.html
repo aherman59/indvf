@@ -8,8 +8,9 @@
         <p class = "lead"> Applications pour l'utilisation de DVF</p>
     </div>
     
-    <div class="row">
+    
         {% for appli in applis %}
+    {% if forloop.counter0|divisibleby:"3" %}<div class="row">{% endif %}
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">                  
                 <img src="{% static appli.image %}" alt="{{appli.image}}" class="img-responsive img-rounded image-application">
@@ -22,8 +23,9 @@
                 </div>
             </div>
         </div>
+    {% if forloop.counter0|add:"-2"|divisibleby:"3" %}</div>{% endif %}
         {% endfor %}
-    </div>
+    
 
 </div><!-- /.container -->
 {% endblock %}
