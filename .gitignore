@@ -1,0 +1,6 @@
+/db.sqlite3
+/importdvf/__pycache__/*
+/importdvf/creation_dvf/__pycache__/*
+/indicateur/__pycache__/*
+/indvf/__pycache__/*
+/main/__pycache__/*
