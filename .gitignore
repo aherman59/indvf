@@ -1,6 +1,11 @@
 /db.sqlite3
 /importdvf/__pycache__/*
 /importdvf/creation_dvf/__pycache__/*
+/importdvf/migrations/__pycache__/*
 /indicateur/__pycache__/*
+/indicateur/calcul/__pycache__/*
+/indicateur/territoire/__pycache__/*
+/indicateur/migrations/__pycache__/*
 /indvf/__pycache__/*
 /main/__pycache__/*
+/main/migrations/__pycache__/*
