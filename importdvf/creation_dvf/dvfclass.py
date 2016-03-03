@@ -131,15 +131,29 @@ class DVFMere(PgOutils):
             comment_champs[variable.nom] = variable.description           
         return comment_champs
     
-    def renommage_tables(self, table, code_creation):
+    def renommage_tables(self, table, id, code_creation):
+        valeur_sequence = self.valeur_sequence(self.schema_principal, table, id, code_creation)
         self.effacer_table_dvf(self.schema_principal, table, code_creation)
         self.renommer_table_dvf_XXXX(self.schema_principal, table, code_creation)
+        self._affecter_curval_sequence(self.schema_principal, table, id, valeur_sequence)
         for schema in self.schemas_departementaux:
             self.effacer_table_dvf(schema, table, code_creation)
             self.renommer_contraintes(schema, table, code_creation)
             self.renommer_table_dvf_XXXX(schema, table, code_creation)
-        self.supprimer_trigger_table_dvf_XXXX(table, code_creation)        
+        self.supprimer_trigger_table_dvf_XXXX(table, code_creation)
+
+    def valeur_sequence(self, schema, table, id, code_creation):
+        nom_table_dvf = self.nom_table_dvf(table, code_creation)
+        return self._recuperer_curval_sequence(schema, nom_table_dvf, id)
+
+    @select_sql_valeur_unique
+    def _recuperer_curval_sequence(self, schema, table, id):
+        pass
     
+    @requete_sql
+    def _affecter_curval_sequence(self, schema, table, id, valeur):
+        pass
+
     def effacer_table_dvf(self, schema, table, code_creation):
         nom_table_dvf = self.nom_table_dvf(table, code_creation)
         self.effacer_table(schema, nom_table_dvf)
@@ -159,10 +173,6 @@ class DVFMere(PgOutils):
     
     @requete_sql
     def _renommer_trigger(self, schema, nom_table_dvf, table):
-        pass
-    
-    @requete_sql
-    def _renommer_sequence(self, schema, table, nom_table_dvf):
         pass
     
     def renommer_contraintes(self, schema, table, code_creation):
@@ -518,8 +528,9 @@ class DVF_PLUS(DVFMere):
     
     
     def transformation_tables_dvf(self):
+        id = {'local_plus' : 'iddispoloc', 'disposition_parcelle_plus': 'iddispopar', 'mutation_plus' : 'idmutation'}
         for table in self.TABLES:
-            self.renommage_tables(table, 2)            
+            self.renommage_tables(table, id[table], 2)            
     
     '''
     
