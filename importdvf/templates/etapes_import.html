@@ -7,33 +7,46 @@
             <h3 class="panel-title">Création de la base de données DVF+</h3>
         </div>
         <div class="panel-body">
-            <h3>{{desc_etape}}</h3>
+            <h3 id="description_etape">Vérification des données du répertoire</h3>
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="{{pourcentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{pourcentage}}%;">
-                    <span class="sr-only">{{pourcentage}} %</span>
+                <div class="progress-bar" id="barre_progression" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                    <span id="pourcentage">0 %</span>
                 </div>
             </div>
         </div>
+        <div class="vide"></div>
     </div>
-    {% if messages %}
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Notifications</h3>
         </div>
         <div class="panel-body">
             <ul class="list-group">
-            {% for message in messages %}
-                <li class="list-group-item list-group-item-{% if message.tags %}{{ message.tags }}{% endif %}">{{message}}</li>
-            {% endfor %}
             </ul>
         </div>
     </div>
-        {% endif %}
-<script>
-$(document).ready(function() {
-      window.location.href = "{% url 'import:etape_import' numero_suivant %}";   
- });
 
+<script>
+    $(function() {
+        $(window).load(function(){
+             $('.vide').trigger('click', '1');
+        });
+        $('.vide').click(function(event, etape) {
+            if (etape == '8') window.location.href = '/fin_import';
+            if (etape == undefined) etape = '1';
+             $.getJSON('/import/step/' + etape, function(data) {
+                       $('#description_etape').html(data.description);
+                       $('#pourcentage').html(data.pourcentage + ' %');
+                       $('#barre_progression').css('width', data.pourcentage + '%');
+                       $('#barre_progression').attr('aria-valuenow', data.pourcentage);
+                       $('.list-group').append('<li class="list-group-item list-group-item-success">'+ data.description +'</li>')
+                       $('.vide').trigger('click', data.etape_suivante)
+                       
+              });
+
+        });  
+    });
 </script>
 
 {% endblock %}
