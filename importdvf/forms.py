@@ -27,7 +27,7 @@ class ConfigForm(forms.Form):
             msg_erreur = "Saisie incorrecte du champ hôte"
             self.add_error('hote', msg_erreur)
 
-        if bdd not in ['dvf', 'postgres']:
+        if ' ' in bdd:
             msg_erreur = "Saisie incorrecte du nom de la base"
             self.add_error('bdd', msg_erreur)
 

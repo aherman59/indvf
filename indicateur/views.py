@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from main import configuration
+from main import configuration, controle_bdd
 from pg.pgbasics import *
 from .calcul.indicateurs import IndicateurDVF, CalculIndicateur
 from .territoire import integration 
@@ -40,7 +40,7 @@ def indicateurs(request):
 
     # verification qu'une configuration a bien été definie
     config_active = configuration.configuration_active()
-    if config_active:
+    if config_active and controle_bdd.verification_configuration(config_active):
         params = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)
         calculateur = CalculIndicateur(*params, script = 'sorties/script_indvf.sql')
         territoires = list(territoire_comparaison().departements.all()) + list(territoire_comparaison().epcis.all()) + list(territoire_comparaison().communes.all())

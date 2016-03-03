@@ -68,7 +68,7 @@ def etape_import(request, etape):
         return render(request, 'test.html', context)
     else:
         print('Not OK')
-        #return _afficher_formulaire(request, formulaire)
+        return _afficher_formulaire(request, formulaire)
 
 def old_etape_import(request, etape):
     context = None

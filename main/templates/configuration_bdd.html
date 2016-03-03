@@ -6,7 +6,9 @@
 <div class="panel panel-default">
   <div class="panel-body">
     {% if config_active %}
-    La configuration actuellement sélectionnée est {{ config_active }}. La base de données correspondante est de type {{config_active.type_bdd }}.
+    La configuration actuellement sélectionnée est {{ config_active }}. 
+	La base de données correspondante est définie comme une base de type {{config_active.type_bdd }}
+	{% if not verif_config %} mais ne répond pas aux critères de définition d'une base de ce type{% endif %}.
     {% else %}
     Aucune configuration n'est selectionnée.
     {% endif %}
