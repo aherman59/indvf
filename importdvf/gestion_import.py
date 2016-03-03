@@ -20,9 +20,10 @@ def reconstituer_etapes(request):
 
 def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers_ordonnes):
     etape_nt = _definition_etape()
+    print(request.session)
     request.session['etapes'] = [etape_nt(2, 300, '15', 
                                               'creation', 
-                                              ('DVF', fichier_gestion_csv, fichiers_annexes), 
+                                              ('DVF', fichier_gestion_csv, fichiers_annexes, request.session['effacer_schemas_existants']), 
                                               'Import des données sources DVF - Fichier {0}'.format(fichiers_ordonnes[0]))]
     l = len(fichiers_ordonnes)
     for index in range(l): 
@@ -43,7 +44,7 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
     # creation des etapes DVF+
     request.session['etapes'].append(etape_nt(302 + 2*(l-1), 4 , '30', 
                                               'creation_table_dvf_plus', 
-                                              ('DVF+', fichier_gestion_csv), 
+                                              ('DVF+', fichier_gestion_csv, request.session['effacer_schemas_existants']), 
                                               'Calculs de la table local'))
     request.session['etapes'].append(etape_nt(4, 5, '65', 
                                               'transformation', 

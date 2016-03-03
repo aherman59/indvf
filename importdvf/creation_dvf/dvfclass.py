@@ -25,11 +25,11 @@ class DVFMere(PgOutils):
     def __init__(self, hote, base, port, utilisateur, motdepasse, departements, script = 'sorties/script.sql'):
         super().__init__(hote, base, port, utilisateur, motdepasse, script)        
         self.gestionnaire = GestionVariablesDVF()        
-        self.departements = [dep.upper() for dep in departements]
+        self.departements = [dep.lower() for dep in departements]
         self.schema_principal = 'dvf'
         self.schema_annexe = 'dvf_annexe'
         self.prefixe_schemas_departementaux = 'dvf_d'
-        self.schemas_departementaux = [self.prefixe_schemas_departementaux + dep.upper() for dep in self.departements]
+        self.schemas_departementaux = [self.prefixe_schemas_departementaux + dep.lower() for dep in self.departements]
     
     def charger_gestionnaire_depuis_csv(self, fichier_csv):
         self.gestionnaire.charger_tables_depuis_csv(fichier_csv)
@@ -94,7 +94,7 @@ class DVFMere(PgOutils):
     def _ajout_contrainte_check_departement(self, schema, table, code_creation):
         champs = self.recuperer_contrainte(table, 'C', code_creation)
         if len(champs) > 0:
-            expression = """{} = '{}'""".format(str(champs[0]), self.departement(schema))
+            expression = """{} = '{}'""".format(str(champs[0]), self.departement(schema).upper())
             self.ajouter_contrainte_check(schema, table, expression)
     
     def _ajout_commentaire_table(self, schema, table, code_creation):
@@ -146,7 +146,7 @@ class DVFMere(PgOutils):
     
     def renommer_table_dvf_XXXX(self, schema, table, code_creation):
         nom_table_dvf = self.nom_table_dvf(table, code_creation)        
-        self.renommer_table(schema, table, nom_table_dvf)        
+        self.renommer_table(schema, table, nom_table_dvf)                
     
     def supprimer_trigger_table_dvf_XXXX(self, table, code_creation):
         nom_table_dvf = self.nom_table_dvf(table, code_creation)
@@ -159,6 +159,10 @@ class DVFMere(PgOutils):
     
     @requete_sql
     def _renommer_trigger(self, schema, nom_table_dvf, table):
+        pass
+    
+    @requete_sql
+    def _renommer_sequence(self, schema, table, nom_table_dvf):
         pass
     
     def renommer_contraintes(self, schema, table, code_creation):
@@ -197,10 +201,10 @@ class DVFMere(PgOutils):
         return False
     
     def departement(self, schema):
-        return schema[len(self.prefixe_schemas_departementaux):].upper()
+        return schema[len(self.prefixe_schemas_departementaux):].lower()
     
     def schema(self, departement):
-        return self.prefixe_schemas_departementaux + departement.upper()
+        return self.prefixe_schemas_departementaux + departement.lower()
         
     
 
@@ -302,8 +306,11 @@ class DVF(DVFMere):
         if recreer_tables_principales:
             self.creation_tables_principales_et_departementales(self.TABLES, 1)
         else:
+            for table in ['mutation', 'local', 'disposition_parcelle']:
+                self._renommer_sequence(self.schema_principal, table + '_plus', table)
             self.creer_tables_departementales_vides(self.TABLES, 1)
             self.creer_insert_triggers(self.TABLES, 1)
+
     
     '''
     
@@ -357,9 +364,9 @@ class DVF(DVFMere):
     def ecrire_dans_log(self, table, nb_initial, nb_final):
         self.redaction_script(self.log, 'Table {0} : {1}|{2}|{3}\n'.format(table, str(nb_initial), str(nb_final), str(int(nb_final - nb_initial))), False)
     
-    @requete_sql    
+    @requete_sql_avec_modification_args    
     def creer_table_source_departementale(self, table_src, departement):
-        pass
+        return table_src, departement, departement.upper()
     
     def maj_tables_avec(self, table_src):
         # Première partie des maj
@@ -487,7 +494,7 @@ class DVF_PLUS(DVFMere):
             self.creation_tables_principales_et_departementales(self.TABLES, 2)
         else:
             for table in self.TABLES: # on renomme les tables du schema principal avec l'extension _plus 
-                self.renommer_table(self.schema_principal, self.nom_table_dvf(table, 2), table)
+                self.renommer_table(self.schema_principal, self.nom_table_dvf(table, 2), table)                
                 self._renommer_trigger(self.schema_principal, self.nom_table_dvf(table, 2), table)                
             self.creer_tables_departementales_vides(self.TABLES, 2)
     
@@ -641,6 +648,5 @@ SELECT \n\t''' % {'schema':schema, 'table':table + '_plus', 'variable':', '.join
         for table_pour_creation in tableDVF.lister_tables_pour_creation():
             champs.append([table_pour_creation, tableDVF.lister_nom_variables_ayant_table_creation(table_pour_creation)])        
         return champs
-
 
 # eof

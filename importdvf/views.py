@@ -43,6 +43,8 @@ def etape_import(request, etape):
                         'pourcentage':etape_courante.pourcentage, 
                         'etape_suivante':str(etape_courante.numero_suivant)}
                 return HttpResponse(json.dumps(data), content_type='application/json')
+            else:
+                print(erreurs)
         elif etape == '8':
             pass
         else:
@@ -55,6 +57,8 @@ def etape_import(request, etape):
                         'pourcentage':etape_courante.pourcentage, 
                         'etape_suivante':str(etape_courante.numero_suivant)}
                 return HttpResponse(json.dumps(data), content_type='application/json')
+            else:
+                print(erreur)
         
     context = None
     formulaire  = ConfigForm(request.POST)
@@ -63,6 +67,7 @@ def etape_import(request, etape):
         # enregistrement des données formulaire dans la session
         request.session['dossier'] = formulaire.cleaned_data['chemin_dossier']
         request.session['parametres_connexion'] = recuperer_donnees_connexion(formulaire)
+        request.session['effacer_schemas_existants'] = formulaire.cleaned_data['effacer_schemas_existants']
         return render(request, 'etapes_import.html', context)
     else:
         print('Not OK')

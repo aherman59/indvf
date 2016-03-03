@@ -34,7 +34,10 @@ DROP TRIGGER insert_{2}_trigger ON {0}.{1};
 --FOR EACH ROW EXECUTE PROCEDURE {0}.{1}_insert_trigger();
 
 ## _RENOMMER_TRIGGER
-ALTER TRIGGER insert_{1}_trigger ON {0}.{2} RENAME TO insert_{2}_trigger
+ALTER TRIGGER insert_{1}_trigger ON {0}.{2} RENAME TO insert_{2}_trigger;
+
+## _RENOMMER_SEQUENCE
+ALTER SEQUENCE {0}.{1}_idmutation_seq RENAME TO {2}_idmutation_seq;
 
 ## _RENOMMER_CONTRAINTE
-ALTER TABLE {0}.{1} RENAME CONSTRAINT {1}{3} TO {2}{3}
+ALTER TABLE {0}.{1} RENAME CONSTRAINT {1}{3} TO {2}{3};

@@ -316,7 +316,7 @@ CREATE TABLE source.{0} AS
 DROP TABLE IF EXISTS source.{0}_d{1};
 CREATE TABLE source.{0}_d{1} AS
 (
-	SELECT * FROM source.{0} WHERE code_departement = '{1}'
+	SELECT * FROM source.{0} WHERE code_departement = '{2}'
 );
 
 ## CREER_TABLE_CALCUL_LOT

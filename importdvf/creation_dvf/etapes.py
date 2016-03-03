@@ -64,14 +64,18 @@ def _ordonner_fichiers_txt(fichiers):
     fichiers_ordonnes.reverse()
     return fichiers_ordonnes
 
-def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes):
+def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_existants):
     try:
         dvf.start_script()
         dvf.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
-        dvf.effacer_schemas_commencant_par(dvf.prefixe_schemas_departementaux)
-        dvf.effacer_et_creer_schemas_dvf()
-        dvf.creation_tables_annexes(*fichiers_annexes)    
-        dvf.creation_tables()
+        if effacer_schemas_existants:        
+            dvf.effacer_schemas_commencant_par(dvf.prefixe_schemas_departementaux)
+            dvf.effacer_et_creer_schemas_dvf()
+            dvf.creation_tables()
+        else:
+            dvf.effacer_et_creer_schemas_dvf_departementaux()
+            dvf.creation_tables(recreer_tables_principales = False)
+        dvf.creation_tables_annexes(*fichiers_annexes)
         dvf.ecrire_entete_log()
         return True, 'Création des schémas et des tables DVF effectuée.'
     except Exception as e:
@@ -93,11 +97,11 @@ def integration_dans_dvf(dvf, table_src, fichier):
     except Exception as e:
         return False, str(e)
 
-def creation_tables_dvf_plus(dvf_plus, fichier_gestion_csv):
+def creation_tables_dvf_plus(dvf_plus, fichier_gestion_csv, effacer_schemas_existants):
     try:
         dvf_plus.start_script()        
         dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
-        dvf_plus.creation_tables_dvf_plus()
+        dvf_plus.creation_tables_dvf_plus(recreer_tables_principales = effacer_schemas_existants)
         return True, 'Création des tables DVF+ effectuée.'
     except Exception as e:
         return False, str(e)
@@ -120,8 +124,7 @@ def transformation(dvf_plus, fichier_gestion_csv, nom_table_dvf):
 def renommage(dvf_plus, fichier_gestion_csv, tables):
     try:
         dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
-        for nom_table_dvf in tables:
-            dvf_plus.renommage_tables(nom_table_dvf + '_plus', 2)
+        dvf_plus.transformation_tables_dvf()
         return True, 'Renommage des tables.'
     except Exception as e:
         return False, str(e)

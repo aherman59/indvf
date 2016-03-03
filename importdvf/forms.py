@@ -9,6 +9,7 @@ class ConfigForm(forms.Form):
     mdp = forms.CharField(label='Mot de Passe', max_length = 255, widget = forms.PasswordInput(attrs={'class':"form-control", 'placeholder':""}))
     port = forms.CharField(label='Port', max_length = 8, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"5432"}))
     chemin_dossier = forms.CharField(label='Dossier données DVF', widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':os.getcwd()}))
+    effacer_schemas_existants = forms.BooleanField(required = False, label='Effacer schemas DVF+ existants', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
 
     def clean(self):
         cleaned_data = super(ConfigForm, self).clean()
