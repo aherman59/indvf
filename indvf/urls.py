@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^import/', include('importdvf.urls', namespace='import')),
     url(r'^main/', include('main.urls', namespace='main')),
     url(r'^indicateur/', include('indicateur.urls', namespace='indicateur')),
+    url(r'^recherche/', include('easydvf.urls', namespace='easydvf')),
     url(r'^admin/', admin.site.urls),
 ]

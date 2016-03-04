@@ -26,7 +26,7 @@ def applications(request):
                        version='1.0', 
                        classe_fa='fa fa-info-circle', 
                        image = 'img/usedvf.jpg', 
-                       url='import:formulaire_configuration'),
+                       url='easydvf:recherche'),
               appli_nt(nom='GeoDVF', 
                        description='Application permettant de faciliter la production de cartographies à partir de DVF (projet QGis, export shp, etc)', 
                        version='1.0', 

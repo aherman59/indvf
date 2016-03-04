@@ -42,11 +42,14 @@ def etape_import(request, etape):
                 data = {'description':etape_courante.description_prochaine_etape, 
                         'pourcentage':etape_courante.pourcentage, 
                         'etape_suivante':str(etape_courante.numero_suivant)}
-                return HttpResponse(json.dumps(data), content_type='application/json')
+                if erreurs:
+                    data['warning'] = erreurs[0]
             else:
-                print(erreurs)
+                request.session['erreur'] = str(erreur)
+                data = {'erreur':True}               
+            return HttpResponse(json.dumps(data), content_type='application/json')
         elif etape == '8':
-            pass
+            return HttpResponse(json.dumps(None), content_type='application/json')
         else:
             etape_courante = etapes.context_etape(request.session['etapes'], int(etape))
             dvf = dvf_objet(request, etape_courante)
@@ -58,7 +61,9 @@ def etape_import(request, etape):
                         'etape_suivante':str(etape_courante.numero_suivant)}
                 return HttpResponse(json.dumps(data), content_type='application/json')
             else:
-                print(erreur)
+                request.session['erreur'] = str(erreur)
+                data = {'erreur':True}
+            return HttpResponse(json.dumps(data), content_type='application/json')
         
     context = None
     formulaire  = ConfigForm(request.POST)
@@ -70,8 +75,12 @@ def etape_import(request, etape):
         request.session['effacer_schemas_existants'] = formulaire.cleaned_data['effacer_schemas_existants']
         return render(request, 'etapes_import.html', context)
     else:
-        print('Not OK')
         return _afficher_formulaire(request, formulaire)
+
+def erreur(request):
+    if 'erreur' in request.session:
+        return _afficher_msg(request, request.session['erreur'], True)
+    return _afficher_formulaire(request, ConfigForm())
 
 def fin_import(request):
     return _afficher_msg(request, "L'import des données DVF dans la base DVF+ est achevé.", False)

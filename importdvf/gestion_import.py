@@ -57,7 +57,7 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
     request.session['etapes'].append(etape_nt(6, 7, '95', 
                                               'transformation', 
                                               ('DVF+', fichier_gestion_csv, 'mutation'), 
-                                              'Renommmage des tables'))
+                                              'Renommage des tables'))
     request.session['etapes'].append(etape_nt(7, 8, '100', 
                                               'renommage', 
                                               ('DVF+', fichier_gestion_csv, ['local', 'disposition_parcelle', 'mutation']), 
