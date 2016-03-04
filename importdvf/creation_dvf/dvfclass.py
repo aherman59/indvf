@@ -131,20 +131,24 @@ class DVFMere(PgOutils):
             comment_champs[variable.nom] = variable.description           
         return comment_champs
     
-    def renommage_tables(self, table, id, code_creation):
-        valeur_sequence = self.valeur_sequence(self.schema_principal, table, id, code_creation)
+    def renommage_tables(self, table, code_creation):
+        nom_table_dvf = self.nom_table_dvf(table, code_creation)
+        if nom_table_dvf in self.lister_tables(self.schema_principal): # on redefinit la valeur de départ pour l'identifiant
+            ids = {'mutation' : 'idmutation', 'local':'iddispoloc', 'disposition_parcelle':'iddispopar'}
+            id = ids[nom_table_dvf]
+            self.redefinir_valeur_sequence(self.schema_principal, table, id, code_creation)       
         self.effacer_table_dvf(self.schema_principal, table, code_creation)
         self.renommer_table_dvf_XXXX(self.schema_principal, table, code_creation)
-        self._affecter_curval_sequence(self.schema_principal, table, id, valeur_sequence)
         for schema in self.schemas_departementaux:
             self.effacer_table_dvf(schema, table, code_creation)
             self.renommer_contraintes(schema, table, code_creation)
             self.renommer_table_dvf_XXXX(schema, table, code_creation)
-        self.supprimer_trigger_table_dvf_XXXX(table, code_creation)
-
-    def valeur_sequence(self, schema, table, id, code_creation):
+        self.supprimer_trigger_table_dvf_XXXX(table, code_creation)    
+    
+    def redefinir_valeur_sequence(self, schema, table, id, code_creation):
         nom_table_dvf = self.nom_table_dvf(table, code_creation)
-        return self._recuperer_curval_sequence(schema, nom_table_dvf, id)
+        valeur = self._recuperer_curval_sequence(schema, nom_table_dvf, id)
+        self._affecter_curval_sequence(self.schema_principal, table, id, valeur)
 
     @select_sql_valeur_unique
     def _recuperer_curval_sequence(self, schema, table, id):
@@ -316,8 +320,6 @@ class DVF(DVFMere):
         if recreer_tables_principales:
             self.creation_tables_principales_et_departementales(self.TABLES, 1)
         else:
-            for table in ['mutation', 'local', 'disposition_parcelle']:
-                self._renommer_sequence(self.schema_principal, table + '_plus', table)
             self.creer_tables_departementales_vides(self.TABLES, 1)
             self.creer_insert_triggers(self.TABLES, 1)
 
@@ -528,9 +530,8 @@ class DVF_PLUS(DVFMere):
     
     
     def transformation_tables_dvf(self):
-        id = {'local_plus' : 'iddispoloc', 'disposition_parcelle_plus': 'iddispopar', 'mutation_plus' : 'idmutation'}
         for table in self.TABLES:
-            self.renommage_tables(table, id[table], 2)            
+            self.renommage_tables(table, 2)            
     
     '''
     

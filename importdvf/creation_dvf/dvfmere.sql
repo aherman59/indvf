@@ -37,12 +37,11 @@ DROP TRIGGER insert_{2}_trigger ON {0}.{1};
 ALTER TRIGGER insert_{1}_trigger ON {0}.{2} RENAME TO insert_{2}_trigger;
 
 ## _RECUPERER_CURVAL_SEQUENCE
-SELECT currval(pg_get_serial_sequence('{0}.{1}','{2}')::TEXT);
+SELECT nextval(pg_get_serial_sequence('{0}.{1}','{2}')::TEXT);
 
 ## _AFFECTER_CURVAL_SEQUENCE
---SELECT nextval(pg_get_serial_sequence('{0}.{1}','{2}')::TEXT);
+SELECT nextval(pg_get_serial_sequence('{0}.{1}','{2}')::TEXT);
 SELECT setval(pg_get_serial_sequence('{0}.{1}','{2}')::TEXT, {3});
--- ALTER SEQUENCE pg_get_serial_sequence('{0}.{1}','{2}') START WITH {3};
 
 ## _RENOMMER_CONTRAINTE
 ALTER TABLE {0}.{1} RENAME CONSTRAINT {1}{3} TO {2}{3};
