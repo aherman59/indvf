@@ -3,4 +3,65 @@
 
 {% block contenu %}
 
+<div id="recherche">
+    <table id="tableSearchResults" class="table table-hover table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date Mutation</th>
+                <th>Parcelles</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="mutation1" class="accordion-toggle" data-toggle="collapse" data-parent="#recherche" data-target=".mutation1_details">
+                <td>1</td>
+                <td>20/12/2013</td>
+                <td>59350AE000101</td>
+                <td><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="hiddenRow">
+                    <div class="accordion-body collapse mutation1_details" id="accordion1">
+                        <table>
+                            <tr>
+                                <td>Revealed item 1</td>
+                            </tr>
+                            <tr>
+                                <td>Revealed item 2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr id="mutation2" class="accordion-toggle" data-toggle="collapse" data-parent="#recherche" data-target=".mutation2details">
+                <td>2</td>
+                <td>15/01/2016</td>
+                <td>59350AE000101</td>
+                <td><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="hiddenRow">
+                    <div class="accordion-body collapse mutation2details" id="accordion2">
+                        <table>
+                            <tr>
+                                <td>Revealed item 1</td>
+                            </tr>
+                            <tr>
+                                <td>Revealed item 2</td>
+                            </tr>
+                            <tr>
+                                <td>Revealed item 3</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr></tr>
+        </tbody>
+    </table>
+</div>
+
+
 {% endblock %}
