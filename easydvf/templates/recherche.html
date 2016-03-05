@@ -4,13 +4,13 @@
 {% block contenu %}
 
 <div id="recherche">
-    <table id="tableSearchResults" class="table table-hover table-striped table-condensed">
+    <table id="tableSearchResults" class="table table-hover table-striped">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Id Mutation</th>
                 <th>Code Service</th>
-                <th>Référence Doc.</th>
+                <th>Date de mutation</th>
                 <th>Valeur Foncière (€)</th>
                 <th>Surface batie (m2)</th>
                 <th>Surface terrain (m2)</th>
@@ -18,59 +18,43 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="mutation1" class="accordion-toggle" data-toggle="collapse" data-parent="#recherche" data-target=".mutation1_details">
-                <td>1</td>
-                <td>1548</td>
-                <td>59CHROD</td>
-                <td>45F458ET</td>
-                <td>157 000</td>
-                <td>105</td>
-                <td>260</td>
+        {% for mutation in mutations %}
+            <tr id="{{mutation.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#recherche" data-target=".detail_{{mutation.id}}">
+                <td>{{forloop.counter}}</td>
+                <td>{{mutation.id}}</td>
+                <td>{{mutation.idmutinvar}}</td>
+                <td>{{mutation.datemut}}</td>
+                <td>{{mutation.valeurfonc}}</td>
+                <td>{{mutation.sbati}}</td>
+                <td>{{mutation.sterr}}</td>
                 <td><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
                 </td>
             </tr>
             <tr>
                 <td colspan="8" class="hiddenRow">
-                    <div class="accordion-body collapse mutation1_details" id="accordion1">
-                        <table>
-                            <tr>
-                                <td>Revealed item 1</td>
-                            </tr>
-                            <tr>
-                                <td>Revealed item 2</td>
-                            </tr>
-                        </table>
+                    <div class="accordion-body collapse detail_{{mutation.id}}" id="accordion2">
+                         <table class="table table-bordered table-condensed">
+                         <thead> 
+                         <tr> 
+                         	<th> Détails de la mutation {{mutation.id}}</th> 
+                         	<th></th>  
+                         </tr> 
+                         </thead> 
+                         <tbody> 
+                         <tr> 
+                         	<td>Nombre de pièces</td> 
+                         	<td>5</td> 
+                         </tr> 
+                         <tr> 
+                         	<td>Valeur foncière</td> 
+                         	<td>157 000</td> 
+                         </tr> 
+                         </tbody> 
+                         </table>
                     </div>
                 </td>
             </tr>
-            <tr id="mutation2" class="accordion-toggle" data-toggle="collapse" data-parent="#recherche" data-target=".mutation2_details">
-                <td>1</td>
-                <td>1548</td>
-                <td>59CHROD</td>
-                <td>45F458ET</td>
-                <td>157 000</td>
-                <td>105</td>
-                <td>260</td>
-                <td><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="8" class="hiddenRow">
-                    <div class="accordion-body collapse mutation2details" id="accordion2">
-                        <table>
-                            <tr>
-                                <td>Revealed item 1</td>
-                            </tr>
-                            <tr>
-                                <td>Revealed item 2</td>
-                            </tr>
-                            <tr>
-                                <td>Revealed item 3</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
+        {% endfor %}
             <tr></tr>
         </tbody>
     </table>
