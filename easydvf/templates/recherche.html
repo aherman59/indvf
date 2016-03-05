@@ -19,7 +19,7 @@
         </thead>
         <tbody>
         {% for mutation in mutations %}
-            <tr id="{{mutation.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#recherche" data-target=".detail_{{mutation.id}}">
+            <tr id="{{mutation.id}}" class="accordion-toggle mutation" data-toggle="collapse" data-parent="#recherche" data-target=".detail_{{mutation.id}}">
                 <td>{{forloop.counter}}</td>
                 <td>{{mutation.id}}</td>
                 <td>{{mutation.idmutinvar}}</td>
@@ -60,5 +60,9 @@
     </table>
 </div>
 
-
+<script type="text/javascript">
+$('.mutation').on("click", function() {
+  alert("Vous avez cliqué sur l'élément d'identifiant " + this.id);
+});
+</script>
 {% endblock %}
