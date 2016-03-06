@@ -33,24 +33,7 @@
             <tr>
                 <td colspan="8" class="hiddenRow">
                     <div class="accordion-body collapse detail_{{mutation.id}}" id="accordion2">
-                         <table class="table table-bordered table-condensed">
-                         <thead> 
-                         <tr> 
-                         	<th> Détails de la mutation {{mutation.id}}</th> 
-                         	<th></th>  
-                         </tr> 
-                         </thead> 
-                         <tbody> 
-                         <tr> 
-                         	<td>Nombre de pièces</td> 
-                         	<td>5</td> 
-                         </tr> 
-                         <tr> 
-                         	<td>Valeur foncière</td> 
-                         	<td>157 000</td> 
-                         </tr> 
-                         </tbody> 
-                         </table>
+                         
                     </div>
                 </td>
             </tr>
@@ -62,7 +45,10 @@
 
 <script type="text/javascript">
 $('.mutation').on("click", function() {
-  alert("Vous avez cliqué sur l'élément d'identifiant " + this.id);
+  var identifiant = this.id;
+  $.getJSON('/recherche/detail/' + this.id, function(data) {
+       $('.detail_' + identifiant).html('<table class="table table-bordered table-condensed"><thead><tr><th>Mutation ' + identifiant + '</th><th></th></tr></thead><tbody><tr><td>Nombre de pièces</td><td>test</td></tr><tr><td>Valeur foncière</td><td>test</td></tr></tbody></table>');
+  });
 });
 </script>
 {% endblock %}

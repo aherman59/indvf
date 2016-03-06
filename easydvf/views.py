@@ -1,4 +1,6 @@
 from django.shortcuts import render
+import json
+from django.http import HttpResponse
 from .recherche.requetes import Requeteur
 from main import configuration, controle_bdd
 
@@ -13,3 +15,7 @@ def recherche(request):
         mutations = requeteur.mutations()
     context = {'mutations': mutations}
     return render(request, 'recherche.html', context)
+
+def recherche_detaillee(request, id):
+    data = {'test':True}
+    return HttpResponse(json.dumps(data), content_type='application/json')
