@@ -7,7 +7,7 @@ from indicateur.models import Departement, Epci, Commune, Territoire
 
 # Create your views here.
 
-def recherche(request):
+def recherche(request, tri = 'id'):
     
     departements = Departement.objects.all()
     # initialiation des variables de session
@@ -35,10 +35,10 @@ def recherche(request):
         codes_insee = [str(Commune.objects.get(pk = request.session['commune']).code),]
     if ('voir_commune' in request.POST) or ('voir_epci' in request.POST):   
         requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')            
-        mutations = requeteur.mutations(codes_insee)
+        mutations = requeteur.mutations(codes_insee, tri = tri)
         request.session['mutations'] = mutations
     else:
-        mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'])
+        mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'], tri = tri)
     context = {'departements' : departements, 'epcis' : epcis, 'communes' : communes, 'mutations': mutations}
     return render(request, 'recherche.html', context)
 
