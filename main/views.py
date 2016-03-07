@@ -8,27 +8,18 @@ from main.models import ConfigurationBDD
 
 def applications(request):
     appli_nt = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
+    
+    applis = configuration.recuperer_metadonnees_applications_disponibles()
 
-    applis = [appli_nt(nom='ImportDVF+', 
-                       description='Application permettant d\'importer des données sources DVF dans une base de données PostgreSQL 9.x', 
-                       version='2.0', 
-                       classe_fa='fa fa-database', 
-                       image = 'img/import.jpg', 
+    # Pour mémoire, applications à créer mais pas encore de modules et donc métadonnées disponibles.
+    applis += [appli_nt(nom='ExportDVF', 
+                       description='Application permettant des exports de données DVF+ ou DV3F sous différents formats (shp, ods, xls, pdf)', 
+                       version='1.0', 
+                       classe_fa='fa fa-map', 
+                       image = 'img/export.jpg', 
                        url='import:formulaire_configuration'),
-              appli_nt(nom='InDVF', 
-                       description='Application permettant de produire, à partir de DVF+ ou DV3F, des indicateurs agrégés pour différentes échelles géographiques', 
-                       version='1.0', 
-                       classe_fa='fa fa-bar-chart', 
-                       image = 'img/indicateur.jpg', 
-                       url='indicateur:indicateurs'),
-              appli_nt(nom='EasyDV3F', 
-                       description='Application pour faciliter les recherches à travers DV3F', 
-                       version='1.0', 
-                       classe_fa='fa fa-info-circle', 
-                       image = 'img/usedvf.jpg', 
-                       url='easydvf:recherche'),
-              appli_nt(nom='GeoDVF', 
-                       description='Application permettant de faciliter la production de cartographies à partir de DVF (projet QGis, export shp, etc)', 
+              appli_nt(nom='GeoDV3F', 
+                       description='Application permettant des visualisations cartographiques à partir de DV3F.', 
                        version='1.0', 
                        classe_fa='fa fa-map', 
                        image = 'img/geo.jpg', 

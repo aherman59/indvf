@@ -1,0 +1,6 @@
+nom=EasyDV3F 
+description=Application pour faciliter les recherches à travers DVF+ et DV3F 
+version=1.0
+classe_fa=fa fa-info-circle 
+image = img/usedvf.jpg 
+url=easydvf:recherche

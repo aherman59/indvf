@@ -1,0 +1,6 @@
+nom=InDVF
+description=Application permettant de produire, à partir de DVF+ ou DV3F, des indicateurs agrégés pour différentes échelles géographiques 
+version=1.0
+classe_fa=fa fa-bar-chart 
+image = img/indicateur.jpg 
+url=indicateur:indicateurs

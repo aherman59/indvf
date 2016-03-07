@@ -1,0 +1,6 @@
+nom=ImportDVF+
+description=Application permettant d'importer des données sources DVF dans une base de données PostgreSQL 9.x 
+version=2.0
+classe_fa=fa fa-database 
+image = img/import.jpg 
+url=import:formulaire_configuration
