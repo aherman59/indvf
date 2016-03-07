@@ -3,6 +3,75 @@
 
 {% block contenu %}
 
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-search"></i> Territoire</h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-circle-o-notch fa-lg"></i> Département</label>
+                <div class="col-sm-8">
+                    <form role="Departement" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='departement' onChange="submit()">
+                                    {% for departement in departements %}
+                                    <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
+                                    {% endfor %}
+			                    </select> 
+                            </div>                            
+                        </div>
+                    </form>
+                </div>                
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-map-signs fa-lg"></i> Epci</label>
+                <div class="col-sm-8">
+                    <form role="Epci" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='epci'>
+                                    {% for epci in epcis %}
+                                    <option value="{{ epci.pk }}" {% if request.session.epci == epci.pk %}selected{% endif %}>{{ epci }}</option>
+                                    {% endfor %}
+			                    </select>
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_epci"><i class="fa fa-search fa-lg"></i></button>
+                            </div>                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-building fa-lg"></i> Commune</label>
+                <div class="col-sm-8">
+                    <form role="Commune" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='commune'>
+                                    {% for commune in communes %}
+                                    <option value="{{ commune.pk }}" {% if request.session.commune == commune.pk %}selected{% endif %}>{{ commune }}</option>
+                                    {% endfor %}
+			                    </select>
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_commune"><i class="fa fa-search fa-lg"></i></button>
+                            </div>                            
+                        </div>
+                    </form>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+
+
 <div id="recherche">
     <table id="tableSearchResults" class="table table-hover table-striped">
         <thead>

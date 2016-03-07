@@ -37,6 +37,15 @@
   <body>
     {% include "barre_navigation.html" %}
     {% block body %}{% endblock %}
+    
+    <script type="text/javascript">
+	$(document).ready(function() {
+	  $(".selecteur").select2({
+	  theme: "classic"
+	});
+	});
+	</script>
+    
     {% include "pied_page.html" %}
   </body>
 </html>
