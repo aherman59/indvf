@@ -71,7 +71,7 @@
     </div>
 </div>
 
-<div class="row page-header">
+<div class="row page-header" id="resultats">
         <h3><i class="fa fa-search"></i> Résultats pour {{request.session.titre}}</h3>
 </div>
 
@@ -107,17 +107,17 @@
 	<div class ="col-sm-4 col-sm-offset-4 text-center">
 		<ul class="pagination pagination-centered">
 		    {% if mutations.has_previous %}
-		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page='1' %}"><<</a></li>
-		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=mutations.previous_page_number %}"><</a></li>
+		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page='1' %}#resultats"><<</a></li>
+		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=mutations.previous_page_number %}#resultats"><</a></li>
 		    {% endif %}
 		
 		    {% for i in mutations.paginator.page_range %}
-		        {% if mutations.number == i %}<li  class="active"><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=i %}">{{i}}</a></li>{% endif %}
+		        {% if mutations.number == i %}<li class="active"><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=i %}#resultats">{{i}}</a></li>{% endif %}
 		    {% endfor %}
 		
 		    {% if mutations.has_next %}
-		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=mutations.next_page_number %}">></a></li>
-		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=mutations.paginator.num_pages %}">>></a></li>
+		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=mutations.next_page_number %}#resultats">></a></li>
+		        <li><a href="{% url 'easydvf:recherche_triee_page' tri=tri page=mutations.paginator.num_pages %}#resultats">>></a></li>
 		    {% endif %}
 		</ul>
 	</div>
@@ -129,9 +129,9 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th><a href="{% url 'easydvf:recherche_triee' tri='id' %}">Id Mutation</a></th>
+                <th><a href="{% url 'easydvf:recherche_triee' tri='id' %}#resultats">Id Mutation</a></th>
                 <th>Code Service</th>
-                <th><a href="{% url 'easydvf:recherche_triee' tri='datemut' %}">Date de mutation</a></th>
+                <th><a href="{% url 'easydvf:recherche_triee' tri='datemut' %}#resultats">Date de mutation</a></th>
                 <th>Valeur Foncière (€)</th>
                 <th>Surface batie (m2)</th>
                 <th>Surface terrain (m2)</th>

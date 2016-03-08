@@ -1,6 +1,7 @@
 from pg.pgbasics import *
 from collections import namedtuple
 from datetime import datetime
+from main.controle_bdd import ControleBDD
 
 class Requeteur(PgOutils):
     
@@ -23,10 +24,11 @@ class Requeteur(PgOutils):
             return sorted(mutations, key=lambda x: datetime.strptime(x.datemut, '%d/%m/%Y'))
     
     def __init__(self, hote, base, port, utilisateur, motdepasse, script):
-        super().__init__(hote, base, port, utilisateur, motdepasse, script)
-
+        super().__init__(hote, base, port, utilisateur, motdepasse, script)        
+        self.base = 'DV3F' if ControleBDD(hote, base, port, utilisateur, motdepasse).est_une_base_DV3F() else 'DVF+'
+ 
     def mutations(self, codes_insee, tri):
-        mutations = self.recuperer_mutations(codes_insee)        
+        mutations = self.recuperer_mutations_dv3f(codes_insee) if self.base == 'DV3F' else self.recuperer_mutations_dvf_plus(codes_insee)        
         mutations = [list(mutation) for mutation in mutations]
         for mutation in mutations:
             mutation[2] = (mutation[2]).strftime("%d/%m/%Y")
@@ -37,7 +39,11 @@ class Requeteur(PgOutils):
         return mutations
     
     @select_sql_avec_modification_args
-    def recuperer_mutations(self, codes_insee):
+    def recuperer_mutations_dv3f(self, codes_insee):
+        return ("', '".join(codes_insee),)
+    
+    @select_sql_avec_modification_args
+    def recuperer_mutations_dvf_plus(self, codes_insee):
         return ("', '".join(codes_insee),)
         
     

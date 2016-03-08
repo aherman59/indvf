@@ -80,3 +80,7 @@ def recherche_detaillee(request, id):
     data = {'test':True}
     return HttpResponse(json.dumps(data), content_type='application/json')
 
+def maj_table(request):
+    context = None
+    return render(request, 'table.html', context)
+
