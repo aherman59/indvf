@@ -41,30 +41,44 @@ def indicateurs(request):
 
     if 'voir_departement' in request.POST:
         t = recreer_territoire_comparaison()
-        t.ajouter_departement(request.session['departement'])
+        t.ajouter_departement(request.session['departement'])        
     if 'voir_epci' in request.POST:
         request.session['epci'] = int(request.POST['epci'])
         t = recreer_territoire_comparaison()
-        t.ajouter_epci(request.session['epci'])
+        t.ajouter_epci(request.session['epci'])        
     if 'voir_commune' in request.POST:
         request.session['commune'] = int(request.POST['commune'])
         t = recreer_territoire_comparaison()
+        t.ajouter_commune(request.session['commune'])        
+    if 'ajout_departement' in request.POST:
+        t = territoire_comparaison()
+        t.ajouter_departement(request.session['departement'])
+    if 'ajout_epci' in request.POST:
+        request.session['epci'] = int(request.POST['epci'])
+        t = territoire_comparaison()
+        t.ajouter_epci(request.session['epci'])
+    if 'ajout_commune' in request.POST:
+        request.session['commune'] = int(request.POST['commune'])
+        t = territoire_comparaison()
         t.ajouter_commune(request.session['commune'])
 
-    calculateur = CalculIndicateur(*request.session['params'], script = 'sorties/script_indvf.sql')
-    territoires = list(territoire_comparaison().departements.all()) + list(territoire_comparaison().epcis.all()) + list(territoire_comparaison().communes.all())
-
-    indicateurs = Indicateur.objects.all()
     indicateursDVF = []
-    for num, indicateur in enumerate(indicateurs):
-        indic_dvf = IndicateurDVF(indicateur, territoires, calculateur)
-        i = {}
-        i['nom'] = indicateur.nom
-        i['graph'] = indic_dvf.graphique()
-        i['idgraph'] = 'graph' + str(num) 
-        i['type_graph'] = indicateur.type_graphe
-        indicateursDVF.append(i)
-    calculateur.deconnecter()
+    if not init:
+        calculateur = CalculIndicateur(*request.session['params'], script = 'sorties/script_indvf.sql')
+        territoires = list(territoire_comparaison().departements.all()) + list(territoire_comparaison().epcis.all()) + list(territoire_comparaison().communes.all())
+        request.session['titre'] = ', '.join(['<span class="color'+ str(i) + '-indvf">' + territoire.nom + '</span>' for i, territoire in enumerate(territoires)])
+        indicateurs = Indicateur.objects.all()
+        
+        for num, indicateur in enumerate(indicateurs):
+            indic_dvf = IndicateurDVF(indicateur, territoires, calculateur)
+            i = {}
+            i['nom'] = indicateur.nom
+            i['graph'] = indic_dvf.graphique()
+            i['idgraph'] = 'graph' + str(num) 
+            i['type_graph'] = indicateur.type_graphe
+            i['tableau'] = indic_dvf.tableau()
+            indicateursDVF.append(i)
+        calculateur.deconnecter()
    
     context = {'departements' : departements, 'epcis' : epcis, 'communes' : communes, 'indicateursDVF' : indicateursDVF}
     return render(request, 'indicateurs.html', context)

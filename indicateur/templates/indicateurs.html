@@ -27,6 +27,7 @@
                             </div>
                             <div class = "col-sm-2">
 		                        <button type="submit" class="btn btn-default" name="voir_departement"><i class="fa fa-search fa-lg"></i></button>
+		                        <button type="submit" class="btn btn-default" name="ajout_departement"><i class="fa fa-cart-plus fa-lg"></i></button>
                             </div>
                         </div>
                     </form>
@@ -58,6 +59,7 @@
                             </div>
                             <div class = "col-sm-2">
 		                        <button type="submit" class="btn btn-default" name="voir_epci"><i class="fa fa-search fa-lg"></i></button>
+		                        <button type="submit" class="btn btn-default" name="ajout_epci"><i class="fa fa-cart-plus fa-lg"></i></button>
                             </div>
                         </div>
                     </form>
@@ -78,6 +80,7 @@
                             </div>
                             <div class = "col-sm-2">
 		                        <button type="submit" class="btn btn-default" name="voir_commune"><i class="fa fa-search fa-lg"></i></button>
+		                        <button type="submit" class="btn btn-default" name="ajout_commune"><i class="fa fa-cart-plus fa-lg"></i></button>
                             </div>
                         </div>
                     </form>
@@ -89,6 +92,13 @@
 
 </div>
 
+
+{% if request.session.titre != '' %}
+
+<div class="row page-header" id="resultats">
+        <h3><i class="fa fa-search"></i> Résultats pour {{request.session.titre|safe}}</h3>
+</div>
+
 {% for i in indicateursDVF %}
     <div class="panel panel-default">
 
@@ -96,8 +106,11 @@
 	        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> {{i.nom}}</h3>
         </div>
         <div class="panel-body">
-            <div class = "col-sm-offset-3 col-sm-6 col-sm-offset-3">
+            <div class = "col-sm-6">
                 <figure style="width: 480px; height: 250px;" id="{{i.idgraph}}"></figure>
+            </div>
+            <div class = "col-sm-6">
+                {{i.tableau|safe}}
             </div>
         </div>
     </div>
@@ -107,6 +120,6 @@
 		  </script>
 {% endfor %}
 
-
+{% endif %}
 
 {% endblock %}

@@ -39,7 +39,17 @@ class IndicateurDVF():
             return self.graphique()
 
     def tableau(self):
-        pass
+        if len(self.donnees) >0:
+            tableau = '<table class="table table-condensed table-striped">'
+            for i, d in enumerate(self.donnees):
+                if i == 0:
+                    tableau += '<tr><th></th>' + ''.join(['<th>' + str(x) + '</th>' for (x, y) in d]) + '</tr>'
+                tableau += '<tr><th>' + self.territoires[i].nom + '</th>' + ''.join(['<td>' + str(y) + '</td>' for (x, y) in d]) + '</tr>' 
+            tableau += '</table>'
+            return tableau
+        else:
+            self.calcul()
+            return self.tableau()
 
     def calcul(self):
         if (self.type_indic == 'somme' and self.periode == 'a'):
