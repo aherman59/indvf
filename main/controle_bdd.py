@@ -30,7 +30,19 @@ def verification_configuration(configuration):
             return False
     return True
 
-
+def departements_disponibles(configuration):
+    
+    if not configuration:
+        return None
+    
+    hote = configuration.hote
+    bdd = configuration.bdd
+    port = configuration.port
+    utilisateur = configuration.utilisateur
+    mdp = configuration.mdp
+        
+    return [dep[5:] for dep in ControleBDD(hote, bdd, port, utilisateur, mdp).schemas_departementaux()]
+    
     
 class ControleBDD(PgOutils):
 
@@ -115,10 +127,10 @@ class ControleBDD(PgOutils):
         return False
 
     def a_au_moins_un_schema_departemental(self):
-        return True if len(self.lister_schemas_commencant_par('dvf_d')) >= 1 else False
+        return True if len(self.schemas_departementaux()) >= 1 else False
 
     def a_les_tables_dvf_plus(self):
-        for schema in ['dvf'] + self.lister_schemas_commencant_par('dvf_d'):
+        for schema in ['dvf'] + self.schemas_departementaux():
             tables = self.lister_tables(schema)
             if not set(self.TABLES_DVF_PLUS).issubset(set(tables)):
                 return False
@@ -129,7 +141,7 @@ class ControleBDD(PgOutils):
         return True
     
     def a_les_tables_dv3f(self):
-        for schema in ['dvf'] + self.lister_schemas_commencant_par('dvf_d'):
+        for schema in ['dvf'] + self.schemas_departementaux():
             tables = self.lister_tables(schema)
             if not 'acheteur_vendeur' in tables:
                 return False        
@@ -151,11 +163,15 @@ class ControleBDD(PgOutils):
         return self._comparaison_champs(correspondance)
         
     def _comparaison_champs(self, correspondance):
-        for schema in ['dvf'] + self.lister_schemas_commencant_par('dvf_d'):
+        for schema in ['dvf'] + self.schemas_departementaux():
             for table, CHAMPS in correspondance.items():
                 champs = [champ[1] for champ in self.lister_champs(schema, table)]
                 if not set(CHAMPS).issubset(set(champs)):
                     return False
         return True
+    
+    def schemas_departementaux(self):
+        return self.lister_schemas_commencant_par('dvf_d')
+    
         
     

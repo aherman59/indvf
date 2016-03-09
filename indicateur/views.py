@@ -10,19 +10,32 @@ import json
 def indicateurs(request):
     # integration des territoires si nécessaire
     _integrer_territoires()
+    
+    init = False
+    # si page de démarrage
+    if request.method != 'POST' and request.get_full_path() == '/indicateur/':    
+        # verification qu'une configuration a bien été definie 
+        config_active = configuration.configuration_active()
+        if config_active and controle_bdd.verification_configuration(config_active):
+            init = True
+        else:
+            return redirect('main:configuration_bdd')
 
-    # chargement des territoires
-    departements = Departement.objects.all()
-    if request.method != 'POST':
-        # initialiation des variables de session
+    departements = Departement.objects.filter(code__in=controle_bdd.departements_disponibles(configuration.configuration_active()))
+    
+    if init:
+        request.session['params'] = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)        
         request.session['departement'] = int(departements[0].pk)
         request.session['ecpi'] = int(Epci.objects.filter(departement=request.session['departement'])[0].pk)
         request.session['commune'] = int(Commune.objects.filter(departement=request.session['departement'])[0].pk)
+        request.session['titre'] = ''
         t = recreer_territoire_comparaison()
         t.ajouter_commune(request.session['commune'])
+    
     # changement de département
     if 'departement' in request.POST:
         request.session['departement'] = int(request.POST['departement'])
+        
     epcis = Epci.objects.filter(departement=request.session['departement'])
     communes = Commune.objects.filter(departement = request.session['departement'])
 
@@ -38,26 +51,20 @@ def indicateurs(request):
         t = recreer_territoire_comparaison()
         t.ajouter_commune(request.session['commune'])
 
-    # verification qu'une configuration a bien été definie
-    config_active = configuration.configuration_active()
-    if config_active and controle_bdd.verification_configuration(config_active):
-        params = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)
-        calculateur = CalculIndicateur(*params, script = 'sorties/script_indvf.sql')
-        territoires = list(territoire_comparaison().departements.all()) + list(territoire_comparaison().epcis.all()) + list(territoire_comparaison().communes.all())
+    calculateur = CalculIndicateur(*request.session['params'], script = 'sorties/script_indvf.sql')
+    territoires = list(territoire_comparaison().departements.all()) + list(territoire_comparaison().epcis.all()) + list(territoire_comparaison().communes.all())
 
-        indicateurs = Indicateur.objects.all()
-        indicateursDVF = []
-        for num, indicateur in enumerate(indicateurs):
-            indic_dvf = IndicateurDVF(indicateur, territoires, calculateur)
-            i = {}
-            i['nom'] = indicateur.nom
-            i['graph'] = indic_dvf.graphique()
-            i['idgraph'] = 'graph' + str(num) 
-            i['type_graph'] = indicateur.type_graphe
-            indicateursDVF.append(i)
-        calculateur.deconnecter()
-    else:
-        return redirect('main:configuration_bdd')
+    indicateurs = Indicateur.objects.all()
+    indicateursDVF = []
+    for num, indicateur in enumerate(indicateurs):
+        indic_dvf = IndicateurDVF(indicateur, territoires, calculateur)
+        i = {}
+        i['nom'] = indicateur.nom
+        i['graph'] = indic_dvf.graphique()
+        i['idgraph'] = 'graph' + str(num) 
+        i['type_graph'] = indicateur.type_graphe
+        indicateursDVF.append(i)
+    calculateur.deconnecter()
    
     context = {'departements' : departements, 'epcis' : epcis, 'communes' : communes, 'indicateursDVF' : indicateursDVF}
     return render(request, 'indicateurs.html', context)

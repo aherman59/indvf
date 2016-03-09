@@ -71,6 +71,8 @@
     </div>
 </div>
 
+{% if request.session.titre != '' %}
+
 <div class="row page-header" id="resultats">
         <h3><i class="fa fa-search"></i> Résultats pour {{request.session.titre}}</h3>
 </div>
@@ -84,7 +86,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label"><i class="fa fa-sitemap fa-lg"></i> Type de bien</label>
                 <div class="col-sm-8">
-                    <form role="Typologie" method="post" action="{% url 'easydvf:recherche_triee' tri=tri %}">
+                    <form role="Typologie" method="post" action="{% url 'easydvf:recherche_triee' tri=tri %}#resultats">
                         {% csrf_token %} 
                         <div class="form-group">
                             <div class = "col-sm-10">
@@ -129,30 +131,51 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th><a href="{% url 'easydvf:recherche_triee' tri='id' %}#resultats">Id Mutation</a></th>
-                <th>Code Service</th>
-                <th><a href="{% url 'easydvf:recherche_triee' tri='datemut' %}#resultats">Date de mutation</a></th>
-                <th>Valeur Foncière (€)</th>
-                <th>Surface batie (m2)</th>
-                <th>Surface terrain (m2)</th>
-                <th></th>
+                <th class="text-center">
+	                <a href="{% url 'easydvf:recherche_triee' tri='id_desc' %}#resultats"><i class="fa fa-sort-asc"></i></a>
+	                 idmutation 
+	                <a href="{% url 'easydvf:recherche_triee' tri='id' %}#resultats"><i class="fa fa-sort-desc"></i></a>
+                </th>
+                <th class="text-center">Code Service</th>
+                <th class="text-center">Réf. Document</th>
+                <th class="text-center">
+	                <a href="{% url 'easydvf:recherche_triee' tri='datemut_desc' %}#resultats"><i class="fa fa-sort-asc"></i></a>
+	                 Date de mutation 
+	                <a href="{% url 'easydvf:recherche_triee' tri='datemut' %}#resultats"><i class="fa fa-sort-desc"></i></a>
+                </th>
+                <th class="text-center">
+	                <a href="{% url 'easydvf:recherche_triee' tri='valeurfonc_desc' %}#resultats"><i class="fa fa-sort-asc"></i></a>
+	                 Valeur Foncière (€) 
+	                <a href="{% url 'easydvf:recherche_triee' tri='valeurfonc' %}#resultats"><i class="fa fa-sort-desc"></i></a>
+                </th>  
+                <th class="text-center">
+	                <a href="{% url 'easydvf:recherche_triee' tri='sbati_desc' %}#resultats"><i class="fa fa-sort-asc"></i></a>
+	                 Surf. batie (m2) 
+	                <a href="{% url 'easydvf:recherche_triee' tri='sbati' %}#resultats"><i class="fa fa-sort-desc"></i></a>
+                </th>
+                <th class="text-center">
+	                <a href="{% url 'easydvf:recherche_triee' tri='sterr_desc' %}#resultats"><i class="fa fa-sort-asc"></i></a>
+	                 Surf. terrain (m2) 
+	                <a href="{% url 'easydvf:recherche_triee' tri='sterr' %}#resultats"><i class="fa fa-sort-desc"></i></a>
+                </th>          
             </tr>
         </thead>
         <tbody>
         {% for mutation in mutations %}
             <tr id="{{mutation.id}}" class="accordion-toggle mutation" data-toggle="collapse" data-parent="#recherche" data-target=".detail_{{mutation.id}}">
                 <td>{{forloop.counter}}</td>
-                <td>{{mutation.id}}</td>
-                <td>{{mutation.idmutinvar}}</td>
-                <td>{{mutation.datemut}}</td>
-                <td>{{mutation.valeurfonc}}</td>
-                <td>{{mutation.sbati}}</td>
-                <td>{{mutation.sterr}}</td>
+                <td class="text-center">{{mutation.id}}</td>
+                <td class="text-center">{{mutation.codservch}}</td>
+                <td class="text-center">{{mutation.refdoc}}</td>
+                <td class="text-center">{{mutation.datemut}}</td>
+                <td class="text-center">{{mutation.valeurfonc}}</td>
+                <td class="text-center">{{mutation.sbati}}</td>
+                <td class="text-center">{{mutation.sterr}}</td>
                 <td><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
                 </td>
             </tr>
             <tr>
-                <td colspan="8" class="hiddenRow">
+                <td colspan="9" class="hiddenRow">
                     <div class="accordion-body collapse detail_{{mutation.id}}" id="accordion2">                         
                     </div>
                 </td>
@@ -163,11 +186,20 @@
     </table>
 </div>
 
+{% endif %}
+
 <script type="text/javascript">
 $('.mutation').on("click", function() {
   var identifiant = this.id;
   $.getJSON('/recherche/detail/' + this.id, function(data) {
-       $('.detail_' + identifiant).html('<table class="table table-bordered table-condensed"><thead><tr><th>Mutation ' + identifiant + '</th><th></th></tr></thead><tbody><tr><td>Nombre de pièces</td><td>test</td></tr><tr><td>Valeur foncière</td><td>test</td></tr></tbody></table>');
+  	   var table_html = '<table class="table table-striped table-condensed">'
+  	   table_html += '<thead><tr><th>Mutation ' + identifiant + '</th><th></th></tr></thead>'
+  	   table_html += '<tbody>'
+  	   $.each(data, function(key, value) {
+  	   		table_html += '<tr><td width="25%">' + key + '</td><td>'+ value + '</td></tr>'
+  	   });
+  	   table_html += '</tbody></table>'
+ 	   $('.detail_' + identifiant).html(table_html);
   });
 });
 </script>

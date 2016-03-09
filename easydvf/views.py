@@ -8,24 +8,28 @@ from indicateur.models import Departement, Epci, Commune, Territoire
 
 # Create your views here.
 
-def recherche(request, page = 1, tri = 'id'):
+def recherche(request, page = 1, tri = 'id'):    
     
-    departements = Departement.objects.all()
-    
-    # initialiation des variables de session
+    init = False
+    # si page de démarrage
     if request.method != 'POST' and request.get_full_path() == '/recherche/':    
         # verification qu'une configuration a bien été definie 
         config_active = configuration.configuration_active()
         if config_active and controle_bdd.verification_configuration(config_active):
-            request.session['params'] = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)
+            init = True
         else:
             return redirect('main:configuration_bdd')
+        
+    departements = Departement.objects.filter(code__in=controle_bdd.departements_disponibles(configuration.configuration_active()))
+    
+    if init:
+        request.session['params'] = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)        
         request.session['departement'] = int(departements[0].pk)
         request.session['ecpi'] = int(Epci.objects.filter(departement=request.session['departement'])[0].pk)
         request.session['commune'] = int(Commune.objects.filter(departement=request.session['departement'])[0].pk)
         request.session['mutations'] = []
         request.session['titre'] = ''
-        request.session['typologie'] = 9999
+        request.session['typologie'] = 0
         
     # changement de département
     if 'departement' in request.POST:
@@ -48,14 +52,14 @@ def recherche(request, page = 1, tri = 'id'):
         
     if ('voir_commune' in request.POST) or ('voir_epci' in request.POST):   
         requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')            
-        mutations = requeteur.mutations(codes_insee, tri = tri)
+        mutations = requeteur.mutations(codes_insee)
         request.session['mutations'] = mutations        
     else:
         mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'])
     
-    typologies = set([(int(mutation.codtypbien), mutation.libtypbien) for mutation in mutations] + [(9999, 'TOUS')])
+    typologies = sorted(set([(int(mutation.codtypbien), mutation.libtypbien) for mutation in mutations] + [(0, 'TOUS')]))
     if request.session['typologie'] not in [code for code, lib in typologies]:
-        request.session['typologie'] = 9999
+        request.session['typologie'] = 0
     
     mutations = Requeteur.filtrer_mutations(mutations, typologie = request.session['typologie'])
     mutations = Requeteur.trier_mutations(mutations, tri)
@@ -76,11 +80,13 @@ def recherche(request, page = 1, tri = 'id'):
                'tri' : tri}
     return render(request, 'recherche.html', context)
 
+
 def recherche_detaillee(request, id):
-    data = {'test':True}
+    requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')
+    mutation = requeteur.mutation_detaillee(id)
+    data = {'Type de bien vendu': mutation.libtypbien,
+            'Nombre de locaux vendus': mutation.nblocmut, 
+            'Nombre de parcelles vendues': mutation.nbparmut}
     return HttpResponse(json.dumps(data), content_type='application/json')
 
-def maj_table(request):
-    context = None
-    return render(request, 'table.html', context)
 
