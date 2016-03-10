@@ -2,14 +2,15 @@ from django.shortcuts import render, redirect
 from main import configuration, controle_bdd
 from pg.pgbasics import *
 from .calcul.indicateurs import IndicateurDVF, CalculIndicateur
-from .territoire import integration 
-from indicateur.models import Departement, Epci, Commune, Territoire, Indicateur
+from main.territoire import integration 
+from main.models import Departement, Epci, Commune, Territoire
+from indicateur.models import Indicateur
 import json
  
 
 def indicateurs(request):
     # integration des territoires si nécessaire
-    _integrer_territoires()
+    integration.integrer_territoires()
     
     init = False
     # si page de démarrage
@@ -82,22 +83,6 @@ def indicateurs(request):
    
     context = {'departements' : departements, 'epcis' : epcis, 'communes' : communes, 'indicateursDVF' : indicateursDVF}
     return render(request, 'indicateurs.html', context)
-
-
-def _integrer_territoires():
-    fichier_departement_insee = 'indicateur/territoire/doc_insee/departement.csv'
-    fichier_epci_insee = 'indicateur/territoire/doc_insee/epci2015.csv'
-    fichier_commune_insee = 'indicateur/territoire/doc_insee/code_insee_france2015.txt'
-    fichier_historique_commune = 'indicateur/territoire/doc_insee/historiq2015.txt'
-    if len(Departement.objects.all()) == 0:
-        integration.integrer_departements(fichier_departement_insee)
-    if len(Epci.objects.all()) == 0:
-        integration.integrer_epcis(fichier_epci_insee)
-    if len(Commune.objects.all()) == 0:
-        integration.integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier_epci_insee)
-    if len(Indicateur.objects.all()) == 0:
-        integration.integrer_indicateurs()
-
 
 def recreer_territoire_comparaison():
     if len(Territoire.objects.filter(nom = 'comparaison')):

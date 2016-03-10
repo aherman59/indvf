@@ -3,12 +3,16 @@ import json
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .recherche.requetes import Requeteur
+from main.territoire import integration
 from main import configuration, controle_bdd
-from indicateur.models import Departement, Epci, Commune, Territoire
+from main.models import Departement, Epci, Commune, Territoire
 
 # Create your views here.
 
-def recherche(request, page = 1, tri = 'id'):    
+def recherche(request, page = 1, tri = 'id'):
+    
+    # integration des territoires si nécessaire
+    integration.integrer_territoires()    
     
     init = False
     # si page de démarrage

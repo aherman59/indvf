@@ -1,5 +1,5 @@
 from pg.pgbasics import *
-from indicateur.models import Departement, Epci, Commune, Territoire
+from main.models import Departement, Epci, Commune, Territoire
 
 class IndicateurDVF():
 
