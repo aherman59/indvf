@@ -14,13 +14,11 @@ def integrer_territoires():
     if len(Epci.objects.all()) == 0:
         integrer_epcis(fichier_epci_insee)
     if len(Commune.objects.all()) == 0:
-        integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier_epci_insee)
-    if len(Indicateur.objects.all()) == 0:
-        integrer_indicateurs()
+        integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier_epci_insee)    
 
 def integrer_departements(fichier_departement_insee):
     Departement.objects.all().delete()
-    with open(fichier_departement_insee, 'r') as f:
+    with open(fichier_departement_insee, 'r', encoding = 'utf-8') as f:
         lignes = csv.reader(f, delimiter = ';')
         for ligne in lignes:
             d = Departement(nom=ligne[2],code=ligne[1])
@@ -28,7 +26,7 @@ def integrer_departements(fichier_departement_insee):
 
 def integrer_epcis(fichier_epci_insee):
     Epci.objects.all().delete()
-    with open(fichier_epci_insee, 'r') as f:
+    with open(fichier_epci_insee, 'r', encoding = 'utf-8') as f:
         lignes = csv.reader(f, delimiter = ';')
         next(lignes) # enlever l'entête
         for ligne in lignes:
@@ -61,7 +59,7 @@ def integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier
 def lister_communes(fichier_commune_insee):
     communes = []
     nt_comm1 = _nt_commune()
-    with open(fichier_commune_insee, 'r') as f:
+    with open(fichier_commune_insee, 'r', encoding = 'utf-8') as f:
         lignes = csv.reader(f, delimiter = '\t')
         next(lignes) # enlever l'entête
         for ligne in lignes:
@@ -76,7 +74,7 @@ def lister_communes(fichier_commune_insee):
 
 def correspondance_epci_communes(fichier_epci_insee):
     commune_epci = {}
-    with open(fichier_epci_insee, 'r') as f:
+    with open(fichier_epci_insee, 'r', encoding = 'utf-8') as f:
         lignes = csv.reader(f, delimiter = ';')
         next(lignes) # enlever l'entête
         for ligne in lignes:
@@ -86,7 +84,7 @@ def correspondance_epci_communes(fichier_epci_insee):
 def recuperer_fusion_separation_communes(fichier_historique_commune, date_minimale = '01-01-2005'):
     fusions_separations = {}
     nt_comm2 = _nt_fusion_separation()
-    with open(fichier_historique_commune, 'r') as f:
+    with open(fichier_historique_commune, 'r', encoding = 'utf-8') as f:
         lignes = csv.reader(f, delimiter = '\t')
         next(lignes) # enlever l'entête
         for ligne in lignes:

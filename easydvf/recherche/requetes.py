@@ -7,7 +7,7 @@ class Requeteur(PgOutils):
     
     @classmethod
     def transformer_mutations_en_namedtuple(cls, mutations):
-        mutation_nt = namedtuple('Mutation', ['id', 'codservch', 'refdoc', 'datemut', 'valeurfonc', 'sbati', 'sterr','codtypbien', 'libtypbien'])
+        mutation_nt = namedtuple('Mutation', ['id', 'datemut', 'valeurfonc', 'sbati', 'sterr', 'nblocmut', 'nbparmut','codtypbien', 'libtypbien'])
         return [mutation_nt(*mutation) for mutation in mutations]
     
     @classmethod
@@ -20,14 +20,18 @@ class Requeteur(PgOutils):
     def trier_mutations(cls, mutations, tri):
         if tri.startswith('id'):
             mutations_triees = sorted(mutations, key=lambda x: x.id)
-        if tri.startswith('datemut'):
+        elif tri.startswith('datemut'):
             mutations_triees = sorted(mutations, key=lambda x: datetime.strptime(x.datemut, '%d/%m/%Y'))
-        if tri.startswith('valeurfonc'):
+        elif tri.startswith('valeurfonc'):
             mutations_triees = sorted(mutations, key=lambda x: int(x.valeurfonc.replace(' ', '')))
-        if tri.startswith('sbati'):
+        elif tri.startswith('sbati'):
             mutations_triees = sorted(mutations, key=lambda x: int(x.sbati.replace(' ', '')))
-        if tri.startswith('sterr'):
+        elif tri.startswith('nblocmut'):
+            mutations_triees = sorted(mutations, key=lambda x: int(x.nblocmut))
+        elif tri.startswith('sterr'):
             mutations_triees = sorted(mutations, key=lambda x: int(x.sterr.replace(' ', '')))
+        elif tri.startswith('nbparmut'):
+            mutations_triees = sorted(mutations, key=lambda x: int(x.nbparmut))
         if tri.endswith('desc'):
             mutations_triees.reverse()
         return mutations_triees
@@ -40,17 +44,17 @@ class Requeteur(PgOutils):
         mutations = self.recuperer_mutations_dv3f(codes_insee) if self.base == 'DV3F' else self.recuperer_mutations_dvf_plus(codes_insee)        
         mutations = [list(mutation) for mutation in mutations]
         for mutation in mutations:
-            mutation[3] = (mutation[3]).strftime("%d/%m/%Y")
-            mutation[4] = self._separateur_millier(str(round(mutation[4])))
-            mutation[5] = self._separateur_millier(str(mutation[5]))
-            mutation[6] = self._separateur_millier(str(mutation[6]))
+            mutation[1] = (mutation[1]).strftime("%d/%m/%Y")
+            mutation[2] = self._separateur_millier(str(round(mutation[2])))
+            mutation[3] = self._separateur_millier(str(mutation[3]))
+            mutation[4] = self._separateur_millier(str(mutation[4]))
         mutations = self.transformer_mutations_en_namedtuple(mutations)
         return mutations
     
     def mutation_detaillee(self, id):
         resultat = self.recuperer_mutation_detaillee_dv3f() if self.base == 'DV3F' else self.recuperer_mutation_detaillee_dvf_plus(id)
         mutation = list(resultat[0])
-        mutation_detaillee_nt = namedtuple('Mutation_Detail', ['nblocmut', 'nbparmut', 'libtypbien'])
+        mutation_detaillee_nt = namedtuple('Mutation_Detail', ['codservch', 'refdoc', 'nblocmut', 'nbparmut', 'libtypbien'])
         mutation = mutation_detaillee_nt(*mutation)
         return mutation 
     

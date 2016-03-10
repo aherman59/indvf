@@ -1,10 +1,10 @@
 ## RECUPERER_MUTATIONS_DV3F
-SELECT idmutation, codservch, refdoc, datemut, valeurfonc, sbati, sterr, codtypbien, libtypbien
+SELECT idmutation, datemut, valeurfonc, sbati, sterr, nblocmut, nbparmut, codtypbien, libtypbien
 FROM dvf.mutation
 WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
 
 ## RECUPERER_MUTATIONS_DVF_PLUS
-SELECT idmutation, codservch, refdoc, datemut, valeurfonc, sbati, sterr, 
+SELECT idmutation, datemut, valeurfonc, sbati, sterr, nblocmut, nbparmut,
 CASE 
 	WHEN libnatmut = 'Echange' THEN '7' -- ON MET UNE CATEGORIE A PART POUR LES ECHANGES
 	WHEN libnatmut = 'Expropriation' THEN '9' -- ON MET UNE CATEGORIE A PART POUR LES EXPROPRIATIONS
@@ -106,10 +106,10 @@ FROM dvf.mutation
 WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
 
 ## RECUPERER_MUTATION_DETAILLEE_DV3F
-SELECT nblocmut, nbparmut, libtypbien FROM dvf.mutation WHERE idmutation = {0};
+SELECT codservch, refdoc, nblocmut, nbparmut, libtypbien FROM dvf.mutation WHERE idmutation = {0};
 
 ## RECUPERER_MUTATION_DETAILLEE_DVF_PLUS
-SELECT nblocmut, nbparmut,
+SELECT codservch, refdoc, nblocmut, nbparmut,
 CASE 
 		WHEN libnatmut = 'Echange' THEN 'ECHANGE DE BIENS' -- ON MET UNE CATEGORIE A PART POUR LES ECHANGES
 		WHEN libnatmut = 'Expropriation' THEN 'EXPROPRIATION' -- ON MET UNE CATEGORIE A PART POUR LES EXPROPRIATIONS

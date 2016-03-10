@@ -88,9 +88,11 @@ def recherche(request, page = 1, tri = 'id'):
 def recherche_detaillee(request, id):
     requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')
     mutation = requeteur.mutation_detaillee(id)
-    data = {'Type de bien vendu': mutation.libtypbien.capitalize(),
-            'Nombre de locaux vendus': mutation.nblocmut, 
-            'Nombre de parcelles vendues': mutation.nbparmut}
+    data = [{'champ':'Code Service', 'valeur': mutation.codservch},
+            {'champ':'Référence du document', 'valeur': mutation.refdoc},
+            {'champ':'Type de bien vendu', 'valeur': mutation.libtypbien.capitalize()},
+            {'champ':'Nombre de locaux vendus', 'valeur': mutation.nblocmut}, 
+            {'champ':'Nombre de parcelles vendues', 'valeur': mutation.nbparmut}]
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
