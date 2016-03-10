@@ -71,12 +71,12 @@ def indicateurs(request):
         
         for num, indicateur in enumerate(indicateurs):
             indic_dvf = IndicateurDVF(indicateur, territoires, calculateur)
-            i = {}
-            i['nom'] = indicateur.nom
+            i = {}            
             i['graph'] = indic_dvf.graphique()
             i['idgraph'] = 'graph' + str(num) 
             i['type_graph'] = indicateur.type_graphe
             i['tableau'] = indic_dvf.tableau()
+            i['nom'] = indic_dvf.titre()
             indicateursDVF.append(i)
         calculateur.deconnecter()
    

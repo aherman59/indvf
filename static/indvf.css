@@ -6,6 +6,12 @@
     padding-top:20px;
 }
 
+.vcenter {
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+}
+
 .image-application {
     max-width:200px;
     max-height:200px;

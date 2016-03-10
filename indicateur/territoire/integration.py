@@ -2,14 +2,7 @@ import csv
 from collections import namedtuple
 from datetime import datetime
 
-from indicateur.models import Departement, Epci, Commune, Indicateur
-
-def integrer_indicateurs():
-    Indicateur.objects.all().delete()
-    i = Indicateur(type_indic = "Médiane", periode = 'a', annee_debut = '2010', annee_fin = '2013', code_typo = '121')
-    i.save()
-    i = Indicateur(type_indic = "Médiane", periode = 'ma', annee_debut = '2010', annee_fin = '2013', code_typo = '121')
-    i.save()
+from main.models import Departement, Epci, Commune, Indicateur
 
 def integrer_departements(fichier_departement_insee):
     Departement.objects.all().delete()

@@ -57,7 +57,7 @@ def recherche(request, page = 1, tri = 'id'):
     else:
         mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'])
     
-    typologies = sorted(set([(int(mutation.codtypbien), mutation.libtypbien) for mutation in mutations] + [(0, 'TOUS')]))
+    typologies = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) for mutation in mutations] + [(0, 'Tous')]), key = lambda x : x[1])
     if request.session['typologie'] not in [code for code, lib in typologies]:
         request.session['typologie'] = 0
     
@@ -84,7 +84,7 @@ def recherche(request, page = 1, tri = 'id'):
 def recherche_detaillee(request, id):
     requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')
     mutation = requeteur.mutation_detaillee(id)
-    data = {'Type de bien vendu': mutation.libtypbien,
+    data = {'Type de bien vendu': mutation.libtypbien.capitalize(),
             'Nombre de locaux vendus': mutation.nblocmut, 
             'Nombre de parcelles vendues': mutation.nbparmut}
     return HttpResponse(json.dumps(data), content_type='application/json')
