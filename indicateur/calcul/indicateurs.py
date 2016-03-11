@@ -1,5 +1,6 @@
 from pg.pgbasics import *
 from main.models import Departement, Epci, Commune, Territoire
+from main.controle_bdd import ControleBDD 
 
 class IndicateurDVF():
 
@@ -71,16 +72,22 @@ class IndicateurDVF():
         calculs = []
         if (self.type_indic == 'somme' and self.periode == 'a'):
             for t in self.territoires:
-                calculs.append(self.calculateur.calculer_somme_par_annee(self.variable, self.code_insee(t)))                
+                calculs.append(self.calculateur.calculer_somme_par_annee(self.variable, self.code_insee(t), self.code_typo))                
         elif (self.type_indic == 'somme' and self.periode == 'ma'):
             for t in self.territoires:
-                calculs.append(self.calculateur.calculer_somme_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin))
+                calculs.append(self.calculateur.calculer_somme_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin, self.code_typo))
         elif (self.type_indic == 'compte' and self.periode == 'a'):
             for t in self.territoires:
-                calculs.append(self.calculateur.compter_par_annee(self.variable, self.code_insee(t)))
+                calculs.append(self.calculateur.compter_par_annee(self.variable, self.code_insee(t), self.code_typo))
         elif (self.type_indic == 'compte' and self.periode == 'ma'):
             for t in self.territoires:
-                calculs.append(self.calculateur.compter_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin))
+                calculs.append(self.calculateur.compter_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin, self.code_typo))
+        elif (self.type_indic == 'mediane_10' and self.periode == 'a'):
+            for t in self.territoires:
+                calculs.append(self.calculateur.calculer_mediane_10_par_annee(self.variable, self.code_insee(t), self.code_typo))
+        elif (self.type_indic == 'mediane_10' and self.periode == 'ma'):
+            for t in self.territoires:
+                calculs.append(self.calculateur.calculer_mediane_10_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin, self.code_typo))
         for t in self.territoires:
             self.donnees = [self.formatter(calcul) for calcul in calculs]
     
@@ -115,21 +122,53 @@ class CalculIndicateur(PgOutils):
 
     def __init__(self, hote, base, port, utilisateur, motdepasse, script):
         super().__init__(hote, base, port, utilisateur, motdepasse, script)
+        self.base = 'DV3F' if ControleBDD(hote, base, port, utilisateur, motdepasse).est_une_base_DV3F() else 'DVF+'
+        self.creer_aggregat_mediane_10()
+    
+    @requete_sql    
+    def creer_aggregat_mediane_10(self):
+        pass
     
     @select_sql_avec_modification_args
-    def calculer_somme_par_annee(self, variable, codes_insee):
-        return variable, "'" + "', '".join(codes_insee) + "'"
+    def calculer_somme_par_annee(self, variable, codes_insee, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
 
     @select_sql_avec_modification_args
-    def calculer_somme_multi_annee(self, variable, codes_insee, annee_debut, annee_fin):
-        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin
+    def calculer_somme_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, variables_typologie_dvf_plus
 
     @select_sql_avec_modification_args
-    def compter_par_annee(self, variable, codes_insee):
-        return variable, "'" + "', '".join(codes_insee) + "'"
+    def compter_par_annee(self, variable, codes_insee, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
 
     @select_sql_avec_modification_args
-    def compter_multi_annee(self, variable, codes_insee, annee_debut, annee_fin):
-        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin
+    def compter_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, variables_typologie_dvf_plus
+    
+    @select_sql_avec_modification_args
+    def calculer_mediane_10_par_annee(self, variable, codes_insee, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
+    
+    @select_sql_avec_modification_args
+    def calculer_mediane_10_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
+    
+    def condition_code_typo(self, code_typo):
+        return '' if code_typo == '999' else " WHERE codtypbien='{0}' ".format(code_typo)
+    
+    def ajout_variables_typologies(self):
+        return '' if self.base == 'DV3F' else self.requete_sql['SOUS_REQUETE_TYPOLOGIE']
     
     
