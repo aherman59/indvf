@@ -9,12 +9,13 @@ from main.models import Departement, Epci, Commune, Territoire
 
 # Create your views here.
 
-def recherche(request, page = 1, tri = 'id'):
+def recherche(request):
     
     # integration des territoires si nécessaire
     integration.integrer_territoires()    
     
     init = False
+    charger_tableau = False
     # si page de démarrage
     if request.method != 'POST' and request.get_full_path() == '/recherche/':    
         # verification qu'une configuration a bien été definie 
@@ -38,9 +39,6 @@ def recherche(request, page = 1, tri = 'id'):
     # changement de département
     if 'departement' in request.POST:
         request.session['departement'] = int(request.POST['departement'])
-    # changement de typologie
-    if 'typologie' in request.POST:
-        request.session['typologie'] = int(request.POST['typologie'])
         
     epcis = Epci.objects.filter(departement=request.session['departement'])
     communes = Commune.objects.filter(departement = request.session['departement'])
@@ -58,8 +56,21 @@ def recherche(request, page = 1, tri = 'id'):
         requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')            
         mutations = requeteur.mutations(codes_insee)
         request.session['mutations'] = mutations        
-    else:
-        mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'])
+        charger_tableau =  True
+    context = {'departements' : departements, 
+               'epcis' : epcis, 
+               'communes' : communes,
+               'charger_tableau': charger_tableau,}
+    return render(request, 'recherche.html', context)
+    
+    
+def maj_tableau(request, page, tri):
+    
+    # changement de typologie
+    if 'typologie' in request.POST:
+        request.session['typologie'] = int(request.POST['typologie'])
+    
+    mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'])    
     
     typologies = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) for mutation in mutations] + [(0, 'Tous')]), key = lambda x : x[1])
     if request.session['typologie'] not in [code for code, lib in typologies]:
@@ -76,13 +87,10 @@ def recherche(request, page = 1, tri = 'id'):
     except EmptyPage:
         mutations = paginator.page(paginator.num_pages)
     
-    context = {'departements' : departements, 
-               'epcis' : epcis, 
-               'communes' : communes, 
-               'typologies' : typologies, 
-               'mutations': mutations, 
-               'tri' : tri}
-    return render(request, 'recherche.html', context)
+    context = {'mutations': mutations, 
+               'tri' : tri,
+               'typologies' : typologies,}
+    return render(request, 'tableau_mutations.html', context)
 
 
 def recherche_detaillee(request, id):
