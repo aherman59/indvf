@@ -72,7 +72,7 @@ class IndicateurDVF():
         calculs = []
         if (self.type_indic == 'somme' and self.periode == 'a'):
             for t in self.territoires:
-                calculs.append(self.calculateur.calculer_somme_par_annee(self.variable, self.code_insee(t), self.code_typo))                
+                calculs.append(self.calculateur.calculer_somme_par_annee(self.variable, self.code_insee(t), self.code_typo))                          
         elif (self.type_indic == 'somme' and self.periode == 'ma'):
             for t in self.territoires:
                 calculs.append(self.calculateur.calculer_somme_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin, self.code_typo))
@@ -106,7 +106,11 @@ class IndicateurDVF():
 
     def formatter(self, donnees):
         if self.periode == 'a':
-            return tuple((annee, int(resultat)) for annee, resultat in sorted(donnees, key = lambda x: int(x[0])) if (int(annee) >= self.annee_debut and int(annee) <= self.annee_fin))
+            resultats = [(annee, int(resultat)) for annee, resultat in donnees if (int(annee) >= self.annee_debut and int(annee) <= self.annee_fin)]
+            for an in range(self.annee_debut, self.annee_fin + 1):
+                if an not in [annee for annee, resultat in resultats]:
+                    resultats.append((str(an), 0))
+            return tuple(sorted(resultats, key = lambda x : int(x[0])))
         elif self.periode == 'ma':
             return ((str(self.annee_debut) + ' - ' + str(self.annee_fin), int(donnees[0][0])),)
         
