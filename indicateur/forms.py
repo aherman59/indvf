@@ -25,13 +25,20 @@ class IndicateurForm(forms.ModelForm):
             'periode' : forms.Select(attrs={'class':"form-control"}),
             'annee_debut' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"2010"}),
             'annee_fin' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"2013"}),
-            'code_typo' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"121"}),
+            'code_typo' : forms.Select(attrs={'class':"form-control"}),
             'type_graphe': forms.Select(attrs={'class':"form-control"}),
             'actif': forms.CheckboxInput(attrs={'class':"form-control"}),
         }
 
     def clean(self):
         cleaned_data = super(IndicateurForm, self).clean()
+        
+        annee_debut = cleaned_data.get('annee_debut')
+        annee_fin = cleaned_data.get('annee_fin')
+        
+        if int(annee_debut) >= int(annee_fin):
+            self.add_error('__all__', "L'année de début est supérieure ou égale à l'année de fin.")
+        
         return cleaned_data
         
 class SelectIndicateurForm(forms.Form):

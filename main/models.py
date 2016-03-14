@@ -23,6 +23,9 @@ class Departement(models.Model):
     def __str__(self):
         return self.nom
     
+    def type(self):
+        return 'departement'
+    
 class Epci(models.Model):
     nom = models.CharField(max_length=255)
     code = models.CharField(max_length=15, unique = True)
@@ -30,6 +33,9 @@ class Epci(models.Model):
 
     def __str__(self):
         return self.nom
+    
+    def type(self):
+        return 'epci'
         
 class Commune(models.Model):
     nom = models.CharField(max_length=100)
@@ -44,6 +50,9 @@ class Commune(models.Model):
 
     def __str__(self):
         return self.nom
+    
+    def type(self):
+        return 'commune'
 
 class Territoire(models.Model):
     nom = models.CharField(max_length = 100, unique = True)
@@ -53,6 +62,9 @@ class Territoire(models.Model):
     
     def __str__(self):
         return self.nom
+    
+    def type(self):
+        return 'territoire'
 
     def ajouter_departement(self, pk):
         self.departements.add(pk)

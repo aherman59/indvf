@@ -4,7 +4,7 @@ from pg.pgbasics import *
 from .calcul.indicateurs import IndicateurDVF, CalculIndicateur
 from main.territoire import integration 
 from main.models import Departement, Epci, Commune, Territoire
-from indicateur.models import Indicateur
+from indicateur.models import Indicateur, ResultatIndicateur
 from indicateur.forms import IndicateurForm, SelectIndicateurForm
 import json
  
@@ -108,6 +108,8 @@ def configuration_indicateur(request):
         id_indicateur = int(request.POST['selection_indicateur'])
         indicateur_choisi = Indicateur.objects.get(pk = id_indicateur)
         indicateur_choisi.delete()
+        ResultatIndicateur.objects.filter(id_indicateur = id_indicateur).delete()
+        
         return _charger_formulaire(request, IndicateurForm())
     # modification de la selection
     elif 'selection' in request.POST:
@@ -121,7 +123,8 @@ def configuration_indicateur(request):
             indicateur_choisi = Indicateur.objects.get(pk = id_indicateur)
             indicateurform = IndicateurForm(request.POST, instance = indicateur_choisi)
         if indicateurform.is_valid():       
-            indicateurform.save()        
+            indicateurform.save()
+            ResultatIndicateur.objects.filter(id_indicateur = id_indicateur).delete()        
             return _charger_formulaire(request, IndicateurForm())
         else:
             return _charger_formulaire(request, indicateurform, id_indicateur = id_indicateur)
