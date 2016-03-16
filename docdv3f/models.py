@@ -29,6 +29,39 @@ class Variable(models.Model):
     def __str__(self):
         return self.nom + ' (' + self.table_associee + ')'
     
+    def type_fr(self):
+        if self.type == 'serial':
+            return 'Entier auto-incrémenté'
+        elif self.type == 'integer':
+            return self.type.replace('integer', 'Entier')
+        elif self.type.startswith('numeric'):
+            return self.type.replace('numeric', 'Décimal')
+        elif self.type.startswith('varchar'):
+            return self.type.replace('varchar', 'Caractère')
+        elif self.type == 'boolean':
+            return 'Vrai / Faux'
+        return self.type
+    
+    def contrainte_fr(self):
+        if self.contrainte == 'PK':
+            return 'Clef primaire'
+        elif self.contrainte == 'U':
+            vars_unique = Variable.objects.filter(contrainte = 'U', table_associee = self.table_associee)
+            if len(vars_unique) > 1:
+                return 'Contrainte d\'unicité sur (' + ', '.join([var.nom for var in vars_unique]) + ')'
+            else:
+                return 'Contrainte d\'unicité'
+        elif self.contrainte == '' or not self.contrainte:
+            return 'Pas de contrainte'
+        elif self.contrainte == 'C':
+            return 'Contrainte de validation'
+        return self.contrainte
+    
+    def modele(self):
+        if self.code_modele < 3:
+            return 'DVF+ et DV3F'
+        return 'DV3F' 
+                
 class ValeurVariable(models.Model):
     valeur = models.CharField(max_length = 255)
     depuis_version = models.CharField(max_length = 20)

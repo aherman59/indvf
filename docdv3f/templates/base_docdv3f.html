@@ -6,6 +6,20 @@
     <div class="page-header text-left espace-titre">
         <h2><i class="fa fa-book"></i> DocDV3F</h2>
     </div>
+
+	<div class="row">
+	   <div class="col-sm-offset-3 col-sm-6">    
+		<div class="input-group">
+		  <div class="input-group-btn">
+		    <a href="{% url 'docdv3f:accueil_doc' %}" class="btn btn-default"><i class="fa fa-table"></i></a>
+		    <button class="btn btn-default"><i class="fa fa-search"></i></button>
+		  </div>
+		  <input type="text" class="form-control" placeholder="Recherche">
+		</div>
+	   </div>
+	</div>
+    
 {% block contenu %}{% endblock %}
+
 </div><!-- /.container -->
 {% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base_docdv3f.html" %}
+{% load staticfiles %}
+
+{% block contenu %}
+
+<div class="page-header">
+<h3><i class="fa fa-table"></i> table {{table}}</h3>
+</div>
+<table class="table-bordered table-striped table-condensed" width = "100 %">
+	<tr>
+		<th>N°</th>
+		<th>Nom</th>
+		<th>Description</th>
+		<th>Type</th>
+		<th></th>
+	</tr>
+	{% for variable in variables %}
+	<tr>
+		<td>{{variable.position}}</td>
+		<td><a href ="{% url 'docdv3f:doc_variable' table variable.nom %}">{{variable.nom}}</a></td>
+		<td>{{variable.description_simplifiee}}</td>
+		<td>{{variable.type_fr}}</td>
+		<td>{{variable.contrainte}}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+{% endblock %} 

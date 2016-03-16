@@ -1,0 +1,137 @@
+{% extends "base_docdv3f.html" %}
+{% load staticfiles %}
+
+{% block contenu %}
+
+<div class="page-header">
+<h3>{{variable.nom}} <small> table {{variable.table_associee}}</small></h3>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-file-image-o"></i> Identité</h3>
+    </div>
+    <div class="panel-body">
+
+		<table class="table table-striped" width = "100 %">
+			<tr>
+				<th width="15%" class="text-right">Modèle</th>
+				<td>{{ variable.modele }}</td>		
+			</tr>
+			<tr>
+				<th width="15%" class="text-right">Type</th>
+				<td>{{ variable.type_fr }}  -  {{ variable.type }}</td>		
+			</tr>
+			<tr>
+				<th class="text-right">Table</th>
+				<td><a href="{% url 'docdv3f:doc_table' variable.table_associee %}">{{ variable.table_associee }}</a></td>		
+			</tr>
+			<tr>
+				<th class="text-right">Position</th>
+				<td>{{ variable.position }}</td>		
+			</tr>
+			<tr>
+				<th class="text-right">Description</th>
+				<td>{{ variable.description_simplifiee }}</td>		
+			</tr>
+			<tr>
+				<th width="15%" class="text-right">Contrainte</th>
+				<td>{{ variable.contrainte_fr }}</td>		
+			</tr>
+			<tr>
+				<th class="text-right">Existence</th>
+				<td>La variable existe depuis la version {{ variable.depuis_version }}. </td>		
+			</tr>
+		
+		</table>
+
+	</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-comment-o"></i> Présentation</h3>
+    </div>
+    <div class="panel-body">
+
+		<table class="table table-striped" width = "100 %">
+	 		<tr>			
+				<th width="15%" class="text-right">Description détaillée</th>
+				<td>{{ desc_variable.description }}</td>		
+			</tr>
+			<tr>			
+				<th class="text-right">Observations</th>
+				<td>{{ desc_variable.observation }}</td>		
+			</tr>
+		</table>
+
+	</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-list-alt"></i> Modalités possibles</h3>
+    </div>
+    <div class="panel-body">
+
+		<table class="table-bordered table-striped table-condensed" width = "100 %">
+			<tr>
+				<th>Modalité</th>
+				<th>Description</th>
+				<th>Depuis</th>
+				<th>Jusque</th>
+			</tr>
+			{% for valeur_variable in valeurs_variable %}
+			<tr>
+				<td>{{valeur_variable.valeur}}</td>
+				<td>{{valeur_variable.detail}}</td>
+				<td>{{valeur_variable.depuis_version}}</td>
+				<td>{{valeur_variable.jusque_version}}</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+	</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-sliders"></i> Utilisation</h3>
+    </div>
+    <div class="panel-body">
+
+		<table class="table table-striped" width = "100 %">
+	 		<tr>			
+				<th width="15%" class="text-right">Fiabilité de la variable</th>
+				<td>{{ desc_variable.fiabilite }}</td>		
+			</tr>
+			<tr>			
+				<th class="text-right">Précautions d'usage</th>
+				<td>{{ desc_variable.limites_précautions }}</td>		
+			</tr>
+			<tr>			
+				<th class="text-right">Pistes d'amélioration</th>
+				<td>{{ desc_variable.amelioration }}</td>		
+			</tr>
+		</table>
+
+	</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-wrench"></i> Construction</h3>
+    </div>
+    <div class="panel-body">
+
+		<table class="table table-striped" width = "100 %">
+	 		<tr>			
+				<th width="15%" class="text-right">Méthode de construction</th>
+				<td>{{ desc_variable.construction }}</td>		
+			</tr>
+		</table>
+
+	</div>
+</div>
+
+{% endblock %} 
