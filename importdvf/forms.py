@@ -24,9 +24,9 @@ class ConfigForm(forms.Form):
         if not test_connexion:
             self.add_error('__all__', msg_erreur)
             
-        if hote not in ['localhost']:
-            msg_erreur = "Saisie incorrecte du champ hôte"
-            self.add_error('hote', msg_erreur)
+        #if hote not in ['localhost']:
+        #    msg_erreur = "Saisie incorrecte du champ hôte"
+        #    self.add_error('hote', msg_erreur)
 
         if ' ' in bdd:
             msg_erreur = "Saisie incorrecte du nom de la base"

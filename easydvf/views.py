@@ -7,7 +7,6 @@ from main.territoire import integration
 from main import configuration, controle_bdd
 from main.models import Departement, Epci, Commune, Territoire
 
-# Create your views here.
 
 def recherche(request):
     
