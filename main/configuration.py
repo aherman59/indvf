@@ -12,6 +12,7 @@ GESTION DES APPLICATIONS POUR LE MENU PRINCIPAL
 def recuperer_metadonnees_applications_disponibles():
     applis = []
     appli_nt = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
+    print(os.path.abspath('.'))
     for racine, repertoires, fichiers in os.walk('.'):
         for fichier in fichiers:
             if fichier.lower() == 'metadata.txt':
