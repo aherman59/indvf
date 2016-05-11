@@ -52,7 +52,7 @@ class Requeteur(PgOutils):
         return mutations
     
     def mutation_detaillee(self, id):
-        resultat = self.recuperer_mutation_detaillee_dv3f() if self.base == 'DV3F' else self.recuperer_mutation_detaillee_dvf_plus(id)
+        resultat = self.recuperer_mutation_detaillee_dv3f(id) if self.base == 'DV3F' else self.recuperer_mutation_detaillee_dvf_plus(id)
         mutation = list(resultat[0])
         mutation_detaillee_nt = namedtuple('Mutation_Detail', ['codservch', 'refdoc', 'nblocmut', 'nbparmut', 'libtypbien'])
         mutation = mutation_detaillee_nt(*mutation)
