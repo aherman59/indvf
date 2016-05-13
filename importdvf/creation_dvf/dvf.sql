@@ -5,6 +5,13 @@ INSERT INTO {0}.ann_type_local(codtyploc, libtyploc) VALUES (2, 'Appartement');
 INSERT INTO {0}.ann_type_local(codtyploc, libtyploc) VALUES (3, 'Dépendance');
 INSERT INTO {0}.ann_type_local(codtyploc, libtyploc) VALUES (4, 'Local industriel, commercial ou assimilé');
 
+INSERT INTO {0}.ann_nature_mutation(libnatmut) VALUES ('Vente');
+INSERT INTO {0}.ann_nature_mutation(libnatmut) VALUES ('Vente en l''état futur d''achèvement');
+INSERT INTO {0}.ann_nature_mutation(libnatmut) VALUES ('Expropriation');
+INSERT INTO {0}.ann_nature_mutation(libnatmut) VALUES ('Vente terrain à bâtir');
+INSERT INTO {0}.ann_nature_mutation(libnatmut) VALUES ('Adjudication');
+INSERT INTO {0}.ann_nature_mutation(libnatmut) VALUES ('Echange');
+
 ## CREER_TABLES_ANNEXES_TEMPORAIRES
 SET client_encoding = 'UTF8';
 -- CREATION DE TABLES ANNEXES TEMPORAIRES
@@ -353,6 +360,7 @@ CREATE TABLE source.tmp_calcul_lot AS(
 
 ## MAJ_TABLE_ANN_NATURE_MUTATION
 -- insertion table ann_nature_mutation
+-- NE SERT PLUS : dorénavant, les valeurs sont figés : cf INSERER_DONNEES_TABLES_ANNEXES
 INSERT INTO {0}.ann_nature_mutation(libnatmut)
 (
     SELECT t.nature_mutation 

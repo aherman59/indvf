@@ -1,5 +1,9 @@
+import os
+
 from collections import namedtuple
 from django.contrib import messages
+
+from main.configuration import BASE_DIR
 from .creation_dvf.dvfclass import DVF, DVF_PLUS
 
 def constituer_etapes(request):
@@ -79,9 +83,12 @@ def recuperer_donnees_connexion(formulaire):
 def dvf_objet(request, etape_courante):
     dvf = None
     if etape_courante.params[0] == 'DVF':
-        dvf = DVF(*request.session['parametres_connexion'], departements = request.session['departements'])
+        dvf = DVF(*request.session['parametres_connexion'], departements = request.session['departements'], 
+                  script = os.path.join(BASE_DIR, 'sorties/script_dvf.sql'),
+                  log = os.path.join(BASE_DIR, 'sorties/log.txt'))
     elif etape_courante.params[0] == 'DVF+':
-        dvf = DVF_PLUS(*request.session['parametres_connexion'], departements = request.session['departements'])
+        dvf = DVF_PLUS(*request.session['parametres_connexion'], departements = request.session['departements'], 
+                       script = os.path.join(BASE_DIR, 'sorties/script_dvf_plus.sql'))
     return dvf
 
 def ajouter_messages_succes(request, msgs):

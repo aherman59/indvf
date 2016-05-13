@@ -5,14 +5,21 @@ from main.forms import ConfigBDDForm
 
 '''
 
+VARIABLES POUR TOUTES LES APPLICATIONS
+
+'''
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+'''
+
 GESTION DES APPLICATIONS POUR LE MENU PRINCIPAL
 
 '''
 
 def recuperer_metadonnees_applications_disponibles():
     applis = []
-    appli_nt = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    appli_nt = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])    
     for racine, repertoires, fichiers in os.walk(BASE_DIR):
         for fichier in fichiers:
             if fichier.lower() == 'metadata.txt':

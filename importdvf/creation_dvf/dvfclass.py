@@ -322,7 +322,6 @@ class DVF(DVFMere):
         else:
             self.creer_tables_departementales_vides(self.TABLES, 1)
             self.creer_insert_triggers(self.TABLES, 1)
-
     
     '''
     
@@ -384,7 +383,7 @@ class DVF(DVFMere):
         # Première partie des maj
         self.effacer_table('source', 'tmp_calcul_lot')
         self.creer_table_calcul_lot(table_src)        
-        self.maj_table_ann_nature_mutation(table_src)
+        #self.maj_table_ann_nature_mutation(table_src)  -->  ne sert plus, les données sont figées par la fonction inserer_donnees_tables_annexes
         self.maj_table_mutation(table_src)
         self.maj_table_mutation_art_cgi(table_src)
         self.maj_table_disposition(table_src)

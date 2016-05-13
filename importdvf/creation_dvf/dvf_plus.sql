@@ -226,9 +226,9 @@ CREATE TABLE  {0}.tmp_calcul_disposition_parcelle_idmutation AS(
         array_agg(DISTINCT (t.coddep || t.codcomm)) as l_codinsee,
         count(DISTINCT t.nosect) as nbsection,
         array_agg(DISTINCT t.nosect) as l_section,
-        count(t.iddispopar) as nbpar,
+        count(DISTINCT t.idpar) as nbpar,
         array_agg(DISTINCT t.idpar) AS l_idpar,
-        count(tt.iddispopar) AS nbparmut,
+        count(DISTINCT tt.idpar) AS nbparmut,
         array_supprimer_null(array_agg(DISTINCT tt.idpar)) AS l_idparmut
         --
         -- A partir de la version 9.3 de PostgreSQL:

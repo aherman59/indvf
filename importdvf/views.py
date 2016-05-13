@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse
 
+from main.configuration import BASE_DIR
+
 from importdvf.forms import ConfigForm
 
 from .creation_dvf import etapes
@@ -24,7 +26,7 @@ def _afficher_formulaire(request, formulaire):
 
 def etape_import(request, etape):
     # Ressources
-    repertoire_ressources = 'importdvf/creation_dvf/ressources' 
+    repertoire_ressources = os.path.join(BASE_DIR, 'importdvf/creation_dvf/ressources') 
     fichier_gestion_csv = os.path.join(repertoire_ressources,'champs_dvf.csv')
     fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
                         os.path.join(repertoire_ressources,'natcult.csv'),
