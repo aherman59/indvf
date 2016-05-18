@@ -40,6 +40,8 @@ class Variable(models.Model):
             return self.type.replace('varchar', 'Caractère')
         elif self.type == 'boolean':
             return 'Vrai / Faux'
+        elif self.type == 'geometry':
+            return 'Géométrie'
         return self.type
     
     def contrainte_fr(self):
