@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'indicateur',
     'easydvf',
     'docdv3f',
+    'tutodvf',
 ]
 
 MIDDLEWARE_CLASSES = [
