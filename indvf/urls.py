@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^indicateur/', include('indicateur.urls', namespace='indicateur')),
     url(r'^recherche/', include('easydvf.urls', namespace='easydvf')),
     url(r'^doc/', include('docdv3f.urls', namespace='docdv3f')),
+    url(r'^tuto/', include('tutodvf.urls', namespace='tutodvf')),
     url(r'^admin/', admin.site.urls),
 ]

@@ -1,4 +1,6 @@
 /db.sqlite3
+/docdv3f/__pycache__/*
+/docdv3f/migrations/__pycache__/*
 /easydvf/__pycache__/*
 /easydvf/migrations/__pycache__/*
 /easydvf/recherche/__pycache__/*
@@ -13,6 +15,8 @@
 /main/migrations/__pycache__/*
 /main/territoire/__pycache__/*
 /main/templatetags/__pycache__/*
+/tutodvf/__pycache__/*
+/tutodvf/migrations/__pycache__/*
 /.project
 /.pydevproject
 /.settings/

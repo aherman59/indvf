@@ -23,13 +23,7 @@ def applications(request):
                        version='1.0', 
                        classe_fa='fa fa-map', 
                        image = 'img/geo.jpg', 
-                       url='import:formulaire_configuration'),              
-              appli_nt(nom='TutoDVF', 
-                       description='Application tutorielle pour démarrer avec DVF et les bases de données DVF+ et DV3F', 
-                       version='1.0', 
-                       classe_fa='fa fa-graduation-cap', 
-                       image = 'img/tutoriel.jpg', 
-                       url='import:formulaire_configuration'),]
+                       url='import:formulaire_configuration')]
     
     context = {'applis':applis}
     return render(request, 'applications.html', context)

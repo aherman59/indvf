@@ -1,0 +1,31 @@
+{% extends "base_tutodvf.html" %}
+{% load staticfiles %}
+     
+{% block contenu %}
+<div class="page-header">
+<h3>Sommaire</h3>
+</div>
+
+{% regroup fiches by theme as fiches_list %}
+
+{% for fiche in fiches_list %}
+    <div class="panel panel-default">
+	    <div class="panel-heading">
+		    <h3 class="panel-title"><i class="fa fa-file-text-o"></i> Fiches {{ fiche.grouper }}</h3>
+	    </div>
+	    <div class="panel-body">
+	    	<table class="table table-striped" width = "100 %">
+            	{% for item in fiche.list|dictsort:'numero' %}
+			<tr>
+				<td>{{ item.numero }}</td>				
+				<td width="95%"><a href="{{item.lien}}">{{ item.titre }}</a></td>								
+			</tr>	
+				{% endfor %}
+			</table> 
+	    </div>
+	 </div>
+{% endfor %}
+
+
+{% endblock %}
+

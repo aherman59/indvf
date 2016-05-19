@@ -1,0 +1,26 @@
+{% extends "principal.html" %}
+{% load staticfiles %}
+ 
+{% block body %}
+<div class="container">
+    <div class="page-header text-left espace-titre">
+        <h2><i class="fa fa-graduation-cap"></i> TutoDVF</h2>
+    </div>
+
+	<div class="row">
+	   <div class="col-sm-offset-3 col-sm-6">    
+		<div class="input-group">
+		  <div class="input-group-btn">
+		    <a href="{% url 'tutodvf:accueil' %}" class="btn btn-default"><i class="fa fa-book"></i></a>
+		    <button class="btn btn-default"><i class="fa fa-search"></i></button>
+		  </div>
+		  <input type="text" class="form-control" placeholder="Recherche">
+		</div>
+	   </div>
+	</div>
+    
+{% block contenu %}
+{% endblock %}
+
+</div><!-- /.container -->
+{% endblock %}
