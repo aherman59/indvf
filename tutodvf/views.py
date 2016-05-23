@@ -43,4 +43,6 @@ def convertir_markdown_en_html(txt_fiche):
 
 def _convertir_html_brut_en_html_bootstrap(html_brut):
     html_bootstrap = html_brut.replace('<table>', '<table class = "table table-condensed table-striped">')
+    html_bootstrap = html_bootstrap.replace('ressources/', '/static/img/tutodvf/')
+    html_bootstrap = html_bootstrap.replace('<p><img', '<p class = "p-center"><img')
     return html_bootstrap

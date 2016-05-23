@@ -4,7 +4,7 @@
 {% block contenu %}
 
 <div class="page-header">
-<h3>{{variable.nom}} <small> table {{variable.table_associee}}</small></h3>
+<h3>{{variable.nom}} <a href="{% url 'docdv3f:doc_table' variable.table_associee %}"><small> table {{variable.table_associee}}</small></a></h3>
 </div>
 
 <div class="panel panel-default">
@@ -32,7 +32,7 @@
 			</tr>
 			<tr>
 				<th class="text-right">Description</th>
-				<td>{{ variable.description_simplifiee }}</td>		
+				<td>{{ variable.description_simplifiee|default:"---" }}</td>		
 			</tr>
 			<tr>
 				<th width="15%" class="text-right">Contrainte</th>
@@ -57,17 +57,18 @@
 		<table class="table table-striped" width = "100 %">
 	 		<tr>			
 				<th width="15%" class="text-right">Description détaillée</th>
-				<td>{{ desc_variable.description }}</td>		
+				<td>{{ desc_variable.description|default:"---" }}</td>		
 			</tr>
 			<tr>			
 				<th class="text-right">Observations</th>
-				<td>{{ desc_variable.observation }}</td>		
+				<td>{{ desc_variable.observation|default:"---" }}</td>		
 			</tr>
 		</table>
 
 	</div>
 </div>
 
+{% ifnotequal valeurs_variable|length  0 %}
 <div class="panel panel-default">
     <div class="panel-heading">
 	    <h3 class="panel-title"><i class="fa fa-list-alt"></i> Modalités possibles</h3>
@@ -93,6 +94,7 @@
 
 	</div>
 </div>
+{% endifnotequal %}
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -103,15 +105,15 @@
 		<table class="table table-striped" width = "100 %">
 	 		<tr>			
 				<th width="15%" class="text-right">Fiabilité de la variable</th>
-				<td>{{ desc_variable.fiabilite }}</td>		
+				<td>{{ desc_variable.fiabilite|default:"---" }}</td>		
 			</tr>
 			<tr>			
 				<th class="text-right">Précautions d'usage</th>
-				<td>{{ desc_variable.limites_précautions }}</td>		
+				<td>{{ desc_variable.limites_precautions|default:"---" }}</td>		
 			</tr>
 			<tr>			
 				<th class="text-right">Pistes d'amélioration</th>
-				<td>{{ desc_variable.amelioration }}</td>		
+				<td>{{ desc_variable.amelioration|default:"---" }}</td>		
 			</tr>
 		</table>
 
@@ -127,7 +129,7 @@
 		<table class="table table-striped" width = "100 %">
 	 		<tr>			
 				<th width="15%" class="text-right">Méthode de construction</th>
-				<td>{{ desc_variable.construction }}</td>		
+				<td>{{ desc_variable.construction|default:"---" }}</td>		
 			</tr>
 		</table>
 

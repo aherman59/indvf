@@ -32,7 +32,7 @@ class Variable(models.Model):
     def type_fr(self):
         if self.type == 'serial':
             return 'Entier auto-incrémenté'
-        elif self.type == 'integer':
+        elif self.type.startswith('integer'):
             return self.type.replace('integer', 'Entier')
         elif self.type.startswith('numeric'):
             return self.type.replace('numeric', 'Décimal')
