@@ -14,8 +14,8 @@ def accueil(request):
         if fichier.endswith('.md'):
             chemin_fichier = os.path.join(REPERTOIRE_FICHES, fichier)
             metadonnees, txt = convertir_markdown_en_html(open(chemin_fichier, encoding='utf-8').read())
-            fiches.append({'theme' : metadonnees.get('theme')[0], 
-                           'titre' : metadonnees.get('titre')[0], 
+            fiches.append({'theme' : metadonnees.get('theme')[0].strip(), 
+                           'titre' : metadonnees.get('titre')[0].strip(), 
                            'lien' : './' + fichier[:-3],
                            'numero' : metadonnees.get('numero')[0]})
     context = {'fiches' : fiches}
