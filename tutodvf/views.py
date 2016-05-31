@@ -18,6 +18,7 @@ def accueil(request):
                            'titre' : metadonnees.get('titre')[0].strip(), 
                            'lien' : './' + fichier[:-3],
                            'numero' : metadonnees.get('numero')[0]})
+            fiches = sorted(fiches, key=lambda x: x['theme'])
     context = {'fiches' : fiches}
     return render(request, 'sommaire.html', context)
     
