@@ -9,6 +9,8 @@ class ConfigForm(forms.Form):
     mdp = forms.CharField(label='Mot de Passe', max_length = 255, widget = forms.PasswordInput(attrs={'class':"form-control", 'placeholder':""}))
     port = forms.CharField(label='Port', max_length = 8, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"5432"}))
     chemin_dossier = forms.CharField(label='Dossier données DVF', widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':os.getcwd()}))
+    geolocaliser = forms.BooleanField(required = False, label='Importer géométries depuis cadastre.api.gouv.fr', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
+    proxy = forms.CharField(label='Proxy', max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"http://proxy.example.fr - laisser vide en l'absence de proxy"}))
     effacer_schemas_existants = forms.BooleanField(required = False, label='Effacer schemas DVF+ existants', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
 
     def clean(self):
@@ -19,6 +21,7 @@ class ConfigForm(forms.Form):
         mdp = cleaned_data.get('mdp') or ''
         port = cleaned_data.get('port') or ''
         chemin_dossier = cleaned_data.get('chemin_dossier') or '' 
+        proxy = cleaned_data.get('proxy') or ''
 
         test_connexion, msg_erreur = controle_bdd.tentative_connexion(hote, bdd, utilisateur, mdp, port)
         if not test_connexion:

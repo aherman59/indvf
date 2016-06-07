@@ -299,8 +299,9 @@ class PgImport(PgOutils):
         self.execution_multiple(insert, donnees)
 
 if __name__ == '__main__':
-    p = PgImport('localhost', 'dvf', '5432', 'postgres','postgres')
-    p.importer_table_depuis_sqlite('/home/antoine/git/indvf/db_init.sqlite3', 'docdv3f_descriptionvariable', 'ressources', 'docdv3f_descriptionvariable')
-    p.importer_table_depuis_sqlite('/home/antoine/git/indvf/db_init.sqlite3', 'docdv3f_variable', 'ressources', 'docdv3f_variable')
-    
+    #p = PgImport('localhost', 'dvf', '5432', 'postgres','postgres')
+    #p.importer_table_depuis_sqlite('/home/antoine/git/indvf/db_init.sqlite3', 'docdv3f_descriptionvariable', 'ressources', 'docdv3f_descriptionvariable')
+    #p.importer_table_depuis_sqlite('/home/antoine/git/indvf/db_init.sqlite3', 'docdv3f_variable', 'ressources', 'docdv3f_variable')
+    p = PgExport('localhost', 'dvf', '5432', 'postgres','postgres')
+    p.exporter_table_vers_csv('dvf_d62', 'mutation', '/home/antoine/python/data_test.csv')
 #eof

@@ -22,7 +22,6 @@ def accueil(request):
     context = {'fiches' : fiches}
     return render(request, 'sommaire.html', context)
     
-
 def fiche(request, nom_fichier_md):
     fiche = os.path.join(REPERTOIRE_FICHES, nom_fichier_md + '.md')
     try:
@@ -35,7 +34,6 @@ def fiche(request, nom_fichier_md):
     context = {'contenu' : txt_html_bootstrap, 'meta' : metadonnees}
     return render(request, 'fiche.html', context)
     
-
 def convertir_markdown_en_html(txt_fiche):
     md = markdown.Markdown(output_format = 'html5', encoding='utf-8', extensions=['markdown.extensions.extra', 'markdown.extensions.meta'])
     txt_html_brut = md.convert(txt_fiche)

@@ -16,7 +16,8 @@ def fonction_a_executer(description):
                  'integration': integration_dans_dvf,
                  'creation_table_dvf_plus':creation_tables_dvf_plus,
                  'transformation': transformation,
-                 'renommage': renommage,}
+                 'renommage': renommage,
+                 'creation_cadastre': creation_cadastre,}
     return fonctions[description]
 
 def verification_donnees(repertoire):
@@ -126,6 +127,13 @@ def renommage(dvf_plus, fichier_gestion_csv, tables):
         dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
         dvf_plus.transformation_tables_dvf()
         return True, 'Renommage des tables.'
+    except Exception as e:
+        return False, str(e)
+    
+def creation_cadastre(cadastre):
+    try:
+        cadastre.creation_table_parcelles('cadastre', 'parcellaire')
+        return True, 'Création de la table cadastre.parcellaire'
     except Exception as e:
         return False, str(e)
     

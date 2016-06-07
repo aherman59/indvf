@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from main.configuration import BASE_DIR
 from .creation_dvf.dvfclass import DVF, DVF_PLUS
+from .creation_dvf.cadastre import Cadastre
 
 def constituer_etapes(request):
     #description d'une étape
@@ -62,10 +63,16 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
                                               'transformation', 
                                               ('DVF+', fichier_gestion_csv, 'mutation'), 
                                               'Renommage des tables'))
+    txt_descriptif = 'Constitution des données cadastrales' if request.session['geolocaliser'] else 'Fin des opérations'
     request.session['etapes'].append(etape_nt(7, 8, '100', 
                                               'renommage', 
                                               ('DVF+', fichier_gestion_csv, ['local', 'disposition_parcelle', 'mutation']), 
-                                              'Fin des opérations'))
+                                              txt_descriptif))
+    if request.session['geolocaliser']:
+        request.session['etapes'].append(etape_nt(8, 9, '10', 
+                                              'creation_cadastre', 
+                                              ('Cadastre',), 
+                                              'Import des données de la commune ...'))
 
 
 def _definition_etape():
@@ -89,6 +96,10 @@ def dvf_objet(request, etape_courante):
     elif etape_courante.params[0] == 'DVF+':
         dvf = DVF_PLUS(*request.session['parametres_connexion'], departements = request.session['departements'], 
                        script = os.path.join(BASE_DIR, 'sorties/script_dvf_plus.sql'))
+    elif etape_courante.params[0] == 'Cadastre':
+        dvf = Cadastre(*request.session['parametres_connexion'], script = os.path.join(BASE_DIR, 'sorties/cadastre.sql'))
+        if not request.session['communes_a_geolocaliser']:
+            request.session['communes_a_geolocaliser'] = dvf.recuperer_communes_a_geolocaliser()
     return dvf
 
 def ajouter_messages_succes(request, msgs):
