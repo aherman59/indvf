@@ -10,3 +10,5 @@ Table local : 0|83140|83140
 Table volume : 0|433|433
 Table suf : 0|96418|96418
 Table lot : 0|34802|34802
+Table adresse_dispoparc : 0|107759|107759
+Table adresse_local : 0|83181|83181
