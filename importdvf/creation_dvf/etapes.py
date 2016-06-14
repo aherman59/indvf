@@ -17,7 +17,8 @@ def fonction_a_executer(description):
                  'creation_table_dvf_plus':creation_tables_dvf_plus,
                  'transformation': transformation,
                  'renommage': renommage,
-                 'creation_cadastre': creation_cadastre,}
+                 'creation_cadastre': creation_cadastre,
+                 'insertion_parcelle': insertion_parcelle,}
     return fonctions[description]
 
 def verification_donnees(repertoire):
@@ -132,8 +133,15 @@ def renommage(dvf_plus, fichier_gestion_csv, tables):
     
 def creation_cadastre(cadastre):
     try:
-        cadastre.creation_table_parcelles('cadastre', 'parcellaire')
+        cadastre.creer_table_parcelles('cadastre', 'parcellaire')
         return True, 'Création de la table cadastre.parcellaire'
+    except Exception as e:
+        return False, str(e)
+
+def insertion_parcelle(cadastre, commune):
+    try:
+        cadastre.inserer_parcelles_communales(self, commune, 'cadastre', 'parcellaire')
+        return True, 'Intégration des parcelles de la commune' + commune
     except Exception as e:
         return False, str(e)
     

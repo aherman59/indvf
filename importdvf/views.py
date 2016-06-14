@@ -13,8 +13,6 @@ from importdvf.forms import ConfigForm
 from .creation_dvf import etapes
 from .gestion_import import *
 
-# Create your views here.
-
 def formulaire_configuration(request):
     formulaire = ConfigForm()
     return _afficher_formulaire(request, formulaire)
@@ -35,7 +33,6 @@ def etape_import(request, etape):
     if request.is_ajax():
         reconstituer_etapes(request)
         if etape == '1':
-            print(request.session['etapes'])
             etape_courante = etapes.context_etape(request.session['etapes'], int(etape))
             reussite, fichiers_ordonnes, departements, erreurs = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(request.session['dossier'])
             if reussite:
@@ -50,15 +47,15 @@ def etape_import(request, etape):
                 request.session['erreur'] = str(erreur)
                 data = {'erreur':True}               
             return HttpResponse(json.dumps(data), content_type='application/json')
-        elif (etape == '8' and not request.session['geolocaliser']) or etape == '9':
+        elif (etape == '8' and not request.session['geolocaliser']) or etape == '9999':
             return HttpResponse(json.dumps(None), content_type='application/json')
         else:
             etape_courante = etapes.context_etape(request.session['etapes'], int(etape))
-            dvf = dvf_objet(request, etape_courante)
+            dvf = retourner_objet_dvf(request, etape_courante)
             reussite, erreur = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
-            print(etape_courante.fonction_a_executer)
             dvf.pgconn.deconnection_postgres()
             if reussite:
+                print(etape_courante.fonction_a_executer)
                 data = {'description':etape_courante.description_prochaine_etape, 
                         'pourcentage':etape_courante.pourcentage, 
                         'etape_suivante':str(etape_courante.numero_suivant)}

@@ -7,13 +7,6 @@ from main.configuration import BASE_DIR
 from .creation_dvf.dvfclass import DVF, DVF_PLUS
 from .creation_dvf.cadastre import Cadastre
 
-def constituer_etapes(request):
-    #description d'une étape
-    etape_nt = _definition_etape()
-    # creation des deux premières étapes
-    request.session['etapes'] = [etape_nt(0, 1, '5', '', (None,),'Vérification des fichiers sources'),
-                    etape_nt(1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF')]
-
 def reconstituer_etapes(request):
     #description d'une étape
     etape_nt = _definition_etape()
@@ -23,9 +16,16 @@ def reconstituer_etapes(request):
     else:
         constituer_etapes(request)
 
+def constituer_etapes(request):
+    #description d'une étape
+    etape_nt = _definition_etape()
+    # creation des deux premières étapes
+    request.session['etapes'] = [etape_nt(0, 1, '5', '', (None,),'Vérification des fichiers sources'),
+                    etape_nt(1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF')]
+
+
 def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers_ordonnes):
     etape_nt = _definition_etape()
-    print(request.session)
     request.session['etapes'] = [etape_nt(2, 300, '15', 
                                               'creation', 
                                               ('DVF', fichier_gestion_csv, fichiers_annexes, request.session['effacer_schemas_existants']), 
@@ -72,7 +72,22 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
         request.session['etapes'].append(etape_nt(8, 9, '10', 
                                               'creation_cadastre', 
                                               ('Cadastre',), 
-                                              'Import des données de la commune ...'))
+                                              'Récupération des parcelles communales'))
+
+def constituer_etapes_3(request):
+    etape_nt = _definition_etape()
+    communes = request.session['communes_a_geolocaliser']
+    l = len(communes)
+    if l > 0:
+        request.session['etapes'].append(etape_nt(9, 10001, str(10 + int(90/l)), 
+                                                  'insertion_parcelle', 
+                                                  ('Cadastre', communes[0]), 
+                                                  'Récupération des parcelles de la commune ' + str(communes[0])))
+        for i, commune in enumerate(communes[1:]):
+            request.session['etapes'].append(etape_nt(10001 + i, 10002 + i, str(10 + int(90*i/l)), 
+                                                  'insertion_parcelle', 
+                                                  ('Cadastre', commune), 
+                                                  'Récupération des parcelles de la commune ' + str(commune)))
 
 
 def _definition_etape():
@@ -87,7 +102,7 @@ def recuperer_donnees_connexion(formulaire):
     mdp = formulaire.cleaned_data['mdp']
     return (hote, bdd, port, utilisateur, mdp)
 
-def dvf_objet(request, etape_courante):
+def retourner_objet_dvf(request, etape_courante):
     dvf = None
     if etape_courante.params[0] == 'DVF':
         dvf = DVF(*request.session['parametres_connexion'], departements = request.session['departements'], 
@@ -97,10 +112,11 @@ def dvf_objet(request, etape_courante):
         dvf = DVF_PLUS(*request.session['parametres_connexion'], departements = request.session['departements'], 
                        script = os.path.join(BASE_DIR, 'sorties/script_dvf_plus.sql'))
     elif etape_courante.params[0] == 'Cadastre':
-        dvf = Cadastre(*request.session['parametres_connexion'], script = os.path.join(BASE_DIR, 'sorties/cadastre.sql'))
+        cadastre = Cadastre(*request.session['parametres_connexion'], script = os.path.join(BASE_DIR, 'sorties/cadastre.sql'))
         if not request.session['communes_a_geolocaliser']:
-            request.session['communes_a_geolocaliser'] = dvf.recuperer_communes_a_geolocaliser()
-    return dvf
+            request.session['communes_a_geolocaliser'] = cadastre.recuperer_communes_a_geolocaliser()
+            constituer_etapes_3(request)            
+    return dvf or cadastre
 
 def ajouter_messages_succes(request, msgs):
     for msg in msgs:
