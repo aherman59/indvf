@@ -63,8 +63,8 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
                                               'transformation', 
                                               ('DVF+', fichier_gestion_csv, 'mutation'), 
                                               'Renommage des tables'))
-    txt_descriptif = 'Constitution des données cadastrales' if request.session['geolocaliser'] else 'Fin des opérations'
-    request.session['etapes'].append(etape_nt(7, 8, '100', 
+    (txt_descriptif, no_etape) = ('Constitution des données cadastrales', 8) if request.session['geolocaliser'] else ('Fin des opérations', 9999)
+    request.session['etapes'].append(etape_nt(7, no_etape, '100', 
                                               'renommage', 
                                               ('DVF+', fichier_gestion_csv, ['local', 'disposition_parcelle', 'mutation']), 
                                               txt_descriptif))
@@ -88,6 +88,10 @@ def constituer_etapes_3(request):
                                                   'insertion_parcelle', 
                                                   ('Cadastre', commune), 
                                                   'Récupération des parcelles de la commune ' + str(commune)))
+        request.session['etapes'].append(etape_nt(10001 + l, 9999, 100, 
+                                                  'integration_geometries', 
+                                                  ('Cadastre',), 
+                                                  'Fin des opérations'))
 
 
 def _definition_etape():

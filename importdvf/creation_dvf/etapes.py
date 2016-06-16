@@ -18,7 +18,8 @@ def fonction_a_executer(description):
                  'transformation': transformation,
                  'renommage': renommage,
                  'creation_cadastre': creation_cadastre,
-                 'insertion_parcelle': insertion_parcelle,}
+                 'insertion_parcelle': insertion_parcelle,
+                 'integration_geometries': integration_geometries,}
     return fonctions[description]
 
 def verification_donnees(repertoire):
@@ -140,8 +141,10 @@ def creation_cadastre(cadastre):
 
 def insertion_parcelle(cadastre, commune):
     try:
-        cadastre.inserer_parcelles_communales(self, commune, 'cadastre', 'parcellaire')
+        cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire')
         return True, 'Intégration des parcelles de la commune' + commune
     except Exception as e:
         return False, str(e)
-    
+
+def integration_geometries(cadastre):
+    return True, 'Intégration des géométries'    

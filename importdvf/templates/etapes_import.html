@@ -33,7 +33,7 @@
              $('.vide').trigger('click', '1');
         });
         $('.vide').click(function(event, etape) {            
-            if (etape == '8') window.location.href = '/import/fin_import';
+            if (etape == '9999') window.location.href = '/import/fin_import';
             if (etape == undefined) etape = '1';
              $.getJSON('/import/step/' + etape, function(data) {
                        if (data.erreur) window.location.href = '/import/erreur';
