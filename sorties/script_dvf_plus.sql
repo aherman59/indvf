@@ -10,7 +10,7 @@
 --
 -- Ce script est fourni sous licence Creative Commons 3.0 CC-BY-SA
 --
--- Début d'exécution le 14/06/2016 à 21:10:31
+-- Début d'exécution le 16/06/2016 à 20:48:57
 ---
 
 DROP TABLE IF EXISTS dvf.local_plus CASCADE;
@@ -42,45 +42,45 @@ l_idmutsui integer[]
 
 COMMENT ON TABLE dvf.local_plus IS 'table des locaux';
 
-COMMENT ON COLUMN dvf.local_plus.datemut IS 'date de signature du document (acte de vente)';
-
 COMMENT ON COLUMN dvf.local_plus.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf.local_plus.datemutsui IS 'date de la mutation suivante du local';
-
-COMMENT ON COLUMN dvf.local_plus.l_idmutpre IS 'identifiants des mutations précédentes du local ayant eu lieu à la date de mutation précédente (datemutpre)';
-
-COMMENT ON COLUMN dvf.local_plus.libtyploc IS 'libellé du type de local';
-
-COMMENT ON COLUMN dvf.local_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf.local_plus.l_idmutsui IS 'identifiants des mutations suivantes du local ayant eu lieu à la date de mutation suivante (datemutsui)';
-
-COMMENT ON COLUMN dvf.local_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf.local_plus.identloc IS 'identifiant du local';
-
-COMMENT ON COLUMN dvf.local_plus.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-COMMENT ON COLUMN dvf.local_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
-
-COMMENT ON COLUMN dvf.local_plus.nbpprinc IS 'nombre de pièces principales';
-
-COMMENT ON COLUMN dvf.local_plus.codtyploc IS 'code du type de local';
-
-COMMENT ON COLUMN dvf.local_plus.nbmutannee IS 'nombre de mutations du local au cours de l''année calendaire';
-
-COMMENT ON COLUMN dvf.local_plus.sbati IS 'surface réelle attachée à l''identifiant local';
-
-COMMENT ON COLUMN dvf.local_plus.datemutpre IS 'date de la précédente mutation du local';
 
 COMMENT ON COLUMN dvf.local_plus.idloc IS 'identifiant du local (Fichier Fonciers)';
 
-COMMENT ON COLUMN dvf.local_plus.iddispoloc IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf.local_plus.datemutsui IS 'date de la mutation suivante du local';
+
+COMMENT ON COLUMN dvf.local_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf.local_plus.anneemut IS 'annee de signature du document';
 
+COMMENT ON COLUMN dvf.local_plus.l_idmutpre IS 'identifiants des mutations précédentes du local ayant eu lieu à la date de mutation précédente (datemutpre)';
+
+COMMENT ON COLUMN dvf.local_plus.datemutpre IS 'date de la précédente mutation du local';
+
+COMMENT ON COLUMN dvf.local_plus.libtyploc IS 'libellé du type de local';
+
+COMMENT ON COLUMN dvf.local_plus.nbmutannee IS 'nombre de mutations du local au cours de l''année calendaire';
+
+COMMENT ON COLUMN dvf.local_plus.codtyploc IS 'code du type de local';
+
+COMMENT ON COLUMN dvf.local_plus.iddispoloc IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf.local_plus.identloc IS 'identifiant du local';
+
+COMMENT ON COLUMN dvf.local_plus.l_idmutsui IS 'identifiants des mutations suivantes du local ayant eu lieu à la date de mutation suivante (datemutsui)';
+
+COMMENT ON COLUMN dvf.local_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
+
+COMMENT ON COLUMN dvf.local_plus.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf.local_plus.sbati IS 'surface réelle attachée à l''identifiant local';
+
+COMMENT ON COLUMN dvf.local_plus.coddep IS 'code du département';
+
 COMMENT ON COLUMN dvf.local_plus.nbmutjour IS 'nombre de mutations du local au cours de la journée';
+
+COMMENT ON COLUMN dvf.local_plus.nbpprinc IS 'nombre de pièces principales';
+
+COMMENT ON COLUMN dvf.local_plus.datemut IS 'date de signature du document (acte de vente)';
 
 DROP TABLE IF EXISTS dvf.disposition_parcelle_plus CASCADE;
 
@@ -129,75 +129,75 @@ COMMENT ON TABLE dvf.disposition_parcelle_plus IS 'table des parcelles attachée
 
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcntnat IS 'surface de suf de type naturel ayant muté';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.iddispo IS 'identifiant de la table disposition';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.idparcelle IS 'identifiant de la table parcelle';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.l_idmutpre IS 'identifiants des mutations précédentes de la parcelle ayant eu lieu à la date de mutation précédente (datemutpre)';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt06 IS 'surface de suf de type 06 ayant muté';
 
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt05 IS 'surface de suf de type 05 ayant muté';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt03 IS 'surface de suf de type 03 ayant muté';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt09 IS 'surface de suf de type 09 ayant muté';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.anneemut IS 'annee de signature du document';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.nosect IS 'numéro de section de la parcelle';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.nbmutannee IS 'nombre de mutations de la parcelle au cours de l''année calendaire';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt11 IS 'surface de suf de type 11 ayant muté';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.idparcelle IS 'identifiant de la table parcelle';
 
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.parcvendue IS 'Vrai si la parcelle fait partie de la vente';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcntsol IS 'surface de suf de type sol ayant muté';
-
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt03 IS 'surface de suf de type 03 ayant muté';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt01 IS 'surface de suf de type 01 ayant muté';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt07 IS 'surface de suf de type 07 ayant muté';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.iddispopar IS 'identifiant pour clef primaire';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt02 IS 'surface de suf de type 02  ayant muté';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.datemutsui IS 'date de la mutation suivante de la parcelle (date postérieure)';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.moismut IS 'mois de signature du document';
 
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.nbmutjour IS 'nombre de mutations de la parcelle au cours de la journée';
 
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt08 IS 'surface de suf de type 08 ayant muté';
+
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt10 IS 'surface de suf de type 10 ayant muté';
 
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcntsol IS 'surface de suf de type sol ayant muté';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt09 IS 'surface de suf de type 09 ayant muté';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.l_idmutsui IS 'identifiants des mutations suivantes de la parcelle ayant eu lieu à la date de mutation suivante (datemutsui)';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt02 IS 'surface de suf de type 02  ayant muté';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.noplan IS 'numéro de la parcelle';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.codcomm IS 'code insee de la commune';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.datemutpre IS 'date de la précédente mutation de la parcelle (date antérieure)';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt07 IS 'surface de suf de type 07 ayant muté';
+
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.prefsect IS 'prefixe de section de la parcelle';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt13 IS 'surface de suf de type 13 ayant muté';
+
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt04 IS 'surface de suf de type 04 ayant muté';
 
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcntagri IS 'surface de suf de type agricole ayant muté';
 
 COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt12 IS 'surface de suf de type 12 ayant muté';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt06 IS 'surface de suf de type 06 ayant muté';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.l_idmutpre IS 'identifiants des mutations précédentes de la parcelle ayant eu lieu à la date de mutation précédente (datemutpre)';
 
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.datemutsui IS 'date de la mutation suivante de la parcelle (date postérieure)';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.codcomm IS 'code insee de la commune';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.l_idmutsui IS 'identifiants des mutations suivantes de la parcelle ayant eu lieu à la date de mutation suivante (datemutsui)';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.noplan IS 'numéro de la parcelle';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.iddispopar IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt11 IS 'surface de suf de type 11 ayant muté';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.prefsect IS 'prefixe de section de la parcelle';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.nosect IS 'numéro de section de la parcelle';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt13 IS 'surface de suf de type 13 ayant muté';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.nbmutannee IS 'nombre de mutations de la parcelle au cours de l''année calendaire';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt08 IS 'surface de suf de type 08 ayant muté';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.datemutpre IS 'date de la précédente mutation de la parcelle (date antérieure)';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt04 IS 'surface de suf de type 04 ayant muté';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.dcnt01 IS 'surface de suf de type 01 ayant muté';
-
-COMMENT ON COLUMN dvf.disposition_parcelle_plus.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf.disposition_parcelle_plus.iddispo IS 'identifiant de la table disposition';
 
 DROP TABLE IF EXISTS dvf.mutation_plus CASCADE;
 
@@ -266,121 +266,121 @@ smai5pp numeric
 
 COMMENT ON TABLE dvf.mutation_plus IS 'table des mutations';
 
-COMMENT ON COLUMN dvf.mutation_plus.nblocact IS 'nombre de locaux d''activités ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbmai2pp IS 'nombre de maisons avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.moismut IS 'mois de signature du document';
+COMMENT ON COLUMN dvf.mutation_plus.nblocmut IS 'nombre de locaux ayant muté';
 
 COMMENT ON COLUMN dvf.mutation_plus.smai3pp IS 'surface de l''ensemble des maisons avec 3 pièces principales ayant muté';
 
-COMMENT ON COLUMN dvf.mutation_plus.sapt3pp IS 'surface de l''ensemble des appartements avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.l_section IS 'liste des sections concernées par la mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.sapt4pp IS 'surface de l''ensemble des appartements avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbcomm IS 'nombre de communes concernées par la mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbmai3pp IS 'nombre de maisons avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbpar IS 'nombre de parcelles concernées par la mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.smai4pp IS 'surface de l''ensemble des maisons avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.datemut IS 'date de signature du document (acte de vente)';
-
-COMMENT ON COLUMN dvf.mutation_plus.smai1pp IS 'surface de l''ensemble des maisons avec 1 pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.sterr IS 'surface de terrain ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.refdoc IS 'référence d''enregistrement du document (acte de vente)';
-
-COMMENT ON COLUMN dvf.mutation_plus.smai2pp IS 'surface de l''ensemble des maisons avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.sapt1pp IS 'surface de l''ensemble des appartements avec 1 pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbapt5pp IS 'nombre d''appartements avec au moins 5 pièces principales ayant muté';
-
 COMMENT ON COLUMN dvf.mutation_plus.nblocapt IS 'nombre d''appartements ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.sapt5pp IS 'surface de l''ensemble des appartements avec au moins 5 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbsuf IS 'nombre de subdivisions fiscales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.vefa IS 'vrai si la mutation est une Vente en l''état futur d''achèvement (VEFA)';
 
 COMMENT ON COLUMN dvf.mutation_plus.sbatact IS 'surface de l''ensemble du bâti d’activité ayant muté';
 
-COMMENT ON COLUMN dvf.mutation_plus.sbatmai IS 'surface de l''ensemble des maisons ayant muté';
+COMMENT ON COLUMN dvf.mutation_plus.anneemut IS 'annee de signature du document';
 
-COMMENT ON COLUMN dvf.mutation_plus.l_artcgi IS 'liste des codes d’articles CGI (Code Général des Impôts) associés à la mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.sbatapt IS 'surface de l''ensemble des appartements ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nblot IS 'nombre total de lots dans la mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbapt4pp IS 'nombre d''appartements avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.codservch IS 'code du service de conservation des hypothèques';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbapt2pp IS 'nombre d''appartements avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.sapt2pp IS 'surface de l''ensemble des appartements avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nblocmai IS 'nombre de maisons ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nblocdep IS 'nombre de dépendances ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbparmut IS 'nombre de parcelles ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbsection IS 'nombre de sections concernées par la mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbapt1pp IS 'nombre d''appartements avec une pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.l_idlocmut IS 'liste des identifiants de locaux ayant muté (idloc)';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbvolmut IS 'nombre de volumes ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
+COMMENT ON COLUMN dvf.mutation_plus.sterr IS 'surface de terrain ayant muté';
 
 COMMENT ON COLUMN dvf.mutation_plus.sbati IS 'surface de l''ensemble du bâti ayant muté';
 
-COMMENT ON COLUMN dvf.mutation_plus.idmutinvar IS 'identifiant invariant de la mutation';
+COMMENT ON COLUMN dvf.mutation_plus.nbpar IS 'nombre de parcelles concernées par la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbmai2pp IS 'nombre de maisons avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf.mutation_plus.libnatmut IS 'libellé de la nature de mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.vefa IS 'vrai si la mutation est une Vente en l''état futur d''achèvement (VEFA)';
+
+COMMENT ON COLUMN dvf.mutation_plus.smai1pp IS 'surface de l''ensemble des maisons avec 1 pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbapt2pp IS 'nombre d''appartements avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbsuf IS 'nombre de subdivisions fiscales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbapt3pp IS 'nombre d''appartements avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.sapt4pp IS 'surface de l''ensemble des appartements avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.smai4pp IS 'surface de l''ensemble des maisons avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.l_idparmut IS 'liste des identifiants de parcelles ayant muté (idpar)';
+
+COMMENT ON COLUMN dvf.mutation_plus.l_dcnt IS 'Liste ordonnée des surfaces de suf de 01 à 13';
+
+COMMENT ON COLUMN dvf.mutation_plus.codservch IS 'code du service de conservation des hypothèques';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbparmut IS 'nombre de parcelles ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbapt1pp IS 'nombre d''appartements avec une pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.refdoc IS 'référence d''enregistrement du document (acte de vente)';
+
+COMMENT ON COLUMN dvf.mutation_plus.sapt3pp IS 'surface de l''ensemble des appartements avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf.mutation_plus.l_idpar IS 'liste des identifiants de parcelles concernées par la mutation (idpar)';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbmai3pp IS 'nombre de maisons avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.sapt5pp IS 'surface de l''ensemble des appartements avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.sapt2pp IS 'surface de l''ensemble des appartements avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.smai2pp IS 'surface de l''ensemble des maisons avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.sbatapt IS 'surface de l''ensemble des appartements ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.l_codinsee IS 'liste des codes INSEE des communes concernées par la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.sapt1pp IS 'surface de l''ensemble des appartements avec 1 pièce principale ayant muté';
 
 COMMENT ON COLUMN dvf.mutation_plus.nbdispo IS 'nombre de dispositions associées à la mutation';
 
 COMMENT ON COLUMN dvf.mutation_plus.nbartcgi IS 'nombre d''articles du Code Général des Impôts (CGI) associés à la mutation';
 
-COMMENT ON COLUMN dvf.mutation_plus.l_dcnt IS 'Liste ordonnée des surfaces de suf de 01 à 13';
-
-COMMENT ON COLUMN dvf.mutation_plus.l_idpar IS 'liste des identifiants de parcelles concernées par la mutation (idpar)';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbmai4pp IS 'nombre de maisons avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbmai5pp IS 'nombre de maisons avec au moins 5 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.l_codinsee IS 'liste des codes INSEE des communes concernées par la mutation';
-
-COMMENT ON COLUMN dvf.mutation_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbapt3pp IS 'nombre d''appartements avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf.mutation_plus.l_idparmut IS 'liste des identifiants de parcelles ayant muté (idpar)';
-
-COMMENT ON COLUMN dvf.mutation_plus.nbmai1pp IS 'nombre de maisons avec une pièce principale ayant muté';
+COMMENT ON COLUMN dvf.mutation_plus.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
 
 COMMENT ON COLUMN dvf.mutation_plus.smai5pp IS 'surface de l''ensemble des maisons avec au moins 5 pièces principales ayant muté';
 
-COMMENT ON COLUMN dvf.mutation_plus.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf.mutation_plus.nblocdep IS 'nombre de dépendances ayant muté';
 
-COMMENT ON COLUMN dvf.mutation_plus.libnatmut IS 'libellé de la nature de mutation';
+COMMENT ON COLUMN dvf.mutation_plus.moismut IS 'mois de signature du document';
 
-COMMENT ON COLUMN dvf.mutation_plus.nblocmut IS 'nombre de locaux ayant muté';
+COMMENT ON COLUMN dvf.mutation_plus.l_idlocmut IS 'liste des identifiants de locaux ayant muté (idloc)';
+
+COMMENT ON COLUMN dvf.mutation_plus.l_section IS 'liste des sections concernées par la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbcomm IS 'nombre de communes concernées par la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbvolmut IS 'nombre de volumes ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbapt5pp IS 'nombre d''appartements avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nblocmai IS 'nombre de maisons ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nblocact IS 'nombre de locaux d''activités ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbmai5pp IS 'nombre de maisons avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.sbatmai IS 'surface de l''ensemble des maisons ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.nblot IS 'nombre total de lots dans la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbmai4pp IS 'nombre de maisons avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.idmutinvar IS 'identifiant invariant de la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbsection IS 'nombre de sections concernées par la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbmai1pp IS 'nombre de maisons avec une pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf.mutation_plus.l_artcgi IS 'liste des codes d’articles CGI (Code Général des Impôts) associés à la mutation';
+
+COMMENT ON COLUMN dvf.mutation_plus.nbapt4pp IS 'nombre d''appartements avec 4 pièces principales ayant muté';
 
 DROP TABLE IF EXISTS dvf_d62.local_plus CASCADE;
 
@@ -400,45 +400,45 @@ ADD CONSTRAINT local_plus_check CHECK (coddep = '62');
 
 COMMENT ON TABLE dvf_d62.local_plus IS 'table des locaux';
 
-COMMENT ON COLUMN dvf_d62.local_plus.datemut IS 'date de signature du document (acte de vente)';
-
 COMMENT ON COLUMN dvf_d62.local_plus.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d62.local_plus.datemutsui IS 'date de la mutation suivante du local';
-
-COMMENT ON COLUMN dvf_d62.local_plus.l_idmutpre IS 'identifiants des mutations précédentes du local ayant eu lieu à la date de mutation précédente (datemutpre)';
-
-COMMENT ON COLUMN dvf_d62.local_plus.libtyploc IS 'libellé du type de local';
-
-COMMENT ON COLUMN dvf_d62.local_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.local_plus.l_idmutsui IS 'identifiants des mutations suivantes du local ayant eu lieu à la date de mutation suivante (datemutsui)';
-
-COMMENT ON COLUMN dvf_d62.local_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.local_plus.identloc IS 'identifiant du local';
-
-COMMENT ON COLUMN dvf_d62.local_plus.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-COMMENT ON COLUMN dvf_d62.local_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
-
-COMMENT ON COLUMN dvf_d62.local_plus.nbpprinc IS 'nombre de pièces principales';
-
-COMMENT ON COLUMN dvf_d62.local_plus.codtyploc IS 'code du type de local';
-
-COMMENT ON COLUMN dvf_d62.local_plus.nbmutannee IS 'nombre de mutations du local au cours de l''année calendaire';
-
-COMMENT ON COLUMN dvf_d62.local_plus.sbati IS 'surface réelle attachée à l''identifiant local';
-
-COMMENT ON COLUMN dvf_d62.local_plus.datemutpre IS 'date de la précédente mutation du local';
 
 COMMENT ON COLUMN dvf_d62.local_plus.idloc IS 'identifiant du local (Fichier Fonciers)';
 
-COMMENT ON COLUMN dvf_d62.local_plus.iddispoloc IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf_d62.local_plus.datemutsui IS 'date de la mutation suivante du local';
+
+COMMENT ON COLUMN dvf_d62.local_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf_d62.local_plus.anneemut IS 'annee de signature du document';
 
+COMMENT ON COLUMN dvf_d62.local_plus.l_idmutpre IS 'identifiants des mutations précédentes du local ayant eu lieu à la date de mutation précédente (datemutpre)';
+
+COMMENT ON COLUMN dvf_d62.local_plus.datemutpre IS 'date de la précédente mutation du local';
+
+COMMENT ON COLUMN dvf_d62.local_plus.libtyploc IS 'libellé du type de local';
+
+COMMENT ON COLUMN dvf_d62.local_plus.nbmutannee IS 'nombre de mutations du local au cours de l''année calendaire';
+
+COMMENT ON COLUMN dvf_d62.local_plus.codtyploc IS 'code du type de local';
+
+COMMENT ON COLUMN dvf_d62.local_plus.iddispoloc IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d62.local_plus.identloc IS 'identifiant du local';
+
+COMMENT ON COLUMN dvf_d62.local_plus.l_idmutsui IS 'identifiants des mutations suivantes du local ayant eu lieu à la date de mutation suivante (datemutsui)';
+
+COMMENT ON COLUMN dvf_d62.local_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
+
+COMMENT ON COLUMN dvf_d62.local_plus.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d62.local_plus.sbati IS 'surface réelle attachée à l''identifiant local';
+
+COMMENT ON COLUMN dvf_d62.local_plus.coddep IS 'code du département';
+
 COMMENT ON COLUMN dvf_d62.local_plus.nbmutjour IS 'nombre de mutations du local au cours de la journée';
+
+COMMENT ON COLUMN dvf_d62.local_plus.nbpprinc IS 'nombre de pièces principales';
+
+COMMENT ON COLUMN dvf_d62.local_plus.datemut IS 'date de signature du document (acte de vente)';
 
 DROP TABLE IF EXISTS dvf_d62.disposition_parcelle_plus CASCADE;
 
@@ -460,75 +460,75 @@ COMMENT ON TABLE dvf_d62.disposition_parcelle_plus IS 'table des parcelles attac
 
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcntnat IS 'surface de suf de type naturel ayant muté';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.iddispo IS 'identifiant de la table disposition';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.idparcelle IS 'identifiant de la table parcelle';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.l_idmutpre IS 'identifiants des mutations précédentes de la parcelle ayant eu lieu à la date de mutation précédente (datemutpre)';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt06 IS 'surface de suf de type 06 ayant muté';
 
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt05 IS 'surface de suf de type 05 ayant muté';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt03 IS 'surface de suf de type 03 ayant muté';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt09 IS 'surface de suf de type 09 ayant muté';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.anneemut IS 'annee de signature du document';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.nosect IS 'numéro de section de la parcelle';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.nbmutannee IS 'nombre de mutations de la parcelle au cours de l''année calendaire';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt11 IS 'surface de suf de type 11 ayant muté';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.idparcelle IS 'identifiant de la table parcelle';
 
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.parcvendue IS 'Vrai si la parcelle fait partie de la vente';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcntsol IS 'surface de suf de type sol ayant muté';
-
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt03 IS 'surface de suf de type 03 ayant muté';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt01 IS 'surface de suf de type 01 ayant muté';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt07 IS 'surface de suf de type 07 ayant muté';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.iddispopar IS 'identifiant pour clef primaire';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt02 IS 'surface de suf de type 02  ayant muté';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.datemutsui IS 'date de la mutation suivante de la parcelle (date postérieure)';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.moismut IS 'mois de signature du document';
 
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.nbmutjour IS 'nombre de mutations de la parcelle au cours de la journée';
 
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt08 IS 'surface de suf de type 08 ayant muté';
+
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt10 IS 'surface de suf de type 10 ayant muté';
 
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcntsol IS 'surface de suf de type sol ayant muté';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt09 IS 'surface de suf de type 09 ayant muté';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.l_idmutsui IS 'identifiants des mutations suivantes de la parcelle ayant eu lieu à la date de mutation suivante (datemutsui)';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt02 IS 'surface de suf de type 02  ayant muté';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.noplan IS 'numéro de la parcelle';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.codcomm IS 'code insee de la commune';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.datemutpre IS 'date de la précédente mutation de la parcelle (date antérieure)';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt07 IS 'surface de suf de type 07 ayant muté';
+
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.prefsect IS 'prefixe de section de la parcelle';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt13 IS 'surface de suf de type 13 ayant muté';
+
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt04 IS 'surface de suf de type 04 ayant muté';
 
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcntagri IS 'surface de suf de type agricole ayant muté';
 
 COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt12 IS 'surface de suf de type 12 ayant muté';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt06 IS 'surface de suf de type 06 ayant muté';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.l_idmutpre IS 'identifiants des mutations précédentes de la parcelle ayant eu lieu à la date de mutation précédente (datemutpre)';
 
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.datemutsui IS 'date de la mutation suivante de la parcelle (date postérieure)';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.codcomm IS 'code insee de la commune';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.l_idmutsui IS 'identifiants des mutations suivantes de la parcelle ayant eu lieu à la date de mutation suivante (datemutsui)';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.noplan IS 'numéro de la parcelle';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.iddispopar IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt11 IS 'surface de suf de type 11 ayant muté';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.prefsect IS 'prefixe de section de la parcelle';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.nosect IS 'numéro de section de la parcelle';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt13 IS 'surface de suf de type 13 ayant muté';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.nbmutannee IS 'nombre de mutations de la parcelle au cours de l''année calendaire';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt08 IS 'surface de suf de type 08 ayant muté';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.datemutpre IS 'date de la précédente mutation de la parcelle (date antérieure)';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt04 IS 'surface de suf de type 04 ayant muté';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.dcnt01 IS 'surface de suf de type 01 ayant muté';
-
-COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf_d62.disposition_parcelle_plus.iddispo IS 'identifiant de la table disposition';
 
 DROP TABLE IF EXISTS dvf_d62.mutation_plus CASCADE;
 
@@ -548,121 +548,121 @@ ADD CONSTRAINT mutation_plus_check CHECK (coddep = '62');
 
 COMMENT ON TABLE dvf_d62.mutation_plus IS 'table des mutations';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.nblocact IS 'nombre de locaux d''activités ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai2pp IS 'nombre de maisons avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.moismut IS 'mois de signature du document';
+COMMENT ON COLUMN dvf_d62.mutation_plus.nblocmut IS 'nombre de locaux ayant muté';
 
 COMMENT ON COLUMN dvf_d62.mutation_plus.smai3pp IS 'surface de l''ensemble des maisons avec 3 pièces principales ayant muté';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.sapt3pp IS 'surface de l''ensemble des appartements avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.l_section IS 'liste des sections concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.sapt4pp IS 'surface de l''ensemble des appartements avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbcomm IS 'nombre de communes concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai3pp IS 'nombre de maisons avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbpar IS 'nombre de parcelles concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.smai4pp IS 'surface de l''ensemble des maisons avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.datemut IS 'date de signature du document (acte de vente)';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.smai1pp IS 'surface de l''ensemble des maisons avec 1 pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.sterr IS 'surface de terrain ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.refdoc IS 'référence d''enregistrement du document (acte de vente)';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.smai2pp IS 'surface de l''ensemble des maisons avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.sapt1pp IS 'surface de l''ensemble des appartements avec 1 pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt5pp IS 'nombre d''appartements avec au moins 5 pièces principales ayant muté';
-
 COMMENT ON COLUMN dvf_d62.mutation_plus.nblocapt IS 'nombre d''appartements ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.sapt5pp IS 'surface de l''ensemble des appartements avec au moins 5 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbsuf IS 'nombre de subdivisions fiscales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.vefa IS 'vrai si la mutation est une Vente en l''état futur d''achèvement (VEFA)';
 
 COMMENT ON COLUMN dvf_d62.mutation_plus.sbatact IS 'surface de l''ensemble du bâti d’activité ayant muté';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.sbatmai IS 'surface de l''ensemble des maisons ayant muté';
+COMMENT ON COLUMN dvf_d62.mutation_plus.anneemut IS 'annee de signature du document';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.l_artcgi IS 'liste des codes d’articles CGI (Code Général des Impôts) associés à la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.sbatapt IS 'surface de l''ensemble des appartements ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nblot IS 'nombre total de lots dans la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt4pp IS 'nombre d''appartements avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.codservch IS 'code du service de conservation des hypothèques';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt2pp IS 'nombre d''appartements avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.sapt2pp IS 'surface de l''ensemble des appartements avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nblocmai IS 'nombre de maisons ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nblocdep IS 'nombre de dépendances ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbparmut IS 'nombre de parcelles ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbsection IS 'nombre de sections concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt1pp IS 'nombre d''appartements avec une pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.l_idlocmut IS 'liste des identifiants de locaux ayant muté (idloc)';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbvolmut IS 'nombre de volumes ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
+COMMENT ON COLUMN dvf_d62.mutation_plus.sterr IS 'surface de terrain ayant muté';
 
 COMMENT ON COLUMN dvf_d62.mutation_plus.sbati IS 'surface de l''ensemble du bâti ayant muté';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.idmutinvar IS 'identifiant invariant de la mutation';
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbpar IS 'nombre de parcelles concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai2pp IS 'nombre de maisons avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.libnatmut IS 'libellé de la nature de mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.vefa IS 'vrai si la mutation est une Vente en l''état futur d''achèvement (VEFA)';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.smai1pp IS 'surface de l''ensemble des maisons avec 1 pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt2pp IS 'nombre d''appartements avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbsuf IS 'nombre de subdivisions fiscales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt3pp IS 'nombre d''appartements avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.sapt4pp IS 'surface de l''ensemble des appartements avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.smai4pp IS 'surface de l''ensemble des maisons avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.l_idparmut IS 'liste des identifiants de parcelles ayant muté (idpar)';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.l_dcnt IS 'Liste ordonnée des surfaces de suf de 01 à 13';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.codservch IS 'code du service de conservation des hypothèques';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbparmut IS 'nombre de parcelles ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt1pp IS 'nombre d''appartements avec une pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.refdoc IS 'référence d''enregistrement du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.sapt3pp IS 'surface de l''ensemble des appartements avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.l_idpar IS 'liste des identifiants de parcelles concernées par la mutation (idpar)';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai3pp IS 'nombre de maisons avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.sapt5pp IS 'surface de l''ensemble des appartements avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.sapt2pp IS 'surface de l''ensemble des appartements avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.smai2pp IS 'surface de l''ensemble des maisons avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.sbatapt IS 'surface de l''ensemble des appartements ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.l_codinsee IS 'liste des codes INSEE des communes concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.sapt1pp IS 'surface de l''ensemble des appartements avec 1 pièce principale ayant muté';
 
 COMMENT ON COLUMN dvf_d62.mutation_plus.nbdispo IS 'nombre de dispositions associées à la mutation';
 
 COMMENT ON COLUMN dvf_d62.mutation_plus.nbartcgi IS 'nombre d''articles du Code Général des Impôts (CGI) associés à la mutation';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.l_dcnt IS 'Liste ordonnée des surfaces de suf de 01 à 13';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.l_idpar IS 'liste des identifiants de parcelles concernées par la mutation (idpar)';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai4pp IS 'nombre de maisons avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai5pp IS 'nombre de maisons avec au moins 5 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.l_codinsee IS 'liste des codes INSEE des communes concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt3pp IS 'nombre d''appartements avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.l_idparmut IS 'liste des identifiants de parcelles ayant muté (idpar)';
-
-COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai1pp IS 'nombre de maisons avec une pièce principale ayant muté';
+COMMENT ON COLUMN dvf_d62.mutation_plus.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
 
 COMMENT ON COLUMN dvf_d62.mutation_plus.smai5pp IS 'surface de l''ensemble des maisons avec au moins 5 pièces principales ayant muté';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf_d62.mutation_plus.nblocdep IS 'nombre de dépendances ayant muté';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.libnatmut IS 'libellé de la nature de mutation';
+COMMENT ON COLUMN dvf_d62.mutation_plus.moismut IS 'mois de signature du document';
 
-COMMENT ON COLUMN dvf_d62.mutation_plus.nblocmut IS 'nombre de locaux ayant muté';
+COMMENT ON COLUMN dvf_d62.mutation_plus.l_idlocmut IS 'liste des identifiants de locaux ayant muté (idloc)';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.l_section IS 'liste des sections concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbcomm IS 'nombre de communes concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbvolmut IS 'nombre de volumes ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt5pp IS 'nombre d''appartements avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nblocmai IS 'nombre de maisons ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nblocact IS 'nombre de locaux d''activités ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai5pp IS 'nombre de maisons avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.sbatmai IS 'surface de l''ensemble des maisons ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nblot IS 'nombre total de lots dans la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai4pp IS 'nombre de maisons avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.idmutinvar IS 'identifiant invariant de la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbsection IS 'nombre de sections concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbmai1pp IS 'nombre de maisons avec une pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.l_artcgi IS 'liste des codes d’articles CGI (Code Général des Impôts) associés à la mutation';
+
+COMMENT ON COLUMN dvf_d62.mutation_plus.nbapt4pp IS 'nombre d''appartements avec 4 pièces principales ayant muté';
 
 DROP TABLE IF EXISTS dvf_d59.local_plus CASCADE;
 
@@ -682,45 +682,45 @@ ADD CONSTRAINT local_plus_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.local_plus IS 'table des locaux';
 
-COMMENT ON COLUMN dvf_d59.local_plus.datemut IS 'date de signature du document (acte de vente)';
-
 COMMENT ON COLUMN dvf_d59.local_plus.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d59.local_plus.datemutsui IS 'date de la mutation suivante du local';
-
-COMMENT ON COLUMN dvf_d59.local_plus.l_idmutpre IS 'identifiants des mutations précédentes du local ayant eu lieu à la date de mutation précédente (datemutpre)';
-
-COMMENT ON COLUMN dvf_d59.local_plus.libtyploc IS 'libellé du type de local';
-
-COMMENT ON COLUMN dvf_d59.local_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d59.local_plus.l_idmutsui IS 'identifiants des mutations suivantes du local ayant eu lieu à la date de mutation suivante (datemutsui)';
-
-COMMENT ON COLUMN dvf_d59.local_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d59.local_plus.identloc IS 'identifiant du local';
-
-COMMENT ON COLUMN dvf_d59.local_plus.iddispopar IS 'identifiant de la table disposition_parcelle';
-
-COMMENT ON COLUMN dvf_d59.local_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
-
-COMMENT ON COLUMN dvf_d59.local_plus.nbpprinc IS 'nombre de pièces principales';
-
-COMMENT ON COLUMN dvf_d59.local_plus.codtyploc IS 'code du type de local';
-
-COMMENT ON COLUMN dvf_d59.local_plus.nbmutannee IS 'nombre de mutations du local au cours de l''année calendaire';
-
-COMMENT ON COLUMN dvf_d59.local_plus.sbati IS 'surface réelle attachée à l''identifiant local';
-
-COMMENT ON COLUMN dvf_d59.local_plus.datemutpre IS 'date de la précédente mutation du local';
 
 COMMENT ON COLUMN dvf_d59.local_plus.idloc IS 'identifiant du local (Fichier Fonciers)';
 
-COMMENT ON COLUMN dvf_d59.local_plus.iddispoloc IS 'identifiant pour clef primaire';
+COMMENT ON COLUMN dvf_d59.local_plus.datemutsui IS 'date de la mutation suivante du local';
+
+COMMENT ON COLUMN dvf_d59.local_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
 
 COMMENT ON COLUMN dvf_d59.local_plus.anneemut IS 'annee de signature du document';
 
+COMMENT ON COLUMN dvf_d59.local_plus.l_idmutpre IS 'identifiants des mutations précédentes du local ayant eu lieu à la date de mutation précédente (datemutpre)';
+
+COMMENT ON COLUMN dvf_d59.local_plus.datemutpre IS 'date de la précédente mutation du local';
+
+COMMENT ON COLUMN dvf_d59.local_plus.libtyploc IS 'libellé du type de local';
+
+COMMENT ON COLUMN dvf_d59.local_plus.nbmutannee IS 'nombre de mutations du local au cours de l''année calendaire';
+
+COMMENT ON COLUMN dvf_d59.local_plus.codtyploc IS 'code du type de local';
+
+COMMENT ON COLUMN dvf_d59.local_plus.iddispoloc IS 'identifiant pour clef primaire';
+
+COMMENT ON COLUMN dvf_d59.local_plus.identloc IS 'identifiant du local';
+
+COMMENT ON COLUMN dvf_d59.local_plus.l_idmutsui IS 'identifiants des mutations suivantes du local ayant eu lieu à la date de mutation suivante (datemutsui)';
+
+COMMENT ON COLUMN dvf_d59.local_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
+
+COMMENT ON COLUMN dvf_d59.local_plus.iddispopar IS 'identifiant de la table disposition_parcelle';
+
+COMMENT ON COLUMN dvf_d59.local_plus.sbati IS 'surface réelle attachée à l''identifiant local';
+
+COMMENT ON COLUMN dvf_d59.local_plus.coddep IS 'code du département';
+
 COMMENT ON COLUMN dvf_d59.local_plus.nbmutjour IS 'nombre de mutations du local au cours de la journée';
+
+COMMENT ON COLUMN dvf_d59.local_plus.nbpprinc IS 'nombre de pièces principales';
+
+COMMENT ON COLUMN dvf_d59.local_plus.datemut IS 'date de signature du document (acte de vente)';
 
 DROP TABLE IF EXISTS dvf_d59.disposition_parcelle_plus CASCADE;
 
@@ -742,75 +742,75 @@ COMMENT ON TABLE dvf_d59.disposition_parcelle_plus IS 'table des parcelles attac
 
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcntnat IS 'surface de suf de type naturel ayant muté';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.iddispo IS 'identifiant de la table disposition';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.moismut IS 'mois de signature du document';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.idparcelle IS 'identifiant de la table parcelle';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.l_idmutpre IS 'identifiants des mutations précédentes de la parcelle ayant eu lieu à la date de mutation précédente (datemutpre)';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt06 IS 'surface de suf de type 06 ayant muté';
 
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt05 IS 'surface de suf de type 05 ayant muté';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt03 IS 'surface de suf de type 03 ayant muté';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt09 IS 'surface de suf de type 09 ayant muté';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.anneemut IS 'annee de signature du document';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.nosect IS 'numéro de section de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.nbmutannee IS 'nombre de mutations de la parcelle au cours de l''année calendaire';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt11 IS 'surface de suf de type 11 ayant muté';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.idparcelle IS 'identifiant de la table parcelle';
 
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.parcvendue IS 'Vrai si la parcelle fait partie de la vente';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcntsol IS 'surface de suf de type sol ayant muté';
-
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.idpar IS 'identifiant de la parcelle (Fichiers fonciers)';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt03 IS 'surface de suf de type 03 ayant muté';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt01 IS 'surface de suf de type 01 ayant muté';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt07 IS 'surface de suf de type 07 ayant muté';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.iddispopar IS 'identifiant pour clef primaire';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt02 IS 'surface de suf de type 02  ayant muté';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.datemutsui IS 'date de la mutation suivante de la parcelle (date postérieure)';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.moismut IS 'mois de signature du document';
 
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.nbmutjour IS 'nombre de mutations de la parcelle au cours de la journée';
 
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt08 IS 'surface de suf de type 08 ayant muté';
+
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt10 IS 'surface de suf de type 10 ayant muté';
 
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcntsol IS 'surface de suf de type sol ayant muté';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt09 IS 'surface de suf de type 09 ayant muté';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.l_idmutsui IS 'identifiants des mutations suivantes de la parcelle ayant eu lieu à la date de mutation suivante (datemutsui)';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt02 IS 'surface de suf de type 02  ayant muté';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.noplan IS 'numéro de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.codcomm IS 'code insee de la commune';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.datemutpre IS 'date de la précédente mutation de la parcelle (date antérieure)';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt07 IS 'surface de suf de type 07 ayant muté';
+
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.prefsect IS 'prefixe de section de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt13 IS 'surface de suf de type 13 ayant muté';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt04 IS 'surface de suf de type 04 ayant muté';
 
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcntagri IS 'surface de suf de type agricole ayant muté';
 
 COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt12 IS 'surface de suf de type 12 ayant muté';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt06 IS 'surface de suf de type 06 ayant muté';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.l_idmutpre IS 'identifiants des mutations précédentes de la parcelle ayant eu lieu à la date de mutation précédente (datemutpre)';
 
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.datemutsui IS 'date de la mutation suivante de la parcelle (date postérieure)';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.codcomm IS 'code insee de la commune';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.l_idmutsui IS 'identifiants des mutations suivantes de la parcelle ayant eu lieu à la date de mutation suivante (datemutsui)';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.noplan IS 'numéro de la parcelle';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.iddispopar IS 'identifiant pour clef primaire';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt11 IS 'surface de suf de type 11 ayant muté';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.prefsect IS 'prefixe de section de la parcelle';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.nosect IS 'numéro de section de la parcelle';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt13 IS 'surface de suf de type 13 ayant muté';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.nbmutannee IS 'nombre de mutations de la parcelle au cours de l''année calendaire';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt08 IS 'surface de suf de type 08 ayant muté';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.datemutpre IS 'date de la précédente mutation de la parcelle (date antérieure)';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt04 IS 'surface de suf de type 04 ayant muté';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.dcnt01 IS 'surface de suf de type 01 ayant muté';
-
-COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf_d59.disposition_parcelle_plus.iddispo IS 'identifiant de la table disposition';
 
 DROP TABLE IF EXISTS dvf_d59.mutation_plus CASCADE;
 
@@ -830,121 +830,121 @@ ADD CONSTRAINT mutation_plus_check CHECK (coddep = '59');
 
 COMMENT ON TABLE dvf_d59.mutation_plus IS 'table des mutations';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.nblocact IS 'nombre de locaux d''activités ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai2pp IS 'nombre de maisons avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.moismut IS 'mois de signature du document';
+COMMENT ON COLUMN dvf_d59.mutation_plus.nblocmut IS 'nombre de locaux ayant muté';
 
 COMMENT ON COLUMN dvf_d59.mutation_plus.smai3pp IS 'surface de l''ensemble des maisons avec 3 pièces principales ayant muté';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.sapt3pp IS 'surface de l''ensemble des appartements avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.l_section IS 'liste des sections concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.sapt4pp IS 'surface de l''ensemble des appartements avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbcomm IS 'nombre de communes concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai3pp IS 'nombre de maisons avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbpar IS 'nombre de parcelles concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.smai4pp IS 'surface de l''ensemble des maisons avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.datemut IS 'date de signature du document (acte de vente)';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.smai1pp IS 'surface de l''ensemble des maisons avec 1 pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.sterr IS 'surface de terrain ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.refdoc IS 'référence d''enregistrement du document (acte de vente)';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.smai2pp IS 'surface de l''ensemble des maisons avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.sapt1pp IS 'surface de l''ensemble des appartements avec 1 pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt5pp IS 'nombre d''appartements avec au moins 5 pièces principales ayant muté';
-
 COMMENT ON COLUMN dvf_d59.mutation_plus.nblocapt IS 'nombre d''appartements ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.sapt5pp IS 'surface de l''ensemble des appartements avec au moins 5 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbsuf IS 'nombre de subdivisions fiscales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.vefa IS 'vrai si la mutation est une Vente en l''état futur d''achèvement (VEFA)';
 
 COMMENT ON COLUMN dvf_d59.mutation_plus.sbatact IS 'surface de l''ensemble du bâti d’activité ayant muté';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.sbatmai IS 'surface de l''ensemble des maisons ayant muté';
+COMMENT ON COLUMN dvf_d59.mutation_plus.anneemut IS 'annee de signature du document';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.l_artcgi IS 'liste des codes d’articles CGI (Code Général des Impôts) associés à la mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.sbatapt IS 'surface de l''ensemble des appartements ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nblot IS 'nombre total de lots dans la mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt4pp IS 'nombre d''appartements avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.codservch IS 'code du service de conservation des hypothèques';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt2pp IS 'nombre d''appartements avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.sapt2pp IS 'surface de l''ensemble des appartements avec 2 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nblocmai IS 'nombre de maisons ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nblocdep IS 'nombre de dépendances ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbparmut IS 'nombre de parcelles ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbsection IS 'nombre de sections concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt1pp IS 'nombre d''appartements avec une pièce principale ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.l_idlocmut IS 'liste des identifiants de locaux ayant muté (idloc)';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbvolmut IS 'nombre de volumes ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
+COMMENT ON COLUMN dvf_d59.mutation_plus.sterr IS 'surface de terrain ayant muté';
 
 COMMENT ON COLUMN dvf_d59.mutation_plus.sbati IS 'surface de l''ensemble du bâti ayant muté';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.idmutinvar IS 'identifiant invariant de la mutation';
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbpar IS 'nombre de parcelles concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai2pp IS 'nombre de maisons avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.coddep IS 'code du département';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.libnatmut IS 'libellé de la nature de mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.vefa IS 'vrai si la mutation est une Vente en l''état futur d''achèvement (VEFA)';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.smai1pp IS 'surface de l''ensemble des maisons avec 1 pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt2pp IS 'nombre d''appartements avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbsuf IS 'nombre de subdivisions fiscales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt3pp IS 'nombre d''appartements avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.sapt4pp IS 'surface de l''ensemble des appartements avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.idmutation IS 'identifiant de clef primaire de la table mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.smai4pp IS 'surface de l''ensemble des maisons avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.l_idparmut IS 'liste des identifiants de parcelles ayant muté (idpar)';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.l_dcnt IS 'Liste ordonnée des surfaces de suf de 01 à 13';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.codservch IS 'code du service de conservation des hypothèques';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbparmut IS 'nombre de parcelles ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt1pp IS 'nombre d''appartements avec une pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.refdoc IS 'référence d''enregistrement du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.sapt3pp IS 'surface de l''ensemble des appartements avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.datemut IS 'date de signature du document (acte de vente)';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.l_idpar IS 'liste des identifiants de parcelles concernées par la mutation (idpar)';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai3pp IS 'nombre de maisons avec 3 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.sapt5pp IS 'surface de l''ensemble des appartements avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.sapt2pp IS 'surface de l''ensemble des appartements avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.smai2pp IS 'surface de l''ensemble des maisons avec 2 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.sbatapt IS 'surface de l''ensemble des appartements ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.l_codinsee IS 'liste des codes INSEE des communes concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.sapt1pp IS 'surface de l''ensemble des appartements avec 1 pièce principale ayant muté';
 
 COMMENT ON COLUMN dvf_d59.mutation_plus.nbdispo IS 'nombre de dispositions associées à la mutation';
 
 COMMENT ON COLUMN dvf_d59.mutation_plus.nbartcgi IS 'nombre d''articles du Code Général des Impôts (CGI) associés à la mutation';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.l_dcnt IS 'Liste ordonnée des surfaces de suf de 01 à 13';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.l_idpar IS 'liste des identifiants de parcelles concernées par la mutation (idpar)';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai4pp IS 'nombre de maisons avec 4 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai5pp IS 'nombre de maisons avec au moins 5 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.l_codinsee IS 'liste des codes INSEE des communes concernées par la mutation';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.coddep IS 'code du département';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt3pp IS 'nombre d''appartements avec 3 pièces principales ayant muté';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.l_idparmut IS 'liste des identifiants de parcelles ayant muté (idpar)';
-
-COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai1pp IS 'nombre de maisons avec une pièce principale ayant muté';
+COMMENT ON COLUMN dvf_d59.mutation_plus.idnatmut IS 'identifiant de clef primaire de la table ann_nature_mutation';
 
 COMMENT ON COLUMN dvf_d59.mutation_plus.smai5pp IS 'surface de l''ensemble des maisons avec au moins 5 pièces principales ayant muté';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.anneemut IS 'annee de signature du document';
+COMMENT ON COLUMN dvf_d59.mutation_plus.nblocdep IS 'nombre de dépendances ayant muté';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.libnatmut IS 'libellé de la nature de mutation';
+COMMENT ON COLUMN dvf_d59.mutation_plus.moismut IS 'mois de signature du document';
 
-COMMENT ON COLUMN dvf_d59.mutation_plus.nblocmut IS 'nombre de locaux ayant muté';
+COMMENT ON COLUMN dvf_d59.mutation_plus.l_idlocmut IS 'liste des identifiants de locaux ayant muté (idloc)';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.l_section IS 'liste des sections concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbcomm IS 'nombre de communes concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbvolmut IS 'nombre de volumes ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt5pp IS 'nombre d''appartements avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nblocmai IS 'nombre de maisons ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nblocact IS 'nombre de locaux d''activités ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.valeurfonc IS 'prix ou évaluation déclarée dans le cadre d''une mutation onéreuse';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai5pp IS 'nombre de maisons avec au moins 5 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.sbatmai IS 'surface de l''ensemble des maisons ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nblot IS 'nombre total de lots dans la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai4pp IS 'nombre de maisons avec 4 pièces principales ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.idmutinvar IS 'identifiant invariant de la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbsection IS 'nombre de sections concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbmai1pp IS 'nombre de maisons avec une pièce principale ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.l_artcgi IS 'liste des codes d’articles CGI (Code Général des Impôts) associés à la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation_plus.nbapt4pp IS 'nombre d''appartements avec 4 pièces principales ayant muté';
 
 -- création du trigger de la table local_plus
 CREATE OR REPLACE FUNCTION dvf.local_plus_insert_trigger()
@@ -1866,68 +1866,68 @@ SELECT
 	t5.libnatmut,
 	t4.nbartcgi,
 	t4.l_artcgi,
-	t6.vefa,
-	t2.valeurfonc,
-	t2.nbdispo,
-	t2.nblot,
-	t7.nbcomm,
-	t7.l_codinsee,
-	t7.nbsection,
-	t7.l_section,
-	t7.nbpar,
-	t7.l_idpar,
-	t7.nbparmut,
-	t7.l_idparmut,
-	t3.nbsuf,
-	t3.sterr,
-	t3.l_dcnt,
-	t0.nbvolmut,
-	t1.nblocmut,
-	t1.l_idlocmut,
-	t1.nblocmai,
-	t1.nblocapt,
-	t1.nblocdep,
-	t1.nblocact,
-	t1.nbapt1pp,
-	t1.nbapt2pp,
-	t1.nbapt3pp,
-	t1.nbapt4pp,
-	t1.nbapt5pp,
-	t1.nbmai1pp,
-	t1.nbmai2pp,
-	t1.nbmai3pp,
-	t1.nbmai4pp,
-	t1.nbmai5pp,
-	t1.sbati,
-	t1.sbatmai,
-	t1.sbatapt,
-	t1.sbatact,
-	t1.sapt1pp,
-	t1.sapt2pp,
-	t1.sapt3pp,
-	t1.sapt4pp,
-	t1.sapt5pp,
-	t1.smai1pp,
-	t1.smai2pp,
-	t1.smai3pp,
-	t1.smai4pp,
-	t1.smai5pp
+	t3.vefa,
+	t6.valeurfonc,
+	t6.nbdispo,
+	t6.nblot,
+	t0.nbcomm,
+	t0.l_codinsee,
+	t0.nbsection,
+	t0.l_section,
+	t0.nbpar,
+	t0.l_idpar,
+	t0.nbparmut,
+	t0.l_idparmut,
+	t1.nbsuf,
+	t1.sterr,
+	t1.l_dcnt,
+	t7.nbvolmut,
+	t2.nblocmut,
+	t2.l_idlocmut,
+	t2.nblocmai,
+	t2.nblocapt,
+	t2.nblocdep,
+	t2.nblocact,
+	t2.nbapt1pp,
+	t2.nbapt2pp,
+	t2.nbapt3pp,
+	t2.nbapt4pp,
+	t2.nbapt5pp,
+	t2.nbmai1pp,
+	t2.nbmai2pp,
+	t2.nbmai3pp,
+	t2.nbmai4pp,
+	t2.nbmai5pp,
+	t2.sbati,
+	t2.sbatmai,
+	t2.sbatapt,
+	t2.sbatact,
+	t2.sapt1pp,
+	t2.sapt2pp,
+	t2.sapt3pp,
+	t2.sapt4pp,
+	t2.sapt5pp,
+	t2.smai1pp,
+	t2.smai2pp,
+	t2.smai3pp,
+	t2.smai4pp,
+	t2.smai5pp
 FROM dvf_d62.mutation t 
-LEFT JOIN dvf_d62.tmp_calcul_volume_idmutation t0
+LEFT JOIN dvf_d62.tmp_calcul_disposition_parcelle_idmutation t0
 	ON t.idmutation = t0.idmutation
-LEFT JOIN dvf_d62.tmp_calcul_local_idmutation t1
+LEFT JOIN dvf_d62.tmp_calcul_suf_idmutation t1
 	ON t.idmutation = t1.idmutation
-LEFT JOIN dvf_d62.tmp_calcul_disposition_idmutation t2
+LEFT JOIN dvf_d62.tmp_calcul_local_idmutation t2
 	ON t.idmutation = t2.idmutation
-LEFT JOIN dvf_d62.tmp_calcul_suf_idmutation t3
+LEFT JOIN dvf_d62.tmp_calcul_annexes_idmutation t3
 	ON t.idmutation = t3.idmutation
 LEFT JOIN dvf_d62.tmp_calcul_mutation_article_cgi_idmutation t4
 	ON t.idmutation = t4.idmutation
 LEFT JOIN dvf_d62.tmp_calcul_ann_nature_mutation_idmutation t5
 	ON t.idmutation = t5.idmutation
-LEFT JOIN dvf_d62.tmp_calcul_annexes_idmutation t6
+LEFT JOIN dvf_d62.tmp_calcul_disposition_idmutation t6
 	ON t.idmutation = t6.idmutation
-LEFT JOIN dvf_d62.tmp_calcul_disposition_parcelle_idmutation t7
+LEFT JOIN dvf_d62.tmp_calcul_volume_idmutation t7
 	ON t.idmutation = t7.idmutation
 );
 SELECT tablename 
@@ -1970,68 +1970,68 @@ SELECT
 	t5.libnatmut,
 	t4.nbartcgi,
 	t4.l_artcgi,
-	t6.vefa,
-	t2.valeurfonc,
-	t2.nbdispo,
-	t2.nblot,
-	t7.nbcomm,
-	t7.l_codinsee,
-	t7.nbsection,
-	t7.l_section,
-	t7.nbpar,
-	t7.l_idpar,
-	t7.nbparmut,
-	t7.l_idparmut,
-	t3.nbsuf,
-	t3.sterr,
-	t3.l_dcnt,
-	t0.nbvolmut,
-	t1.nblocmut,
-	t1.l_idlocmut,
-	t1.nblocmai,
-	t1.nblocapt,
-	t1.nblocdep,
-	t1.nblocact,
-	t1.nbapt1pp,
-	t1.nbapt2pp,
-	t1.nbapt3pp,
-	t1.nbapt4pp,
-	t1.nbapt5pp,
-	t1.nbmai1pp,
-	t1.nbmai2pp,
-	t1.nbmai3pp,
-	t1.nbmai4pp,
-	t1.nbmai5pp,
-	t1.sbati,
-	t1.sbatmai,
-	t1.sbatapt,
-	t1.sbatact,
-	t1.sapt1pp,
-	t1.sapt2pp,
-	t1.sapt3pp,
-	t1.sapt4pp,
-	t1.sapt5pp,
-	t1.smai1pp,
-	t1.smai2pp,
-	t1.smai3pp,
-	t1.smai4pp,
-	t1.smai5pp
+	t3.vefa,
+	t6.valeurfonc,
+	t6.nbdispo,
+	t6.nblot,
+	t0.nbcomm,
+	t0.l_codinsee,
+	t0.nbsection,
+	t0.l_section,
+	t0.nbpar,
+	t0.l_idpar,
+	t0.nbparmut,
+	t0.l_idparmut,
+	t1.nbsuf,
+	t1.sterr,
+	t1.l_dcnt,
+	t7.nbvolmut,
+	t2.nblocmut,
+	t2.l_idlocmut,
+	t2.nblocmai,
+	t2.nblocapt,
+	t2.nblocdep,
+	t2.nblocact,
+	t2.nbapt1pp,
+	t2.nbapt2pp,
+	t2.nbapt3pp,
+	t2.nbapt4pp,
+	t2.nbapt5pp,
+	t2.nbmai1pp,
+	t2.nbmai2pp,
+	t2.nbmai3pp,
+	t2.nbmai4pp,
+	t2.nbmai5pp,
+	t2.sbati,
+	t2.sbatmai,
+	t2.sbatapt,
+	t2.sbatact,
+	t2.sapt1pp,
+	t2.sapt2pp,
+	t2.sapt3pp,
+	t2.sapt4pp,
+	t2.sapt5pp,
+	t2.smai1pp,
+	t2.smai2pp,
+	t2.smai3pp,
+	t2.smai4pp,
+	t2.smai5pp
 FROM dvf_d59.mutation t 
-LEFT JOIN dvf_d59.tmp_calcul_volume_idmutation t0
+LEFT JOIN dvf_d59.tmp_calcul_disposition_parcelle_idmutation t0
 	ON t.idmutation = t0.idmutation
-LEFT JOIN dvf_d59.tmp_calcul_local_idmutation t1
+LEFT JOIN dvf_d59.tmp_calcul_suf_idmutation t1
 	ON t.idmutation = t1.idmutation
-LEFT JOIN dvf_d59.tmp_calcul_disposition_idmutation t2
+LEFT JOIN dvf_d59.tmp_calcul_local_idmutation t2
 	ON t.idmutation = t2.idmutation
-LEFT JOIN dvf_d59.tmp_calcul_suf_idmutation t3
+LEFT JOIN dvf_d59.tmp_calcul_annexes_idmutation t3
 	ON t.idmutation = t3.idmutation
 LEFT JOIN dvf_d59.tmp_calcul_mutation_article_cgi_idmutation t4
 	ON t.idmutation = t4.idmutation
 LEFT JOIN dvf_d59.tmp_calcul_ann_nature_mutation_idmutation t5
 	ON t.idmutation = t5.idmutation
-LEFT JOIN dvf_d59.tmp_calcul_annexes_idmutation t6
+LEFT JOIN dvf_d59.tmp_calcul_disposition_idmutation t6
 	ON t.idmutation = t6.idmutation
-LEFT JOIN dvf_d59.tmp_calcul_disposition_parcelle_idmutation t7
+LEFT JOIN dvf_d59.tmp_calcul_volume_idmutation t7
 	ON t.idmutation = t7.idmutation
 );
 SELECT tablename 
