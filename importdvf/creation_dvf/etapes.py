@@ -2,6 +2,8 @@ import os
 import csv
 from datetime import datetime
 
+from . import validation_etapes
+
 def context_etape(ETAPES, numero):
     for etape in ETAPES:
         if etape.numero == numero:
@@ -18,7 +20,8 @@ def fonction_a_executer(description):
                  'transformation': transformation,
                  'renommage': renommage,
                  'creation_cadastre': creation_cadastre,
-                 'insertion_parcelle': insertion_parcelle,}
+                 'insertion_parcelle': insertion_parcelle,
+                 'integration_geometries': integration_geometries,}
     return fonctions[description]
 
 def verification_donnees(repertoire):
@@ -68,6 +71,7 @@ def _ordonner_fichiers_txt(fichiers):
 
 def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_existants):
     try:
+        ## génération des schémas et tables
         dvf.start_script()
         dvf.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
         if effacer_schemas_existants:        
@@ -79,7 +83,14 @@ def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_
             dvf.creation_tables(recreer_tables_principales = False)
         dvf.creation_tables_annexes(*fichiers_annexes)
         dvf.ecrire_entete_log()
-        return True, 'Création des schémas et des tables DVF effectuée.'
+        
+        ## Validation
+        valideur = validation_etapes.Valideur(dvf.hote, dvf.base, dvf.port, dvf.utilisateur, dvf.motdepasse)
+        validation = valideur.validation_creation_tables(dvf.departements, effacer_schemas_existants)
+        if validation:
+            return True, 'Création des schémas et des tables DVF effectuée.'
+        else:
+            return False, 'Echec de la création des tables DVF'
     except Exception as e:
         return False, str(e)
 
@@ -140,8 +151,10 @@ def creation_cadastre(cadastre):
 
 def insertion_parcelle(cadastre, commune):
     try:
-        cadastre.inserer_parcelles_communales(self, commune, 'cadastre', 'parcellaire')
+        cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire')
         return True, 'Intégration des parcelles de la commune' + commune
     except Exception as e:
         return False, str(e)
-    
+
+def integration_geometries(cadastre):
+    return True, 'Intégration des géométries'    

@@ -47,7 +47,7 @@ def etape_import(request, etape):
                 request.session['erreur'] = str(erreur)
                 data = {'erreur':True}               
             return HttpResponse(json.dumps(data), content_type='application/json')
-        elif (etape == '8' and not request.session['geolocaliser']) or etape == '9999':
+        elif etape == '9999':
             return HttpResponse(json.dumps(None), content_type='application/json')
         else:
             etape_courante = etapes.context_etape(request.session['etapes'], int(etape))
