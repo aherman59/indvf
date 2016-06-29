@@ -70,45 +70,46 @@ def _ordonner_fichiers_txt(fichiers):
     return fichiers_ordonnes
 
 def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_existants):
-    try:
-        ## génération des schémas et tables
-        dvf.start_script()
-        dvf.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
-        if effacer_schemas_existants:        
-            dvf.effacer_schemas_commencant_par(dvf.prefixe_schemas_departementaux)
-            dvf.effacer_et_creer_schemas_dvf()
-            dvf.creation_tables()
-        else:
-            dvf.effacer_et_creer_schemas_dvf_departementaux()
-            dvf.creation_tables(recreer_tables_principales = False)
-        dvf.creation_tables_annexes(*fichiers_annexes)
-        dvf.ecrire_entete_log()
-        
-        ## Validation
-        valideur = validation_etapes.Valideur(dvf.hote, dvf.base, dvf.port, dvf.utilisateur, dvf.motdepasse)
-        validation = valideur.validation_creation_tables(dvf.departements, effacer_schemas_existants)
-        if validation:
-            return True, 'Création des schémas et des tables DVF effectuée.'
-        else:
-            return False, 'Echec de la création des tables DVF'
-    except Exception as e:
-        return False, str(e)
+    
+    ## génération des schémas et tables
+    dvf.start_script()
+    dvf.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
+    if effacer_schemas_existants:
+        valid, nb = dvf.effacer_schemas_commencant_par(dvf.prefixe_schemas_departementaux)
+        if valid:
+            valid2 = dvf.effacer_et_creer_schemas_dvf()
+            if valid2:
+                valid_creation_table = dvf.creation_tables()
+    else:
+        valid = dvf.effacer_et_creer_schemas_dvf_departementaux()
+        if valid:
+            valid_creation_table = dvf.creation_tables(recreer_tables_principales=False)
+    if valid_creation_table:
+        valid_preparation = dvf.creation_tables_annexes(*fichiers_annexes)
+    dvf.ecrire_entete_log()
+
+    if not valid_preparation:    
+        return False, 'Echec de la création des schémas et tables.'
+    else:
+        return True, 'Création des tables DVF effectuée.'
 
 def import_donnees(dvf, fichier_source, nom_table):
-    try:
-        dvf.importer(fichier_source, nom_table, recherche_differentielle = True)
+
+    valid_import = dvf.importer(fichier_source, nom_table, recherche_differentielle = True)
+    if valid_import:
         return True, 'Import du fichier {0} effectué.'.format(fichier_source)
-    except Exception as e:
-        return False, str(e)
+    else:
+        return False, 'Impossible d\'importer le fichier {0}.'.format(fichier_source)
 
 
 def integration_dans_dvf(dvf, table_src, fichier):
-    try:
-        dvf.ecrire_entete_table_import_dans_log(table_src)
-        dvf.maj_tables_avec(table_src)
+    
+    dvf.ecrire_entete_table_import_dans_log(table_src)
+    valid_integration = dvf.maj_tables_avec(table_src)
+    if valid_integration:
         return True, 'Intégration des données du fichier {0} dans DVF effectuée.'.format(fichier)
-    except Exception as e:
-        return False, str(e)
+    else:
+        return False, 'Impossible d\'integrer le fichier {0} dans la base.'.format(fichier)
 
 def creation_tables_dvf_plus(dvf_plus, fichier_gestion_csv, effacer_schemas_existants):
     try:

@@ -55,7 +55,6 @@ def etape_import(request, etape):
             reussite, erreur = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
             dvf.pgconn.deconnection_postgres()
             if reussite:
-                print(etape_courante.fonction_a_executer)
                 data = {'description':etape_courante.description_prochaine_etape, 
                         'pourcentage':etape_courante.pourcentage, 
                         'etape_suivante':str(etape_courante.numero_suivant)}
