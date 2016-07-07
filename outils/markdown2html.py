@@ -9,7 +9,7 @@ def convertir_markdown_en_html(txt_fiche):
         return '', ''
     md = markdown.Markdown(output_format = 'html5', encoding='utf-8', extensions=['markdown.extensions.extra', 'markdown.extensions.meta'])
     txt_html_brut = md.convert(txt_fiche)
-    metadonnees = md.Meta if md.Meta else None
+    metadonnees = md.Meta
     return metadonnees, txt_html_brut    
 
 def convertir_html_brut_en_html_bootstrap(html_brut):
