@@ -1,5 +1,7 @@
 from django.db import models
 
+from outils import markdown2html
+
 
 class DescriptionVariable(models.Model):
     nom = models.CharField(max_length = 255)
@@ -11,7 +13,29 @@ class DescriptionVariable(models.Model):
     amelioration = models.TextField(null=True, blank=True)
     
     def __str__(self):
-        return self.nom
+        return self.nom    
+    
+    def description_html(self):
+        return self._conversion_html(self.description)
+    
+    def observation_html(self):
+        return self._conversion_html(self.observation)
+    
+    def construction_html(self):
+        return self._conversion_html(self.construction)
+    
+    def limites_precautions_html(self):
+        return self._conversion_html(self.limites_precautions)
+    
+    def fiabilite_html(self):
+        return self._conversion_html(self.fiabilite)
+    
+    def amelioration_html(self):
+        return self._conversion_html(self.amelioration)
+    
+    def _conversion_html(self, champ):
+        meta, html = markdown2html.convertir_markdown_en_html(champ)
+        return html
 
 class Variable(models.Model):
     position = models.IntegerField()
@@ -79,6 +103,7 @@ class GroupementVariable(models.Model):
     nom = models.CharField(max_length = 255)
     variables_associees = models.ManyToManyField(Variable)
     
+
 
 def integration_donnees_variables():
     if len(Variable.objects.all()) == 0:

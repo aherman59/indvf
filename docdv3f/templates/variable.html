@@ -57,11 +57,11 @@
 		<table class="table table-striped" width = "100 %">
 	 		<tr>			
 				<th width="15%" class="text-right">Description détaillée</th>
-				<td>{{ desc_variable.description|default:"---" }}</td>		
+				<td>{{ desc_variable.description_html|safe|default:"---" }}</td>		
 			</tr>
 			<tr>			
 				<th class="text-right">Observations</th>
-				<td>{{ desc_variable.observation|default:"---" }}</td>		
+				<td>{{ desc_variable.observation_html|safe|default:"---" }}</td>		
 			</tr>
 		</table>
 
@@ -105,15 +105,15 @@
 		<table class="table table-striped" width = "100 %">
 	 		<tr>			
 				<th width="15%" class="text-right">Fiabilité de la variable</th>
-				<td>{{ desc_variable.fiabilite|default:"---" }}</td>		
+				<td>{{ desc_variable.fiabilite_html|safe|default:"---" }}</td>		
 			</tr>
 			<tr>			
 				<th class="text-right">Précautions d'usage</th>
-				<td>{{ desc_variable.limites_precautions|default:"---" }}</td>		
+				<td>{{ desc_variable.limites_precautions_html|safe|default:"---" }}</td>		
 			</tr>
 			<tr>			
 				<th class="text-right">Pistes d'amélioration</th>
-				<td>{{ desc_variable.amelioration|default:"---" }}</td>		
+				<td>{{ desc_variable.amelioration_html|safe|default:"---" }}</td>		
 			</tr>
 		</table>
 
@@ -129,7 +129,7 @@
 		<table class="table table-striped" width = "100 %">
 	 		<tr>			
 				<th width="15%" class="text-right">Méthode de construction</th>
-				<td>{{ desc_variable.construction|default:"---" }}</td>		
+				<td>{{ desc_variable.construction_html|safe|default:"---" }}</td>		
 			</tr>
 		</table>
 
