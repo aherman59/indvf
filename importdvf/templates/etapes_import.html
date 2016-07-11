@@ -42,7 +42,7 @@
                        $('#barre_progression').css('width', data.pourcentage + '%');
                        $('#barre_progression').attr('aria-valuenow', data.pourcentage);
                        if (data.warning) $('.list-group').append('<li class="list-group-item list-group-item-warning">'+ data.warning +'</li>');
-                       $('.list-group').append('<li class="list-group-item list-group-item-success">'+ data.description +'</li>');
+                       $('.list-group').append('<li class="list-group-item list-group-item-success">'+ data.message +'</li>');
                        $('.vide').trigger('click', data.etape_suivante);
                        
               });

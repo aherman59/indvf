@@ -43,6 +43,7 @@ def etape_import(request, etape):
                         'etape_suivante':str(etape_courante.numero_suivant)}
                 if erreurs:
                     data['warning'] = erreurs[0]
+                data['message'] = 'Vérification des fichiers terminée. Intégration des fichiers suivants : ' + ', '.join(fichiers_ordonnes)
             else:
                 request.session['erreur'] = str(erreur)
                 data = {'erreur':True}               
@@ -52,15 +53,16 @@ def etape_import(request, etape):
         else:
             etape_courante = etapes.context_etape(request.session['etapes'], int(etape))
             dvf = retourner_objet_dvf(request, etape_courante)
-            reussite, erreur = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
+            reussite, message = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
             dvf.pgconn.deconnection_postgres()
             if reussite:
                 data = {'description':etape_courante.description_prochaine_etape, 
                         'pourcentage':etape_courante.pourcentage, 
-                        'etape_suivante':str(etape_courante.numero_suivant)}
+                        'etape_suivante':str(etape_courante.numero_suivant),
+                        'message': message,}
                 return HttpResponse(json.dumps(data), content_type='application/json')
             else:
-                request.session['erreur'] = str(erreur)
+                request.session['erreur'] = str(message)
                 data = {'erreur':True}
             return HttpResponse(json.dumps(data), content_type='application/json')
         
