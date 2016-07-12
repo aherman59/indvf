@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from docdv3f.models import DescriptionVariable, Variable, ValeurVariable, integration_donnees_variables
+from docdv3f.models import DescriptionVariable, Variable, ValeurVariable, GroupementVariable, integration_donnees_variables
 
 # Dictionnaire décrivant les tables DVF+ et DV3F
 TABLES = [{'nom' : 'Tables principales' , 
@@ -9,7 +9,7 @@ TABLES = [{'nom' : 'Tables principales' ,
                       {'acheteur_vendeur' : 'table anonymisée des acheteurs et des vendeurs'}]
            },
           {'nom' : 'Tables secondaires' , 
-           'desc_table' : [{'adresse' : 'table contenant les adresses (provenant des parcelles et des locaux'},
+           'desc_table' : [{'adresse' : 'table contenant les adresses (provenant des parcelles et des locaux)'},
                       {'adresse_dispoparc' : 'table de liaison entre la table adresse et la table disposition_parcelle'},
                       {'adresse_local' : 'table de liaison entre la table adresse et la table local'},
                       {'disposition' : 'table des dispositions'},
@@ -42,7 +42,8 @@ def doc_variable(request, table, variable):
     variable = Variable.objects.get(table_associee = table, nom = variable)
     desc_variable = variable.description
     valeurs_variable = ValeurVariable.objects.filter(description = desc_variable)
-    context = {'variable':variable, 'desc_variable': desc_variable, 'valeurs_variable':valeurs_variable}
+    groupements = GroupementVariable.objects.filter(variables_associees = variable)#variable.groupementvariable_set.all()
+    context = {'variable':variable, 'desc_variable': desc_variable, 'valeurs_variable':valeurs_variable, 'groupements':groupements}
     return render(request, 'variable.html', context)
 
     

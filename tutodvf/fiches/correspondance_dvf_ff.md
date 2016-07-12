@@ -20,10 +20,10 @@ par ce [lien](http://piece-jointe-carto.developpement-durable.gouv.fr/NAT004/DTe
 
 |  Nom Variable DV3F | Nom Variable FF 				| Description 																	|
 |--------------------|------------------------------|--------------------------------------------------------------------------------|
-| ffnomprop          | ddenom		   				| nom de l'acheteur ou du vendeur (anonymisé pour les personnes physiques) | 														|
-| ffsiren            | dsiren		   				| libellé de la commune |
-| ffcatpm			 | codnom						| numéro de la voie |
-| ffcatjur			 | dforme						| indice de répétition |
+| ffnomprop          | ddenom		   				| nom de l'acheteur ou du vendeur (anonymisé pour les personnes physiques) |
+| ffsiren            | dsiren		   				| code SIREN  |
+| ffcatpm			 | codnom						| catégorie de personne morale |
+| ffcatjur			 | dforme						| catégorie juridique |
 
 
 ## Correspondance pour la table disposition_parcelle

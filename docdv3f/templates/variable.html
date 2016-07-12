@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 				<th class="text-right">Table</th>
-				<td><a href="{% url 'docdv3f:doc_table' variable.table_associee %}">{{ variable.table_associee }}</a></td>		
+				<td><b><a href="{% url 'docdv3f:doc_table' variable.table_associee %}">{{ variable.table_associee }}</a></b></td>		
 			</tr>
 			<tr>
 				<th class="text-right">Position</th>
@@ -60,7 +60,7 @@
 				<td>{{ desc_variable.description_html|safe|default:"---" }}</td>		
 			</tr>
 			<tr>			
-				<th class="text-right">Observations</th>
+				<th class="text-right">Observation</th>
 				<td>{{ desc_variable.observation_html|safe|default:"---" }}</td>		
 			</tr>
 		</table>
@@ -104,11 +104,11 @@
 
 		<table class="table table-striped" width = "100 %">
 	 		<tr>			
-				<th width="15%" class="text-right">Fiabilité de la variable</th>
+				<th width="15%" class="text-right">Remplissage et Fiabilité de la variable</th>
 				<td>{{ desc_variable.fiabilite_html|safe|default:"---" }}</td>		
 			</tr>
 			<tr>			
-				<th class="text-right">Précautions d'usage</th>
+				<th class="text-right">Conseils ou Précautions d'usage</th>
 				<td>{{ desc_variable.limites_precautions_html|safe|default:"---" }}</td>		
 			</tr>
 			<tr>			
@@ -135,5 +135,25 @@
 
 	</div>
 </div>
+
+{% ifnotequal groupements|length  0 %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-link"></i> Variables associées</h3>
+    </div>
+    <div class="panel-body">
+
+		<table class="table table-striped" width = "100 %">
+		{% for groupement in groupements %}
+	 		<tr>			
+				<th width="15%" class="text-right"></th>
+				<td>{{ groupement.lister_html|safe|default:"---" }}</td>	
+			</tr>
+		{% endfor %}
+		</table>
+
+	</div>
+</div>
+{% endifnotequal %}
 
 {% endblock %} 

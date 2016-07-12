@@ -116,7 +116,24 @@ class GroupementVariable(models.Model):
     nom = models.CharField(max_length = 255)
     variables_associees = models.ManyToManyField(Variable)
     
-
+    def __str__(self):
+        return self.nom
+    
+    def lister_html(self):
+        variables = self.variables_associees.all().order_by('table_associee', 'position')
+        table = ''
+        liste = '<p>'
+        for i, variable in enumerate(variables):
+            chgmt = True if table != variable.table_associee else False
+            table = variable.table_associee
+            url_table = reverse('docdv3f:doc_table', kwargs={'table': table,})
+            url = reverse('docdv3f:doc_variable', kwargs={'table': table, 'variable': variable.nom,})
+            liste += '</p><p>' if chgmt and i != 0 else ''
+            liste += ' table <a href="{1}"><b>{0}</b></a> : '.format(table, url_table) if chgmt else ' - '
+            liste += '<a href="{1}">{0}</a>'.format(variable.nom, url) 
+        liste +='</p>'   
+        return liste
+    
 
 def integration_donnees_variables():
     if len(Variable.objects.all()) == 0:

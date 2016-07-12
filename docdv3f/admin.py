@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from docdv3f.models import DescriptionVariable, Variable, ValeurVariable
+from docdv3f.models import DescriptionVariable, Variable, ValeurVariable, GroupementVariable
 
 
 class VariableAdmin(admin.ModelAdmin):
@@ -58,7 +58,19 @@ class ValeurVariableAdmin(admin.ModelAdmin):
            'fields': ('description',)
         }),
     )
+    
+class GroupementVariableAdmin(admin.ModelAdmin):
+    list_display = ('nom',)
+    ordering = ('nom',)
+    search_fields = ('description', 'variables_associees',)
+    fieldsets = (
+       ('Association', {
+            'classes': ['wide', 'extrapretty',],
+            'fields': ('nom', 'variables_associees'),
+        }),
+    )
 
 admin.site.register(DescriptionVariable, DescriptionVariableAdmin)
 admin.site.register(Variable, VariableAdmin)
 admin.site.register(ValeurVariable, ValeurVariableAdmin)
+admin.site.register(GroupementVariable, GroupementVariableAdmin)
