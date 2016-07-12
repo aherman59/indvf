@@ -41,4 +41,11 @@ class ConfigForm(forms.Form):
             
         return cleaned_data
         
-        
+    def recuperer_donnees_connexion(self):
+    # recuperation des données de connexion
+        hote = self.cleaned_data['hote']
+        bdd = self.cleaned_data['bdd']
+        port = self.cleaned_data['port']
+        utilisateur = self.cleaned_data['utilisateur']
+        mdp = self.cleaned_data['mdp']
+        return (hote, bdd, port, utilisateur, mdp)    

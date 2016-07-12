@@ -2,15 +2,6 @@ import os
 import csv
 from datetime import datetime
 
-from . import validation_etapes
-
-def context_etape(ETAPES, numero):
-    for etape in ETAPES:
-        if etape.numero == numero:
-            etape_courante = etape 
-            return etape_courante
-    return None
-
 def fonction_a_executer(description):
     fonctions = {'verification': verification_donnees,
                  'creation': creation_tables,

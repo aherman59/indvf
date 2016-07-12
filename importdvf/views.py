@@ -33,8 +33,8 @@ def etape_import(request, etape):
     if request.is_ajax():
         reconstituer_etapes(request)
         if etape == '1':
-            etape_courante = etapes.context_etape(request.session['etapes'], int(etape))
-            reussite, fichiers_ordonnes, departements, erreurs = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(request.session['dossier'])
+            etape_courante = renvoyer_etape(request, int(etape))
+            reussite, fichiers_ordonnes, departements, erreurs = executer_etape(request, etape_courante)
             if reussite:
                 request.session['departements'] = departements
                 constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers_ordonnes)            
@@ -51,10 +51,8 @@ def etape_import(request, etape):
         elif etape == '9999':
             return HttpResponse(json.dumps(None), content_type='application/json')
         else:
-            etape_courante = etapes.context_etape(request.session['etapes'], int(etape))
-            dvf = retourner_objet_dvf(request, etape_courante)
-            reussite, message = etapes.fonction_a_executer(etape_courante.fonction_a_executer)(dvf, *(etape_courante.params[1:]))
-            dvf.pgconn.deconnection_postgres()
+            etape_courante = renvoyer_etape(request, int(etape))
+            reussite, message = executer_etape(request, etape_courante)            
             if reussite:
                 data = {'description':etape_courante.description_prochaine_etape, 
                         'pourcentage':etape_courante.pourcentage, 
@@ -72,7 +70,7 @@ def etape_import(request, etape):
         constituer_etapes(request)
         # enregistrement des données formulaire dans la session
         request.session['dossier'] = formulaire.cleaned_data['chemin_dossier']
-        request.session['parametres_connexion'] = recuperer_donnees_connexion(formulaire)
+        request.session['parametres_connexion'] = formulaire.recuperer_donnees_connexion()
         request.session['effacer_schemas_existants'] = formulaire.cleaned_data['effacer_schemas_existants']
         request.session['geolocaliser'] = formulaire.cleaned_data['geolocaliser']
         request.session['communes_a_geolocaliser'] = None
@@ -82,11 +80,11 @@ def etape_import(request, etape):
 
 def erreur(request):
     if 'erreur' in request.session:
-        return _afficher_msg(request, request.session['erreur'], True)
+        return _afficher_msg(request, request.session['erreur'], err=True)
     return _afficher_formulaire(request, ConfigForm())
 
 def fin_import(request):
-    return _afficher_msg(request, "L'import des données DVF dans la base DVF+ est achevé.", False)
+    return _afficher_msg(request, "L'import des données DVF dans la base DVF+ est achevé.", err=False)
 
 def _afficher_msg(request, msg, err):
     context = {'msg': msg, 'err': err}
