@@ -36,6 +36,8 @@ class DescriptionVariable(models.Model):
     def _conversion_html(self, champ):
         meta, html = markdown2html.convertir_markdown_en_html(champ)
         html = self._integrer_liens_variables(html)
+        html = markdown2html.ameliorer_tableaux_avec_bootstrap(html)
+        html = markdown2html.centrer_images_avec_bootstrap(html)
         return html
     
     def _integrer_liens_variables(self, html):
