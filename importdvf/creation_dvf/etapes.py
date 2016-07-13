@@ -92,7 +92,6 @@ def import_donnees(dvf, fichier_source, nom_table):
     else:
         return False, 'Impossible d\'importer le fichier {0}.'.format(fichier_source)
 
-
 def integration_dans_dvf(dvf, table_src, fichier):
     
     dvf.ecrire_entete_table_import_dans_log(table_src)
@@ -103,36 +102,43 @@ def integration_dans_dvf(dvf, table_src, fichier):
         return False, 'Impossible d\'integrer le fichier {0} dans la base.'.format(fichier)
 
 def creation_tables_dvf_plus(dvf_plus, fichier_gestion_csv, effacer_schemas_existants):
-    try:
-        dvf_plus.start_script()        
-        dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
-        dvf_plus.creation_tables_dvf_plus(recreer_tables_principales = effacer_schemas_existants)
+
+    dvf_plus.start_script()        
+    dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
+    valid_creation_table = dvf_plus.creation_tables_dvf_plus(recreer_tables_principales = effacer_schemas_existants)
+    if valid_creation_table:    
         return True, 'Création des tables DVF+ effectuée.'
-    except Exception as e:
-        return False, str(e)
+    else:
+        return False, 'Echec de la création des tables DVF+.'
 
 def transformation(dvf_plus, fichier_gestion_csv, nom_table_dvf):
-    try:
-        variables_jointure = {'local' : 'iddispoloc', 'disposition_parcelle': 'iddispopar', 'mutation' : 'idmutation'}
+
+        variables_jointure = {
+                              'local' : 'iddispoloc', 
+                              'disposition_parcelle': 'iddispopar', 
+                              'mutation' : 'idmutation'
+                            }
+        valid = False
         if nom_table_dvf == 'local':
-            dvf_plus.effectuer_calculs_local()
+            valid = dvf_plus.effectuer_calculs_local()
         elif nom_table_dvf == 'disposition_parcelle':
-            dvf_plus.effectuer_calculs_parcelle()
+            valid = dvf_plus.effectuer_calculs_parcelle()
         elif nom_table_dvf == 'mutation':
-            dvf_plus.effectuer_calculs_mutation()
-        dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)        
-        dvf_plus.construire_tables_dvf_plus(nom_table_dvf, variables_jointure[nom_table_dvf])            
-        return True, 'Modifications de la table {0} effectuées.'.format(nom_table_dvf)
-    except Exception as e:
-        return False, str(e)
+            valid = dvf_plus.effectuer_calculs_mutation()
+        if valid:
+            dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)        
+            valid_construction_table = dvf_plus.construire_tables_dvf_plus(nom_table_dvf, variables_jointure[nom_table_dvf])
+            if valid_construction_table:            
+                return True, 'Modifications de la table {0} effectuée.'.format(nom_table_dvf)
+        return False, 'Modifications de la table {0} non aboutie'.format(nom_table_dvf)
 
 def renommage(dvf_plus, fichier_gestion_csv, tables):
-    try:
-        dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
-        dvf_plus.transformation_tables_dvf()
+    dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
+    valid = dvf_plus.transformation_tables_dvf()
+    if valid:    
         return True, 'Renommage des tables.'
-    except Exception as e:
-        return False, str(e)
+    else:
+        return False, 'Impossible de renommer les tables.'
     
 def creation_cadastre(cadastre):
     try:
@@ -144,7 +150,7 @@ def creation_cadastre(cadastre):
 def insertion_parcelle(cadastre, commune):
     try:
         cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire')
-        return True, 'Intégration des parcelles de la commune' + commune
+        return True, 'Intégration des parcelles de la commune ' + commune
     except Exception as e:
         return False, str(e)
 

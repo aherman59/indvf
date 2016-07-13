@@ -9,6 +9,11 @@ from .creation_dvf.cadastre import Cadastre
 
 
 def reconstituer_etapes(request):
+    '''
+    Récupère les étapes enregistrées dans la session et les transforme en namedtuple
+    
+    si aucun étape n'est enregistrée dans la session, il crée les premières étapes.
+    '''
     #description d'une étape
     etape_nt = _definition_etape()
     # reconstitution des étapes enregistrées dans la session (json -> namedtuple)
@@ -18,7 +23,10 @@ def reconstituer_etapes(request):
         constituer_etapes(request)
 
 def constituer_etapes(request):
-    #description d'une étape
+    '''
+    Crée les deux premières étapes du traitement et les enregistre dans la session.
+    '''
+
     etape_nt = _definition_etape()
     # creation des deux premières étapes
     request.session['etapes'] = [
@@ -28,6 +36,9 @@ def constituer_etapes(request):
 
 
 def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers_ordonnes):
+    '''
+    Crée les étapes suivantes du traitement (jusqu'à l'integration éventuelle des géométries du cadastre) et les enregistre dans la session.
+    '''
     etape_nt = _definition_etape()
     request.session['etapes'] = [
                     etape_nt(2, 300, '15', 'creation', 
@@ -72,6 +83,9 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
                                 ('Cadastre',), 'Récupération des parcelles communales'))
 
 def constituer_etapes_3(request):
+    '''
+    Crée les étapes de constitution des géométries à partir du cadastre
+    '''
     etape_nt = _definition_etape()
     communes = request.session['communes_a_geolocaliser']
     l = len(communes)
@@ -91,6 +105,9 @@ def constituer_etapes_3(request):
                                 'Fin du traitement'))
         
 def renvoyer_etape(request, numero):
+    '''
+    Retourne l'étape correpondant au numero spécifié
+    '''
     for etape in request.session['etapes']:
         if etape.numero == numero:
             etape_courante = etape 
@@ -98,29 +115,33 @@ def renvoyer_etape(request, numero):
     return None
 
 def executer_etape(request, etape_courante):
+    '''
+    Execute la fonction décrite dans l'étape courante
+    '''
     fonction = etapes.fonction_a_executer(etape_courante.fonction_a_executer)
     if etape_courante.numero == 1:
         params = (request.session['dossier'],)
-        return fonction(*params)
+        reussite, fichiers_ordonnes, departements, erreurs = fonction(*params)
+        return reussite, fichiers_ordonnes, departements, erreurs
     else:
-        dvf = retourner_objet_dvf(request, etape_courante)
+        dvf = retourner_objet_dvf(request, etape_courante.params[0])
         reussite, message = fonction(dvf, *(etape_courante.params[1:]))
         dvf.pgconn.deconnection_postgres()
         return reussite, message        
 
 
-def retourner_objet_dvf(request, etape_courante):
+def retourner_objet_dvf(request, type_objet_dvf):
     dvf = None
-    if etape_courante.params[0] == 'DVF':
+    if type_objet_dvf == 'DVF':
         dvf = DVF(*request.session['parametres_connexion'], 
                   departements = request.session['departements'], 
                   script = os.path.join(BASE_DIR, 'sorties/script_dvf.sql'),
                   log = os.path.join(BASE_DIR, 'sorties/log.txt'))
-    elif etape_courante.params[0] == 'DVF+':
+    elif type_objet_dvf == 'DVF+':
         dvf = DVF_PLUS(*request.session['parametres_connexion'], 
                        departements = request.session['departements'], 
                        script = os.path.join(BASE_DIR, 'sorties/script_dvf_plus.sql'))
-    elif etape_courante.params[0] == 'Cadastre':
+    elif type_objet_dvf == 'Cadastre':
         cadastre = Cadastre(*request.session['parametres_connexion'], 
                             script = os.path.join(BASE_DIR, 'sorties/cadastre.sql'))
         if not request.session['communes_a_geolocaliser']:
@@ -129,6 +150,9 @@ def retourner_objet_dvf(request, etape_courante):
     return dvf or cadastre
 
 def _definition_etape():
+    '''
+    Définit un namedtuple pour la gestion des étapes de traitement
+    '''
     return namedtuple('Etape', ['numero',
                                 'numero_suivant', 
                                 'pourcentage', 

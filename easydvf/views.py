@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .recherche.requetes import Requeteur
 from main.territoire import integration
-from main import configuration, controle_bdd
+from main import configuration
+from outils import controle_bdd
 from main.models import Departement, Epci, Commune, Territoire
 
 

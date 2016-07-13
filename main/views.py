@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from main import configuration, controle_bdd
+from main import configuration
+from outils import controle_bdd
 from collections import namedtuple
 from main.forms import ConfigBDDForm, SelectConfigBDDForm
 from main.models import ConfigurationBDD

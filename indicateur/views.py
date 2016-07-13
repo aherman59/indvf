@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from main import configuration, controle_bdd
+from main import configuration
+from outils import controle_bdd
 from pg.pgbasics import *
 from .calcul.indicateurs import IndicateurDVF, CalculIndicateur
 from main.territoire import integration 

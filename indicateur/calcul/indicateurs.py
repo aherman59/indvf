@@ -1,6 +1,6 @@
 from pg.pgbasics import *
 from main.models import Departement, Epci, Commune, Territoire
-from main.controle_bdd import ControleBDD
+from outils.controle_bdd import ControleBDD
 from indicateur.models import ResultatIndicateur 
 
 class IndicateurDVF():

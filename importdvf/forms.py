@@ -1,6 +1,6 @@
 from django import forms
 import os
-from main import controle_bdd
+from outils import controle_bdd
 
 class ConfigForm(forms.Form):
     hote = forms.CharField(label='Hôte', max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"localhost"}))
@@ -10,7 +10,7 @@ class ConfigForm(forms.Form):
     port = forms.CharField(label='Port', max_length = 8, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"5432"}))
     chemin_dossier = forms.CharField(label='Dossier données DVF', widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':os.getcwd()}))
     geolocaliser = forms.BooleanField(required = False, label='Importer géométries depuis cadastre.api.gouv.fr', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
-    proxy = forms.CharField(label='Proxy', max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"http://proxy.example.fr - laisser vide en l'absence de proxy"}))
+    proxy = forms.CharField(label='Proxy', required=False, max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"http://proxy.example.fr - laisser vide en l'absence de proxy"}))
     effacer_schemas_existants = forms.BooleanField(required = False, label='Effacer schemas DVF+ existants', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
 
     def clean(self):

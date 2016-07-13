@@ -2,6 +2,9 @@ import psycopg2
 from pg.pgbasics import *
 
 def tentative_connexion(hote, bdd, utilisateur, mdp, port):
+    '''
+    Tente une connexion à la base PostgreSQL spécifiée
+    '''
     try:
         conn = psycopg2.connect(host=hote, database=bdd, port=port, user=utilisateur, password=mdp)
         return True, 'OK'
@@ -9,7 +12,9 @@ def tentative_connexion(hote, bdd, utilisateur, mdp, port):
         return False, str(e)
 
 def verification_configuration(configuration):
-    
+    '''
+    Teste si la configuration (entite du modèle ConfigurationBDD de main.Models) est correcte
+    '''    
     if not configuration:
         return False
     

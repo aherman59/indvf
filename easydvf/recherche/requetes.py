@@ -1,7 +1,7 @@
 from pg.pgbasics import *
 from collections import namedtuple
 from datetime import datetime
-from main.controle_bdd import ControleBDD
+from outils.controle_bdd import ControleBDD
 
 class Requeteur(PgOutils):
     

@@ -1,6 +1,6 @@
 from django import forms
 from main.models import ConfigurationBDD
-from main.controle_bdd import tentative_connexion, ControleBDD
+from outils.controle_bdd import tentative_connexion, ControleBDD
 
 
 class ConfigBDDForm(forms.ModelForm):
