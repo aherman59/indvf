@@ -141,11 +141,12 @@ def renommage(dvf_plus, fichier_gestion_csv, tables):
         return False, 'Impossible de renommer les tables.'
     
 def creation_cadastre(cadastre):
-    try:
-        cadastre.creer_table_parcelles('cadastre', 'parcellaire')
+    
+    valid = cadastre.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire')
+    if valid:    
         return True, 'Création de la table cadastre.parcellaire'
-    except Exception as e:
-        return False, str(e)
+    else:
+        return False, 'Impossible de créer la table cadastre.parcellaire'
 
 def insertion_parcelle(cadastre, commune):
     try:

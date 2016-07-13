@@ -18,38 +18,35 @@ class Cadastre(PgOutils):
         pass
         
     @requete_sql
-    def creer_table_parcelles(self, schema, table):
+    def creer_table_parcelles_si_inexistante(self, schema, table):
         '''
-        Crée le schéma s'il n'existe pas puis crée la table
+        Crée le schéma s'il n'existe pas puis crée la table si elle n'existe pas
         '''
         pass
     
     def inserer_parcelles_communales(self, code_insee, schema, table):
-        entites = self.recuperer_parcelles_communes(code_insee)
-        if entites and len(entites['features']) > 0:
-            parcelles = self.preparer_parcelles(entites, code_insee)
-            print('Commune ', code_insee, ' :', len(parcelles),' parcelles')
+        reussite, parcelles = self.recuperer_parcelles(code_insee)
+        if len(parcelles) > 0:
             valeurs_sql = [self.creer_valeurs_sql(parcelle) for parcelle in parcelles]
             self.inserer_multi_parcelles(schema, table, valeurs_sql)
-        else: # Problèmes
-            if entites:
-                print('Pas de données pour commune ', code_insee)
+            return True, 'Parcelles insérées pour commune ' + code_insee
+        else:
+            if reussite:
+                return False, 'Pas de parcelles récupérées pour commune ' + code_insee
             else:
-                print('Problème requêtage')
+                return False, 'Problème requêtage'
     
     def inserer_parcelle_unique(self, code_insee, section, numero, schema, table):
-        entites = self.recuperer_parcelle(code_insee, section, numero)
-        if entites and len(entites['features']) == 1:
-            parcelles = self.preparer_parcelles(entites, code_insee)
-            valeurs_sql = [self.creer_valeurs_sql(parcelle) for parcelle in parcelles]
+        reussite, parcelle = self.recuperer_parcelle(code_insee, section, numero)
+        if parcelle:
+            valeurs_sql = [self.creer_valeurs_sql(parcelle)]
             self.inserer_multi_parcelles(schema, table, valeurs_sql)
-        else: # Problèmes
-            if entites and len(entites['features']) == 0:
-                print('Pas de données pour ', code_insee, '000' ,section, numero)
-            elif entites and len(entites['features']) > 1:
-                print('Plusieurs entités récupérées pour ', code_insee, '000' ,section, numero)
-            else : 
-                print('Problème requêtage')
+            return True, 'Parcelle insérée'
+        else:
+            if reussite:
+                return False, 'La parcelle n\'a pas été récupérée'
+            else:
+                return False, 'Problème requêtage'
     
     
     def inserer_multi_parcelles(self, schema, table, valeurs, epsg = '2154'):
@@ -62,7 +59,35 @@ class Cadastre(PgOutils):
         valeurs = (parcelle.departement, parcelle.idpar, float(parcelle.surface), geometrie)
         return valeurs        
     
-    def recuperer_parcelles_communes(self, code_insee):
+    def recuperer_parcelles(self, code_insee):
+        parcelles = []
+        reussite, entites = self.recuperer_donnees_json_commune(code_insee)
+        if entites:
+            nt_parcelle = namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees'])
+            departement = code_insee[:2]
+            for parcelle in entites['features']:
+                if parcelle['geometry']['type'] == 'Polygon':
+                    idpar = departement + str(parcelle['properties']['id'][2:])
+                    surface = str(parcelle['properties']['surface'])
+                    coordonnees = parcelle['geometry']['coordinates'][0]
+                    parcelles.append(nt_parcelle(departement, idpar, surface, coordonnees))
+        return reussite, parcelles
+    
+    def recuperer_parcelle(self, code_insee, section, numero):
+        parcelle = None
+        reussite, entites = self.recuperer_donnees_json_parcelle(code_insee, section, numero)
+        if entites:
+            nt_parcelle = namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees'])
+            departement = code_insee[:2]
+            parcelle = entites['features'][0]
+            if parcelle['geometry']['type'] == 'Polygon':
+                idpar = departement + str(parcelle['properties']['id'][2:])
+                surface = str(parcelle['properties']['surface'])
+                coordonnees = parcelle['geometry']['coordinates'][0]
+                parcelle= nt_parcelle(departement, idpar, surface, coordonnees)
+        return reussite, parcelle
+
+    def recuperer_donnees_json_commune(self, code_insee):
         entites = None
         try:
             with urllib.request.urlopen(url = self.url_commune.format(code_insee)) as reponse:
@@ -70,9 +95,10 @@ class Cadastre(PgOutils):
                 entites = json.loads(donnees)
         except Exception as e:
             print(e)
-        return entites
+            return False, None
+        return True, entites
     
-    def recuperer_parcelle(self, code_insee, section, numero):
+    def recuperer_donnees_json_parcelle(self, code_insee, section, numero):
         entites = None
         params = urllib.parse.urlencode({'section': section, 'numero': numero})
         try:
@@ -81,28 +107,7 @@ class Cadastre(PgOutils):
                 entites = json.loads(donnees)
         except Exception as e:
             print(e)
-        return entites
-    
-    def preparer_parcelles(self, entites, code_insee):
-        parcelles = []
-        nt_parcelle = namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees'])
-        departement = code_insee[:2]
-        for parcelle in entites['features']:
-            if parcelle['geometry']['type'] == 'Polygon':
-                idpar = departement + str(parcelle['properties']['id'][2:])
-                surface = str(parcelle['properties']['surface'])
-                coordonnees = parcelle['geometry']['coordinates'][0]
-                parcelles.append(nt_parcelle(departement, idpar, surface, coordonnees))
-        return parcelles
-
-if __name__ == '__main__':
-    
-    parametre_connexion = ('localhost', 'dvf', '5432', 'postgres', 'postgres')
-    cada = Cadastre(*parametre_connexion)
-    schema, table = 'cadastre', 'dep59'
-    cada.creer_table_parcelles(schema, table)
-    for code_insee in ['59001', '59002', '59003', '59007', '59350']:
-        cada.inserer_parcelles_communales(code_insee, schema, table)
-    #cada.inserer_parcelle_unique('59005', '0A', '0005', schema, table)
+            return False, None
+        return True, entites
 
 #eof

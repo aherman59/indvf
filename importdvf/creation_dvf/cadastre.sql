@@ -3,8 +3,7 @@ SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDE
 
 ## CREER_TABLE_PARCELLES
 CREATE SCHEMA IF NOT EXISTS {0};
-DROP TABLE IF EXISTS {0}.{1};
-CREATE TABLE {0}.{1}(
+CREATE TABLE IF NOT EXISTS {0}.{1}(
  dep varchar(2),
  id varchar(14),
  surface numeric,
