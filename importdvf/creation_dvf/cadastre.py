@@ -34,9 +34,9 @@ class Cadastre(PgOutils):
             if reussite:
                 return False, 'Pas de parcelles récupérées pour commune ' + code_insee
             else:
-                return False, 'Problème requêtage'
+                return False, 'Problème requêtage ou code INSEE incorrect'
     
-    def inserer_parcelle_unique(self, code_insee, section, numero, schema, table):
+    def inserer_parcelle(self, code_insee, section, numero, schema, table):
         reussite, parcelle = self.recuperer_parcelle(code_insee, section, numero)
         if parcelle:
             valeurs_sql = [self.creer_valeurs_sql(parcelle)]
@@ -46,7 +46,7 @@ class Cadastre(PgOutils):
             if reussite:
                 return False, 'La parcelle n\'a pas été récupérée'
             else:
-                return False, 'Problème requêtage'
+                return False, 'Problème requêtage ou code INSEE incorrect'
     
     
     def inserer_multi_parcelles(self, schema, table, valeurs, epsg = '2154'):
@@ -60,6 +60,14 @@ class Cadastre(PgOutils):
         return valeurs        
     
     def recuperer_parcelles(self, code_insee):
+        '''
+        Renvoie une liste des parcelles de la commune spécifiée issue du cadastre
+        
+        Les parcelles de la liste sont des namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees']) 
+        
+        Renvoie True et la liste si la requete aboutit et que le code INSEE est correct
+        Renvoie False et None si la requête n'aboutit pas ou que le code INSEE est incorrect
+        '''
         parcelles = []
         reussite, entites = self.recuperer_donnees_json_commune(code_insee)
         if entites:
@@ -74,20 +82,35 @@ class Cadastre(PgOutils):
         return reussite, parcelles
     
     def recuperer_parcelle(self, code_insee, section, numero):
+        '''
+        Renvoie la parcelle spécifiée issue du cadastre
+        
+        La parcelle est un namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees']) 
+        
+        Renvoie True et la parcelle si la requete aboutit et que le code INSEE est correct
+        Renvoie False et None si la requête n'aboutit pas ou que le code INSEE est incorrect
+        '''
         parcelle = None
         reussite, entites = self.recuperer_donnees_json_parcelle(code_insee, section, numero)
         if entites:
-            nt_parcelle = namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees'])
-            departement = code_insee[:2]
-            parcelle = entites['features'][0]
-            if parcelle['geometry']['type'] == 'Polygon':
-                idpar = departement + str(parcelle['properties']['id'][2:])
-                surface = str(parcelle['properties']['surface'])
-                coordonnees = parcelle['geometry']['coordinates'][0]
-                parcelle= nt_parcelle(departement, idpar, surface, coordonnees)
+            if len(entites['features']) > 0:
+                nt_parcelle = namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees'])
+                departement = code_insee[:2]
+                parcelle = entites['features'][0]
+                if parcelle['geometry']['type'] == 'Polygon':
+                    idpar = departement + str(parcelle['properties']['id'][2:])
+                    surface = str(parcelle['properties']['surface'])
+                    coordonnees = parcelle['geometry']['coordinates'][0]
+                    parcelle= nt_parcelle(departement, idpar, surface, coordonnees)
         return reussite, parcelle
 
     def recuperer_donnees_json_commune(self, code_insee):
+        '''
+         Récupère les données des parcelles de la commune issues du cadastre
+         
+         Renvoie True et le dictionnaire de données si la requete aboutie et que le code INSEE est correct
+         Renvoie False et None si la requete n'aboutit pas ou que le code INSEE est incorrect
+        '''
         entites = None
         try:
             with urllib.request.urlopen(url = self.url_commune.format(code_insee)) as reponse:
@@ -99,6 +122,12 @@ class Cadastre(PgOutils):
         return True, entites
     
     def recuperer_donnees_json_parcelle(self, code_insee, section, numero):
+        '''
+        Renvoie les données de la parcelle spécifiée issue du cadastre
+        
+        Renvoie True et les données de la parcelle si la requete aboutie et que le code INSEE est correct
+        Renvoie False et None si la requete n'aboutit pas ou que le code INSEE est incorrect
+        '''
         entites = None
         params = urllib.parse.urlencode({'section': section, 'numero': numero})
         try:

@@ -37,29 +37,33 @@ class TestCadastre(unittest.TestCase):
     def tearDown(self):
         self.cada.deconnecter()
     
-    def test_une_requete_communale_avec_un_code_INSEE_correct_renvoie_un_dictionnaire(self):
+    '''
+    test sur récuperation données et parcelles
+    '''
+    
+    def test_une_requete_communale_avec_un_code_INSEE_correct_renvoie_True_et_un_dictionnaire(self):
         reussite, entites = self.cada.recuperer_donnees_json_commune('59001')
         self.assertTrue(reussite)
         self.assertFalse(entites is None)
         self.assertEqual(type(entites), type(dict()))
     
-    def test_une_requete_communale_avec_un_code_INSEE_incorrect_renvoie_None(self):
+    def test_une_requete_communale_avec_un_code_INSEE_incorrect_renvoie_False_et_None(self):
         reussite, entites = self.cada.recuperer_donnees_json_commune('00001')
         self.assertFalse(reussite)
         self.assertTrue(entites is None)
     
-    def test_une_requete_communale_avec_un_code_INSEE_a_6_caracteres_renvoie_None(self):
+    def test_une_requete_communale_avec_un_code_INSEE_a_6_caracteres_renvoie_False_et_None(self):
         reussite, entites = self.cada.recuperer_donnees_json_commune('590100')
         self.assertFalse(reussite)
         self.assertTrue(entites is None)
     
-    def test_une_requete_communale_qui_echoue_renvoie_none(self):
+    def test_une_requete_communale_qui_echoue_renvoie_False_et_None(self):
         self.cada.url_commune = 'https://cadastre.erreur_api_volontaire.gouv.fr/commune/{0}'
         reussite, entites = self.cada.recuperer_donnees_json_commune('59001')
         self.assertFalse(reussite)
         self.assertTrue(entites is None)
     
-    def test_une_requete_avec_donnee_parcelle_correct_renvoie_un_dictionnaire(self):
+    def test_une_requete_avec_donnee_parcelle_correcte_renvoie_un_dictionnaire(self):
         reussite, entites = self.cada.recuperer_donnees_json_parcelle('59001', '0U', '0369')
         self.assertTrue(reussite)
         self.assertFalse(entites is None)
@@ -75,7 +79,7 @@ class TestCadastre(unittest.TestCase):
         self.assertTrue(reussite)
         self.assertEqual(type(entites), type(dict()))
     
-    def test_une_requete_avec_donnee_parcelle_qui_echoue_renvoie_none(self):
+    def test_une_requete_avec_donnee_parcelle_qui_echoue_renvoie_False_et_none(self):
         self.cada.url_parcelle = 'https://cadastre.erreur_api_volontaire.gouv.fr/commune/{0}?{1}'
         reussite, entites = self.cada.recuperer_donnees_json_parcelle('59001', '0U', '0369')
         self.assertFalse(reussite)
@@ -97,20 +101,75 @@ class TestCadastre(unittest.TestCase):
         self.assertTrue(len(parcelles) == 0)
         self.assertFalse(reussite)
     
-    def test_les_idpar_commencent_bien_par_le_code_insee(self):
+    def test_les_parcelles_recuperees_ont_des_idpar_qui_commencent_bien_par_le_code_insee(self):
         code_insee = '59001'
         reussite, parcelles = self.cada.recuperer_parcelles(code_insee)
         for parcelle in parcelles:
             self.assertEqual(parcelle.idpar[:5], code_insee)
     
-    def test_coordonnees_renvoient_bien_un_liste_non_vide(self):
+    def test_les_parcelles_recuperees_ont_des_coordonnees_qui_renvoient_bien_un_liste_non_vide(self):
         code_insee = '59001'
         reussite, parcelles = self.cada.recuperer_parcelles(code_insee)
         for parcelle in parcelles:
             self.assertEqual(type(parcelle.coordonnees), type(list()))
             self.assertTrue(len(parcelle.coordonnees) > 0)      
          
-
+    def test_la_recuperation_dune_parcelle_pour_donnees_valables_renvoie_True_et_une_parcelle_bien_constituee(self):
+        reussite, parcelle = self.cada.recuperer_parcelle('59001', '0U', '0369')
+        self.assertTrue(reussite)
+        self.assertEqual(parcelle.idpar[:5], '59001')
+        self.assertEqual(type(parcelle.coordonnees), type(list()))
+        self.assertTrue(len(parcelle.coordonnees) > 0)
+    
+    def test_la_recuperation_dune_parcelle_pour_donnees_non_valables_mais_Code_INSEE_correct_renvoie_True_et_None(self):
+        reussite, parcelle = self.cada.recuperer_parcelle('59001', 'ZZ', '0369')
+        self.assertTrue(reussite)
+        self.assertEqual(parcelle, None)        
+        reussite, parcelle = self.cada.recuperer_parcelle('59001', '0U', '0000')
+        self.assertTrue(reussite)
+        self.assertEqual(parcelle, None)
+    
+    def test_la_recuperation_dune_parcelle_avec_code_INSEE_incorrect_renvoie_False_et_None(self):
+        reussite, parcelle = self.cada.recuperer_parcelle('00001', '0U', '0369')
+        self.assertFalse(reussite)
+        self.assertEqual(parcelle, None)
+        
+    def test_la_recuperation_dune_parcelle_si_la_requete_echoue_renvoie_False_et_None(self):
+        self.cada.url_parcelle = 'https://cadastre.erreur_api_volontaire.gouv.fr/commune/{0}?{1}'
+        reussite, parcelle = self.cada.recuperer_parcelle('59001', '0U', '0369')        
+        self.assertFalse(reussite)
+        self.assertEqual(parcelle, None)
+        
+    '''
+     test sur bdd
+    '''
+        
+    def test_la_table_est_creee_si_inexistante(self):
+        reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire0')
+        self.assertTrue(reussite)
+        schemas = self.cada.lister_schemas()
+        self.assertTrue('cadastre' in schemas)
+        tables = self.cada.lister_tables('cadastre')
+        self.assertTrue('parcellaire0' in tables)
+    
+    def test_la_table_nest_pas_recreee_si_existante(self):
+        reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire1')
+        self.cada.execution('''INSERT INTO cadastre.parcellaire1 VALUES('62', '62001000ZZ0123', 25.1, NULL, 'source_inconnue', 'V')''')
+        nb_lignes = self.cada.compter('cadastre', 'parcellaire1')
+        self.assertEqual(nb_lignes, 1)
+        reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire1')
+        self.assertTrue(reussite)
+        nb_lignes = self.cada.compter('cadastre', 'parcellaire1')
+        self.assertEqual(nb_lignes, 1)
+    
+    def test_la_parcelle_recuperee_est_bien_inseree(self):
+        reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire2')
+        self.cada.inserer_parcelle('59001', '0U', '0369', 'cadastre', 'parcellaire2')
+        lignes = self.cada.execution_et_recuperation('''SELECT * FROM cadastre.parcellaire2''')
+        self.assertEqual(len(lignes), 1)
+        self.assertEqual(lignes[0][0], '59')
+        self.assertEqual(lignes[0][1], '590010000U0369')
+        
 class TestImportDVF(TestCase):
     
     @classmethod
