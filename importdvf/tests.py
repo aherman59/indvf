@@ -169,6 +169,33 @@ class TestCadastre(unittest.TestCase):
         self.assertEqual(len(lignes), 1)
         self.assertEqual(lignes[0][0], '59')
         self.assertEqual(lignes[0][1], '590010000U0369')
+    
+    def test_les_parcelles_recuperees_pour_la_commune_sont_bien_inserees(self):
+        reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire3')
+        self.cada.inserer_parcelles_communales('59001', 'cadastre', 'parcellaire3')
+        lignes = self.cada.execution_et_recuperation('''SELECT * FROM cadastre.parcellaire3''')
+        self.assertTrue(len(lignes) > 0)
+        for ligne in lignes:
+            self.assertEqual(ligne[0], '59')
+            self.assertEqual(ligne[1][:5], '59001')
+            
+    def test_aucune_parcelle_inseree_si_code_INSEE_incorrect_et_renvoi_message_erreur(self):
+        reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire4')
+        reussite, msg = self.cada.inserer_parcelles_communales('00001', 'cadastre', 'parcellaire4')
+        compte = self.cada.compter('cadastre', 'parcellaire4')
+        self.assertFalse(reussite)
+        self.assertEqual(compte, 0)
+        self.assertEqual(msg, 'Problème requêtage ou code INSEE incorrect')
+    
+    def test_aucune_parcelle_inseree_si_erreur_requete_et_renvoi_message_erreur(self):
+        self.cada.url_commune = 'https://cadastre.erreur_api_volontaire.gouv.fr/commune/{0}'
+        reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire5')
+        reussite, msg = self.cada.inserer_parcelles_communales('59001', 'cadastre', 'parcellaire5')
+        compte = self.cada.compter('cadastre', 'parcellaire5')
+        self.assertFalse(reussite)
+        self.assertEqual(compte, 0)
+        self.assertEqual(msg, 'Problème requêtage ou code INSEE incorrect')
+        
         
 class TestImportDVF(TestCase):
     
