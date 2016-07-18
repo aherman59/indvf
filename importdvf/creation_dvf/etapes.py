@@ -47,7 +47,7 @@ def _controler_fichier_txt(fichier):
         next(csv_reader)
         for n, ligne in enumerate(csv_reader):
             if len(ligne) != 43:
-                return False, [], None, 'La ligne {0} du fichier {1} ne possède pas le bon nombre de champs. Le fichier est ignoré.'.format(str(n+1), fichier)
+                return False, [], None, 'La ligne {0} du fichier {1} ne possède pas le bon nombre de champs. Le fichier est ignoré.'.format(str(n+2), fichier)
             if ligne[18] not in departements:
                 departements.append(ligne[18])
             if datetime.strptime(ligne[8], '%d/%m/%Y') > date_max:
@@ -60,8 +60,7 @@ def _ordonner_fichiers_txt(fichiers):
     fichiers_ordonnes.reverse()
     return fichiers_ordonnes
 
-def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_existants):
-    
+def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_existants):    
     ## génération des schémas et tables
     dvf.start_script()
     dvf.charger_gestionnaire_depuis_csv(fichier_gestion_csv)

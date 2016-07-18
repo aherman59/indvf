@@ -45,7 +45,7 @@ def etape_import(request, etape):
                     data['warning'] = erreurs[0]
                 data['message'] = 'Vérification des fichiers terminée. Intégration des fichiers suivants : ' + ', '.join(fichiers_ordonnes)
             else:
-                request.session['erreur'] = str(erreur)
+                request.session['erreur'] = erreurs[0]
                 data = {'erreur':True}               
             return HttpResponse(json.dumps(data), content_type='application/json')
         elif etape == '9999':

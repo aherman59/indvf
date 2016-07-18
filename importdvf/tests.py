@@ -11,7 +11,7 @@ from .creation_dvf.cadastre import Cadastre
 hote = 'localhost'
 bdd = 'test_appdvf'
 utilisateur = 'postgres'
-mdp = 'cerema59'
+mdp = 'postgres'
 port = '5432'
 chemin_dossier = './importdvf/creation_dvf/ressources'
 
@@ -336,7 +336,10 @@ class TestImportDVF(TestCase):
         self.assertContains(reponse, 'Création de la base de données DVF+')
     
     def test_lancement_etape_1(self):       
-        
+        '''
+        Un fichier de test est correct
+        L'autre est incorrect
+        '''
         session = self.client.session
         session['dossier'] = chemin_dossier 
         session['parametres_connexion'] = (hote, bdd, port, utilisateur, mdp) 
@@ -349,12 +352,30 @@ class TestImportDVF(TestCase):
                             (1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF'),
                             ]
         session.save()
-
         url = reverse('import:etape_import', kwargs={'etape':'1'})
         reponse = self.client.post(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        print(str(reponse.content, encoding='UTF-8'))
-        self.assertJSONEqual(str(reponse.content, encoding='UTF-8'), {'etape_suivante' : '2'})
+        print(reponse.content)
+        self.assertIn('"etape_suivante": "2"', str(reponse.content, encoding='utf-8'))
+        self.assertIn('"warning": "La ligne 2 du fichier', str(reponse.content, encoding='utf-8'))
     
+    def test_lancement_etape_1_sur_repertoire_sans_fichiers_txt(self):       
+        session = self.client.session
+        session['dossier'] = os.path.dirname(chemin_dossier) # pas de fichiers txt 
+        session['parametres_connexion'] = (hote, bdd, port, utilisateur, mdp) 
+        session['effacer_schemas_existants']=True
+        session['geolocaliser']=False 
+        session['communes_a_geolocaliser']=None 
+        session['proxy']=None
+        session['etapes'] = [
+                            (0, 1, '5', '', (None,),'Vérification des fichiers sources'),
+                            (1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF'),
+                            ]
+        session.save()
+        url = reverse('import:etape_import', kwargs={'etape':'1'})
+        reponse = self.client.post(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        print(reponse.content)
+        self.assertIn('{"erreur": true}', str(reponse.content, encoding='utf-8'))
+            
     def test_lancement_etape_2(self):       
         
         session = self.client.session
@@ -374,8 +395,7 @@ class TestImportDVF(TestCase):
 
         url = reverse('import:etape_import', kwargs={'etape':'2'})
         reponse = self.client.post(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        print(str(reponse.content, encoding='UTF-8'))
-        self.assertJSONEqual(str(reponse.content, encoding='UTF-8'), {'etape_suivante' : '3'})
+        self.assertIn('"etape_suivante": "300"', str(reponse.content, encoding='UTF-8'))
     
         
     
