@@ -5,15 +5,21 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from .forms import ConfigForm
-
+from main.configuration import BASE_DIR
 from .creation_dvf.cadastre import Cadastre
 
 hote = 'localhost'
 bdd = 'test_appdvf'
 utilisateur = 'postgres'
-mdp = 'postgres'
+mdp = 'cerema59'
 port = '5432'
 chemin_dossier = './importdvf/creation_dvf/ressources'
+
+repertoire_ressources = os.path.join(BASE_DIR, 'importdvf/creation_dvf/ressources') 
+fichier_gestion_csv = os.path.join(repertoire_ressources,'champs_dvf.csv')
+fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
+                        os.path.join(repertoire_ressources,'natcult.csv'),
+                        os.path.join(repertoire_ressources,'natcultspe.csv'))
 
 class TestCadastre(unittest.TestCase):
     
@@ -329,20 +335,47 @@ class TestImportDVF(TestCase):
         reponse = self.client.post(url, data=donnees_formulaire)
         self.assertContains(reponse, 'Création de la base de données DVF+')
     
-    def test_lancement_etape_1(self):
+    def test_lancement_etape_1(self):       
         
         session = self.client.session
         session['dossier'] = chemin_dossier 
-        session['parametre_connexion'] = (hote, bdd, port, utilisateur, mdp) 
+        session['parametres_connexion'] = (hote, bdd, port, utilisateur, mdp) 
         session['effacer_schemas_existants']=True
         session['geolocaliser']=False 
         session['communes_a_geolocaliser']=None 
         session['proxy']=None
+        session['etapes'] = [
+                            (0, 1, '5', '', (None,),'Vérification des fichiers sources'),
+                            (1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF'),
+                            ]
         session.save()
 
         url = reverse('import:etape_import', kwargs={'etape':'1'})
         reponse = self.client.post(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        #self.assertContains(reponse, 'Vérification des fichiers terminée')
+        print(str(reponse.content, encoding='UTF-8'))
+        self.assertJSONEqual(str(reponse.content, encoding='UTF-8'), {'etape_suivante' : '2'})
+    
+    def test_lancement_etape_2(self):       
+        
+        session = self.client.session
+        session['dossier'] = chemin_dossier 
+        session['parametres_connexion'] = (hote, bdd, port, utilisateur, mdp) 
+        session['effacer_schemas_existants']=True
+        session['geolocaliser']=False 
+        session['communes_a_geolocaliser']=None 
+        session['proxy']=None
+        session['departements']=['62', '59']
+        session['etapes'] = [
+                            (0, 1, '5', '', (None,),'Vérification des fichiers sources'),
+                            (1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF'),
+                            (2, 300, '15', 'creation', ('DVF', fichier_gestion_csv, fichiers_annexes, session['effacer_schemas_existants'],), 'Import des données sources DVF - Fichier X')
+                            ]
+        session.save()
+
+        url = reverse('import:etape_import', kwargs={'etape':'2'})
+        reponse = self.client.post(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        print(str(reponse.content, encoding='UTF-8'))
+        self.assertJSONEqual(str(reponse.content, encoding='UTF-8'), {'etape_suivante' : '3'})
     
         
     
