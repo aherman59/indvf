@@ -12,11 +12,7 @@ class Cadastre(PgOutils):
         super().__init__(hote, base, port, utilisateur, motdepasse, script)
         self.url_commune = self.URL + '{0}'
         self.url_parcelle = self.URL + '{0}?{1}'
-        
-    @select_sql_champ_unique
-    def recuperer_communes_a_geolocaliser(self):
-        pass
-        
+               
     @requete_sql
     def creer_table_parcelles_si_inexistante(self, schema, table):
         '''
@@ -25,14 +21,20 @@ class Cadastre(PgOutils):
         pass
     
     def inserer_parcelles_communales(self, code_insee, schema, table):
+        '''
+        Insère les parcelles récupérées pour la commune dans la table spécifiée
+                
+        Renvoie True et un message de réussite si la requete a abouti
+        Renvoie False et le message d'erreur associé dans le cas inverse
+        '''
         reussite, parcelles = self.recuperer_parcelles(code_insee)
         if len(parcelles) > 0:
             valeurs_sql = [self.creer_valeurs_sql(parcelle) for parcelle in parcelles]
             self.inserer_multi_parcelles(schema, table, valeurs_sql)
-            return True, 'Parcelles insérées pour commune ' + code_insee
+            return True, str(len(parcelles)) + ' parcelles insérées pour commune ' + code_insee
         else:
             if reussite:
-                return False, 'Pas de parcelles récupérées pour commune ' + code_insee
+                return True, 'Pas de parcelles récupérées pour commune ' + code_insee
             else:
                 return False, 'Problème requêtage ou code INSEE incorrect'
     
@@ -44,7 +46,7 @@ class Cadastre(PgOutils):
             return True, 'Parcelle insérée'
         else:
             if reussite:
-                return False, 'La parcelle n\'a pas été récupérée'
+                return True, 'La parcelle n\'a pas été récupérée'
             else:
                 return False, 'Problème requêtage ou code INSEE incorrect'
     
@@ -138,5 +140,21 @@ class Cadastre(PgOutils):
             print(e)
             return False, None
         return True, entites
+    
+    '''
+    Travail sur DVF+
+    '''
+    
+    @select_sql_champ_unique
+    def recuperer_communes_a_geolocaliser(self):
+        pass
+    
+    @requete_sql
+    def creer_extension_postgis(self):
+        pass
+    
+    @requete_sql
+    def creer_champs_geometriques(self):
+        pass
 
 #eof

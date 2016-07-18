@@ -142,18 +142,20 @@ def renommage(dvf_plus, fichier_gestion_csv, tables):
     
 def creation_cadastre(cadastre):
     
-    valid = cadastre.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire')
+    valid, nb = cadastre.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire')
     if valid:    
         return True, 'Création de la table cadastre.parcellaire'
     else:
         return False, 'Impossible de créer la table cadastre.parcellaire'
 
 def insertion_parcelle(cadastre, commune):
-    try:
-        cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire')
-        return True, 'Intégration des parcelles de la commune ' + commune
-    except Exception as e:
-        return False, str(e)
+    valid, msg = cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire')
+    return valid, msg 
 
 def integration_geometries(cadastre):
+    valid, nb = cadastre.creer_extension_postgis()
+    if valid:
+        valid, nb = cadastre.creer_champs_geometriques()
+    else:
+        return False, 'Impossible de charger PostGIS.'    
     return True, 'Intégration des géométries'    
