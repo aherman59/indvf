@@ -4029,4 +4029,69 @@ CREATE TABLE IF NOT EXISTS cadastre.parcellaire3(
  vecteur text
 );
 
-SELECT * FROM cadastre.parcellaire3
+SELECT * FROM cadastre.parcellaire3SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ source_geo text,
+ vecteur text
+);
+
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS postgis_topology;
+
+ALTER TABLE dvf.local ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geompar geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomlocmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomparmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geompar geometry;
+SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ source_geo text,
+ vecteur text
+);
+
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS postgis_topology;
+
+ALTER TABLE dvf.local ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geompar geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomlocmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomparmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geompar geometry;

@@ -79,7 +79,7 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
                                 txt_descriptif))
     if request.session['geolocaliser']:
         request.session['etapes'].append(
-                    etape_nt(8, 9, '10', 'creation_cadastre', 
+                    etape_nt(8, 9, '5', 'creation_cadastre', 
                                 ('Cadastre',), 'Récupération des parcelles communales'))
 
 def constituer_etapes_3(request):
@@ -89,18 +89,27 @@ def constituer_etapes_3(request):
     etape_nt = _definition_etape()
     communes = request.session['communes_a_geolocaliser']
     l = len(communes)
+    commune_initiale = communes[0]
+    communes_intermediaires = communes[1:-1]
+    l_intermediaire = len(communes_intermediaires)
+    commune_finale = communes[l-1]
     if l > 0:
         request.session['etapes'].append(
-                    etape_nt(9, 10001, str(10 + int(90/l)), 'insertion_parcelle', 
-                                ('Cadastre', communes[0]), 
-                                'Récupération des parcelles de la commune ' + str(communes[0])))
-        for i, commune in enumerate(communes[1:]):
+                    etape_nt(9, 10001, str(5 + int(90/l)), 'insertion_parcelle', 
+                                ('Cadastre', commune_initiale), 
+                                'Récupération des parcelles de la commune ' + str(communes_intermediaires[0])))
+
+        for i, commune in enumerate(communes_intermediaires[:-1]):
             request.session['etapes'].append(
-                    etape_nt(10001 + i, 10002 + i, str(10 + int(90*i/l)), 'insertion_parcelle', 
+                    etape_nt(10001 + i, 10002 + i, str(5 + int(90*(i+2)/l)), 'insertion_parcelle', 
                                 ('Cadastre', commune), 
-                                'Récupération des parcelles de la commune ' + str(commune)))
+                                'Récupération des parcelles de la commune ' + str(communes_intermediaires[i+1])))
         request.session['etapes'].append(
-                    etape_nt(10001 + l, 9999, 100, 'integration_geometries', 
+                    etape_nt(10000 + l_intermediaire, 10001 + l_intermediaire, '95', 'insertion_parcelle', 
+                                ('Cadastre', communes_intermediaires[l_intermediaire - 1]), 
+                                'Intégration des géométries dans les tables DVF+.'))
+        request.session['etapes'].append(
+                    etape_nt(10001 + l_intermediaire, 9999, '100', 'integration_geometries', 
                                 ('Cadastre',), 
                                 'Fin du traitement'))
         

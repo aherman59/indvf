@@ -13,6 +13,13 @@ from importdvf.forms import ConfigForm
 from .creation_dvf import etapes
 from .gestion_import import *
 
+# Ressources
+repertoire_ressources = os.path.join(BASE_DIR, 'importdvf/creation_dvf/ressources') 
+fichier_gestion_csv = os.path.join(repertoire_ressources,'champs_dvf.csv')
+fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
+                    os.path.join(repertoire_ressources,'natcult.csv'),
+                    os.path.join(repertoire_ressources,'natcultspe.csv'))
+
 def formulaire_configuration(request):
     formulaire = ConfigForm()
     return _afficher_formulaire(request, formulaire)
@@ -23,13 +30,7 @@ def _afficher_formulaire(request, formulaire):
     return render(request, 'formulaire_configuration.html', context)
 
 def etape_import(request, etape):
-    # Ressources
-    repertoire_ressources = os.path.join(BASE_DIR, 'importdvf/creation_dvf/ressources') 
-    fichier_gestion_csv = os.path.join(repertoire_ressources,'champs_dvf.csv')
-    fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
-                        os.path.join(repertoire_ressources,'natcult.csv'),
-                        os.path.join(repertoire_ressources,'natcultspe.csv'))
-
+    # Etapes intermédiaires - renvoie des données JSON traitées par le script jQuery du template etapes_import.html
     if request.is_ajax():
         reconstituer_etapes(request)
         if etape == '1':
@@ -63,7 +64,7 @@ def etape_import(request, etape):
                 request.session['erreur'] = str(message)
                 data = {'erreur':True}
             return HttpResponse(json.dumps(data), content_type='application/json')
-        
+    # Etape initiale - Constitution des premières étapes et enregistrement des données dans la session    
     context = None
     formulaire  = ConfigForm(request.POST)
     if formulaire.is_valid():

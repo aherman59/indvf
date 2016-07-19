@@ -154,7 +154,11 @@ def insertion_parcelle(cadastre, commune):
 def integration_geometries(cadastre):
     valid, nb = cadastre.creer_extension_postgis()
     if valid:
-        valid, nb = cadastre.creer_champs_geometriques()
+        valid2, nb = cadastre.creer_champs_geometriques()
+        if valid2:
+            pass
+        else:
+            return False, 'Impossible d\'intégrer les champs géométriques'
     else:
         return False, 'Impossible de charger PostGIS.'    
     return True, 'Intégration des géométries'    
