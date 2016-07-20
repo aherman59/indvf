@@ -151,14 +151,22 @@ def insertion_parcelle(cadastre, commune):
     valid, msg = cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire')
     return valid, msg 
 
-def integration_geometries(cadastre):
-    valid, nb = cadastre.creer_extension_postgis()
+def integration_geometries(geomdvf):
+    valid, nb = geomdvf.creer_extension_postgis()
     if valid:
-        valid2, nb = cadastre.creer_champs_geometriques()
+        valid2, nb = geomdvf.creer_champs_geometriques()
         if valid2:
-            pass
+            valid3, nb = geomdvf.ajouter_commentaires_champs_geométriques()
+            if valid3:                
+                valid_local, nb = geomdvf.mise_a_jour_geometries_local_depuis('cadastre', 'parcellaire')
+                valid_parcelle, nb = geomdvf.mise_a_jour_geometries_disposition_parcelle_depuis('cadastre', 'parcellaire')
+                valid_mutation, nb = geomdvf.mise_a_jour_geometries_mutation()
+                if not (valid_local and valid_parcelle and valid_mutation):
+                    return False, 'Impossible d\'intégrer les géométries dans DVF+.'
+            else:
+                return False, 'Impossible de créer les commentaires associés aux champs géométriques.'
         else:
-            return False, 'Impossible d\'intégrer les champs géométriques'
+            return False, 'Impossible d\'intégrer les champs géométriques.'
     else:
         return False, 'Impossible de charger PostGIS.'    
-    return True, 'Intégration des géométries'    
+    return True, 'Intégration des géométries dans DVF+ effectuée.'    

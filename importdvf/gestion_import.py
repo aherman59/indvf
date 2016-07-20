@@ -5,7 +5,7 @@ from main.configuration import BASE_DIR
 
 from .creation_dvf import etapes
 from .creation_dvf.dvfclass import DVF, DVF_PLUS
-from .creation_dvf.cadastre import Cadastre
+from .creation_dvf.cadastre import Cadastre, GeomDVF
 
 
 def reconstituer_etapes(request):
@@ -110,7 +110,7 @@ def constituer_etapes_3(request):
                                 'Intégration des géométries dans les tables DVF+.'))
         request.session['etapes'].append(
                     etape_nt(10001 + l_intermediaire, 9999, '100', 'integration_geometries', 
-                                ('Cadastre',), 
+                                ('GeomDVF',), 
                                 'Fin du traitement'))
         
 def renvoyer_etape(request, numero):
@@ -154,8 +154,16 @@ def retourner_objet_dvf(request, type_objet_dvf):
         cadastre = Cadastre(*request.session['parametres_connexion'], 
                             script = os.path.join(BASE_DIR, 'sorties/cadastre.sql'))
         if not request.session['communes_a_geolocaliser']:
-            request.session['communes_a_geolocaliser'] = cadastre.recuperer_communes_a_geolocaliser()
-            constituer_etapes_3(request)            
+            geomdvf = GeomDVF(*request.session['parametres_connexion'], 
+                               departements = request.session['departements'], 
+                            script = os.path.join(BASE_DIR, 'sorties/cadastre.sql'))
+            request.session['communes_a_geolocaliser'] = geomdvf.recuperer_communes_a_geolocaliser()
+            constituer_etapes_3(request) 
+    elif type_objet_dvf == 'GeomDVF':
+        dvf = GeomDVF(*request.session['parametres_connexion'], 
+                           departements = request.session['departements'], 
+                        script = os.path.join(BASE_DIR, 'sorties/cadastre.sql'))
+                       
     return dvf or cadastre
 
 def _definition_etape():
