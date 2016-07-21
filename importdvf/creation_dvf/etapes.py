@@ -142,7 +142,9 @@ def renommage(dvf_plus, fichier_gestion_csv, tables):
 def creation_cadastre(cadastre):
     
     valid, nb = cadastre.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire')
-    if valid:    
+    valid2, nb = cadastre.effacer_contrainte_si_existante('cadastre', 'parcellaire', 'idpar_pkey')
+    valid3, nb = cadastre.ajouter_clef_primaire('cadastre', 'parcellaire', ['idpar'])
+    if valid and valid2 and valid3:    
         return True, 'Création de la table cadastre.parcellaire'
     else:
         return False, 'Impossible de créer la table cadastre.parcellaire'

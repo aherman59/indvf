@@ -1,4 +1,6 @@
-
+'''
+ @author: antoine.herman
+'''
 import urllib.request
 import json
 from collections import namedtuple
@@ -17,6 +19,13 @@ class Cadastre(PgOutils):
     def creer_table_parcelles_si_inexistante(self, schema, table):
         '''
         Crée le schéma s'il n'existe pas puis crée la table si elle n'existe pas
+        '''
+        pass
+    
+    @requete_sql
+    def effacer_contrainte_clef_primaire_si_existante(self, schema, table, nom_contrainte):
+        '''
+        Efface la contrainte si elle existe
         '''
         pass
 
