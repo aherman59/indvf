@@ -519,6 +519,21 @@ INSERT INTO {0}.disposition_parcelle
 );
 
 ## MAJ_TABLE_ADRESSE
+
+-- Création d'une fonction pour récupérer la première valeur
+CREATE OR REPLACE FUNCTION {0}.first_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE sql IMMUTABLE STRICT AS $$
+        SELECT $1;
+$$;
+ 
+-- And then wrap an aggregate around it
+CREATE AGGREGATE {0}.first (
+        sfunc    = {0}.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+
+
 -- insertion table adresse
 INSERT INTO {0}.adresse 
 (
@@ -527,7 +542,7 @@ INSERT INTO {0}.adresse
 (
     SELECT t.no_voie, t.b_t_q, t.code_voie, t.type_de_voie, t.voie, t.code_postal, t.commune, t.idadr_tmp, t.code_departement
     FROM source.{1} t
-    LEFT JOIN {0}.adresse t6 ON t.idadr_tmp=t6.idadrinvar
+    LEFT JOIN {0}.adresse t6 ON t.idadr_tmp=t6.idadrinvar AND t.idadr_tmp not like '%$$$$%' -- eviter les pbs d adresses non renseignees pour contraintes d unicites
     WHERE t6.idadresse IS NULL
     GROUP BY t.no_voie, t.b_t_q, t.code_voie, t.type_de_voie, t.voie, t.code_postal, t.commune, t.idadr_tmp, t.code_departement
     ORDER BY t.no_voie, t.b_t_q, t.code_voie, t.type_de_voie, t.voie, t.code_postal, t.commune, t.idadr_tmp, t.code_departement
@@ -569,19 +584,20 @@ CREATE TABLE source.{1}_tmp AS
 
 ## MAJ_TABLE_LOCAL
 -- insertion table local
-INSERT INTO {0}.local 
+
+INSERT INTO {0}..local 
 (
     idmutation, iddispopar, idpar, idloc, identloc, codtyploc, libtyploc, nbpprinc, sbati, coddep, datemut, anneemut, moismut
 )
 (
-    SELECT t.idmutation, t.iddispopar, t.idpar, t.idloc, t.identifiant_local, t.code_type_local, t.type_local, t.nombre_pieces_principales, t.surface_reelle_bati, t.coddep, t.datemut, t.anneemut, t.moismut
+    SELECT t.idmutation, t.iddispopar, t.idpar, t.idloc, t.identifiant_local, t.code_type_local, t.type_local, {0}.first(t.nombre_pieces_principales), {0}.first(t.surface_reelle_bati), t.coddep, t.datemut, t.anneemut, t.moismut
     FROM source.{1}_tmp t
-    LEFT JOIN {0}.local t7 ON t.iddispopar=t7.iddispopar AND t.identifiant_local=t7.identloc
-    WHERE 
+    LEFT JOIN {0}..local t7 ON t.iddispopar=t7.iddispopar AND t.identifiant_local=t7.identloc
+   WHERE 
         t7.iddispoloc IS NULL
         AND t.identifiant_local IS NOT NULL
-    GROUP BY t.idmutation, t.iddispopar, t.idpar, t.idloc, t.identifiant_local, t.code_type_local, t.type_local, t.nombre_pieces_principales, t.surface_reelle_bati, t.coddep, t.datemut, t.anneemut, t.moismut
-    ORDER BY t.idmutation, t.iddispopar, t.identifiant_local, t.code_type_local, t.nombre_pieces_principales, t.surface_reelle_bati
+    GROUP BY t.idmutation, t.iddispopar, t.idpar, t.idloc, t.identifiant_local, t.code_type_local, t.type_local,  t.coddep, t.datemut, t.anneemut, t.moismut
+    ORDER BY t.idmutation, t.iddispopar, t.identifiant_local, t.code_type_local
 );
 
 ## MAJ_TABLE_VOLUME
