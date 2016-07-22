@@ -288,7 +288,8 @@ class DVF(DVFMere):
     def creer_fonctions_sql_dvf(self):
         valid, nb = self.creer_fonction_array_supprimer_null()
         valid2, nb = self.creer_fonction_pgcd()
-        return True if valid and valid2 else False
+        valid3, nb = self.creer_fonction_aggregat_first()
+        return True if valid and valid2 and valid3 else False
     
     def effacer_et_creer_schemas_dvf(self):
         valid = self.effacer_et_creer_schemas_dvf_departementaux()

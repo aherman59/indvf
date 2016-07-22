@@ -519,21 +519,6 @@ INSERT INTO {0}.disposition_parcelle
 );
 
 ## MAJ_TABLE_ADRESSE
-
--- Création d'une fonction pour récupérer la première valeur
-CREATE OR REPLACE FUNCTION {0}.first_agg ( anyelement, anyelement )
-RETURNS anyelement LANGUAGE sql IMMUTABLE STRICT AS $$
-        SELECT $1;
-$$;
- 
--- And then wrap an aggregate around it
-CREATE AGGREGATE {0}.first (
-        sfunc    = {0}.first_agg,
-        basetype = anyelement,
-        stype    = anyelement
-);
-
-
 -- insertion table adresse
 INSERT INTO {0}.adresse 
 (
@@ -585,14 +570,14 @@ CREATE TABLE source.{1}_tmp AS
 ## MAJ_TABLE_LOCAL
 -- insertion table local
 
-INSERT INTO {0}..local 
+INSERT INTO {0}.local 
 (
     idmutation, iddispopar, idpar, idloc, identloc, codtyploc, libtyploc, nbpprinc, sbati, coddep, datemut, anneemut, moismut
 )
 (
-    SELECT t.idmutation, t.iddispopar, t.idpar, t.idloc, t.identifiant_local, t.code_type_local, t.type_local, {0}.first(t.nombre_pieces_principales), {0}.first(t.surface_reelle_bati), t.coddep, t.datemut, t.anneemut, t.moismut
+    SELECT t.idmutation, t.iddispopar, t.idpar, t.idloc, t.identifiant_local, t.code_type_local, t.type_local, first(t.nombre_pieces_principales), first(t.surface_reelle_bati), t.coddep, t.datemut, t.anneemut, t.moismut
     FROM source.{1}_tmp t
-    LEFT JOIN {0}..local t7 ON t.iddispopar=t7.iddispopar AND t.identifiant_local=t7.identloc
+    LEFT JOIN {0}.local t7 ON t.iddispopar=t7.iddispopar AND t.identifiant_local=t7.identloc
    WHERE 
         t7.iddispoloc IS NULL
         AND t.identifiant_local IS NOT NULL
