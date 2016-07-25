@@ -23,7 +23,7 @@ class Cadastre(PgOutils):
         pass
     
     @requete_sql
-    def effacer_contrainte_clef_primaire_si_existante(self, schema, table, nom_contrainte):
+    def effacer_contrainte_si_existante(self, schema, table, nom_contrainte):
         '''
         Efface la contrainte si elle existe
         '''
@@ -33,7 +33,7 @@ class Cadastre(PgOutils):
     def lister_idpar_existants(self, schema, table, code_insee):
         pass
     
-    def inserer_parcelles_communales(self, code_insee, schema, table, nouvelles_uniquement=True):
+    def inserer_parcelles_communales(self, code_insee, schema, table, proxy = None, nouvelles_uniquement=True):
         '''
         Insère les parcelles récupérées pour la commune dans la table spécifiée
         
@@ -43,7 +43,7 @@ class Cadastre(PgOutils):
         Renvoie True et un message de réussite si la requete a abouti
         Renvoie False et le message d'erreur associé dans le cas inverse
         '''
-        reussite, parcelles = self.recuperer_parcelles(code_insee)
+        reussite, parcelles = self.recuperer_parcelles(code_insee, proxy = proxy)
         if nouvelles_uniquement:
             parcelles_existantes = self.lister_idpar_existants(schema, table, code_insee)
             parcelles = [parcelle for parcelle in parcelles if parcelle.idpar not in parcelles_existantes]
@@ -94,7 +94,7 @@ class Cadastre(PgOutils):
         valeurs = (parcelle.departement, parcelle.idpar, float(parcelle.surface), geometrie, geometrie, geometrie, geometrie)
         return valeurs        
     
-    def recuperer_parcelles(self, code_insee):
+    def recuperer_parcelles(self, code_insee, proxy = None):
         '''
         Renvoie une liste des parcelles de la commune spécifiée issue du cadastre
         
@@ -104,7 +104,7 @@ class Cadastre(PgOutils):
         Renvoie False et None si la requête n'aboutit pas ou que le code INSEE est incorrect
         '''
         parcelles = []
-        reussite, entites = self.recuperer_donnees_json_commune(code_insee)
+        reussite, entites = self.recuperer_donnees_json_commune(code_insee, proxy = proxy)
         if entites:
             nt_parcelle = namedtuple('Parcelle', ['departement', 'idpar', 'surface', 'coordonnees'])
             departement = code_insee[:2]
@@ -139,7 +139,7 @@ class Cadastre(PgOutils):
                     parcelle= nt_parcelle(departement, idpar, surface, coordonnees)
         return reussite, parcelle
 
-    def recuperer_donnees_json_commune(self, code_insee):
+    def recuperer_donnees_json_commune(self, code_insee, proxy = None):
         '''
          Récupère les données des parcelles de la commune issues du cadastre
          
@@ -148,9 +148,16 @@ class Cadastre(PgOutils):
         '''
         entites = None
         try:
-            with urllib.request.urlopen(url = self.url_commune.format(code_insee)) as reponse:
-                donnees = reponse.read().decode('utf-8')
-                entites = json.loads(donnees)
+            if not proxy:
+                with urllib.request.urlopen(url = self.url_commune.format(code_insee)) as reponse:
+                    donnees = reponse.read().decode('utf-8')
+                    entites = json.loads(donnees)
+            else:
+                proxies = {'http': proxy, 'https':proxy}
+                opener = urllib.request.FancyURLopener(proxies)
+                with opener.open(self.url_commune.format(code_insee)) as reponse:
+                    donnees = reponse.read().decode('utf-8')
+                    entites = json.loads(donnees)               
         except Exception as e:
             print(e)
             return False, None
@@ -191,23 +198,23 @@ class GeomDVF(PgOutils):
     
     @requete_sql
     def creer_extension_postgis(self):
-        pass
-    
+        pass   
+                
     @requete_sql
-    def creer_champs_geometriques(self):
+    def creer_champs_geometriques(self, schema):
         pass
     
     def ajouter_commentaires_champs_geométriques(self):
         for schema in [self.schema_principal] + self.schemas_departementaux:
-            valid, nb = self.ajouter_commentaire_sur_champ(schema, 'mutation', 'geompar', 'commentaire')
-            valid1, nb = self.ajouter_commentaire_sur_champ(schema, 'mutation', 'geomparmut', 'commentaire')
-            valid2, nb = self.ajouter_commentaire_sur_champ(schema, 'mutation', 'geomlocmut', 'commentaire')
-            valid3, nb = self.ajouter_commentaire_sur_champ(schema, 'disposition_parcelle', 'geompar', 'commentaire')
-            valid4, nb = self.ajouter_commentaire_sur_champ(schema, 'disposition_parcelle', 'geomloc', 'commentaire')
-            valid5, nb = self.ajouter_commentaire_sur_champ(schema, 'local', 'geomloc', 'commentaire')
+            valid, nb = self.ajouter_commentaire_sur_champ(schema, 'mutation', 'geompar', "geométrie de l'ensemble des contours des parcelles concernées par la mutation")
+            valid1, nb = self.ajouter_commentaire_sur_champ(schema, 'mutation', 'geomparmut', "géométrie de l'ensemble des contours des parcelles ayant muté")
+            valid2, nb = self.ajouter_commentaire_sur_champ(schema, 'mutation', 'geomlocmut', "géométrie de l'ensemble des localisants correspondant à des parcelles surlesquelles un local a muté")
+            valid3, nb = self.ajouter_commentaire_sur_champ(schema, 'disposition_parcelle', 'geompar', "géométrie du contour de la parcelle")
+            valid4, nb = self.ajouter_commentaire_sur_champ(schema, 'disposition_parcelle', 'geomloc', "géométrie du localisant de la parcelle")
+            valid5, nb = self.ajouter_commentaire_sur_champ(schema, 'local', 'geomloc', "géométrie du localisant")
             if not (valid and valid1 and valid2 and valid3 and valid4 and valid5):
-                return False, -1
-        return True, (len(self.schemas_departementaux) + 1)*6
+                return False
+        return True
     
     @requete_sql
     def mise_a_jour_geometries_local_depuis(self, schema, table):

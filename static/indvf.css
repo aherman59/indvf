@@ -6,6 +6,14 @@
     padding-top:20px;
 }
 
+.espace-pied a {
+    color: #777;
+}
+
+.espace-pied a:hover {
+    text-decoration: none;
+}
+
 .vcenter {
 	display: inline-block;
 	vertical-align: middle;

@@ -1,8 +1,12 @@
 {% block pied_page %}
 <footer class="footer">
     <div class="container">
-        <p class="text-muted text-center espace-pied">AppDVF - Cerema - <i class="fa fa-creative-commons"></i> CC-BY-SA<br/>
-            <i class="fa fa-at"></i>: dv3f@cerema.fr</p>
+        <p class="text-muted text-center espace-pied">
+        <a href="{% url 'main:credits' %}"><i class="fa fa-pencil-square-o"></i> Crédits</a> 
+        - <a href="mailto:dv3f@cerema.fr"><i class="fa fa-at"></i> Contact</a>        
+        <br/>
+        AppDVF - Cerema - <i class="fa fa-creative-commons"></i> BY-NC-SA
+        </p>
     </div>
 </footer>
 {% endblock %}

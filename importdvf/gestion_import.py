@@ -96,21 +96,21 @@ def constituer_etapes_3(request):
     if l > 0:
         request.session['etapes'].append(
                     etape_nt(9, 10001, str(5 + int(90/l)), 'insertion_parcelle', 
-                                ('Cadastre', commune_initiale), 
+                                ('Cadastre', commune_initiale, request.session['proxy']), 
                                 'Récupération des parcelles de la commune ' + str(communes_intermediaires[0])))
 
         for i, commune in enumerate(communes_intermediaires[:-1]):
             request.session['etapes'].append(
                     etape_nt(10001 + i, 10002 + i, str(5 + int(90*(i+2)/l)), 'insertion_parcelle', 
-                                ('Cadastre', commune), 
+                                ('Cadastre', commune, request.session['proxy']), 
                                 'Récupération des parcelles de la commune ' + str(communes_intermediaires[i+1])))
         request.session['etapes'].append(
                     etape_nt(10000 + l_intermediaire, 10001 + l_intermediaire, '95', 'insertion_parcelle', 
-                                ('Cadastre', communes_intermediaires[l_intermediaire - 1]), 
+                                ('Cadastre', communes_intermediaires[l_intermediaire - 1], request.session['proxy']), 
                                 'Intégration des géométries dans les tables DVF+.'))
         request.session['etapes'].append(
                     etape_nt(10001 + l_intermediaire, 9999, '100', 'integration_geometries', 
-                                ('GeomDVF',), 
+                                ('GeomDVF', request.session['effacer_schemas_existants']), 
                                 'Fin du traitement'))
         
 def renvoyer_etape(request, numero):

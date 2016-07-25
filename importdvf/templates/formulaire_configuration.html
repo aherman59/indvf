@@ -33,4 +33,19 @@
             </form>
         </div>
     </div>
+    
+    <div class="panel panel-default">       
+        <div class="panel-body">
+        	<p><i> 
+        	(1) - En cochant la case, les données géométriques seront récupérées via cadastre.api.gouv.fr et intégrées
+        	dans la base DVF+. Cela nécessite donc un accès internet. L'application utilisera les paramètres habituels du système pour la connexion. 
+        	En cas d'échec, il peut être utile de préciser le proxy à utiliser. 
+			</i></p>
+			<p><i>
+			(2) - En cochant la case, tous les schémas DVF+ départementaux existants seront supprimés de la base de données. Dans le 
+			cas inverse, ce sont uniquement les schémas départementaux liés aux données à intégrer qui seront écrasés, les autres seront
+			conservés.
+			</i></p>            
+        </div>
+    </div>
 {% endblock %}

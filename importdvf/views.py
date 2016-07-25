@@ -74,6 +74,7 @@ def etape_import(request, etape):
         request.session['parametres_connexion'] = formulaire.recuperer_donnees_connexion()
         request.session['effacer_schemas_existants'] = formulaire.cleaned_data['effacer_schemas_existants']
         request.session['geolocaliser'] = formulaire.cleaned_data['geolocaliser']
+        request.session['proxy'] = formulaire.cleaned_data['proxy']
         request.session['communes_a_geolocaliser'] = None
         return render(request, 'etapes_import.html', context)
     else:

@@ -5,8 +5,6 @@ from collections import namedtuple
 from main.forms import ConfigBDDForm, SelectConfigBDDForm
 from main.models import ConfigurationBDD
 
-# Create your views here.
-
 def applications(request):
     appli_nt = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
     
@@ -28,6 +26,9 @@ def applications(request):
     
     context = {'applis':applis}
     return render(request, 'applications.html', context)
+
+def credits(request):
+    return render(request, 'credits.html')
 
 def configuration_bdd(request):
     # premier chargement de la page

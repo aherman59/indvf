@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     url(r'^$', views.applications, name='applications'),
     url(r'^config_bdd$', views.configuration_bdd, name = 'configuration_bdd'),
+    url(r'^credits$', views.credits, name = 'credits'),
 ]

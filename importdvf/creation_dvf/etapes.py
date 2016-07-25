@@ -142,23 +142,23 @@ def renommage(dvf_plus, fichier_gestion_csv, tables):
 def creation_cadastre(cadastre):
     
     valid, nb = cadastre.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire')
-    valid2, nb = cadastre.effacer_contrainte_si_existante('cadastre', 'parcellaire', 'idpar_pkey')
+    valid2, nb = cadastre.effacer_contrainte_si_existante('cadastre', 'parcellaire', 'parcellaire_pkey')
     valid3, nb = cadastre.ajouter_clef_primaire('cadastre', 'parcellaire', ['idpar'])
     if valid and valid2 and valid3:    
         return True, 'Création de la table cadastre.parcellaire'
     else:
         return False, 'Impossible de créer la table cadastre.parcellaire'
 
-def insertion_parcelle(cadastre, commune):
-    valid, msg = cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire')
+def insertion_parcelle(cadastre, commune, proxy):
+    valid, msg = cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire', proxy = proxy)
     return valid, msg 
 
-def integration_geometries(geomdvf):
+def integration_geometries(geomdvf, effacer_schemas_existants):
     valid, nb = geomdvf.creer_extension_postgis()
-    if valid:
-        valid2, nb = geomdvf.creer_champs_geometriques()
+    if valid:        
+        valid2, nb = geomdvf.creer_champs_geometriques() if effacer_schemas_existants else True, 0
         if valid2:
-            valid3, nb = geomdvf.ajouter_commentaires_champs_geométriques()
+            valid3 = geomdvf.ajouter_commentaires_champs_geométriques()
             if valid3:                
                 valid_local, nb = geomdvf.mise_a_jour_geometries_local_depuis('cadastre', 'parcellaire')
                 valid_parcelle, nb = geomdvf.mise_a_jour_geometries_disposition_parcelle_depuis('cadastre', 'parcellaire')
