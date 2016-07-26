@@ -11,14 +11,20 @@ class Requeteur(PgOutils):
         return [mutation_nt(*mutation) for mutation in mutations]
     
     @classmethod
-    def filtrer_mutations(cls, mutations, typologie, annee_min, annee_max):
+    def filtrer_mutations(cls, mutations, typologie, annee_min, annee_max, valeur_min, valeur_max):
         mutations_filtrees = mutations
         if typologie != 0:
-            mutations_filtrees = [mutation for mutation in mutations_filtrees if int(mutation.codtypbien) == typologie]
+            mutations_filtrees = [mutation for mutation in mutations_filtrees 
+                                  if int(mutation.codtypbien) == typologie]
         if annee_min != 0:
-            mutations_filtrees = [mutation for mutation in mutations_filtrees if int(mutation.anneemut) >= annee_min]
+            mutations_filtrees = [mutation for mutation in mutations_filtrees 
+                                  if int(mutation.anneemut) >= annee_min]
         if annee_max != 0:
-            mutations_filtrees = [mutation for mutation in mutations_filtrees if int(mutation.anneemut) <= annee_max]
+            mutations_filtrees = [mutation for mutation in mutations_filtrees 
+                                  if int(mutation.anneemut) <= annee_max]
+        mutations_filtrees = [mutation for mutation in mutations_filtrees 
+                              if int(mutation.valeurfonc.replace(' ', '')) >= valeur_min 
+                              and int(mutation.valeurfonc.replace(' ', '')) <= valeur_max]
         return mutations_filtrees    
         
     @classmethod

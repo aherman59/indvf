@@ -65,6 +65,32 @@
                 </div>               
             </div>
             
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-minus-circle"></i> Valeur min.</label>
+                <div class="col-sm-2">
+                    <form role="Valeur_minimale" id="form_valeur_min">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-12">
+                                <input class="form-control" name="valeur_min" id="input_valeur_min" type="text" value="{{ request.session.valeur_min }}"></input>
+                            </div>                            
+                        </div>
+                    </form>
+                </div>
+				
+				<label class="col-sm-2 control-label"><i class="fa fa-plus-circle"></i> Valeur max.</label>
+                <div class="col-sm-2">
+                    <form role="Valeur_maximale" id="form_valeur_max">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-12">
+                                <input class="form-control" name="valeur_max" id="input_valeur_max" type="text" value="{{ request.session.valeur_max }}"></input>
+                            </div>                            
+                        </div>
+                    </form>
+                </div>               
+            </div>
+            
                        
     	</div>
     </div>
@@ -208,6 +234,31 @@ $('#select_annee_max').on("change", function() {
        type : 'POST',
        dataType : 'html',
        data : $('#form_annee_max').serialize(),
+       success : function(code_html, statut){       
+		 $('#tableau_mutations').html(code_html);
+       }
+    });
+});
+
+$('#input_valeur_min').on("change", function() {
+    $.ajax({
+       url : '/recherche/modification_affichage_table/{{tri}}/1',
+       type : 'POST',
+       dataType : 'html',
+       data : $('#form_valeur_min').serialize(),
+       success : function(code_html, statut){       
+		 $('#tableau_mutations').html(code_html);
+       }
+    });
+});
+
+
+$('#input_valeur_max').on("change", function() {
+    $.ajax({
+       url : '/recherche/modification_affichage_table/{{tri}}/1',
+       type : 'POST',
+       dataType : 'html',
+       data : $('#form_valeur_max').serialize(),
        success : function(code_html, statut){       
 		 $('#tableau_mutations').html(code_html);
        }

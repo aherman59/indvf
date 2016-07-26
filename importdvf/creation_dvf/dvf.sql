@@ -527,7 +527,7 @@ INSERT INTO {0}.adresse
 (
     SELECT t.no_voie, t.b_t_q, t.code_voie, t.type_de_voie, t.voie, t.code_postal, t.commune, t.idadr_tmp, t.code_departement
     FROM source.{1} t
-    LEFT JOIN {0}.adresse t6 ON t.idadr_tmp=t6.idadrinvar AND t.idadr_tmp not like '%$$$$%' -- eviter les pbs d adresses non renseignees pour contraintes d unicites
+    LEFT JOIN {0}.adresse t6 ON t.idadr_tmp=t6.idadrinvar -- AND t.idadr_tmp not like '%$$$$%' -- eviter les pbs d adresses non renseignees pour contraintes d unicites (ID Bertrand à etudier - m'a fait planter le script / j'aurai tendance a le mettre sur la ligne du dessous)
     WHERE t6.idadresse IS NULL
     GROUP BY t.no_voie, t.b_t_q, t.code_voie, t.type_de_voie, t.voie, t.code_postal, t.commune, t.idadr_tmp, t.code_departement
     ORDER BY t.no_voie, t.b_t_q, t.code_voie, t.type_de_voie, t.voie, t.code_postal, t.commune, t.idadr_tmp, t.code_departement
