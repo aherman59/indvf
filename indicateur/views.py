@@ -129,7 +129,13 @@ def creer_titre_format_html(territoires):
                       + '</span>' for i, territoire in enumerate(territoires)])
     
 def recuperer_et_classer_indicateurs_actifs():
-    return Indicateur.objects.filter(actif=True).order_by('-code_typo', 'annee_debut', 'type_indic', 'periode', 'unite', 'variable', 'nom')
+    return Indicateur.objects.filter(actif=True).order_by('-code_typo', 
+                                                          'annee_debut', 
+                                                          'type_indic', 
+                                                          'periode', 
+                                                          'unite', 
+                                                          'variable', 
+                                                          'nom')
 
 
 def calcul_indicateurs(indicateurs_actifs, calculateur, territoires):

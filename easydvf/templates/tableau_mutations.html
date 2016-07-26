@@ -4,11 +4,15 @@
 </div>
 
 <div class="panel panel-default">
+    
     <div class="panel-heading">
 	    <h3 class="panel-title"><i class="fa fa-filter"></i> Filtre</h3>
     </div>
+    
     <div class="panel-body">
+    
 	    <div class="form-horizontal">
+            
             <div class="form-group">
                 <label class="col-sm-2 control-label"><i class="fa fa-sitemap fa-lg"></i> Type de bien</label>
                 <div class="col-sm-8">
@@ -26,6 +30,42 @@
                     </form>
                 </div>                
             </div>
+            
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-calendar-minus-o"></i> Année min.</label>
+                <div class="col-sm-2">
+                    <form role="Annee_minimale" id="form_annee_min">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-12">
+                                <select class="form-control selecteur" name="annee_min" id="select_annee_min">
+                                    {% for an in annees %}
+                                    <option value="{{ an }}" {% if request.session.annee_min == an %}selected{% endif %}>{{ an }}</option>
+                                    {% endfor %}
+			                    </select> 
+                            </div>                            
+                        </div>
+                    </form>
+                </div>
+				
+				<label class="col-sm-2 control-label"><i class="fa fa-calendar-plus-o"></i> Année max.</label>
+                <div class="col-sm-2">
+                    <form role="Annee_maximale" id="form_annee_max">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-12">
+                                <select class="form-control selecteur" name="annee_max" id="select_annee_max">
+                                    {% for an in annees %}
+                                    <option value="{{ an }}" {% if request.session.annee_max == an %}selected{% endif %}>{{ an }}</option>
+                                    {% endfor %}
+			                    </select> 
+                            </div>                            
+                        </div>
+                    </form>
+                </div>               
+            </div>
+            
+                       
     	</div>
     </div>
 </div>
@@ -149,6 +189,31 @@ $('#select_typo').on("change", function() {
        }
     });
 });
+
+$('#select_annee_min').on("change", function() {
+    $.ajax({
+       url : '/recherche/modification_affichage_table/{{tri}}/1',
+       type : 'POST',
+       dataType : 'html',
+       data : $('#form_annee_min').serialize(),
+       success : function(code_html, statut){       
+		 $('#tableau_mutations').html(code_html);
+       }
+    });
+});
+
+$('#select_annee_max').on("change", function() {
+    $.ajax({
+       url : '/recherche/modification_affichage_table/{{tri}}/1',
+       type : 'POST',
+       dataType : 'html',
+       data : $('#form_annee_max').serialize(),
+       success : function(code_html, statut){       
+		 $('#tableau_mutations').html(code_html);
+       }
+    });
+});
+
 
 // affichage du tableau détaillé de la mutation
 $('.mutation').on("click", function() {

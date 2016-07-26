@@ -7,15 +7,20 @@ class Requeteur(PgOutils):
     
     @classmethod
     def transformer_mutations_en_namedtuple(cls, mutations):
-        mutation_nt = namedtuple('Mutation', ['id', 'datemut', 'valeurfonc', 'sbati', 'sterr', 'nblocmut', 'nbparmut','codtypbien', 'libtypbien'])
+        mutation_nt = namedtuple('Mutation', ['id', 'datemut', 'anneemut', 'valeurfonc', 'sbati', 'sterr', 'nblocmut', 'nbparmut','codtypbien', 'libtypbien'])
         return [mutation_nt(*mutation) for mutation in mutations]
     
     @classmethod
-    def filtrer_mutations(cls, mutations, typologie):
-        if typologie == 0:
-            return mutations
-        return [mutation for mutation in mutations if int(mutation.codtypbien) == typologie]
-    
+    def filtrer_mutations(cls, mutations, typologie, annee_min, annee_max):
+        mutations_filtrees = mutations
+        if typologie != 0:
+            mutations_filtrees = [mutation for mutation in mutations_filtrees if int(mutation.codtypbien) == typologie]
+        if annee_min != 0:
+            mutations_filtrees = [mutation for mutation in mutations_filtrees if int(mutation.anneemut) >= annee_min]
+        if annee_max != 0:
+            mutations_filtrees = [mutation for mutation in mutations_filtrees if int(mutation.anneemut) <= annee_max]
+        return mutations_filtrees    
+        
     @classmethod
     def trier_mutations(cls, mutations, tri):
         if tri.startswith('id'):
@@ -45,9 +50,9 @@ class Requeteur(PgOutils):
         mutations = [list(mutation) for mutation in mutations]
         for mutation in mutations:
             mutation[1] = (mutation[1]).strftime("%d/%m/%Y")
-            mutation[2] = self._separateur_millier(str(round(mutation[2])))
-            mutation[3] = self._separateur_millier(str(mutation[3]))
+            mutation[3] = self._separateur_millier(str(round(mutation[3])))
             mutation[4] = self._separateur_millier(str(mutation[4]))
+            mutation[5] = self._separateur_millier(str(mutation[5]))
         mutations = self.transformer_mutations_en_namedtuple(mutations)
         return mutations
     
