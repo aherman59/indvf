@@ -1,5 +1,7 @@
 from django.db import models
 
+from outils import controle_bdd
+
 
 class ConfigurationBDD(models.Model):
     CHOIX_TYPE_BDD = (('DVF+', 'Base de type DVF+'), ('DV3F','Base de type DV3F'))
@@ -15,6 +17,44 @@ class ConfigurationBDD(models.Model):
 
     def __str__(self):
         return self.nom_config
+    
+    def controleur_bdd(self):
+        return controle_bdd.ControleBDD(self.hote, 
+                                        self.bdd, 
+                                        self.port, 
+                                        self.utilisateur, 
+                                        self.mdp)
+    
+    def verification_configuration(self):
+        test, msg = controle_bdd.tentative_connexion(self.hote, 
+                                                     self.bdd,
+                                                     self.utilisateur,
+                                                     self.mdp,  
+                                                     self.port                                                    
+                                                     )
+        if not test:
+            return False
+        if self.type_bdd == 'DVF+' and not self.controleur_bdd().est_une_base_DVF_plus():
+                return False
+        if self.type_bdd == 'DV3F' and not self.controleur_bdd().est_une_base_DV3F():
+                return False
+        return True
+
+    def departements_disponibles(self):
+        controleurbdd = self.controleur_bdd()
+        departements = [dep[5:] for dep in controleurbdd.schemas_departementaux()]
+        return Departement.objects.filter(code__in=departements)
+    
+    def communes_disponibles(self, departement):
+        controleurbdd = self.controleur_bdd()
+        communes = controleurbdd.lister_codes_insee_commune(departement)
+        return Commune.objects.filter(code__in=communes)
+        
+    def epcis_disponibles(self, departement):
+        controleurbdd = self.controleur_bdd()
+        communes = controleurbdd.lister_codes_insee_commune(departement)
+        epcis = Commune.objects.filter(code__in=communes).values_list('epci', flat=True)
+        return Epci.objects.filter(pk__in = epcis)
 
 class Departement(models.Model):
     nom = models.CharField(max_length=100)

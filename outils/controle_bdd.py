@@ -9,45 +9,7 @@ def tentative_connexion(hote, bdd, utilisateur, mdp, port):
         conn = psycopg2.connect(host=hote, database=bdd, port=port, user=utilisateur, password=mdp)
         return True, 'OK'
     except Exception as e:
-        return False, str(e)
-
-def verification_configuration(configuration):
-    '''
-    Teste si la configuration (entite du modèle ConfigurationBDD de main.Models) est correcte
-    '''    
-    if not configuration:
-        return False
-    
-    hote = configuration.hote
-    bdd = configuration.bdd
-    port = configuration.port
-    utilisateur = configuration.utilisateur
-    mdp = configuration.mdp
-    
-    test, msg = tentative_connexion(hote, bdd, utilisateur, mdp, port)
-    if not test:
-        return False
-    if configuration.type_bdd == 'DVF+':
-        if not ControleBDD(hote, bdd, port, utilisateur, mdp).est_une_base_DVF_plus():
-            return False
-    if configuration.type_bdd ==  'DV3F':
-        if not ControleBDD(hote, bdd, port, utilisateur, mdp).est_une_base_DV3F():
-            return False
-    return True
-
-def departements_disponibles(configuration):
-    
-    if not configuration:
-        return None
-    
-    hote = configuration.hote
-    bdd = configuration.bdd
-    port = configuration.port
-    utilisateur = configuration.utilisateur
-    mdp = configuration.mdp
-        
-    return [dep[5:] for dep in ControleBDD(hote, bdd, port, utilisateur, mdp).schemas_departementaux()]
-    
+        return False, str(e)  
     
 class ControleBDD(PgOutils):
 
@@ -177,6 +139,10 @@ class ControleBDD(PgOutils):
     
     def schemas_departementaux(self):
         return self.lister_schemas_commencant_par('dvf_d')
+    
+    @select_sql_champ_unique
+    def lister_codes_insee_commune(self, departement):
+        pass
     
         
     

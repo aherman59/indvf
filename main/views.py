@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from main import configuration
-from outils import controle_bdd
 from collections import namedtuple
 from main.forms import ConfigBDDForm, SelectConfigBDDForm
 from main.models import ConfigurationBDD
@@ -68,7 +67,7 @@ def _charger_formulaire(request, configform):
                'formulaire_selection' : formulaire_selection,
                'id_config' : 0, 
                'config_active': config_active,
-               'verif_config': controle_bdd.verification_configuration(config_active)}
+               'verif_config': config_active.verification_configuration()}
     return render(request, 'configuration_bdd.html', context)
 
 def _modification_selection(request):
@@ -81,7 +80,7 @@ def _modification_selection(request):
                'formulaire_selection' : formulaire_selection,
                'id_config' : id_config, 
                'config_active': config_active,
-               'verif_config': controle_bdd.verification_configuration(config_active)}
+               'verif_config': config_active.verification_configuration()}
     return render(request, 'configuration_bdd.html', context)
     
 
