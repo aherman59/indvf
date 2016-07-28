@@ -63,11 +63,12 @@ def _charger_formulaire(request, configform):
     formulaire = configform
     formulaire_selection = SelectConfigBDDForm()
     config_active = configuration.configuration_active()
+    verif_bdd = config_active.verification_configuration() if config_active else False
     context = {'formulaire':formulaire, 
                'formulaire_selection' : formulaire_selection,
                'id_config' : 0, 
                'config_active': config_active,
-               'verif_config': config_active.verification_configuration()}
+               'verif_config': verif_bdd,}
     return render(request, 'configuration_bdd.html', context)
 
 def _modification_selection(request):
@@ -76,11 +77,12 @@ def _modification_selection(request):
     formulaire = ConfigBDDForm(instance = config)
     formulaire_selection = SelectConfigBDDForm(initial = {'selection' : id_config })
     config_active = configuration.configuration_active()
+    verif_bdd = config_active.verification_configuration() if config_active else False
     context = {'formulaire':formulaire, 
                'formulaire_selection' : formulaire_selection,
                'id_config' : id_config, 
                'config_active': config_active,
-               'verif_config': config_active.verification_configuration()}
+               'verif_config': verif_bdd}
     return render(request, 'configuration_bdd.html', context)
     
 
