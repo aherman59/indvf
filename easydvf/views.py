@@ -31,7 +31,7 @@ def recherche(request):
         # page de démarrage 
         init = True   
         config_active = configuration.configuration_active()
-        verification_et_enregistrement_configuration_dans_session(request, config_active) 
+        return verification_et_enregistrement_configuration_dans_session(request, config_active) 
     else:
         init = False
         config_active = ConfigurationBDD.objects.get(pk = request.session['config'])
