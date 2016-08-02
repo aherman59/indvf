@@ -15,13 +15,7 @@ def applications(request):
                        version='1.0', 
                        classe_fa='fa fa-map', 
                        image = 'img/export.jpg', 
-                       url='import:formulaire_configuration'),
-              appli_nt(nom='GeoDV3F', 
-                       description='Application permettant des visualisations cartographiques à partir de DV3F.', 
-                       version='1.0', 
-                       classe_fa='fa fa-map', 
-                       image = 'img/geo.jpg', 
-                       url='import:formulaire_configuration')]
+                       url='import:formulaire_configuration'),]
     
     context = {'applis':applis}
     return render(request, 'applications.html', context)

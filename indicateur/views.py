@@ -29,7 +29,9 @@ def indicateurs(request):
         # page de démarrage 
         init = True   
         config_active = configuration.configuration_active()
-        return verification_et_enregistrement_configuration_dans_session(request, config_active) 
+        verif = verification_et_enregistrement_configuration_dans_session(request, config_active)
+        if not verif:
+             return redirect('main:configuration_bdd') 
     else:
         init = False
         config_active = ConfigurationBDD.objects.get(pk = request.session['config'])
@@ -61,11 +63,12 @@ def indicateurs(request):
 def verification_et_enregistrement_configuration_dans_session(request, config_active):
     if config_active:
         if config_active.verification_configuration():
-            request.session['config'] = int(config_active.pk)                
+            request.session['config'] = int(config_active.pk)
+            return True                
         else:
-            return redirect('main:configuration_bdd')
+            return False
     else:
-        return redirect('main:configuration_bdd')
+        return False
 
 def recuperation_code_departement_actif(request, departements, init):            
     if init:    
