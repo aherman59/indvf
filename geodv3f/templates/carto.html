@@ -2,7 +2,67 @@
 {% load staticfiles %}
  
 {% block contenu %}
+
+<link rel="stylesheet" href="http://openlayers.org/en/v3.17.1/css/ol.css" type="text/css">  
+<script src="http://openlayers.org/en/v3.17.1/build/ol.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.14/proj4.js"></script>
     
+<div id="map" class="map"></div>
+
+<script src="{% static 'ol/style.js' %}"></script>
+<script>
+
+//définition repère Lambert93
+proj4.defs("EPSG:2154","+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+/*var geomparSource = new ol.source.Vector({
+	loader: function(extent, resolution, projection) {
+    	var url = '/geo/requete/geompar/' + extent.join('/');
+    	$.ajax(url).then(function(response) {
+		  var geojsonFormat = new ol.format.GeoJSON();
+		  var features = geojsonFormat.readFeatures(response,
+		      {featureProjection: 'EPSG:2154'});
+		  geomparSource.clear();
+		  geomparSource.addFeatures(features);
+		});
+	},
+	strategy: ol.loadingstrategy.bbox
+});*/
+
+var geomparSource = new ol.source.Vector({
+    format: new ol.format.GeoJSON(),
+    strategy: ol.loadingstrategy.bbox,
+    url: function(extent, resolution, projection){
+    	geomparSource.clear();
+    	return '/geo/requete/geompar/' + extent.join('/');}
+});
+
+var geomparLayer = new ol.layer.Vector({
+    source: geomparSource,
+    style: styleFunction
+});
+
+var map = new ol.Map({
+	layers: [
+	         new ol.layer.Tile({
+	        	 source: new ol.source.OSM()
+	         }),
+	         geomparLayer,
+	         ],
+	         target: 'map',
+	         controls: ol.control.defaults({
+	        	 attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+	        		 collapsible: false
+	        	 })
+	         }),
+	         view: new ol.View({
+	        	 projection: 'EPSG:2154',
+	        	 center: [704075, 7059437],
+	        	 zoom: 15
+	         })
+});
+
+</script>
 
 {% endblock %}
 
