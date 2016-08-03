@@ -29,6 +29,14 @@
     display:none;
 }
 
+.info-mutation {
+     color:#09c;
+     background:rgba(0,0,0,.9);
+     padding:15px;
+     border-radius:3px;
+     box-shadow:0 0 2px rgba(0,0,0,.5);
+}
+
 .color0-indvf {
  color: #3880aa;
 }

@@ -1,7 +1,8 @@
+import json
 from pg.pgbasics import *
 from collections import namedtuple
 from datetime import datetime
-from outils.controle_bdd import ControleBDD
+from .controle_bdd import ControleBDD
 
 class Requeteur(PgOutils):
     
@@ -47,9 +48,11 @@ class Requeteur(PgOutils):
             mutations_triees.reverse()
         return mutations_triees
     
-    def __init__(self, hote, base, port, utilisateur, motdepasse, script):
-        super().__init__(hote, base, port, utilisateur, motdepasse, script)        
-        self.base = 'DV3F' if ControleBDD(hote, base, port, utilisateur, motdepasse).est_une_base_DV3F() else 'DVF+'
+    def __init__(self, hote, base, port, utilisateur, motdepasse, script = None):
+        super().__init__(hote, base, port, utilisateur, motdepasse, script)
+        ctrlbdd = ControleBDD(hote, base, port, utilisateur, motdepasse)        
+        self.base = 'DV3F' if ctrlbdd.est_une_base_DV3F() else 'DVF+'
+        self.geobase = True if ctrlbdd.a_les_champs_geometriques() else False
  
     def mutations(self, codes_insee):
         mutations = self.recuperer_mutations_dv3f(codes_insee) if self.base == 'DV3F' else self.recuperer_mutations_dvf_plus(codes_insee)        
@@ -61,6 +64,34 @@ class Requeteur(PgOutils):
             mutation[5] = self._separateur_millier(str(mutation[5]))
         mutations = self.transformer_mutations_en_namedtuple(mutations)
         return mutations
+    
+    def mutations_en_geojson(self, geometrie, xmin, ymin, xmax, ymax, epsg = '2154'):
+        '''
+        Renvoie un dictionnaire avec toutes les informations pour créer un objet 'FeatureCollection' geojson 
+        interprétable par OpenLayers.  
+        '''
+        if self.geobase:
+            mutations = self.recuperer_mutations_avec_geometrie(geometrie, xmin, ymin, xmax, ymax, epsg)
+            entites = []
+            for mutation in mutations:
+                entite = {}
+                entite['type'] = 'feature'
+                entite['properties'] = {
+                                        'idmutation' : mutation[0], 
+                                        'codtypbien':mutation[1],
+                                        'valeurfonc': mutation[2],
+                                        }
+                entite['geometry'] = json.loads(mutation[3])
+                entites.append(entite)
+            collection = {}
+            collection['type'] = 'FeatureCollection'
+            collection['crs'] = {
+                            'type': 'name',
+                            'properties': {'name': 'EPSG:{0}'.format(epsg)},
+                            }
+            collection['features'] = entites
+            return collection
+        return None    
     
     def mutation_detaillee(self, id):
         resultat = self.recuperer_mutation_detaillee_dv3f(id) if self.base == 'DV3F' else self.recuperer_mutation_detaillee_dvf_plus(id)
@@ -75,15 +106,23 @@ class Requeteur(PgOutils):
     
     @select_sql_avec_modification_args
     def recuperer_mutations_dvf_plus(self, codes_insee):
-        return ("', '".join(codes_insee),)
+        codtypbien = self.requete_sql['_CODTYPBIEN']
+        libtypbien = self.requete_sql['_LIBTYPBIEN']
+        return ("', '".join(codes_insee), codtypbien, libtypbien)
     
     @select_sql
     def recuperer_mutation_detaillee_dv3f(self, id):
         pass
     
-    @select_sql
+    @select_sql_avec_modification_args
     def recuperer_mutation_detaillee_dvf_plus(self, id):
-        pass
+        libtypbien = self.requete_sql['_LIBTYPBIEN']
+        return (id, libtypbien)
+    
+    @select_sql_avec_modification_args
+    def recuperer_mutations_avec_geometrie(self, champ_geometrie, xmin, ymin, xmax, ymax, epsg='2154'):
+        codtypbien = self.requete_sql['_CODTYPBIEN']
+        return champ_geometrie, xmin, ymin, xmax, ymax, epsg, codtypbien
     
     def _separateur_millier(self, nombre, sep = ' '):
         if nombre:

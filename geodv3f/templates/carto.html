@@ -8,6 +8,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.14/proj4.js"></script>
     
 <div id="map" class="map"></div>
+<div id="info_mutation" class="info-mutation"></div>
 
 <script src="{% static 'ol/style.js' %}"></script>
 <script>
@@ -39,7 +40,33 @@ var geomparSource = new ol.source.Vector({
 
 var geomparLayer = new ol.layer.Vector({
     source: geomparSource,
-    style: styleFunction
+    style: fct_styleParcellaire,
+});
+
+var geomparmutSource = new ol.source.Vector({
+    format: new ol.format.GeoJSON(),
+    strategy: ol.loadingstrategy.bbox,
+    url: function(extent, resolution, projection){
+    	geomparmutSource.clear();
+    	return '/geo/requete/geomparmut/' + extent.join('/');}
+});
+
+var geomparmutLayer = new ol.layer.Vector({
+    source: geomparmutSource,
+    style: fct_styleParcelles,
+});
+
+var geomlocmutSource = new ol.source.Vector({
+    format: new ol.format.GeoJSON(),
+    strategy: ol.loadingstrategy.bbox,
+    url: function(extent, resolution, projection){
+    	geomlocmutSource.clear();
+    	return '/geo/requete/geomlocmut/' + extent.join('/');}
+});
+
+var geomlocmutLayer = new ol.layer.Vector({
+    source: geomlocmutSource,
+    style: fct_styleLocaux
 });
 
 var map = new ol.Map({
@@ -48,6 +75,8 @@ var map = new ol.Map({
 	        	 source: new ol.source.OSM()
 	         }),
 	         geomparLayer,
+	         geomparmutLayer,
+	         geomlocmutLayer,
 	         ],
 	         target: 'map',
 	         controls: ol.control.defaults({
@@ -60,6 +89,49 @@ var map = new ol.Map({
 	        	 center: [704075, 7059437],
 	        	 zoom: 15
 	         })
+});
+map.addControl(new ol.control.ZoomSlider())
+
+var selectionParcelle = new ol.interaction.Select({
+	condition: ol.events.condition.click,
+	style: function(feature, res) { 
+		return new ol.style.Style({
+			stroke: new ol.style.Stroke({
+				color: 'red',
+				lineDash: [4],
+				width: 2
+			}),
+			fill: new ol.style.Fill({
+				color: 'rgba(255, 0, 0, 0.4)'
+			})
+		}); },
+		layers: [geomparLayer]
+});
+map.addInteraction(selectionParcelle);
+var entites_selectionnees = selectionParcelle.getFeatures()
+entites_selectionnees.on('add', affichage_info_mutation);
+
+var info = new ol.Overlay({
+	element: document.getElementById('info_mutation'),
+	positioning: 'bottom-center'
+});
+
+function affichage_info_mutation(){
+	var entites = selectionParcelle.getFeatures();
+	var entite0 = entites.getArray()[0];
+	var coord = (entite0.getGeometry().getCoordinates())[0][0];
+	var element = info.getElement();
+	element.innerHTML = 'type: ' + entite0.get('codtypbien') + '<br/>Valeur : ' + entite0.get('valeurfonc');
+	info.setPosition(coord);
+	map.addOverlay(info);
+	$(element).show();
+}
+
+map.on('click', function(event) {          
+	var element = info.getElement();
+	if ($(element).is(":visible")) {
+		$(element).hide();
+	}          
 });
 
 </script>

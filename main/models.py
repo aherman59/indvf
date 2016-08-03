@@ -39,6 +39,11 @@ class ConfigurationBDD(models.Model):
         if self.type_bdd == 'DV3F' and not self.controleur_bdd().est_une_base_DV3F():
                 return False
         return True
+    
+    def est_une_geobase(self):
+        if self.controleur_bdd().a_les_champs_geometriques():
+            return True
+        return False
 
     def departements_disponibles(self):
         controleurbdd = self.controleur_bdd()

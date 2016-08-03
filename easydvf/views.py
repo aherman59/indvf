@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .recherche.requetes import Requeteur
+from outils.interrogation_bdd import Requeteur
 from main.territoire import integration
 from main import configuration
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire

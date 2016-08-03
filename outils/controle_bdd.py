@@ -102,7 +102,6 @@ class ControleBDD(PgOutils):
             if not set(self.TABLES_DVF_PLUS).issubset(set(tables)):
                 return False
         tables = self.lister_tables('dvf_annexe')
-        print([champ[1] for champ in self.lister_champs('dvf', 'local')])
         if not set(self.TABLES_ANNEXES).issubset(set(tables)):
                 return False
         return True
@@ -121,12 +120,15 @@ class ControleBDD(PgOutils):
         return self._comparaison_champs(correspondance)
     
     def a_les_champs_dv3f(self):
-        print([champ[1] for champ in self.lister_champs('dvf', 'mutation')])
-        print([champ[1] for champ in self.lister_champs('dvf', 'disposition_parcelle')])
-        print([champ[1] for champ in self.lister_champs('dvf', 'local')])
         correspondance = {'mutation' : self.CHAMPS_MUTATION_DV3F, 
                           'disposition_parcelle' : self.CHAMPS_DISPOSITION_PARCELLE_DV3F,
                           'local' : self.CHAMPS_LOCAL_DV3F}
+        return self._comparaison_champs(correspondance)
+    
+    def a_les_champs_geometriques(self):
+        correspondance = {'mutation' : ['geompar', 'geomparmut', 'geomlocmut'], 
+                          'disposition_parcelle' : ['geompar', 'geomloc'],
+                          'local' : ['geomloc'],}
         return self._comparaison_champs(correspondance)
         
     def _comparaison_champs(self, correspondance):
