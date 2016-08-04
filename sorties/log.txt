@@ -1,14 +1,1 @@
 LOG - INTEGRATION DES DONNEES BRUTES DVF
-tmp_0|Nombre de lignes avant intégration|Nombre de lignes après intégration|Nombre de lignes intégrées
-Table mutation : 0|1327|1327
-Table mutation_article_cgi : 0|1309|1309
-Table disposition : 0|1339|1339
-Table parcelle : 0|1200|1200
-Table disposition_parcelle : 0|1537|1537
-Table adresse : 0|1241|1241
-Table local : 0|1996|1996
-Table volume : 0|27|27
-Table suf : 0|683|683
-Table lot : 0|1686|1686
-Table adresse_dispoparc : 0|1647|1647
-Table adresse_local : 0|1996|1996

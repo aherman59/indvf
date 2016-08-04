@@ -10,65 +10,47 @@
 <div id="map" class="map"></div>
 <div id="info_mutation" class="info-mutation"></div>
 
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title"><i class="fa fa-search"></i> Détail</h3>
+	</div>
+	<div class="panel-body">
+		<div id="tableau_mutation">Aucune mutation selectionnée.</div>
+	</div>
+</div>
+
 <script src="{% static 'ol/style.js' %}"></script>
 <script>
-
 //définition repère Lambert93
 proj4.defs("EPSG:2154","+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 
-/*var geomparSource = new ol.source.Vector({
-	loader: function(extent, resolution, projection) {
-    	var url = '/geo/requete/geompar/' + extent.join('/');
-    	$.ajax(url).then(function(response) {
-		  var geojsonFormat = new ol.format.GeoJSON();
-		  var features = geojsonFormat.readFeatures(response,
-		      {featureProjection: 'EPSG:2154'});
-		  geomparSource.clear();
-		  geomparSource.addFeatures(features);
-		});
-	},
-	strategy: ol.loadingstrategy.bbox
-});*/
+//fonction de définition de source
+function sourceGeometrie(champgeom){
+	source = new ol.source.Vector({
+	    format: new ol.format.GeoJSON(),
+	    strategy: ol.loadingstrategy.bbox,
+	    url: function(extent, resolution, projection){
+	    	source.clear();
+	    	return '/geo/requete/'+ champgeom +'/' + extent.join('/');}
+	});
+	return source;
+};
 
-var geomparSource = new ol.source.Vector({
-    format: new ol.format.GeoJSON(),
-    strategy: ol.loadingstrategy.bbox,
-    url: function(extent, resolution, projection){
-    	geomparSource.clear();
-    	return '/geo/requete/geompar/' + extent.join('/');}
-});
-
+// définition des couches geompar, geomparmut, geomlocmut
 var geomparLayer = new ol.layer.Vector({
-    source: geomparSource,
+    source: sourceGeometrie('geompar'),
     style: fct_styleParcellaire,
 });
-
-var geomparmutSource = new ol.source.Vector({
-    format: new ol.format.GeoJSON(),
-    strategy: ol.loadingstrategy.bbox,
-    url: function(extent, resolution, projection){
-    	geomparmutSource.clear();
-    	return '/geo/requete/geomparmut/' + extent.join('/');}
-});
-
 var geomparmutLayer = new ol.layer.Vector({
-    source: geomparmutSource,
+    source: sourceGeometrie('geomparmut'),
     style: fct_styleParcelles,
 });
-
-var geomlocmutSource = new ol.source.Vector({
-    format: new ol.format.GeoJSON(),
-    strategy: ol.loadingstrategy.bbox,
-    url: function(extent, resolution, projection){
-    	geomlocmutSource.clear();
-    	return '/geo/requete/geomlocmut/' + extent.join('/');}
-});
-
 var geomlocmutLayer = new ol.layer.Vector({
-    source: geomlocmutSource,
+    source: sourceGeometrie('geomlocmut'),
     style: fct_styleLocaux
 });
 
+// définition de la carte
 var map = new ol.Map({
 	layers: [
 	         new ol.layer.Tile({
@@ -92,8 +74,10 @@ var map = new ol.Map({
 });
 map.addControl(new ol.control.ZoomSlider())
 
+// selecteur sur couche geompar
 var selectionParcelle = new ol.interaction.Select({
 	condition: ol.events.condition.click,
+	multi: true,
 	style: function(feature, res) { 
 		return new ol.style.Style({
 			stroke: new ol.style.Stroke({
@@ -105,33 +89,52 @@ var selectionParcelle = new ol.interaction.Select({
 				color: 'rgba(255, 0, 0, 0.4)'
 			})
 		}); },
-		layers: [geomparLayer]
+	layers: [geomparLayer]
 });
 map.addInteraction(selectionParcelle);
-var entites_selectionnees = selectionParcelle.getFeatures()
-entites_selectionnees.on('add', affichage_info_mutation);
 
+// Affichage informations sur la sélection 
+var entites_selectionnees = selectionParcelle.getFeatures()
+entites_selectionnees.on('add', affichage_infos_mutations);
 var info = new ol.Overlay({
 	element: document.getElementById('info_mutation'),
 	positioning: 'bottom-center'
 });
 
-function affichage_info_mutation(){
+function affichage_infos_mutations(){
 	var entites = selectionParcelle.getFeatures();
 	var entite0 = entites.getArray()[0];
 	var coord = (entite0.getGeometry().getCoordinates())[0][0];
 	var element = info.getElement();
-	element.innerHTML = 'type: ' + entite0.get('codtypbien') + '<br/>Valeur : ' + entite0.get('valeurfonc');
+	var txt_info = '';
+	entites.forEach(function(entite){
+		txt_info += '<p>' + entite.get('libtypbien') +
+		'<br/>Valeur : ' + entite.get('valeurfonc') + ' €' +
+		'<br/> Date : ' + entite.get('datemut') +
+		'<br/> Bati : ' + entite.get('sbati') + 'm2 (' + entite.get('nblocmut') + ' loc.)' +
+		'<br/> Terrain : ' + entite.get('sterr') + 'm2 (' + entite.get('nbparmut') + ' parc.)' + '</p>';
+	})
+	element.innerHTML = txt_info;
 	info.setPosition(coord);
 	map.addOverlay(info);
 	$(element).show();
+	
+	$.ajax({
+       	url : '/geo/detail/' + entite0.get('idmutation'),
+       	type : 'GET',
+       	dataType : 'html',
+       	success : function(code_html, statut){        
+		 $('#tableau_mutation').html(code_html);
+       }
+    });
 }
 
 map.on('click', function(event) {          
 	var element = info.getElement();
 	if ($(element).is(":visible")) {
 		$(element).hide();
-	}          
+	}
+	$('#tableau_mutation').html('Aucune mutation selectionnée.');
 });
 
 </script>

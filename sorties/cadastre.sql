@@ -5024,4 +5024,365 @@ WHERE m.idmutation = t.idmutation;
 UPDATE dvf.mutation m
 SET geompar = t.geompar
 FROM (SELECT idmutation, ST_UNION(geompar) AS geompar FROM dvf.disposition_parcelle GROUP BY idmutation) t
-WHERE m.idmutation = t.idmutation;
+WHERE m.idmutation = t.idmutation;SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+ALTER TABLE cadastre.parcellaire DROP CONSTRAINT IF EXISTS parcellaire_pkey;
+
+ALTER TABLE cadastre.parcellaire 
+ADD CONSTRAINT parcellaire_pkey PRIMARY KEY (idpar);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59001%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59002%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59003%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59004%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59005%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59006%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59007%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59008%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59009%';
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire4(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire4 WHERE idpar LIKE '00001%';
+SELECT count(*) FROM cadastre.parcellaire4;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire5(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire5 WHERE idpar LIKE '59001%';
+SELECT count(*) FROM cadastre.parcellaire5;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire2(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire2 WHERE idpar LIKE '59001%';
+SELECT * FROM cadastre.parcellaire2CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire0(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT schema_name FROM information_schema.schemata;
+
+SELECT tablename 
+FROM pg_tables 
+WHERE schemaname = 'cadastre';
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire1(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire3(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire3 WHERE idpar LIKE '59001%';
+SELECT * FROM cadastre.parcellaire3CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire4(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire4 WHERE idpar LIKE '00001%';
+SELECT count(*) FROM cadastre.parcellaire4;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire5(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire5 WHERE idpar LIKE '59001%';
+SELECT count(*) FROM cadastre.parcellaire5;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire2(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire2 WHERE idpar LIKE '59001%';
+SELECT * FROM cadastre.parcellaire2CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire0(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT schema_name FROM information_schema.schemata;
+
+SELECT tablename 
+FROM pg_tables 
+WHERE schemaname = 'cadastre';
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire1(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire3(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire3 WHERE idpar LIKE '59009%';
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire4(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire4 WHERE idpar LIKE '00001%';
+SELECT count(*) FROM cadastre.parcellaire4;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire5(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire5 WHERE idpar LIKE '59001%';
+SELECT count(*) FROM cadastre.parcellaire5;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire2(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire2 WHERE idpar LIKE '59001%';
+SELECT * FROM cadastre.parcellaire2CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire0(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT schema_name FROM information_schema.schemata;
+
+SELECT tablename 
+FROM pg_tables 
+WHERE schemaname = 'cadastre';
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire1(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire3(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire3 WHERE idpar LIKE '59009%';
+SELECT * FROM cadastre.parcellaire3CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire4(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire4 WHERE idpar LIKE '00001%';
+SELECT count(*) FROM cadastre.parcellaire4;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire5(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire5 WHERE idpar LIKE '59001%';
+SELECT count(*) FROM cadastre.parcellaire5;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire2(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire2 WHERE idpar LIKE '59001%';
+SELECT * FROM cadastre.parcellaire2CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire0(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT schema_name FROM information_schema.schemata;
+
+SELECT tablename 
+FROM pg_tables 
+WHERE schemaname = 'cadastre';
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire1(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT count(*) FROM cadastre.parcellaire1;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire1(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT count(*) FROM cadastre.parcellaire1;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire3(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire3 WHERE idpar LIKE '59009%';

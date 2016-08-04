@@ -81,7 +81,8 @@ class Cadastre(PgOutils):
     
     def inserer_multi_parcelles(self, schema, table, valeurs, epsg = '2154'):
         geompar = 'st_transform(ST_SetSRID(ST_PolygonFromText({1}), 4326), {0})'.format(epsg, '%s')
-        geompar_valid = 'CASE WHEN NOT ST_ISVALID({0}) THEN ST_COLLECTIONEXTRACT(ST_MAKEVALID({0}),3) ELSE {0} END'.format(geompar)
+        geompar_makevalid = 'ST_COLLECTIONEXTRACT(st_transform(ST_SetSRID(ST_MakeValid(ST_PolygonFromText({1})), 4326), {0}), 3)'.format(epsg, '%s')
+        geompar_valid = 'CASE WHEN NOT ST_ISVALID({0}) THEN {1} ELSE {0} END'.format(geompar, geompar_makevalid)
         geomloc = 'st_PointOnSurface({0})'.format(geompar)
         source = 'API CADASTRE'
         vecteur = 'V'

@@ -39,4 +39,15 @@ def requete_geom(request, geom, xmin, ymin, xmax, ymax):
     geomutations = Requeteur(*(request.session['params'])).mutations_en_geojson(geom, xmin, ymin, xmax, ymax)
     return JsonResponse(geomutations)
 
+'''
+
+REQUETE AJAX AFFICHAGE DETAIL MUTATION
+
+'''
+
+def requete_detail_mutation(request, id):
+    requeteur = Requeteur(*(request.session['params']))
+    mutation = requeteur.mutation_detaillee(id)
+    return render(request, 'detail_mutation.html', {'mutation':mutation, 'identifiant' : id})
+
 # eof

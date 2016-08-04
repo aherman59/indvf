@@ -160,7 +160,7 @@ class TestCadastre(unittest.TestCase):
     
     def test_la_table_nest_pas_recreee_si_existante(self):
         reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire1')
-        self.cada.execution('''INSERT INTO cadastre.parcellaire1 VALUES('62', '62001000ZZ0123', 25.1, NULL, 'source_inconnue', 'V')''')
+        self.cada.execution('''INSERT INTO cadastre.parcellaire1 VALUES('62', '62001000ZZ0123', 25.1, NULL, NULL, 'source_inconnue', 'V')''')
         nb_lignes = self.cada.compter('cadastre', 'parcellaire1')
         self.assertEqual(nb_lignes, 1)
         reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire1')
@@ -178,12 +178,12 @@ class TestCadastre(unittest.TestCase):
     
     def test_les_parcelles_recuperees_pour_la_commune_sont_bien_inserees(self):
         reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire3')
-        self.cada.inserer_parcelles_communales('59001', 'cadastre', 'parcellaire3')
+        self.cada.inserer_parcelles_communales('59009', 'cadastre', 'parcellaire3')
         lignes = self.cada.execution_et_recuperation('''SELECT * FROM cadastre.parcellaire3''')
         self.assertTrue(len(lignes) > 0)
         for ligne in lignes:
             self.assertEqual(ligne[0], '59')
-            self.assertEqual(ligne[1][:5], '59001')
+            self.assertEqual(ligne[1][:5], '59009')
             
     def test_aucune_parcelle_inseree_si_code_INSEE_incorrect_et_renvoi_message_erreur(self):
         reussite, nb = self.cada.creer_table_parcelles_si_inexistante('cadastre', 'parcellaire4')

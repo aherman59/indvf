@@ -117,7 +117,7 @@ SELECT codservch, refdoc, nblocmut, nbparmut, {1} --libtypbien
 FROM dvf.mutation WHERE idmutation = {0};
 
 ## RECUPERER_MUTATIONS_AVEC_GEOMETRIE
-SELECT idmutation, {6}, valeurfonc, ST_ASGEOJSON({0})
+SELECT idmutation, {6}, {7}, valeurfonc, datemut, sbati, sterr, nblocmut, nbparmut, ST_ASGEOJSON({0})
 FROM dvf.mutation 
 WHERE {0} IS NOT NULL 
 AND {0} && ST_MAKEENVELOPE({1}, {2}, {3}, {4}, {5});

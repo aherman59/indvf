@@ -79,9 +79,15 @@ class Requeteur(PgOutils):
                 entite['properties'] = {
                                         'idmutation' : mutation[0], 
                                         'codtypbien':mutation[1],
-                                        'valeurfonc': mutation[2],
+                                        'libtypbien':mutation[2],
+                                        'valeurfonc': self._separateur_millier(str(mutation[3])),
+                                        'datemut': (mutation[4]).strftime("%d/%m/%Y"),
+                                        'sbati': str(mutation[5]),
+                                        'sterr': str(mutation[6]),
+                                        'nblocmut': str(mutation[7]),
+                                        'nbparmut': str(mutation[8]),
                                         }
-                entite['geometry'] = json.loads(mutation[3])
+                entite['geometry'] = json.loads(mutation[9])
                 entites.append(entite)
             collection = {}
             collection['type'] = 'FeatureCollection'
@@ -122,7 +128,8 @@ class Requeteur(PgOutils):
     @select_sql_avec_modification_args
     def recuperer_mutations_avec_geometrie(self, champ_geometrie, xmin, ymin, xmax, ymax, epsg='2154'):
         codtypbien = self.requete_sql['_CODTYPBIEN']
-        return champ_geometrie, xmin, ymin, xmax, ymax, epsg, codtypbien
+        libtypbien = self.requete_sql['_LIBTYPBIEN']
+        return champ_geometrie, xmin, ymin, xmax, ymax, epsg, codtypbien, libtypbien
     
     def _separateur_millier(self, nombre, sep = ' '):
         if nombre:
