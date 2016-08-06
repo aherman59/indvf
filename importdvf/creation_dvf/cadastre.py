@@ -80,19 +80,19 @@ class Cadastre(PgOutils):
     
     
     def inserer_multi_parcelles(self, schema, table, valeurs, epsg = '2154'):
-        geompar = 'st_transform(ST_SetSRID(ST_PolygonFromText({1}), 4326), {0})'.format(epsg, '%s')
-        geompar_makevalid = 'ST_COLLECTIONEXTRACT(st_transform(ST_SetSRID(ST_MakeValid(ST_PolygonFromText({1})), 4326), {0}), 3)'.format(epsg, '%s')
-        geompar_valid = 'CASE WHEN NOT ST_ISVALID({0}) THEN {1} ELSE {0} END'.format(geompar, geompar_makevalid)
-        geomloc = 'st_PointOnSurface({0})'.format(geompar)
+        #geompar = 'st_transform(ST_SetSRID(ST_PolygonFromText(%s), 4326), {0})'.format(epsg)
+        geompar_makevalid = 'ST_COLLECTIONEXTRACT(st_transform(ST_SetSRID(ST_MakeValid(ST_PolygonFromText(%s)), 4326), {0}), 3)'.format(epsg)
+        #geompar_valid = 'CASE WHEN NOT ST_ISVALID(ST_PolygonFromText(%s)) THEN {1} ELSE {0} END'.format(geompar, geompar_makevalid)
+        geomloc = 'st_PointOnSurface({0})'.format(geompar_makevalid)
         source = 'API CADASTRE'
         vecteur = 'V'
-        insert = "INSERT INTO {0} VALUES (%s, %s, %s, {1}, {2}, '{3}', '{4}');".format(schema + '.' + table, geompar_valid, geomloc, source, vecteur)
+        insert = "INSERT INTO {0} VALUES (%s, %s, %s, {1}, {2}, '{3}', '{4}');".format(schema + '.' + table, geompar_makevalid, geomloc, source, vecteur)
         return self.execution_multiple(insert, valeurs)
         
     def creer_valeurs_sql(self, parcelle):        
         liste_point = ', '.join([str(point[0]) + ' ' + str(point[1]) for point in parcelle.coordonnees])
         geometrie = "POLYGON((" + liste_point + "))"                    
-        valeurs = (parcelle.departement, parcelle.idpar, float(parcelle.surface), geometrie, geometrie, geometrie, geometrie)
+        valeurs = (parcelle.departement, parcelle.idpar, float(parcelle.surface), geometrie, geometrie)
         return valeurs        
     
     def recuperer_parcelles(self, code_insee, proxy = None):
@@ -217,16 +217,37 @@ class GeomDVF(PgOutils):
                 return False
         return True
     
-    @requete_sql
     def mise_a_jour_geometries_local_depuis(self, schema, table):
+        for schema_departemental in self.schemas_departementaux:
+            valid, nb = self.mise_a_jour_geometries_local_pour_departement_depuis(schema, table, schema_departemental)
+            if not valid:
+                return False
+        return True
+    
+    def mise_a_jour_geometries_disposition_parcelle_depuis(self, schema, table):
+        for schema_departemental in self.schemas_departementaux:
+            valid, nb = self.mise_a_jour_geometries_disposition_parcelle_pour_departement_depuis(schema, table, schema_departemental)
+            if not valid:
+                return False
+        return True
+    
+    def mise_a_jour_geometries_mutation(self):
+        for schema_departemental in self.schemas_departementaux:
+            valid, nb = self.mise_a_jour_geometries_mutation_pour_departement(schema_departemental)
+            if not valid:
+                return False
+        return True
+    
+    @requete_sql
+    def mise_a_jour_geometries_local_pour_departement_depuis(self, schema, table, schema_departemental):
         pass
     
     @requete_sql
-    def mise_a_jour_geometries_disposition_parcelle_depuis(self, schema, table):
+    def mise_a_jour_geometries_disposition_parcelle_pour_departement_depuis(self, schema, table, schema_departemental):
         pass
 
     @requete_sql
-    def mise_a_jour_geometries_mutation(self):
+    def mise_a_jour_geometries_mutation_pour_departement(self,  schema_departemental):
         pass
     
 #eof

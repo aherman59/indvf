@@ -76,6 +76,7 @@ class Requeteur(PgOutils):
             for mutation in mutations:
                 entite = {}
                 entite['type'] = 'feature'
+                entite['id'] = mutation[0]
                 entite['properties'] = {
                                         'idmutation' : mutation[0], 
                                         'codtypbien':mutation[1],

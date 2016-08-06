@@ -32,11 +32,12 @@ class ConfigForm(forms.Form):
             self.add_error('__all__', msg_erreur)
         
         # test acces aux données cadastre si demande d'intégration des géométries
-        cada = Cadastre(hote, bdd, port, utilisateur, mdp)
-        reussite, donnees = cada.recuperer_donnees_json_commune('59001', proxy = proxy)
-        if not reussite:
-            msg_erreur = "Le test de récupération des données géométriques a échoué."
-            self.add_error('__all__', msg_erreur)      
+        if geolocaliser:
+            cada = Cadastre(hote, bdd, port, utilisateur, mdp)
+            reussite, donnees = cada.recuperer_donnees_json_commune('59001', proxy = proxy)
+            if not reussite:
+                msg_erreur = "Le test de récupération des données géométriques a échoué."
+                self.add_error('__all__', msg_erreur)      
 
         if ' ' in bdd:
             msg_erreur = "Saisie incorrecte du nom de la base"

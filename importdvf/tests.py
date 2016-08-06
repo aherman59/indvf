@@ -20,6 +20,7 @@ fichier_gestion_csv = os.path.join(repertoire_ressources,'champs_dvf.csv')
 fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
                         os.path.join(repertoire_ressources,'natcult.csv'),
                         os.path.join(repertoire_ressources,'natcultspe.csv'))
+fichiers_ordonnes = ['./importdvf/creation_dvf/ressources/ValeursFoncieres-ZZ000001-0000-echantillon-bouchonne.txt']
 
 class TestCadastre(unittest.TestCase):
     
@@ -330,6 +331,7 @@ class TestImportDVF(TestCase):
                               'mdp':mdp, 
                               'port':port, 
                               'chemin_dossier':chemin_dossier,
+                              'geolocaliser': False,
                               'proxy':None}
         url = reverse('import:etape_import', kwargs={'etape':'0'})
         reponse = self.client.post(url, data=donnees_formulaire)
@@ -397,5 +399,25 @@ class TestImportDVF(TestCase):
         reponse = self.client.post(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertIn('"etape_suivante": "300"', str(reponse.content, encoding='UTF-8'))
     
+    def test_lancement_etape_300(self):       
         
+        session = self.client.session
+        session['dossier'] = chemin_dossier 
+        session['parametres_connexion'] = (hote, bdd, port, utilisateur, mdp) 
+        session['effacer_schemas_existants']=True
+        session['geolocaliser']=False 
+        session['communes_a_geolocaliser']=None 
+        session['proxy']=None
+        session['departements']=['62', '59']
+        session['etapes'] = [
+                            (0, 1, '5', '', (None,),'Vérification des fichiers sources'),
+                            (1, 2, '10', 'verification', (None,),'Creation des schémas et tables du modèle DVF'),
+                            (2, 300, '15', 'creation', ('DVF', fichier_gestion_csv, fichiers_annexes, session['effacer_schemas_existants'],), 'Import des données sources DVF - Fichier X'),
+                            (300, 301, '55', 'import', ('DVF', fichiers_ordonnes[0], 'tmp_0'), 'Intégration dans DVF du fichier X')
+                            ]
+        session.save()
+
+        url = reverse('import:etape_import', kwargs={'etape':'300'})
+        reponse = self.client.post(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertIn('"etape_suivante": "301"', str(reponse.content, encoding='UTF-8'))    
     

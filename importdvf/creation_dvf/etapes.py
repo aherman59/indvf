@@ -160,9 +160,9 @@ def integration_geometries(geomdvf, effacer_schemas_existants):
         if valid2:
             valid3 = geomdvf.ajouter_commentaires_champs_geométriques()
             if valid3:                
-                valid_local, nb = geomdvf.mise_a_jour_geometries_local_depuis('cadastre', 'parcellaire')
-                valid_parcelle, nb = geomdvf.mise_a_jour_geometries_disposition_parcelle_depuis('cadastre', 'parcellaire')
-                valid_mutation, nb = geomdvf.mise_a_jour_geometries_mutation()
+                valid_local = geomdvf.mise_a_jour_geometries_local_depuis('cadastre', 'parcellaire')
+                valid_parcelle = geomdvf.mise_a_jour_geometries_disposition_parcelle_depuis('cadastre', 'parcellaire')
+                valid_mutation = geomdvf.mise_a_jour_geometries_mutation()
                 if not (valid_local and valid_parcelle and valid_mutation):
                     return False, 'Impossible d\'intégrer les géométries dans DVF+.'
             else:

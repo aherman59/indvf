@@ -13,30 +13,30 @@ ALTER TABLE dvf.mutation ADD COLUMN geomlocmut geometry;
 ALTER TABLE dvf.mutation ADD COLUMN geomparmut geometry;
 ALTER TABLE dvf.mutation ADD COLUMN geompar geometry;
 
-## MISE_A_JOUR_GEOMETRIES_LOCAL_DEPUIS
-UPDATE dvf.local l
+## MISE_A_JOUR_GEOMETRIES_LOCAL_POUR_DEPARTEMENT_DEPUIS
+UPDATE {2}.local l
 SET geomloc = t.geomloc
 FROM {0}.{1} t
 WHERE l.idpar = t.idpar;
 
-## MISE_A_JOUR_GEOMETRIES_DISPOSITION_PARCELLE_DEPUIS
-UPDATE dvf.disposition_parcelle d
+## MISE_A_JOUR_GEOMETRIES_DISPOSITION_PARCELLE_POUR_DEPARTEMENT_DEPUIS
+UPDATE {2}.disposition_parcelle d
 SET geomloc = t.geomloc, geompar = t.geompar
 FROM {0}.{1} t
 WHERE d.idpar = t.idpar;
 
-## MISE_A_JOUR_GEOMETRIES_MUTATION
-UPDATE dvf.mutation m
+## MISE_A_JOUR_GEOMETRIES_MUTATION_POUR_DEPARTEMENT
+UPDATE {0}.mutation m
 SET geomlocmut = t.geomlocmut
-FROM (SELECT idmutation, ST_UNION(geomloc) AS geomlocmut FROM dvf.local GROUP BY idmutation) t
+FROM (SELECT idmutation, ST_UNION(geomloc) AS geomlocmut FROM {0}.local GROUP BY idmutation) t
 WHERE m.idmutation = t.idmutation;
 
-UPDATE dvf.mutation m
+UPDATE {0}.mutation m
 SET geomparmut = t.geomparmut
-FROM (SELECT idmutation, ST_UNION(geompar) AS geomparmut FROM dvf.disposition_parcelle WHERE parcvendue IS TRUE GROUP BY idmutation) t
+FROM (SELECT idmutation, ST_UNION(geompar) AS geomparmut FROM {0}.disposition_parcelle WHERE parcvendue IS TRUE GROUP BY idmutation) t
 WHERE m.idmutation = t.idmutation;
 
-UPDATE dvf.mutation m
+UPDATE {0}.mutation m
 SET geompar = t.geompar
-FROM (SELECT idmutation, ST_UNION(geompar) AS geompar FROM dvf.disposition_parcelle GROUP BY idmutation) t
+FROM (SELECT idmutation, ST_UNION(geompar) AS geompar FROM {0}.disposition_parcelle GROUP BY idmutation) t
 WHERE m.idmutation = t.idmutation;
