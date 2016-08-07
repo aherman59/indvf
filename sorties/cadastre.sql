@@ -12773,4 +12773,30 @@ WHERE m.idmutation = t.idmutation;
 UPDATE dvf_d59.mutation m
 SET geompar = t.geompar
 FROM (SELECT idmutation, ST_UNION(geompar) AS geompar FROM dvf_d59.disposition_parcelle GROUP BY idmutation) t
-WHERE m.idmutation = t.idmutation;
+WHERE m.idmutation = t.idmutation;SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+ALTER TABLE cadastre.parcellaire DROP CONSTRAINT IF EXISTS parcellaire_pkey;
+
+ALTER TABLE cadastre.parcellaire 
+ADD CONSTRAINT parcellaire_pkey PRIMARY KEY (idpar);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59220%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59328%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59346%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59350%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59368%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59386%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59410%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59507%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59527%';

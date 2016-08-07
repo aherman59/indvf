@@ -40,3 +40,8 @@ UPDATE {0}.mutation m
 SET geompar = t.geompar
 FROM (SELECT idmutation, ST_UNION(geompar) AS geompar FROM {0}.disposition_parcelle GROUP BY idmutation) t
 WHERE m.idmutation = t.idmutation;
+
+## CREER_INDEX_GEOMETRIQUES_POUR_DEPARTEMENT
+CREATE INDEX IF NOT EXISTS geompar_gist ON {0}.mutation USING gist (geompar);
+CREATE INDEX IF NOT EXISTS geomparmut_gist ON {0}.mutation USING gist (geomparmut);
+CREATE INDEX IF NOT EXISTS geomlocmut_gist ON {0}.mutation USING gist (geolocmut);

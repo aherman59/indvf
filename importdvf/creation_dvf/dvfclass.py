@@ -591,6 +591,9 @@ class DVF_PLUS(DVFMere):
             valid = self.renommage_tables(table, 2)
             if not valid:
                 return False
+        valid = self.creation_index_dvf_plus()
+        if not valid:
+            return False
         return True
     
     '''
@@ -736,5 +739,16 @@ SELECT \n\t''' % {'schema':schema, 'table':table + '_plus', 'variable':', '.join
         for table_pour_creation in tableDVF.lister_tables_pour_creation():
             champs.append([table_pour_creation, tableDVF.lister_nom_variables_ayant_table_creation(table_pour_creation)])        
         return champs
+    
+    def creation_index_dvf_plus(self):
+        for schema in self.schemas_departementaux:
+            valid, nb = self.creer_index_gin_champ_lcodinsee(schema)
+            if not valid:
+                return False
+        return True
+    
+    @requete_sql
+    def creer_index_gin_champ_lcodinsee(self, schema):
+        pass
 
 # eof

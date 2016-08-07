@@ -238,6 +238,13 @@ class GeomDVF(PgOutils):
                 return False
         return True
     
+    def creer_index_geometriques(self):
+        for schema_departemental in self.schemas_departementaux:
+            valid, nb =self.creer_index_geometriques_pour_departement(schema_departemental)
+            if not valid:
+                return False
+        return True
+    
     @requete_sql
     def mise_a_jour_geometries_local_pour_departement_depuis(self, schema, table, schema_departemental):
         pass
@@ -248,6 +255,10 @@ class GeomDVF(PgOutils):
 
     @requete_sql
     def mise_a_jour_geometries_mutation_pour_departement(self,  schema_departemental):
+        pass
+    
+    @requete_sql
+    def creer_index_geometriques_pour_departement(self, schema_departemental):
         pass
     
 #eof
