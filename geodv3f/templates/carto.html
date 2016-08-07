@@ -100,7 +100,6 @@ var selectionParcelle = new ol.interaction.Select({
 map.addInteraction(selectionParcelle);
 
 // Affichage informations sur la sélection 
-var entites_selectionnees = selectionParcelle.getFeatures()
 selectionParcelle.on('select', affichage_infos_mutations);
 var info = new ol.Overlay({
 	element: document.getElementById('info_mutation'),

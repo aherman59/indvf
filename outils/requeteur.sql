@@ -109,11 +109,41 @@ FROM dvf.mutation
 WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
 
 ## RECUPERER_MUTATION_DETAILLEE_DV3F
-SELECT codservch, refdoc, nblocmut, nbparmut, libtypbien 
-ROM dvf.mutation WHERE idmutation = {0};
+SELECT idmutation,
+	   codservch, 
+	   refdoc, 
+	   datemut,
+	   valeurfonc,
+	   nblocmut,
+	   l_idlocmut, 
+	   nbparmut,
+	   l_idparmut, 
+	   libtypbien 
+FROM dvf.mutation WHERE idmutation = {0};
+
+## RECUPERER_LOCAUX_DV3F
+SELECT idloc, 
+	   sbati,
+	   libtyploc
+FROM dvf.local WHERE idmutation = {0}; 
+
+## RECUPERER_LOCAUX_DVF_PLUS
+SELECT idloc, 
+	   sbati,
+	   libtyploc
+FROM dvf.local WHERE idmutation = {0}; 
 
 ## RECUPERER_MUTATION_DETAILLEE_DVF_PLUS
-SELECT codservch, refdoc, nblocmut, nbparmut, {1} --libtypbien
+SELECT idmutation,
+	   codservch, 
+	   refdoc, 
+	   datemut,
+	   valeurfonc,
+	   nblocmut,
+	   l_idlocmut, 
+	   nbparmut,
+	   l_idparmut, 
+	   {1} --libtypbien
 FROM dvf.mutation WHERE idmutation = {0};
 
 ## RECUPERER_MUTATIONS_AVEC_GEOMETRIE

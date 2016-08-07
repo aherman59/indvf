@@ -101,11 +101,37 @@ class Requeteur(PgOutils):
         return None    
     
     def mutation_detaillee(self, id):
-        resultat = self.recuperer_mutation_detaillee_dv3f(id) if self.base == 'DV3F' else self.recuperer_mutation_detaillee_dvf_plus(id)
+        mutation = None
+        mutation_detaillee_nt = namedtuple('Mutation_Detail', ['idmutation',
+                                                               'codservch', 
+                                                               'refdoc',
+                                                               'datemut',
+                                                               'valeurfonc', 
+                                                               'nblocmut',
+                                                               'l_idlocmut', 
+                                                               'nbparmut', 
+                                                               'l_idparmut',
+                                                               'libtypbien'])
+        if self.base == 'DV3F':
+            resultat = self.recuperer_mutation_detaillee_dv3f(id)
+        else:
+            resultat = self.recuperer_mutation_detaillee_dvf_plus(id)
         mutation = list(resultat[0])
-        mutation_detaillee_nt = namedtuple('Mutation_Detail', ['codservch', 'refdoc', 'nblocmut', 'nbparmut', 'libtypbien'])
         mutation = mutation_detaillee_nt(*mutation)
-        return mutation 
+        return mutation
+    
+    def locaux_detaillees(self, id):
+        locaux =[]
+        local_nt = namedtuple('Local', ['idloc', 'sbati', 'libtyploc'])
+        if self.base == 'DV3F':
+            resultat = self.recuperer_locaux_dv3f(id)
+        else:
+            resultat = self.recuperer_locaux_dvf_plus(id)
+        for ligne in resultat:
+            local = list(ligne)
+            local = local_nt(*local)
+            locaux.append(local)
+        return locaux 
     
     @select_sql_avec_modification_args
     def recuperer_mutations_dv3f(self, codes_insee):
@@ -125,6 +151,14 @@ class Requeteur(PgOutils):
     def recuperer_mutation_detaillee_dvf_plus(self, id):
         libtypbien = self.requete_sql['_LIBTYPBIEN']
         return (id, libtypbien)
+    
+    @select_sql
+    def recuperer_locaux_dv3f(self, id):
+        pass
+    
+    @select_sql
+    def recuperer_locaux_dvf_plus(self, id):
+        pass
     
     @select_sql_avec_modification_args
     def recuperer_mutations_avec_geometrie(self, champ_geometrie, xmin, ymin, xmax, ymax, epsg='2154'):

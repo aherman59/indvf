@@ -198,6 +198,7 @@ REQUETE AJAX AFFICHAGE DETAIL MUTATION
 def recherche_detaillee(request, id):
     requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')
     mutation = requeteur.mutation_detaillee(id)
-    return render(request, 'detail_mutation.html', {'mutation':mutation, 'identifiant' : id})
+    locaux = requeteur.locaux_detaillees(id)
+    return render(request, 'detail_mutation.html', {'mutation':mutation, 'locaux': locaux})
 
 
