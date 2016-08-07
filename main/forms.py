@@ -1,6 +1,6 @@
 from django import forms
 from main.models import ConfigurationBDD
-from outils.controle_bdd import tentative_connexion, ControleBDD
+from outils import controle_bdd
 
 
 class ConfigBDDForm(forms.ModelForm):
@@ -35,16 +35,19 @@ class ConfigBDDForm(forms.ModelForm):
         port = cleaned_data.get('port') or ''
         type_bdd = cleaned_data.get('type_bdd') or ''
 
-        test_connexion, msg_erreur = tentative_connexion(hote, bdd, utilisateur, mdp, port)
+        test_connexion, msg_erreur = controle_bdd.tentative_connexion(hote, bdd, utilisateur, mdp, port)
         if not test_connexion:
             self.add_error('__all__', msg_erreur)
         else:
-            ctrlbdd = ControleBDD(hote, bdd, port, utilisateur, mdp)
+            ctrlbdd = controle_bdd.ControleBDD(hote, bdd, port, utilisateur, mdp)
             if type_bdd == 'DVF+':
                 test = ctrlbdd.est_une_base_DVF_plus()
                 if not test:
-                    self.add_error('__all__', "La base spécifiée n'est pas une base DVF+ valide")
-          
+                    self.add_error('__all__', "La base spécifiée n'est pas une base DVF+ valide.")
+            elif type_bdd == 'DV3F':
+                test = ctrlbdd.est_une_base_DV3F()
+                if not test:
+                    self.add_error('__all__', "La base spécifiée n'est pas une base DV3F valide.")
 
         return cleaned_data
         
