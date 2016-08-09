@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from main import configuration
 from pg.pgbasics import *
 from .calcul.indicateurs import IndicateurDVF, CalculIndicateur
 from main.territoire import integration 
@@ -28,7 +27,7 @@ def indicateurs(request):
     if request.method != 'POST' and request.get_full_path() == '/indicateur/':
         # page de démarrage 
         init = True   
-        config_active = configuration.configuration_active()
+        config_active = ConfigurationBDD.objects.configuration_active()
         verif = verification_et_enregistrement_configuration_dans_session(request, config_active)
         if not verif:
              return redirect('main:configuration_bdd') 
@@ -87,44 +86,31 @@ def recuperation_epcis_communes(request, config_active, code_departement, init):
 
 def generer_territoire_etude(request):
     if 'voir_departement' in request.POST:
-        t = recreer_territoire_comparaison()
+        t = Territoire.objects.territoire_comparaison_reinitialise()
         t.ajouter_departement(request.session['departement'])        
     elif 'voir_epci' in request.POST:
         request.session['epci'] = int(request.POST['epci'])
-        t = recreer_territoire_comparaison()
+        t = Territoire.objects.territoire_comparaison_reinitialise()
         t.ajouter_epci(request.session['epci'])        
     elif 'voir_commune' in request.POST:
         request.session['commune'] = int(request.POST['commune'])
-        t = recreer_territoire_comparaison()
+        t = Territoire.objects.territoire_comparaison_reinitialise()
         t.ajouter_commune(request.session['commune'])        
     elif 'ajout_departement' in request.POST:
-        t = territoire_comparaison()
+        t = Territoire.objects.territoire_comparaison()
         t.ajouter_departement(request.session['departement'])
     elif 'ajout_epci' in request.POST:
         request.session['epci'] = int(request.POST['epci'])
-        t = territoire_comparaison()
+        t = Territoire.objects.territoire_comparaison()
         t.ajouter_epci(request.session['epci'])
     elif 'ajout_commune' in request.POST:
         request.session['commune'] = int(request.POST['commune'])
-        t = territoire_comparaison()
+        t = Territoire.objects.territoire_comparaison()
         t.ajouter_commune(request.session['commune'])
     else:
-        t = territoire_comparaison()
-    territoires = (
-                    list(t.departements.all()) 
-                    + list(t.epcis.all()) 
-                    + list(t.communes.all())
-                   )
+        t = Territoire.objects.territoire_comparaison()
+    territoires = t.lister_entites_administratives()
     return territoires
-
-def recreer_territoire_comparaison():
-    if len(Territoire.objects.filter(nom = 'comparaison')):
-        Territoire.objects.get(nom = 'comparaison').delete()
-    t = Territoire.objects.create(nom = 'comparaison')
-    return t
-
-def territoire_comparaison():
-    return Territoire.objects.get(nom = 'comparaison')
 
 def creer_titre_format_html(territoires):
     return ', '.join(['<span class="color'+ str(i) + '-indvf">' 

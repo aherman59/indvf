@@ -13,14 +13,14 @@ bdd = 'test_appdvf'
 utilisateur = 'postgres'
 mdp = 'postgres'
 port = '5432'
-chemin_dossier = './importdvf/creation_dvf/ressources'
+chemin_dossier = './data_test'
 
 repertoire_ressources = os.path.join(BASE_DIR, 'importdvf/creation_dvf/ressources') 
 fichier_gestion_csv = os.path.join(repertoire_ressources,'champs_dvf.csv')
 fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
                         os.path.join(repertoire_ressources,'natcult.csv'),
                         os.path.join(repertoire_ressources,'natcultspe.csv'))
-fichiers_ordonnes = ['./importdvf/creation_dvf/ressources/ValeursFoncieres-ZZ000001-0000-echantillon-bouchonne.txt']
+fichiers_ordonnes = ['./data_test/ValeursFoncieres-ZZ000001-0000-echantillon-bouchonne.txt']
 
 class TestCadastre(unittest.TestCase):
     
@@ -362,7 +362,7 @@ class TestImportDVF(TestCase):
     
     def test_lancement_etape_1_sur_repertoire_sans_fichiers_txt(self):       
         session = self.client.session
-        session['dossier'] = os.path.dirname(chemin_dossier) # pas de fichiers txt 
+        session['dossier'] = './importdvf/creation_dvf/ressources' # pas de fichiers txt 
         session['parametres_connexion'] = (hote, bdd, port, utilisateur, mdp) 
         session['effacer_schemas_existants']=True
         session['geolocaliser']=False 

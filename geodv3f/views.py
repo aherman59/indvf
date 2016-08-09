@@ -3,7 +3,7 @@ from pg.pgbasics import *
 from django.shortcuts import render
 from django.http import JsonResponse
 from outils.interrogation_bdd import Requeteur
-from main import configuration
+from main.models import ConfigurationBDD
 
 def carto(request):
     '''
@@ -11,7 +11,7 @@ def carto(request):
     
     La clef 'params' de request.session conserve les paramètres de configuration de la bdd.
     '''
-    config_active = configuration.configuration_active()
+    config_active = ConfigurationBDD.objects.configuration_active()
     verif = verification_geoconfiguration(request, config_active)
     if not verif:
         return redirect('main:configuration_bdd')
@@ -48,6 +48,7 @@ REQUETE AJAX AFFICHAGE DETAIL MUTATION
 def requete_detail_mutation(request, id):
     requeteur = Requeteur(*(request.session['params']))
     mutation = requeteur.mutation_detaillee(id)
-    return render(request, 'detail_mutation.html', {'mutation':mutation, 'identifiant' : id})
+    locaux = requeteur.locaux_detailles(id)
+    return render(request, 'detail_mutation.html', {'mutation':mutation, 'locaux' : locaux})
 
 # eof

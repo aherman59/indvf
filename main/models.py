@@ -2,6 +2,20 @@ from django.db import models
 
 from outils import controle_bdd
 
+class ConfigurationManager(models.Manager):
+    '''
+    Manager du modèle ConfigurationBDD
+    '''
+    def configuration_active(self):
+        try: 
+            return self.get(active=True)
+        except Exception as e:
+            return None
+    
+    def desactiver_configurations(self):
+        for config in self.all():
+            config.active = False
+            config.save()
 
 class ConfigurationBDD(models.Model):
     CHOIX_TYPE_BDD = (('DVF+', 'Base de type DVF+'), ('DV3F','Base de type DV3F'))
@@ -14,9 +28,15 @@ class ConfigurationBDD(models.Model):
     type_bdd = models.CharField(max_length=4, choices=CHOIX_TYPE_BDD)
     active = models.BooleanField()
     date_creation = models.DateField(auto_now_add=True)
+    
+    objects = ConfigurationManager()
 
     def __str__(self):
         return self.nom_config
+    
+    def activer(self):
+        self.active = True
+        self.save()
     
     def controleur_bdd(self):
         return controle_bdd.ControleBDD(self.hote, 
@@ -26,6 +46,9 @@ class ConfigurationBDD(models.Model):
                                         self.mdp)
     
     def verification_configuration(self):
+        '''
+        Verifie que la configuration correspond bien au type de bdd spécifié (DVF+ ou DV3F)
+        '''
         test, msg = controle_bdd.tentative_connexion(self.hote, 
                                                      self.bdd,
                                                      self.utilisateur,
@@ -99,11 +122,24 @@ class Commune(models.Model):
     def type(self):
         return 'commune'
 
+class TerritoireManager(models.Manager):
+    
+    def territoire_comparaison(self):
+        return self.get(nom = 'comparaison')
+    
+    def territoire_comparaison_reinitialise(self):
+        if len(self.filter(nom = 'comparaison')):
+            self.get(nom = 'comparaison').delete()
+        return self.create(nom = 'comparaison')
+    
+
 class Territoire(models.Model):
     nom = models.CharField(max_length = 100, unique = True)
     departements = models.ManyToManyField(Departement)
     epcis = models.ManyToManyField(Epci)
     communes = models.ManyToManyField(Commune)
+    
+    objects = TerritoireManager()
     
     def __str__(self):
         return self.nom
@@ -123,4 +159,9 @@ class Territoire(models.Model):
         self.communes.add(pk)
         self.save()
 
-
+    def lister_entites_administratives(self):
+        return (
+                list(self.departements.all()) 
+                + list(self.epcis.all()) 
+                + list(self.communes.all())
+                   )

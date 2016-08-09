@@ -115,23 +115,43 @@ SELECT idmutation,
 	   datemut,
 	   valeurfonc,
 	   nblocmut,
-	   l_idlocmut, 
+	   nblot, 
 	   nbparmut,
-	   l_idparmut, 
+	   nbvolmut, 
 	   libtypbien 
 FROM dvf.mutation WHERE idmutation = {0};
 
 ## RECUPERER_LOCAUX_DV3F
-SELECT idloc, 
+SELECT idloc,
+	   idpar, 
 	   sbati,
+	   nbpprinc,
 	   libtyploc
 FROM dvf.local WHERE idmutation = {0}; 
 
 ## RECUPERER_LOCAUX_DVF_PLUS
-SELECT idloc, 
+SELECT idloc,
+	   idpar, 
 	   sbati,
+	   nbpprinc,
 	   libtyploc
 FROM dvf.local WHERE idmutation = {0}; 
+
+## ADRESSES_ASSOCIEES
+SELECT COALESCE(novoie::VARCHAR, '') || 
+		COALESCE(btq, '') || ' ' || 
+		COALESCE(typvoie, '') || ' ' || 
+		COALESCE(voie, '') || ' ' || 
+		COALESCE(codepostal, '') || ' ' || 
+		COALESCE(commune, '') 
+FROM dvf.adresse a
+JOIN
+(
+	SELECT idadresse AS idadresse FROM dvf.adresse_dispoparc WHERE idmutation = {0}
+	UNION
+	SELECT idadresse FROM dvf.adresse_local WHERE idmutation = {0}
+) t
+ON a.idadresse = t.idadresse
 
 ## RECUPERER_MUTATION_DETAILLEE_DVF_PLUS
 SELECT idmutation,
@@ -140,9 +160,9 @@ SELECT idmutation,
 	   datemut,
 	   valeurfonc,
 	   nblocmut,
-	   l_idlocmut, 
+	   nblot, 
 	   nbparmut,
-	   l_idparmut, 
+	   nbvolmut, 
 	   {1} --libtypbien
 FROM dvf.mutation WHERE idmutation = {0};
 

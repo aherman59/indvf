@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from main import configuration
 from collections import namedtuple
 from main.forms import ConfigBDDForm, SelectConfigBDDForm
 from main.models import ConfigurationBDD
+from main import configuration
 
 def applications(request):
     appli_nt = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
@@ -43,12 +43,12 @@ def configuration_bdd(request):
     if 'activation' in request.POST:
         id_config = int(request.POST['selection_config'])
         if id_config == 0: # nouvelle entree
-            actif, configform = configuration.creer_et_activer_nouvelle_configuration(request.POST)
+            actif, configform = creer_et_activer_nouvelle_configuration(request.POST)
             if not actif:
                 return _charger_formulaire(request, configform)
         else: # mise à jour
             config_choisie = ConfigurationBDD.objects.get(pk = id_config)
-            actif, configform = configuration.maj_et_activer_configuration(request.POST, config_choisie)
+            actif, configform = maj_et_activer_configuration(request.POST, config_choisie)
             if not actif:
                 return _charger_formulaire(request, configform)
         return redirect('main:applications') 
@@ -56,7 +56,7 @@ def configuration_bdd(request):
 def _charger_formulaire(request, configform):
     formulaire = configform
     formulaire_selection = SelectConfigBDDForm()
-    config_active = configuration.configuration_active()
+    config_active = ConfigurationBDD.objects.configuration_active()
     verif_bdd = config_active.verification_configuration() if config_active else False
     context = {'formulaire':formulaire, 
                'formulaire_selection' : formulaire_selection,
@@ -70,7 +70,7 @@ def _modification_selection(request):
     config = ConfigurationBDD.objects.get(pk = id_config)
     formulaire = ConfigBDDForm(instance = config)
     formulaire_selection = SelectConfigBDDForm(initial = {'selection' : id_config })
-    config_active = configuration.configuration_active()
+    config_active = ConfigurationBDD.objects.configuration_active()
     verif_bdd = config_active.verification_configuration() if config_active else False
     context = {'formulaire':formulaire, 
                'formulaire_selection' : formulaire_selection,
@@ -78,11 +78,26 @@ def _modification_selection(request):
                'config_active': config_active,
                'verif_config': verif_bdd}
     return render(request, 'configuration_bdd.html', context)
-    
 
+def creer_et_activer_nouvelle_configuration(valeurs_configform):
+    configform = ConfigBDDForm(valeurs_configform)
+    if configform.is_valid():
+        ConfigurationBDD.objects.desactiver_configurations()
+        nvelle_config = configform.save(commit=False)
+        nvelle_config.activer()
+        return True, configform
+    else:
+        return False, configform
 
-
-
+def maj_et_activer_configuration(valeurs_configform, config_choisie):
+    configform = ConfigBDDForm(valeurs_configform, instance = config_choisie)
+    if configform.is_valid():
+        ConfigurationBDD.objects.desactiver_configurations()
+        configform.save() 
+        config_choisie.activer()
+        return True, configform
+    else:
+        return False, configform
 
 
 

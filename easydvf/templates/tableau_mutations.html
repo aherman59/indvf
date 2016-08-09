@@ -1,3 +1,4 @@
+{% load general_extras %}
 
 <div class="row page-header" id="resultats">
         <h3><i class="fa fa-search"></i> Résultats pour {{request.session.titre}}</h3>
@@ -72,7 +73,7 @@
                         {% csrf_token %} 
                         <div class="form-group">
                             <div class = "col-sm-12">
-                                <input class="form-control" name="valeur_min" id="input_valeur_min" type="text" value="{{ request.session.valeur_min }}"></input>
+                                <input class="form-control" name="valeur_min" id="input_valeur_min" type="text" value="{{ request.session.valeur_min|separateur_millier }}"></input>
                             </div>                            
                         </div>
                     </form>
@@ -84,7 +85,7 @@
                         {% csrf_token %} 
                         <div class="form-group">
                             <div class = "col-sm-12">
-                                <input class="form-control" name="valeur_max" id="input_valeur_max" type="text" value="{{ request.session.valeur_max }}"></input>
+                                <input class="form-control" name="valeur_max" id="input_valeur_max" type="text" value="{{ request.session.valeur_max|separateur_millier }}"></input>
                             </div>                            
                         </div>
                     </form>
@@ -148,11 +149,11 @@
                 <td>{{forloop.counter}}</td>
                 <td class="text-center">{{mutation.id}}</td>                
                 <td class="text-center">{{mutation.datemut}}</td>
-                <td class="text-center">{{mutation.valeurfonc}}</td>
-                <td class="text-center">{{mutation.sbati}}</td>
-                <td class="text-center">{{mutation.nblocmut}}</td>
-                <td class="text-center">{{mutation.sterr}}</td>
-                <td class="text-center">{{mutation.nbparmut}}</td>
+                <td class="text-center">{{mutation.valeurfonc|separateur_millier}}</td>
+                <td class="text-center">{{mutation.sbati|separateur_millier}}</td>
+                <td class="text-center">{{mutation.nblocmut|separateur_millier}}</td>
+                <td class="text-center">{{mutation.sterr|separateur_millier}}</td>
+                <td class="text-center">{{mutation.nbparmut|separateur_millier}}</td>
                 <td><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
                 </td>
             </tr>

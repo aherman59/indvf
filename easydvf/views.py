@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from outils.interrogation_bdd import Requeteur
 from main.territoire import integration
-from main import configuration
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 
 '''
@@ -30,7 +29,7 @@ def recherche(request):
     if request.method != 'POST' and request.get_full_path() == '/recherche/':
         # page de démarrage 
         init = True   
-        config_active = configuration.configuration_active()
+        config_active = ConfigurationBDD.objects.configuration_active()
         verif = verification_et_enregistrement_configuration_dans_session(request, config_active)
         if not verif:
              return redirect('main:configuration_bdd') 
@@ -111,8 +110,8 @@ def recuperation_mutations_dans_session(request):
 def calculer_possibilites_filtre(request):
     request.session['typologies'] = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) for mutation in request.session['mutations']] + [(0, 'Tous')]), key = lambda x : x[1])    
     request.session['annees'] = sorted(set([int(mutation.anneemut) for mutation in request.session['mutations']]))
-    request.session['valeur_min_existante'] = min([int(mutation.valeurfonc.replace(' ', '')) for mutation in request.session['mutations']])
-    request.session['valeur_max_existante'] = max([int(mutation.valeurfonc.replace(' ', '')) for mutation in request.session['mutations']])
+    request.session['valeur_min_existante'] = min([float(mutation.valeurfonc) for mutation in request.session['mutations']])
+    request.session['valeur_max_existante'] = max([float(mutation.valeurfonc) for mutation in request.session['mutations']])
 
 
 '''
@@ -132,6 +131,10 @@ def maj_tableau(request, page, tri):
                                             valeur_max = request.session['valeur_max'],)
     mutations = Requeteur.trier_mutations(mutations, tri)  
     mutations = mutations_ds_page(page, mutations, 50)    
+
+    
+    
+    
     context = {'mutations': mutations, 
                'tri' : tri,
                'typologies' : request.session['typologies'],
@@ -197,8 +200,11 @@ REQUETE AJAX AFFICHAGE DETAIL MUTATION
 
 def recherche_detaillee(request, id):
     requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')
-    mutation = requeteur.mutation_detaillee(id)
-    locaux = requeteur.locaux_detaillees(id)
-    return render(request, 'detail_mutation.html', {'mutation':mutation, 'locaux': locaux})
+    mutation = requeteur.mutation_detaillee(id) or []
+    locaux = requeteur.locaux_detailles(id) or []
+    adresses = requeteur.adresses_associees(id) or []
+    return render(request, 'detail_mutation.html', {'mutation':mutation, 
+                                                    'locaux': locaux, 
+                                                    'adresses': ', '.join(adresses)})
 
 

@@ -8,7 +8,16 @@ class Requeteur(PgOutils):
     
     @classmethod
     def transformer_mutations_en_namedtuple(cls, mutations):
-        mutation_nt = namedtuple('Mutation', ['id', 'datemut', 'anneemut', 'valeurfonc', 'sbati', 'sterr', 'nblocmut', 'nbparmut','codtypbien', 'libtypbien'])
+        mutation_nt = namedtuple('Mutation', ['id', 
+                                              'datemut', 
+                                              'anneemut', 
+                                              'valeurfonc', 
+                                              'sbati', 
+                                              'sterr', 
+                                              'nblocmut', 
+                                              'nbparmut',
+                                              'codtypbien', 
+                                              'libtypbien'])
         return [mutation_nt(*mutation) for mutation in mutations]
     
     @classmethod
@@ -24,8 +33,8 @@ class Requeteur(PgOutils):
             mutations_filtrees = [mutation for mutation in mutations_filtrees 
                                   if int(mutation.anneemut) <= annee_max]
         mutations_filtrees = [mutation for mutation in mutations_filtrees 
-                              if int(mutation.valeurfonc.replace(' ', '')) >= valeur_min 
-                              and int(mutation.valeurfonc.replace(' ', '')) <= valeur_max]
+                              if float(mutation.valeurfonc) >= valeur_min 
+                              and float(mutation.valeurfonc) <= valeur_max]
         return mutations_filtrees    
         
     @classmethod
@@ -35,13 +44,13 @@ class Requeteur(PgOutils):
         elif tri.startswith('datemut'):
             mutations_triees = sorted(mutations, key=lambda x: datetime.strptime(x.datemut, '%d/%m/%Y'))
         elif tri.startswith('valeurfonc'):
-            mutations_triees = sorted(mutations, key=lambda x: int(x.valeurfonc.replace(' ', '')))
+            mutations_triees = sorted(mutations, key=lambda x: float(x.valeurfonc))
         elif tri.startswith('sbati'):
-            mutations_triees = sorted(mutations, key=lambda x: int(x.sbati.replace(' ', '')))
+            mutations_triees = sorted(mutations, key=lambda x: int(x.sbati))
         elif tri.startswith('nblocmut'):
             mutations_triees = sorted(mutations, key=lambda x: int(x.nblocmut))
         elif tri.startswith('sterr'):
-            mutations_triees = sorted(mutations, key=lambda x: int(x.sterr.replace(' ', '')))
+            mutations_triees = sorted(mutations, key=lambda x: int(x.sterr))
         elif tri.startswith('nbparmut'):
             mutations_triees = sorted(mutations, key=lambda x: int(x.nbparmut))
         if tri.endswith('desc'):
@@ -59,9 +68,9 @@ class Requeteur(PgOutils):
         mutations = [list(mutation) for mutation in mutations]
         for mutation in mutations:
             mutation[1] = (mutation[1]).strftime("%d/%m/%Y")
-            mutation[3] = self._separateur_millier(str(round(mutation[3])))
-            mutation[4] = self._separateur_millier(str(mutation[4]))
-            mutation[5] = self._separateur_millier(str(mutation[5]))
+            mutation[3] = str(mutation[3])
+            mutation[4] = str(mutation[4])
+            mutation[5] = str(mutation[5])
         mutations = self.transformer_mutations_en_namedtuple(mutations)
         return mutations
     
@@ -81,7 +90,7 @@ class Requeteur(PgOutils):
                                         'idmutation' : mutation[0], 
                                         'codtypbien':mutation[1],
                                         'libtypbien':mutation[2],
-                                        'valeurfonc': self._separateur_millier(str(mutation[3])),
+                                        'valeurfonc': mutation[3],
                                         'datemut': (mutation[4]).strftime("%d/%m/%Y"),
                                         'sbati': str(mutation[5]),
                                         'sterr': str(mutation[6]),
@@ -108,9 +117,9 @@ class Requeteur(PgOutils):
                                                                'datemut',
                                                                'valeurfonc', 
                                                                'nblocmut',
-                                                               'l_idlocmut', 
+                                                               'nblot', 
                                                                'nbparmut', 
-                                                               'l_idparmut',
+                                                               'nbvolmut',
                                                                'libtypbien'])
         if self.base == 'DV3F':
             resultat = self.recuperer_mutation_detaillee_dv3f(id)
@@ -120,9 +129,9 @@ class Requeteur(PgOutils):
         mutation = mutation_detaillee_nt(*mutation)
         return mutation
     
-    def locaux_detaillees(self, id):
+    def locaux_detailles(self, id):
         locaux =[]
-        local_nt = namedtuple('Local', ['idloc', 'sbati', 'libtyploc'])
+        local_nt = namedtuple('Local', ['idloc', 'idpar', 'sbati', 'nbpprinc', 'libtyploc'])
         if self.base == 'DV3F':
             resultat = self.recuperer_locaux_dv3f(id)
         else:
@@ -165,12 +174,7 @@ class Requeteur(PgOutils):
         codtypbien = self.requete_sql['_CODTYPBIEN']
         libtypbien = self.requete_sql['_LIBTYPBIEN']
         return champ_geometrie, xmin, ymin, xmax, ymax, epsg, codtypbien, libtypbien
-    
-    def _separateur_millier(self, nombre, sep = ' '):
-        if nombre:
-            if len(nombre) <= 3:
-                return nombre
-            else:
-                return self._separateur_millier(nombre[:-3], sep) + sep + nombre[-3:]
         
-    
+    @select_sql_champ_unique
+    def adresses_associees(self, id):
+        pass
