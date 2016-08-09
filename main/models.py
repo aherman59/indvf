@@ -55,7 +55,7 @@ class ConfigurationBDD(models.Model):
                                                      self.mdp,  
                                                      self.port                                                    
                                                      )
-        if not test:
+        if not test or self.type_bdd not in ['DVF+', 'DV3F']:
             return False
         if self.type_bdd == 'DVF+' and not self.controleur_bdd().est_une_base_DVF_plus():
                 return False

@@ -48,6 +48,8 @@ class ConfigBDDForm(forms.ModelForm):
                 test = ctrlbdd.est_une_base_DV3F()
                 if not test:
                     self.add_error('__all__', "La base spécifiée n'est pas une base DV3F valide.")
+            else:
+                self.add_error('__all__', "Le type de la base de données n'est pas valide")
 
         return cleaned_data
         
