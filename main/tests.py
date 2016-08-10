@@ -229,6 +229,61 @@ class TestMain(TestCase):
         reponse = self.client.get(url)
         self.assertContains(reponse, 'Paramètrage de la base de données')
         self.assertContains(reponse, '<form')
+    
+    def test_la_page_precise_la_base_active_si_elle_est_specifiee(self):
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = True)
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf2',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.get(url)
+        self.assertContains(reponse, 'La configuration actuellement sélectionnée est Test_conf.')
+        
+    def test_la_page_affiche_aucune_configuration_active_si_cest_le_cas(self):
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf2',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.get(url)
+        self.assertContains(reponse, "Aucune configuration n'est selectionnée")
+    
+    def test_la_page_affiche_un_message_si_la_configuration_ne_repond_pas_aux_criteres(self):
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DV3F',
+                                        active = True)
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.get(url)
+        self.assertContains(reponse, "ne répond pas aux critères de définition d'une base de ce type")    
         
     '''
     TEST FORMULAIRE
@@ -306,9 +361,155 @@ class TestMain(TestCase):
     
     '''
 
-    def test_annulation_formulaire_renvoie(self):
+    def test_annulation_formulaire_renvoie_vers_la_page_accueil(self):
         donnees_post = {'annulation':''}
         url = reverse('main:configuration_bdd')
         reponse = self.client.post(url, data = donnees_post)        
         self.assertEqual(reponse.status_code, 302)
         self.assertEqual(reponse.url, reverse('main:applications'))
+        
+    def test_un_changement_de_selection_inscrit_les_donnees_correspondantes_dans_les_differents_champs(self):
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf2',
+                                        hote = 'host2',
+                                        bdd = 'base2',
+                                        utilisateur = 'user2',
+                                        mdp = 'mdp2',
+                                        port = 'port2',
+                                        type_bdd = 'DV3F',
+                                        active = False)
+        donnees_post = {'selection':'2'}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertContains(reponse, '<input type = "hidden" name="selection_config" value="2"/>', html=True) 
+        self.assertContains(reponse, 'Test_conf2')
+        self.assertContains(reponse, 'host2')
+        self.assertContains(reponse, 'base2')
+        self.assertContains(reponse, 'user2')
+        self.assertContains(reponse, 'mdp2')
+        self.assertContains(reponse, 'port2')
+        donnees_post = {'selection':'1'}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertContains(reponse, '<input type = "hidden" name="selection_config" value="1"/>', html=True)
+        self.assertContains(reponse, hote)
+        self.assertContains(reponse, base)
+        self.assertContains(reponse, port)
+        self.assertContains(reponse, utilisateur)
+        donnees_post = {'selection':''}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertNotIn('Test_conf', reponse)
+        self.assertNotIn('Test_conf2', reponse)
+        
+    def test_le_bouton_supprimer_apparait_quand_la_configuration_existe_deja(self):
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf2',
+                                        hote = 'host2',
+                                        bdd = 'base2',
+                                        utilisateur = 'user2',
+                                        mdp = 'mdp2',
+                                        port = 'port2',
+                                        type_bdd = 'DV3F',
+                                        active = False)
+        donnees_post = {'selection':'2'}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertContains(reponse, 'Supprimer cette configuration')
+        donnees_post = {'selection':'1'}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertContains(reponse, 'Supprimer cette configuration')
+        donnees_post = {'selection':''}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertNotIn('Supprimer cette configuration', reponse)
+        
+    def test_la_suppression_dune_configuration_existante_fonctionne_et_renvoie_un_formulaire_vierge(self):
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf2',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        donnees_post = {'suppression':'', 'selection_config':'1'}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertEquals(len(ConfigurationBDD.objects.all()), 1)
+        self.assertEquals((ConfigurationBDD.objects.all())[0].nom_config, 'Test_conf2')
+        self.assertNotIn('Test_conf', reponse)
+        self.assertNotIn('Test_conf2', reponse)
+        
+    def test_lactivation_echoue_si_formulaire_non_valide(self):
+        donnees_post = {'activation':'',
+                        'selection_config':'0', 
+                        'nom_config':'Test_conf',
+                        'hote': 'hote_non_valide', 
+                        'bdd':base, 
+                        'utilisateur':utilisateur, 
+                        'mdp':mdp, 
+                        'port':port, 
+                        'type_bdd':'DVF+',}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertTemplateUsed(reponse, 'configuration_bdd.html')
+        self.assertContains(reponse, 'Name or service not known')
+    
+    def test_lactivation_echoue_si_le_type_base_est_non_valide(self):
+        donnees_post = {'activation':'',
+                        'selection_config':'0', 
+                        'nom_config':'Test_conf',
+                        'hote': hote, 
+                        'bdd':base, 
+                        'utilisateur':utilisateur, 
+                        'mdp':mdp, 
+                        'port':port, 
+                        'type_bdd':'DV3F',}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertTemplateUsed(reponse, 'configuration_bdd.html')
+        self.assertContains(reponse, "pas une base DV3F valide")
+    
+    def test_lactivation_reussit_si_la_configuration_est_correcte_et_retourne_vers_accueil(self):
+        donnees_post = {'activation':'',
+                        'selection_config':'0', 
+                        'nom_config':'Test_conf',
+                        'hote': hote, 
+                        'bdd':base, 
+                        'utilisateur':utilisateur, 
+                        'mdp':mdp, 
+                        'port':port, 
+                        'type_bdd':'DVF+',}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)        
+        self.assertEqual(reponse.status_code, 302)
+        self.assertEqual(reponse.url, reverse('main:applications'))
+        self.assertEqual(len(ConfigurationBDD.objects.all()), 1)
+        self.assertEqual((ConfigurationBDD.objects.all())[0].nom_config, 'Test_conf')
+        self.assertTrue((ConfigurationBDD.objects.all())[0].active)
+        
+            

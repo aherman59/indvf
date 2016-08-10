@@ -1,6 +1,6 @@
 import json
 from pg.pgbasics import *
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from outils.interrogation_bdd import Requeteur
 from main.models import ConfigurationBDD
