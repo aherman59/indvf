@@ -137,6 +137,16 @@ SELECT idloc,
 	   libtyploc
 FROM dvf.local WHERE idmutation = {0}; 
 
+## RECUPERER_PARCELLES_DV3F
+SELECT idpar,
+	   dcnt01 + dcnt02 + dcnt03 + dcnt04 + dcnt05 + dcnt06 + dcnt07 + dcnt08 + dcnt09 + dcnt10 + dcnt11 + dcnt12 + dcnt13
+FROM dvf.disposition_parcelle WHERE parcvendue IS TRUE AND idmutation = {0}; 
+
+## RECUPERER_PARCELLES_DVF_PLUS
+SELECT idpar,
+	   dcnt01 + dcnt02 + dcnt03 + dcnt04 + dcnt05 + dcnt06 + dcnt07 + dcnt08 + dcnt09 + dcnt10 + dcnt11 + dcnt12 + dcnt13
+FROM dvf.disposition_parcelle WHERE parcvendue IS TRUE AND idmutation = {0};
+
 ## ADRESSES_ASSOCIEES
 SELECT COALESCE(novoie::VARCHAR, '') || 
 		COALESCE(btq, '') || ' ' || 
@@ -171,3 +181,122 @@ SELECT idmutation, {6}, {7}, valeurfonc, datemut, sbati, sterr, nblocmut, nbparm
 FROM dvf.mutation 
 WHERE {0} IS NOT NULL 
 AND {0} && ST_MAKEENVELOPE({1}, {2}, {3}, {4}, {5});
+
+## RECUPERER_LOCALISANT_MOYEN
+SELECT avg(st_x(geomloc)::numeric), avg(st_y(geomloc)::numeric) 
+FROM dvf.disposition_parcelle 
+WHERE geomloc IS NOT NULL 
+LIMIT {0}
+
+
+## CREER_AGGREGAT_MEDIANE_10
+CREATE OR REPLACE FUNCTION centile(anyarray, integer)
+  RETURNS anyelement AS
+$BODY$
+  /*
+   Retourne le n-ième centile des valeurs du tableau (trié ou non)
+
+   exemples : 
+    SELECT centile(ARRAY[10,20,30,40,50], 50)
+    >> 30
+
+    SELECT centile(ARRAY[21,20,100,70,49,13,52,60], 10)
+    >> 13
+  */
+  SELECT t[$2/100.0 * array_upper($1,1) + 0.5] FROM (SELECT ARRAY(SELECT unnest($1) ORDER BY 1) as t) t1;
+$BODY$
+  LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION mediane_centree_10(anyarray NUMERIC[])
+  RETURNS NUMERIC AS
+$BODY$
+/*
+   Retourne la médiane des valeurs du tableau (trié ou non) contenues dans l'intervalle
+   Ici le centile exterieur est defini à 10 ce qui exclut les 10 % de valeurs les plus hautes et les 10 % de valeurs plus basses.
+
+   exemples :   
+
+    SELECT mediane_centree_10(ARRAY[10,50,3,47,29,49,12,78,85.5,0,1),0,1,1,0], 10);
+    >> 10
+  */
+    DECLARE 
+        array_sans_deciles NUMERIC[];
+        borne_inf numeric;
+        borne_sup numeric;
+    BEGIN
+        borne_inf := centile(anyarray, 10);
+        borne_sup := centile(anyarray, 99 - 10);
+        FOR i IN 1..array_upper(anyarray,1)
+        LOOP
+            IF anyarray[i] >= borne_inf AND anyarray[i] <= borne_sup THEN array_sans_deciles :=  array_sans_deciles || anyarray[i]; END IF;        
+        END LOOP;
+        RETURN centile(array_sans_deciles, 50);
+    END;
+$BODY$
+  LANGUAGE plpgsql;
+
+DROP AGGREGATE IF EXISTS mediane_10(NUMERIC);
+CREATE aggregate mediane_10(NUMERIC)
+(
+sfunc = array_append,
+stype = NUMERIC[],
+finalfunc = mediane_centree_10
+);
+
+## CALCULER_SOMME_PAR_ANNEE
+SELECT anneemut, sum({0})
+FROM (
+	SELECT * {3} --codtypbien, libtypbien
+	FROM dvf.mutation 
+	WHERE l_codinsee && ARRAY[{1}]::VARCHAR[]
+	) t
+{2}
+GROUP BY anneemut;
+
+## CALCULER_SOMME_MULTI_ANNEE
+SELECT COALESCE(SUM({0}), 0)
+FROM (
+	SELECT * {5}
+	FROM dvf.mutation
+	WHERE l_codinsee && ARRAY[{1}]::VARCHAR[] AND anneemut >= {2} AND anneemut <= {3}
+	) t
+{4};
+
+## COMPTER_PAR_ANNEE
+SELECT anneemut, count({0})
+FROM (
+	SELECT * {3} 
+	FROM dvf.mutation 
+	WHERE l_codinsee && ARRAY[{1}]::VARCHAR[] 
+	) t
+{2}
+GROUP BY anneemut;
+
+## COMPTER_MULTI_ANNEE
+SELECT COUNT({0})
+FROM (
+	SELECT * {5}
+	FROM dvf.mutation
+	WHERE l_codinsee && ARRAY[{1}]::VARCHAR[] AND anneemut >= {2} AND anneemut <= {3}
+	) t
+{4};
+
+## CALCULER_MEDIANE_10_PAR_ANNEE
+SELECT anneemut, mediane_10({0}) 
+FROM (
+	SELECT * {3} 
+	FROM dvf.mutation 
+	WHERE l_codinsee && ARRAY[{1}]::VARCHAR[]
+	) t
+{2}
+GROUP BY anneemut;
+
+## CALCULER_MEDIANE_10_MULTI_ANNEE
+SELECT mediane_10({0}) 
+FROM (
+	SELECT * {5}
+	FROM dvf.mutation
+	WHERE l_codinsee && ARRAY[{1}]::VARCHAR[] AND anneemut >= {2} AND anneemut <= {3}
+	) t
+{4};
+

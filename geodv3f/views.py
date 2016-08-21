@@ -11,23 +11,19 @@ def carto(request):
     
     La clef 'params' de request.session conserve les paramètres de configuration de la bdd.
     '''
-    config_active = ConfigurationBDD.objects.configuration_active()
-    verif = verification_geoconfiguration(request, config_active)
-    if not verif:
-        return redirect('main:configuration_bdd')
-    request.session['params'] = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)
     
-    context = None
+    ## à retravailler sur modèle easydvf
+    verif = ConfigurationBDD.objects.verifier_configuration_active()
+    if not (verif.validation and verif.geobase):
+        return redirect('main:configuration_bdd')
+    request.session['type_bdd'] = ConfigurationBDD.objects.type_bdd_active()
+    request.session['params'] = ConfigurationBDD.objects.parametres_bdd_active()
+    print(request.session['type_bdd'])
+    
+    [x, y] = Requeteur(*(request.session['params']), type_base=request.session['type_bdd']).localisant_moyen(10000) 
+    context = {'localisant' : '[' + str(x) + ', ' + str(y) + ']'}
     return render(request, 'carto.html', context)
 
-def verification_geoconfiguration(request, config_active):
-    if config_active:
-        if config_active.verification_configuration() and config_active.est_une_geobase():
-            return True                
-        else:
-            return False
-    else:
-        return False
 
 '''
 
@@ -36,7 +32,7 @@ REQUETES AJAX pour envoi des informations géométriques
 '''
 
 def requete_geom(request, geom, xmin, ymin, xmax, ymax):
-    geomutations = Requeteur(*(request.session['params'])).mutations_en_geojson(geom, xmin, ymin, xmax, ymax)
+    geomutations = Requeteur(*(request.session['params']), type_base=request.session['type_bdd']).mutations_en_geojson(geom, xmin, ymin, xmax, ymax)
     return JsonResponse(geomutations)
 
 '''
@@ -46,9 +42,15 @@ REQUETE AJAX AFFICHAGE DETAIL MUTATION
 '''
 
 def requete_detail_mutation(request, id):
-    requeteur = Requeteur(*(request.session['params']))
-    mutation = requeteur.mutation_detaillee(id)
-    locaux = requeteur.locaux_detailles(id)
-    return render(request, 'detail_mutation.html', {'mutation':mutation, 'locaux' : locaux})
+    requeteur = Requeteur(*(request.session['params']), type_base=request.session['type_bdd'])
+    mutation = requeteur.mutation_detaillee(id) or []
+    locaux = requeteur.locaux_detailles(id) or []
+    parcelles = requeteur.parcelles_detaillees(id) or []
+    adresses = requeteur.adresses_associees(id) or []
+    return render(request, 'detail_mutation.html', {'mutation':mutation, 
+                                                    'locaux': locaux,
+                                                    'parcelles' : parcelles, 
+                                                    'adresses': ', '.join(adresses)})
+
 
 # eof

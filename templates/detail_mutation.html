@@ -58,6 +58,26 @@
   	   		<tr>
   	   			<td width="25%">Nombre de parcelles vendues</td><td>{{mutation.nbparmut|separateur_millier}}</td>
   	   		</tr>
+  	   	{% if parcelles|length > 0 %}
+ 			<tr>
+ 			 <td colspan="2" style="padding-left:30px;">
+	   			<table class="table table-condensed table-bordered table-hover">
+  	   			<tr>
+  	   				<th width="5%" class="text-right">#</th>
+  	   				<th>Identifiant</th>
+  	   				<th width="30%">Surface (m2)</th>
+  	   			<tr>
+	  	   		{% for parcelle in parcelles %}
+	  	   		<tr>
+	  	   			<td class="text-right">{{forloop.counter}}</td>
+	  	   			<td>{{parcelle.idpar}}</td>
+	  	   			<td>{{parcelle.sterr|separateur_millier}}</td>
+	  	   		</tr>
+	  	   		{% endfor %}
+	   			</table>
+	   			</td>
+	   		</tr>
+	   	{% endif %}
 	  	   	<tr>
 	 			<td width="25%">Nombre de lots vendus</td><td>{{mutation.nblot|separateur_millier}}</td>
 	 		</tr>

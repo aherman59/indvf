@@ -29,15 +29,17 @@ def recherche(request):
     if request.method != 'POST' and request.get_full_path() == '/recherche/':
         # page de démarrage 
         init = True   
-        config_active = ConfigurationBDD.objects.configuration_active()
-        verif = verification_et_enregistrement_configuration_dans_session(request, config_active)
-        if not verif:
-             return redirect('main:configuration_bdd') 
+        verif = ConfigurationBDD.objects.verifier_configuration_active()
+        if not verif.validation:
+             return redirect('main:configuration_bdd')
+        request.session['id_config'] = verif.id         
     else:
-        init = False
-        config_active = ConfigurationBDD.objects.get(pk = request.session['config'])
-    request.session['params'] = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)
-        
+        init = False    
+    
+    config_active = ConfigurationBDD.objects.get(pk = request.session['id_config'])
+    request.session['type_bdd'] = config_active.type_bdd
+    request.session['params'] = config_active.parametres_bdd() 
+     
     departements = config_active.departements_disponibles()
     code_departement_actif = recuperation_code_departement_actif(request, departements, init)
     epcis, communes = recuperation_epcis_communes(request, config_active, code_departement_actif, init)
@@ -59,16 +61,6 @@ def recherche(request):
                'communes' : communes,
                'charger_tableau': charger_tableau,}
     return render(request, 'recherche.html', context)
-
-def verification_et_enregistrement_configuration_dans_session(request, config_active):
-    if config_active:
-        if config_active.verification_configuration():
-            request.session['config'] = int(config_active.pk)
-            return True                
-        else:
-            return False
-    else:
-        return False
 
 def recuperation_code_departement_actif(request, departements, init):            
     if init:    
@@ -103,7 +95,7 @@ def recuperation_mutations_dans_session(request):
         request.session['commune'] = int(request.POST['commune'])
         titre = Commune.objects.get(pk = request.session['commune']).nom
         codes_insee = [str(Commune.objects.get(pk = request.session['commune']).code),]        
-    requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')            
+    requeteur = Requeteur(*(request.session['params']), type_base = request.session['type_bdd'], script = 'sorties/requeteur_recherche.sql')            
     mutations = requeteur.mutations(codes_insee)
     return titre, mutations 
 
@@ -131,9 +123,6 @@ def maj_tableau(request, page, tri):
                                             valeur_max = request.session['valeur_max'],)
     mutations = Requeteur.trier_mutations(mutations, tri)  
     mutations = mutations_ds_page(page, mutations, 50)    
-
-    
-    
     
     context = {'mutations': mutations, 
                'tri' : tri,
@@ -199,12 +188,14 @@ REQUETE AJAX AFFICHAGE DETAIL MUTATION
 '''
 
 def recherche_detaillee(request, id):
-    requeteur = Requeteur(*(request.session['params']), script = 'sorties/requeteur_recherche.sql')
+    requeteur = Requeteur(*(request.session['params']), type_base = request.session['type_bdd'], script = 'sorties/requeteur_recherche.sql')
     mutation = requeteur.mutation_detaillee(id) or []
     locaux = requeteur.locaux_detailles(id) or []
+    parcelles = requeteur.parcelles_detaillees(id) or []
     adresses = requeteur.adresses_associees(id) or []
     return render(request, 'detail_mutation.html', {'mutation':mutation, 
-                                                    'locaux': locaux, 
+                                                    'locaux': locaux,
+                                                    'parcelles': parcelles, 
                                                     'adresses': ', '.join(adresses)})
 
 

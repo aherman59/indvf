@@ -1,3 +1,4 @@
+from collections import namedtuple
 from django.db import models
 
 from outils import controle_bdd
@@ -12,10 +13,47 @@ class ConfigurationManager(models.Manager):
         except Exception as e:
             return None
     
+    def parametres_bdd_active(self):
+        config_active = self.configuration_active()
+        if not config_active:
+            return None
+        return (config_active.hote, 
+                config_active.bdd, 
+                config_active.port, 
+                config_active.utilisateur, 
+                config_active.mdp)
+    
+    def type_bdd_active(self):
+        config_active = self.configuration_active()
+        if not config_active:
+            return None
+        return config_active.type_bdd
+        
     def desactiver_configurations(self):
         for config in self.all():
             config.active = False
             config.save()
+    
+    def verifier_configuration_active(self):
+        '''
+        Renvoie un tuple nommé
+        le premier element renvoie l'id de la configuration
+        le premier boolean renvoie True si la base active est bien de type DVF+ ou DV3F
+        le deuxième boolean renvoie True si la base active est bien une geobase 
+        '''
+        VerifConfiguration = namedtuple('VerifConfiguration', ['id', 'validation', 'geobase'])
+        config_active = self.configuration_active()
+        if config_active:
+            if config_active.verification_configuration():
+                id = int(config_active.pk)
+                if config_active.est_une_geobase():
+                    return VerifConfiguration(id, True, True)
+                else:
+                    return VerifConfiguration(id, True, False)                 
+            else:
+                return VerifConfiguration(-1, False, False)
+        else:
+            return VerifConfiguration(-1, False, False)
 
 class ConfigurationBDD(models.Model):
     CHOIX_TYPE_BDD = (('DVF+', 'Base de type DVF+'), ('DV3F','Base de type DV3F'))
@@ -33,6 +71,13 @@ class ConfigurationBDD(models.Model):
 
     def __str__(self):
         return self.nom_config
+    
+    def parametres_bdd(self):
+        return (self.hote, 
+                self.bdd, 
+                self.port, 
+                self.utilisateur, 
+                self.mdp)
     
     def activer(self):
         self.active = True
@@ -53,20 +98,21 @@ class ConfigurationBDD(models.Model):
                                                      self.bdd,
                                                      self.utilisateur,
                                                      self.mdp,  
-                                                     self.port                                                    
-                                                     )
+                                                     self.port)
         if not test or self.type_bdd not in ['DVF+', 'DV3F']:
             return False
-        if self.type_bdd == 'DVF+' and not self.controleur_bdd().est_une_base_DVF_plus():
-                return False
-        if self.type_bdd == 'DV3F' and not self.controleur_bdd().est_une_base_DV3F():
-                return False
-        return True
+        if self.type_bdd == 'DVF+':
+            return self.controleur_bdd().est_une_base_DVF_plus()
+        if self.type_bdd == 'DV3F':
+            return self.controleur_bdd().est_une_base_DV3F()
     
     def est_une_geobase(self):
-        if self.controleur_bdd().a_les_champs_geometriques():
-            return True
-        return False
+        try:
+            reussite = self.controleur_bdd().a_les_champs_geometriques()
+            return reussite
+        except Exception as e:
+            print(e)
+            return False
 
     def departements_disponibles(self):
         controleurbdd = self.controleur_bdd()

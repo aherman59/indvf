@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from pg.pgbasics import *
-from .calcul.indicateurs import IndicateurDVF, CalculIndicateur
+from outils.interrogation_bdd import Requeteur
+from .calcul.indicateurs import IndicateurDVF
 from main.territoire import integration 
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 from indicateur.models import Indicateur, ResultatIndicateur
@@ -27,14 +28,14 @@ def indicateurs(request):
     if request.method != 'POST' and request.get_full_path() == '/indicateur/':
         # page de démarrage 
         init = True   
-        config_active = ConfigurationBDD.objects.configuration_active()
-        verif = verification_et_enregistrement_configuration_dans_session(request, config_active)
-        if not verif:
-             return redirect('main:configuration_bdd') 
+        verif = ConfigurationBDD.objects.verifier_configuration_active()
+        if not verif.validation:
+             return redirect('main:configuration_bdd')
+        request.session['id_config'] = verif.id  
     else:
         init = False
-        config_active = ConfigurationBDD.objects.get(pk = request.session['config'])
-        params_config = (config_active.hote, config_active.bdd, config_active.port, config_active.utilisateur, config_active.mdp)
+        
+    config_active = ConfigurationBDD.objects.get(pk = request.session['id_config'])
         
     departements = config_active.departements_disponibles()
     code_departement_actif = recuperation_code_departement_actif(request, departements, init)
@@ -45,7 +46,9 @@ def indicateurs(request):
         titre = creer_titre_format_html(territoires)
         
         indicateurs_actifs = recuperer_et_classer_indicateurs_actifs()
-        calculateur = CalculIndicateur(*params_config, script = 'sorties/script_indvf.sql')
+        calculateur = Requeteur(*(config_active.parametres_bdd()), 
+                                type_base = config_active.type_bdd, 
+                                script = 'sorties/script_indvf.sql')
         indicateursDVF = calcul_indicateurs(indicateurs_actifs, calculateur, territoires)
         calculateur.deconnecter()
     else:
@@ -58,16 +61,6 @@ def indicateurs(request):
                'indicateursDVF' : indicateursDVF,
                'titre': titre}
     return render(request, 'indicateurs.html', context)
-
-def verification_et_enregistrement_configuration_dans_session(request, config_active):
-    if config_active:
-        if config_active.verification_configuration():
-            request.session['config'] = int(config_active.pk)
-            return True                
-        else:
-            return False
-    else:
-        return False
 
 def recuperation_code_departement_actif(request, departements, init):            
     if init:    

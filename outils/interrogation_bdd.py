@@ -8,7 +8,7 @@ class Requeteur(PgOutils):
     
     @classmethod
     def transformer_mutations_en_namedtuple(cls, mutations):
-        mutation_nt = namedtuple('Mutation', ['id', 
+        Mutation = namedtuple('Mutation', ['id', 
                                               'datemut', 
                                               'anneemut', 
                                               'valeurfonc', 
@@ -18,7 +18,7 @@ class Requeteur(PgOutils):
                                               'nbparmut',
                                               'codtypbien', 
                                               'libtypbien'])
-        return [mutation_nt(*mutation) for mutation in mutations]
+        return [Mutation(*mutation) for mutation in mutations]
     
     @classmethod
     def filtrer_mutations(cls, mutations, typologie, annee_min, annee_max, valeur_min, valeur_max):
@@ -57,14 +57,45 @@ class Requeteur(PgOutils):
             mutations_triees.reverse()
         return mutations_triees
     
-    def __init__(self, hote, base, port, utilisateur, motdepasse, script = None):
+    def __init__(self, hote, base, port, utilisateur, motdepasse, type_base = None, script = None):
         super().__init__(hote, base, port, utilisateur, motdepasse, script)
-        ctrlbdd = ControleBDD(hote, base, port, utilisateur, motdepasse)        
-        self.base = 'DV3F' if ctrlbdd.est_une_base_DV3F() else 'DVF+'
-        self.geobase = True if ctrlbdd.a_les_champs_geometriques() else False
+        self.base = self.detecter_type_base(type_base, hote, base, port, utilisateur, motdepasse)
+        self.geobase = self.detecter_si_geobase(hote, base, port, utilisateur, motdepasse)
+        
+    def detecter_type_base(self, type_base, hote, base, port, utilisateur, motdepasse):
+        if type_base in ['DVF+', 'DV3F']:
+            return type_base
+        else:
+            try:
+                ctrlbdd = ControleBDD(hote, base, port, utilisateur, motdepasse)
+                if ctrlbdd.est_une_base_DV3F():        
+                    return 'DV3F'  
+                elif ctrlbdd.est_une_base_DVF_plus():        
+                    return 'DVF+'
+                else:
+                    return None
+            except Exception as e:
+                print(e)
+                return None
+    
+    def detecter_si_geobase(self, hote, base, port, utilisateur, motdepasse):
+        if self.base == 'DV3F':
+            return True
+        elif self.base == 'DVF+':
+            try:
+                ctrlbdd = ControleBDD(hote, base, port, utilisateur, motdepasse)
+                return ctrlbdd.a_les_champs_geometriques()
+            except Exception as e:
+                print(e)
+                return False
+        else:
+            return False
+    
+    def creer_fonctions_utiles(self):
+        self.creer_aggregat_mediane_10()                
  
     def mutations(self, codes_insee):
-        mutations = self.recuperer_mutations_dv3f(codes_insee) if self.base == 'DV3F' else self.recuperer_mutations_dvf_plus(codes_insee)        
+        mutations = self.recuperer_mutations(codes_insee)        
         mutations = [list(mutation) for mutation in mutations]
         for mutation in mutations:
             mutation[1] = (mutation[1]).strftime("%d/%m/%Y")
@@ -73,6 +104,24 @@ class Requeteur(PgOutils):
             mutation[5] = str(mutation[5])
         mutations = self.transformer_mutations_en_namedtuple(mutations)
         return mutations
+            
+    def recuperer_mutations(self, code_insee):
+        if self.base == 'DV3F':
+            return self.recuperer_mutations_dv3f(code_insee)
+        elif self.base == 'DVF+':
+            return self.recuperer_mutations_dvf_plus(code_insee)
+        else:
+            return []
+    
+    @select_sql_avec_modification_args
+    def recuperer_mutations_dv3f(self, codes_insee):
+        return ("', '".join(codes_insee),)
+    
+    @select_sql_avec_modification_args
+    def recuperer_mutations_dvf_plus(self, codes_insee):
+        codtypbien = self.requete_sql['_CODTYPBIEN']
+        libtypbien = self.requete_sql['_LIBTYPBIEN']
+        return ("', '".join(codes_insee), codtypbien, libtypbien)
     
     def mutations_en_geojson(self, geometrie, xmin, ymin, xmax, ymax, epsg = '2154'):
         '''
@@ -109,9 +158,22 @@ class Requeteur(PgOutils):
             return collection
         return None    
     
+    @select_sql_avec_modification_args
+    def recuperer_mutations_avec_geometrie(self, champ_geometrie, xmin, ymin, xmax, ymax, epsg='2154'):
+        codtypbien = self.requete_sql['_CODTYPBIEN']
+        libtypbien = self.requete_sql['_LIBTYPBIEN']
+        return champ_geometrie, xmin, ymin, xmax, ymax, epsg, codtypbien, libtypbien
+    
+    def localisant_moyen(self, nb_points):
+        resultat = self.recuperer_localisant_moyen(nb_points)
+        return list(resultat[0])
+    
+    @select_sql
+    def recuperer_localisant_moyen(self, nb_points):
+        pass
+        
     def mutation_detaillee(self, id):
-        mutation = None
-        mutation_detaillee_nt = namedtuple('Mutation_Detail', ['idmutation',
+        Mutation_detaillee = namedtuple('Mutation_Detail', ['idmutation',
                                                                'codservch', 
                                                                'refdoc',
                                                                'datemut',
@@ -121,36 +183,18 @@ class Requeteur(PgOutils):
                                                                'nbparmut', 
                                                                'nbvolmut',
                                                                'libtypbien'])
+        mutation = self.recuperer_mutation_detaillee(id)
+        mutation = Mutation_detaillee(*mutation)
+        return mutation
+
+    def recuperer_mutation_detaillee(self, id):
         if self.base == 'DV3F':
             resultat = self.recuperer_mutation_detaillee_dv3f(id)
-        else:
+        elif self.base == 'DVF+':
             resultat = self.recuperer_mutation_detaillee_dvf_plus(id)
-        mutation = list(resultat[0])
-        mutation = mutation_detaillee_nt(*mutation)
-        return mutation
-    
-    def locaux_detailles(self, id):
-        locaux =[]
-        local_nt = namedtuple('Local', ['idloc', 'idpar', 'sbati', 'nbpprinc', 'libtyploc'])
-        if self.base == 'DV3F':
-            resultat = self.recuperer_locaux_dv3f(id)
         else:
-            resultat = self.recuperer_locaux_dvf_plus(id)
-        for ligne in resultat:
-            local = list(ligne)
-            local = local_nt(*local)
-            locaux.append(local)
-        return locaux 
-    
-    @select_sql_avec_modification_args
-    def recuperer_mutations_dv3f(self, codes_insee):
-        return ("', '".join(codes_insee),)
-    
-    @select_sql_avec_modification_args
-    def recuperer_mutations_dvf_plus(self, codes_insee):
-        codtypbien = self.requete_sql['_CODTYPBIEN']
-        libtypbien = self.requete_sql['_LIBTYPBIEN']
-        return ("', '".join(codes_insee), codtypbien, libtypbien)
+            return None
+        return list(resultat[0])
     
     @select_sql
     def recuperer_mutation_detaillee_dv3f(self, id):
@@ -161,6 +205,26 @@ class Requeteur(PgOutils):
         libtypbien = self.requete_sql['_LIBTYPBIEN']
         return (id, libtypbien)
     
+
+    def locaux_detailles(self, id):
+        locaux =[]
+        Local = namedtuple('Local', ['idloc', 'idpar', 'sbati', 'nbpprinc', 'libtyploc'])
+        resultat = self.recuperer_locaux(id)
+        for ligne in resultat:
+            local = list(ligne)
+            local = Local(*local)
+            locaux.append(local)
+        return locaux
+
+    def recuperer_locaux(self, id):
+        if self.base == 'DV3F':
+            resultat = self.recuperer_locaux_dv3f(id)
+        elif self.base == 'DVF+':
+            resultat = self.recuperer_locaux_dvf_plus(id)
+        else:
+            return []
+        return resultat
+    
     @select_sql
     def recuperer_locaux_dv3f(self, id):
         pass
@@ -169,12 +233,92 @@ class Requeteur(PgOutils):
     def recuperer_locaux_dvf_plus(self, id):
         pass
     
-    @select_sql_avec_modification_args
-    def recuperer_mutations_avec_geometrie(self, champ_geometrie, xmin, ymin, xmax, ymax, epsg='2154'):
-        codtypbien = self.requete_sql['_CODTYPBIEN']
-        libtypbien = self.requete_sql['_LIBTYPBIEN']
-        return champ_geometrie, xmin, ymin, xmax, ymax, epsg, codtypbien, libtypbien
+    
+    def parcelles_detaillees(self, id):
+        parcelles =[]
+        Parcelle = namedtuple('Parcelle', ['idpar', 'sterr'])
+        resultat = self.recuperer_parcelles(id)
+        for ligne in resultat:
+            parcelle = list(ligne)
+            parcelle = Parcelle(*parcelle)
+            parcelles.append(parcelle)
+        return parcelles  
+
+    def recuperer_parcelles(self, id):
+        if self.base == 'DV3F':
+            resultat = self.recuperer_parcelles_dv3f(id)
+        elif self.base == 'DVF+':
+            resultat = self.recuperer_parcelles_dvf_plus(id)
+        else:
+            return []
+        return resultat
+    
+    @select_sql
+    def recuperer_parcelles_dv3f(self, id):
+        pass
+    
+    @select_sql
+    def recuperer_parcelles_dvf_plus(self, id):
+        pass
         
     @select_sql_champ_unique
     def adresses_associees(self, id):
         pass
+    
+    
+    '''
+    CALCUL AGGREGATS
+    '''
+    
+    @requete_sql    
+    def creer_aggregat_mediane_10(self):
+        pass
+    
+    @select_sql_avec_modification_args
+    def calculer_somme_par_annee(self, variable, codes_insee, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
+
+    @select_sql_avec_modification_args
+    def calculer_somme_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, variables_typologie_dvf_plus
+
+    @select_sql_avec_modification_args
+    def compter_par_annee(self, variable, codes_insee, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
+
+    @select_sql_avec_modification_args
+    def compter_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, variables_typologie_dvf_plus
+    
+    @select_sql_avec_modification_args
+    def calculer_mediane_10_par_annee(self, variable, codes_insee, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
+    
+    @select_sql_avec_modification_args
+    def calculer_mediane_10_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
+        code_typo = self.condition_code_typo(code_typo)
+        variables_typologie_dvf_plus = self.ajout_variables_typologies()
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
+    
+    def condition_code_typo(self, code_typo):
+        return '' if code_typo == '999' else " WHERE codtypbien='{0}' ".format(code_typo)
+    
+    def ajout_variables_typologies(self):
+        if self.base == 'DV3F':
+            return ''
+        elif self.base == 'DVF+':
+            codtypbien = self.requete_sql['_CODTYPBIEN']
+            libtypbien = self.requete_sql['_LIBTYPBIEN']
+            return ', ' + codtypbien + ', ' + libtypbien
+    
+    

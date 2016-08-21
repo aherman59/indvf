@@ -26,10 +26,15 @@ function styleLocal(code_unicode, couleur, taille_px){
 
 // définition Styles 
 var styles_parcelles = {
+		// Vefa
+		'31': styleParcelle('#333300', 'rgba(51, 51, 0, 0.2)'),
+		'32': styleParcelle('#333300', 'rgba(51, 51, 0, 0.2)'),
+		'33': styleParcelle('#333300', 'rgba(51, 51, 0, 0.2)'),
+		'34': styleParcelle('#333300', 'rgba(51, 51, 0, 0.2)'),
 		// Maison
 		'132': styleParcelle('#0066CC', 'rgba(0, 102, 204, 0.2)'),
 		// Maisons
-		'131': styleParcelle('#660033', 'rgba(102, 0, 51, 0.2)'),
+		'131': styleParcelle('#660033', 'rgba(102, 0, 51, 0.2)'),		
 		// Appart - ne doit pas servir à priori 
 		'122': styleParcelle('#FF8000', 'rgba(255, 128, 0, 0.2)'),
 		// Apparts
@@ -38,6 +43,18 @@ var styles_parcelles = {
 		'111': styleParcelle('#00994C', 'rgba(0, 153, 76, 0.2)'),
 		// Dependances
 		'142': styleParcelle('#FF3333', 'rgba(255, 102, 102, 0.2)'),
+		// Terrains à Batir
+		'25': styleParcelle('#660066', 'rgba(102, 0, 102, 0.2)'),
+		// Terrains Forestiers
+		'212': styleParcelle('#32CD32', 'rgba(50, 205, 50, 0.2)'), 	
+		// Terrains Agricoles
+		'213': styleParcelle('#00CCCC', 'rgba(0, 204, 204, 0.2)'),
+		// Terrains naturels
+		'211': styleParcelle('#D2691E', 'rgba(210, 105, 30, 0.2)'),
+		// Terrains artificialisés
+		'221': styleParcelle('#BDB76B', 'rgba(189, 183, 107, 0.2)'),
+		// Terrains mixtes
+		'231': styleParcelle('#556B2F', 'rgba(85, 107, 47, 0.2)'),		
 };
 
 var styles_locaux = {
@@ -45,10 +62,14 @@ var styles_locaux = {
 		'122': styleLocal('\uf1ad', '#FF8000', '14'),
 		// Apparts
 		'121': styleLocal('\uf1ad', '#990000', '14'),
+		// Vefa - Appart(s)
+		'32': styleLocal('\uf1ad', '#333300', '14'),
 		// Maison
 		'132': styleLocal('\uf015', '#0066CC', '18'),
 		// Maisons
 		'131': styleLocal('\uf015', '#660033', '18'),
+		// Vefa - Maison(s)
+		'33': styleLocal('\uf015', '#333300', '18'),
 		// Industriel/Commercial
 		'111': styleLocal('\uf275', '#00994C', '18'),
 		// Dependances

@@ -171,6 +171,13 @@
 
 <script type="text/javascript">
 
+$('form input').keydown(function (e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        return false;
+    }
+});
+
 $('[class*="fa-sort"]').on("click",function() {
   var tri = $(this).attr('tri');  
   $.ajax({
@@ -205,67 +212,34 @@ $('li').on("click", function() {
     });
 });
 
+// changements sur les filtres
+function recuperer_donnees_filtrees(form){
+	$.ajax({
+	       url : '/recherche/modification_affichage_table/{{tri}}/1',
+	       type : 'POST',
+	       dataType : 'html',
+	       data : $(form).serialize(),
+	       success : function(code_html, statut){       
+			 $('#tableau_mutations').html(code_html);
+	       }
+	    });	
+}
+
 $('#select_typo').on("change", function() {
-    $.ajax({
-       url : '/recherche/modification_affichage_table/{{tri}}/1',
-       type : 'POST',
-       dataType : 'html',
-       data : $('#form_typo').serialize(),
-       success : function(code_html, statut){       
-		 $('#tableau_mutations').html(code_html);
-       }
-    });
+	recuperer_donnees_filtrees('#form_typo');
 });
-
 $('#select_annee_min').on("change", function() {
-    $.ajax({
-       url : '/recherche/modification_affichage_table/{{tri}}/1',
-       type : 'POST',
-       dataType : 'html',
-       data : $('#form_annee_min').serialize(),
-       success : function(code_html, statut){       
-		 $('#tableau_mutations').html(code_html);
-       }
-    });
+	recuperer_donnees_filtrees('#form_annee_min');
 });
-
 $('#select_annee_max').on("change", function() {
-    $.ajax({
-       url : '/recherche/modification_affichage_table/{{tri}}/1',
-       type : 'POST',
-       dataType : 'html',
-       data : $('#form_annee_max').serialize(),
-       success : function(code_html, statut){       
-		 $('#tableau_mutations').html(code_html);
-       }
-    });
+	recuperer_donnees_filtrees('#form_annee_max');
 });
-
 $('#input_valeur_min').on("change", function() {
-    $.ajax({
-       url : '/recherche/modification_affichage_table/{{tri}}/1',
-       type : 'POST',
-       dataType : 'html',
-       data : $('#form_valeur_min').serialize(),
-       success : function(code_html, statut){       
-		 $('#tableau_mutations').html(code_html);
-       }
-    });
+	recuperer_donnees_filtrees('#form_valeur_min');
 });
-
-
 $('#input_valeur_max').on("change", function() {
-    $.ajax({
-       url : '/recherche/modification_affichage_table/{{tri}}/1',
-       type : 'POST',
-       dataType : 'html',
-       data : $('#form_valeur_max').serialize(),
-       success : function(code_html, statut){       
-		 $('#tableau_mutations').html(code_html);
-       }
-    });
+	recuperer_donnees_filtrees('#form_valeur_max');
 });
-
 
 // affichage du tableau détaillé de la mutation
 $('.mutation').on("click", function() {

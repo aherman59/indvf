@@ -464,7 +464,7 @@ class TestMain(TestCase):
         self.assertNotIn('Test_conf', reponse)
         self.assertNotIn('Test_conf2', reponse)
         
-    def test_lactivation_echoue_si_formulaire_non_valide(self):
+    def test_lactivation_echoue_si_hote_non_valide(self):
         donnees_post = {'activation':'',
                         'selection_config':'0', 
                         'nom_config':'Test_conf',
@@ -477,7 +477,53 @@ class TestMain(TestCase):
         url = reverse('main:configuration_bdd')
         reponse = self.client.post(url, data = donnees_post)
         self.assertTemplateUsed(reponse, 'configuration_bdd.html')
-        self.assertContains(reponse, 'Name or service not known')
+        #self.assertContains(reponse, 'Name or service not known')
+        self.assertEqual(len(ConfigurationBDD.objects.all()), 0)
+    
+    def test_lactivation_echoue_si_bdd_non_valide(self):
+        donnees_post = {'activation':'',
+                        'selection_config':'0', 
+                        'nom_config':'Test_conf',
+                        'hote': hote, 
+                        'bdd':'base_non_valide', 
+                        'utilisateur':utilisateur, 
+                        'mdp':mdp, 
+                        'port':port, 
+                        'type_bdd':'DVF+',}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertTemplateUsed(reponse, 'configuration_bdd.html')
+        self.assertEqual(len(ConfigurationBDD.objects.all()), 0)
+    
+    def test_lactivation_echoue_si_utilisateur_non_valide(self):
+        donnees_post = {'activation':'',
+                        'selection_config':'0', 
+                        'nom_config':'Test_conf',
+                        'hote': hote, 
+                        'bdd':base, 
+                        'utilisateur': 'user_non_valide', 
+                        'mdp':mdp, 
+                        'port':port, 
+                        'type_bdd':'DVF+',}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertTemplateUsed(reponse, 'configuration_bdd.html')
+        self.assertEqual(len(ConfigurationBDD.objects.all()), 0)
+    
+    def test_lactivation_echoue_si_port_non_valide(self):
+        donnees_post = {'activation':'',
+                        'selection_config':'0', 
+                        'nom_config':'Test_conf',
+                        'hote': hote, 
+                        'bdd':base, 
+                        'utilisateur':utilisateur, 
+                        'mdp':mdp, 
+                        'port': '', 
+                        'type_bdd':'DVF+',}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)
+        self.assertTemplateUsed(reponse, 'configuration_bdd.html')
+        self.assertEqual(len(ConfigurationBDD.objects.all()), 0)
     
     def test_lactivation_echoue_si_le_type_base_est_non_valide(self):
         donnees_post = {'activation':'',
@@ -511,5 +557,39 @@ class TestMain(TestCase):
         self.assertEqual(len(ConfigurationBDD.objects.all()), 1)
         self.assertEqual((ConfigurationBDD.objects.all())[0].nom_config, 'Test_conf')
         self.assertTrue((ConfigurationBDD.objects.all())[0].active)
+    
+    def test_lactivation_reussit_si_la_configuration_existante_choisie_est_correcte_et_retourne_vers_accueil(self):
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = False)
+        ConfigurationBDD.objects.create(nom_config = 'Test_conf2',
+                                        hote = hote,
+                                        bdd = base,
+                                        utilisateur = utilisateur,
+                                        mdp = mdp,
+                                        port = port,
+                                        type_bdd = 'DVF+',
+                                        active = True)
+        donnees_post = {'activation':'',
+                        'selection_config':'1', 
+                        'nom_config':'Test_conf',
+                        'hote': hote, 
+                        'bdd':base, 
+                        'utilisateur':utilisateur, 
+                        'mdp':mdp, 
+                        'port':port, 
+                        'type_bdd':'DVF+',}
+        url = reverse('main:configuration_bdd')
+        reponse = self.client.post(url, data = donnees_post)        
+        self.assertEqual(reponse.status_code, 302)
+        self.assertEqual(reponse.url, reverse('main:applications'))
+        self.assertEqual(len(ConfigurationBDD.objects.all()), 2)
+        self.assertTrue(ConfigurationBDD.objects.get(nom_config='Test_conf').active)
+        self.assertFalse(ConfigurationBDD.objects.get(nom_config='Test_conf2').active)
         
             
