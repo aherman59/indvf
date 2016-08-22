@@ -13516,4 +13516,181 @@ CREATE TABLE IF NOT EXISTS cadastre.parcellaire3(
 );
 
 SELECT DISTINCT idpar FROM cadastre.parcellaire3 WHERE idpar LIKE '59009%';
-SELECT * FROM cadastre.parcellaire3
+SELECT * FROM cadastre.parcellaire3SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+ALTER TABLE cadastre.parcellaire DROP CONSTRAINT IF EXISTS parcellaire_pkey;
+
+ALTER TABLE cadastre.parcellaire 
+ADD CONSTRAINT parcellaire_pkey PRIMARY KEY (idpar);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59220%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59328%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59346%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59350%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59368%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59386%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59410%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59507%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59527%';
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS postgis_topology;
+
+ALTER TABLE dvf.local ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geompar geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomlocmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomparmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geompar geometry;
+
+COMMENT ON COLUMN dvf.mutation.geompar IS 'geométrie de l''ensemble des contours des parcelles concernées par la mutation';
+
+COMMENT ON COLUMN dvf.mutation.geomparmut IS 'géométrie de l''ensemble des contours des parcelles ayant muté';
+
+COMMENT ON COLUMN dvf.mutation.geomlocmut IS 'géométrie de l''ensemble des localisants correspondant à des parcelles surlesquelles un local a muté';
+
+COMMENT ON COLUMN dvf.disposition_parcelle.geompar IS 'géométrie du contour de la parcelle';
+
+COMMENT ON COLUMN dvf.disposition_parcelle.geomloc IS 'géométrie du localisant de la parcelle';
+
+COMMENT ON COLUMN dvf.local.geomloc IS 'géométrie du localisant';
+
+COMMENT ON COLUMN dvf_d59.mutation.geompar IS 'geométrie de l''ensemble des contours des parcelles concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation.geomparmut IS 'géométrie de l''ensemble des contours des parcelles ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation.geomlocmut IS 'géométrie de l''ensemble des localisants correspondant à des parcelles surlesquelles un local a muté';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.geompar IS 'géométrie du contour de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.geomloc IS 'géométrie du localisant de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.local.geomloc IS 'géométrie du localisant';
+
+UPDATE dvf_d59.local l
+SET geomloc = t.geomloc
+FROM cadastre.parcellaire t
+WHERE l.idpar = t.idpar;
+
+UPDATE dvf_d59.disposition_parcelle d
+SET geomloc = t.geomloc, geompar = t.geompar
+FROM cadastre.parcellaire t
+WHERE d.idpar = t.idpar;
+
+UPDATE dvf_d59.mutation m
+SET geomlocmut = t.geomlocmut
+FROM (SELECT idmutation, ST_UNION(geomloc) AS geomlocmut FROM dvf_d59.local GROUP BY idmutation) t
+WHERE m.idmutation = t.idmutation;
+
+UPDATE dvf_d59.mutation m
+SET geomparmut = t.geomparmut
+FROM (SELECT idmutation, ST_UNION(geompar) AS geomparmut FROM dvf_d59.disposition_parcelle WHERE parcvendue IS TRUE GROUP BY idmutation) t
+WHERE m.idmutation = t.idmutation;
+
+UPDATE dvf_d59.mutation m
+SET geompar = t.geompar
+FROM (SELECT idmutation, ST_UNION(geompar) AS geompar FROM dvf_d59.disposition_parcelle GROUP BY idmutation) t
+WHERE m.idmutation = t.idmutation;
+
+SELECT DISTINCT coddep || codcomm as codinsee FROM dvf.disposition_parcelle ORDER BY codinsee;
+
+CREATE SCHEMA IF NOT EXISTS cadastre;
+CREATE TABLE IF NOT EXISTS cadastre.parcellaire(
+ dep varchar(3),
+ idpar varchar(14),
+ surface numeric,
+ geompar geometry,
+ geomloc geometry,
+ source_geo text,
+ vecteur text
+);
+
+ALTER TABLE cadastre.parcellaire DROP CONSTRAINT IF EXISTS parcellaire_pkey;
+
+ALTER TABLE cadastre.parcellaire 
+ADD CONSTRAINT parcellaire_pkey PRIMARY KEY (idpar);
+
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59220%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59328%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59346%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59350%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59368%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59386%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59410%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59507%';
+SELECT DISTINCT idpar FROM cadastre.parcellaire WHERE idpar LIKE '59527%';
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS postgis_topology;
+
+ALTER TABLE dvf.local ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geomloc geometry;
+ALTER TABLE dvf.disposition_parcelle ADD COLUMN geompar geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomlocmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geomparmut geometry;
+ALTER TABLE dvf.mutation ADD COLUMN geompar geometry;
+
+COMMENT ON COLUMN dvf.mutation.geompar IS 'geométrie de l''ensemble des contours des parcelles concernées par la mutation';
+
+COMMENT ON COLUMN dvf.mutation.geomparmut IS 'géométrie de l''ensemble des contours des parcelles ayant muté';
+
+COMMENT ON COLUMN dvf.mutation.geomlocmut IS 'géométrie de l''ensemble des localisants correspondant à des parcelles surlesquelles un local a muté';
+
+COMMENT ON COLUMN dvf.disposition_parcelle.geompar IS 'géométrie du contour de la parcelle';
+
+COMMENT ON COLUMN dvf.disposition_parcelle.geomloc IS 'géométrie du localisant de la parcelle';
+
+COMMENT ON COLUMN dvf.local.geomloc IS 'géométrie du localisant';
+
+COMMENT ON COLUMN dvf_d59.mutation.geompar IS 'geométrie de l''ensemble des contours des parcelles concernées par la mutation';
+
+COMMENT ON COLUMN dvf_d59.mutation.geomparmut IS 'géométrie de l''ensemble des contours des parcelles ayant muté';
+
+COMMENT ON COLUMN dvf_d59.mutation.geomlocmut IS 'géométrie de l''ensemble des localisants correspondant à des parcelles surlesquelles un local a muté';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.geompar IS 'géométrie du contour de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.disposition_parcelle.geomloc IS 'géométrie du localisant de la parcelle';
+
+COMMENT ON COLUMN dvf_d59.local.geomloc IS 'géométrie du localisant';
+
+UPDATE dvf_d59.local l
+SET geomloc = t.geomloc
+FROM cadastre.parcellaire t
+WHERE l.idpar = t.idpar;
+
+UPDATE dvf_d59.disposition_parcelle d
+SET geomloc = t.geomloc, geompar = t.geompar
+FROM cadastre.parcellaire t
+WHERE d.idpar = t.idpar;
+
+UPDATE dvf_d59.mutation m
+SET geomlocmut = t.geomlocmut
+FROM (SELECT idmutation, ST_UNION(geomloc) AS geomlocmut FROM dvf_d59.local GROUP BY idmutation) t
+WHERE m.idmutation = t.idmutation;
+
+UPDATE dvf_d59.mutation m
+SET geomparmut = t.geomparmut
+FROM (SELECT idmutation, ST_UNION(geompar) AS geomparmut FROM dvf_d59.disposition_parcelle WHERE parcvendue IS TRUE GROUP BY idmutation) t
+WHERE m.idmutation = t.idmutation;
+
+UPDATE dvf_d59.mutation m
+SET geompar = t.geompar
+FROM (SELECT idmutation, ST_UNION(geompar) AS geompar FROM dvf_d59.disposition_parcelle GROUP BY idmutation) t
+WHERE m.idmutation = t.idmutation;
+
+CREATE INDEX --IF NOT EXISTS 
+geompar_gist ON dvf_d59.mutation USING gist (geompar);
+CREATE INDEX --IF NOT EXISTS 
+geomparmut_gist ON dvf_d59.mutation USING gist (geomparmut);
+CREATE INDEX --IF NOT EXISTS 
+geomlocmut_gist ON dvf_d59.mutation USING gist (geomlocmut);

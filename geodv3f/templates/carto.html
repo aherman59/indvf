@@ -109,7 +109,7 @@ var info = new ol.Overlay({
 function affichage_infos_mutations(){
 	var entites = selectionParcelle.getFeatures();
 	var entite0 = entites.getArray()[0];
-	var coord = (entite0.getGeometry().getCoordinates())[0][0];
+	var coord = [(entite0.getGeometry().getExtent())[0], (entite0.getGeometry().getExtent())[1]] ;
 	var element = info.getElement();
 	var txt_info = '';
 	entites.forEach(function(entite){

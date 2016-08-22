@@ -18,7 +18,6 @@ def carto(request):
         return redirect('main:configuration_bdd')
     request.session['type_bdd'] = ConfigurationBDD.objects.type_bdd_active()
     request.session['params'] = ConfigurationBDD.objects.parametres_bdd_active()
-    print(request.session['type_bdd'])
     
     [x, y] = Requeteur(*(request.session['params']), type_base=request.session['type_bdd']).localisant_moyen(10000) 
     context = {'localisant' : '[' + str(x) + ', ' + str(y) + ']'}
