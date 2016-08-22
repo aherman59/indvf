@@ -42,7 +42,7 @@ def _recuperer_fichiers_txt(repertoire):
 def _controler_fichier_txt(fichier):
     departements = []
     date_max = datetime(1,1,1,0,0)
-    with open(fichier, 'r') as f:
+    with open(fichier, 'r', encoding='utf-8') as f:
         csv_reader = csv.reader(f, delimiter = '|')
         next(csv_reader)
         for n, ligne in enumerate(csv_reader):
