@@ -51,15 +51,16 @@ def recherche(request):
     else:
         charger_tableau =  True
         request.session['titre'], request.session['mutations'] = recuperation_mutations_dans_session(request)
-        request.session['valeur_min'] = 0
-        request.session['valeur_max'] = 10000000000
-        calculer_possibilites_filtre(request)
+        reinitialisation_parametres_filtre_valeur_fonciere_min_max(request)
+        calculer_modalites_filtre(request)
     
     reinitialisation_parametres_filtre(request)
     context = {'departements' : departements, 
                'epcis' : epcis, 
                'communes' : communes,
                'charger_tableau': charger_tableau,}
+    # une requete ajax sera lancée dès la fin du chargement de la page pour mettre à jour le tableau des mutations
+    # fonction : maj_tableau (page = 1)
     return render(request, 'recherche.html', context)
 
 def recuperation_code_departement_actif(request, departements, init):            
@@ -77,13 +78,6 @@ def recuperation_epcis_communes(request, config_active, code_departement, init):
         request.session['commune'] = int(communes[0].pk)
     return epcis, communes
 
-def reinitialisation_parametres_filtre(request):    
-    request.session['typologie'] = 0
-    request.session['annee_min'] = 0
-    request.session['annee_max'] = 0
-    request.session['valeur_min'] = 0
-    request.session['valeur_max'] = 10000000000
-
 def recuperation_mutations_dans_session(request):
     titre = ''
     codes_insee = []
@@ -99,12 +93,26 @@ def recuperation_mutations_dans_session(request):
     mutations = requeteur.mutations(codes_insee)
     return titre, mutations 
 
-def calculer_possibilites_filtre(request):
-    request.session['typologies'] = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) for mutation in request.session['mutations']] + [(0, 'Tous')]), key = lambda x : x[1])    
-    request.session['annees'] = sorted(set([int(mutation.anneemut) for mutation in request.session['mutations']]))
-    request.session['valeur_min_existante'] = min([float(mutation.valeurfonc) for mutation in request.session['mutations']])
-    request.session['valeur_max_existante'] = max([float(mutation.valeurfonc) for mutation in request.session['mutations']])
+def reinitialisation_parametres_filtre(request):    
+    request.session['typologie'] = 0
+    request.session['annee_min'] = 0
+    request.session['annee_max'] = 0
+    reinitialisation_parametres_filtre_valeur_fonciere_min_max(request)
+    
+def reinitialisation_parametres_filtre_valeur_fonciere_min_max(request):
+    request.session['valeur_min'] = 0
+    request.session['valeur_max'] = 10000000000
 
+def calculer_modalites_filtre(request):
+    request.session['typologies'] = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) 
+                                                for mutation in request.session['mutations']] + [(0, 'Tous')]), 
+                                           key = lambda x : x[1])    
+    request.session['annees'] = sorted(set([int(mutation.anneemut) 
+                                            for mutation in request.session['mutations']]))
+    request.session['valeur_min_existante'] = min([float(mutation.valeurfonc) 
+                                                   for mutation in request.session['mutations']])
+    request.session['valeur_max_existante'] = max([float(mutation.valeurfonc) 
+                                                   for mutation in request.session['mutations']])
 
 '''
 
@@ -122,7 +130,7 @@ def maj_tableau(request, page, tri):
                                             valeur_min = request.session['valeur_min'],
                                             valeur_max = request.session['valeur_max'],)
     mutations = Requeteur.trier_mutations(mutations, tri)  
-    mutations = mutations_ds_page(page, mutations, 50)    
+    mutations = mutations_de_la_page(page, mutations, 50)    
     
     context = {'mutations': mutations, 
                'tri' : tri,
@@ -131,47 +139,37 @@ def maj_tableau(request, page, tri):
     return render(request, 'tableau_mutations.html', context)
 
 def modification_filtre(request):
-    typologies_existantes = request.session['typologies']
-    annees_existantes = request.session['annees']
-    valeur_min_existante = request.session['valeur_min_existante']
-    valeur_max_existante = request.session['valeur_max_existante']
-    # changement de typologie
-    if 'typologie' in request.POST:
-        request.session['typologie'] = int(request.POST['typologie'])    
-    if request.session['typologie'] not in [code for code, lib in typologies_existantes]:
-        request.session['typologie'] = 0
-    # changement annee mini
-    if 'annee_min' in request.POST:
-        request.session['annee_min'] = int(request.POST['annee_min'])
-    if request.session['annee_min'] not in annees_existantes or (request.session['annee_min']==0):
-        request.session['annee_min'] = min(annees_existantes)
-    # changement annee maxi
-    if 'annee_max' in request.POST:
-        request.session['annee_max'] = int(request.POST['annee_max'])
-    if request.session['annee_max'] not in annees_existantes or (request.session['annee_max']==0):
-        request.session['annee_max'] = max(annees_existantes)
-    # changement valeur mini
-    if 'valeur_min' in request.POST:
-        try:
-            request.session['valeur_min'] = int(request.POST['valeur_min'])
-        except Exception as e:
-            request.session['valeur_min'] = valeur_min_existante
-    if request.session['valeur_min'] < valeur_min_existante:
-        request.session['valeur_min'] = valeur_min_existante
-    if request.session['valeur_min'] > valeur_max_existante:
-        request.session['valeur_min'] = valeur_max_existante
-    # changement valeur mini
-    if 'valeur_max' in request.POST:
-        try:
-            request.session['valeur_max'] = int(request.POST['valeur_max'])
-        except Exception as e:
-            request.session['valeur_max'] = valeur_max_existante
-    if request.session['valeur_max'] > valeur_max_existante:
-        request.session['valeur_max'] = valeur_max_existante
-    if request.session['valeur_max'] < valeur_min_existante:
-        request.session['valeur_max'] = valeur_min_existante
+    fonctions_filtres = {'typologie': modification_filtre_typologie,
+                         'annee_min': modification_filtre_annee,
+                         'annee_max': modification_filtre_annee,
+                         'valeur_min': modification_filtre_valeur_fonciere,
+                         'valeur_max': modification_filtre_valeur_fonciere}
+    for key, value in request.POST.items():
+        if key in fonctions_filtres.keys():
+            fonctions_filtres[key](request, key)
 
-def mutations_ds_page(page, mutations, nb_par_page):
+def modification_filtre_typologie(request, clef_session):
+    typologies_existantes = request.session['typologies']
+    request.session[clef_session] = int(request.POST[clef_session])    
+    if request.session[clef_session] not in [code for code, lib in typologies_existantes]:
+        request.session[clef_session] = 0
+
+def modification_filtre_annee(request, clef_session):
+    annees_existantes = request.session['annees']
+    request.session[clef_session] = int(request.POST[clef_session])
+    if request.session[clef_session] not in annees_existantes or (request.session[clef_session]==0):
+        request.session[clef_session] = min(annees_existantes)
+
+def modification_filtre_valeur_fonciere(request, clef_session):
+    valeur_borne = request.session['valeur_min_existante'] 
+    if clef_session == 'valeur_max':
+        valeur_borne = request.session['valeur_max_existante']
+    try:
+        request.session[clef_session] = int(request.POST[clef_session])
+    except Exception as e:
+        request.session[clef_session] = valeur_borne    
+
+def mutations_de_la_page(page, mutations, nb_par_page):
     paginator = Paginator(mutations, nb_par_page)
     try:
         mutations = paginator.page(page)
