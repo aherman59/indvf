@@ -105,11 +105,11 @@ class Requeteur(PgOutils):
         mutations = self.transformer_mutations_en_namedtuple(mutations)
         return mutations
             
-    def recuperer_mutations(self, code_insee):
-        if self.base == 'DV3F':
-            return self.recuperer_mutations_dv3f(code_insee)
-        elif self.base == 'DVF+':
-            return self.recuperer_mutations_dvf_plus(code_insee)
+    def recuperer_mutations(self, codes_insee):
+        if self.base == 'DV3F' and len(codes_insee) > 0:
+            return self.recuperer_mutations_dv3f(codes_insee)
+        elif self.base == 'DVF+' and len(codes_insee) > 0:
+            return self.recuperer_mutations_dvf_plus(codes_insee)
         else:
             return []
     

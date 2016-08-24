@@ -1,11 +1,9 @@
 from django.conf.urls import url
-
-from . import views
+from .views import views
+from .views import ajax
 
 urlpatterns = [
     url(r'^$', views.recherche, name='recherche'),
-    #url(r'^par_(?P<tri>[A-z]+)$', views.recherche, name='recherche_triee'),
-    #url(r'^par_(?P<tri>[A-z]+)/(?P<page>[0-9]+)$', views.recherche, name='recherche_triee_page'),
-    url(r'^detail/(?P<id>[0-9]+)$', views.recherche_detaillee, name='recherche_detaillee'),
-    url(r'^modification_affichage_table/(?P<tri>[A-z]+)/(?P<page>[0-9]+)$', views.maj_tableau, name='maj_tableau'),
+    url(r'^detail/(?P<id>[0-9]+)$', ajax.recherche_detaillee, name='recherche_detaillee'),
+    url(r'^modification_affichage_table/(?P<tri>[A-z]+)/(?P<page>[0-9]+)$', ajax.maj_tableau, name='maj_tableau'),
 ]
