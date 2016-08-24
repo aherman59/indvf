@@ -123,6 +123,7 @@ REQUETE AJAX ACTUALISATION TABLEAU
 def maj_tableau(request, page, tri):    
     mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'])
     modification_filtre(request)
+    correction_valeurs_filtre_incorrectes(request)
     mutations = Requeteur.filtrer_mutations(mutations, 
                                             typologie = request.session['typologie'],
                                             annee_min = request.session['annee_min'],
@@ -143,22 +144,38 @@ def modification_filtre(request):
                          'annee_min': modification_filtre_annee,
                          'annee_max': modification_filtre_annee,
                          'valeur_min': modification_filtre_valeur_fonciere,
-                         'valeur_max': modification_filtre_valeur_fonciere}
+                         'valeur_max': modification_filtre_valeur_fonciere,
+                         }
     for key, value in request.POST.items():
         if key in fonctions_filtres.keys():
             fonctions_filtres[key](request, key)
 
-def modification_filtre_typologie(request, clef_session):
-    typologies_existantes = request.session['typologies']
-    request.session[clef_session] = int(request.POST[clef_session])    
-    if request.session[clef_session] not in [code for code, lib in typologies_existantes]:
-        request.session[clef_session] = 0
+def correction_valeurs_filtre_incorrectes(request):
+    fonctions_corrections = {'typologie': correction_filtre_typologie,
+                             'annee_min': correction_filtre_annee,
+                             'annee_max': correction_filtre_annee,
+                             'valeur_min': correction_filtre_valeur_fonciere,
+                             'valeur_max': correction_filtre_valeur_fonciere,
+                             }
+    for key, value in fonctions_corrections.items():
+        fonctions_corrections[key](request, key)
 
-def modification_filtre_annee(request, clef_session):
-    annees_existantes = request.session['annees']
+def modification_filtre_typologie(request, clef_session):    
     request.session[clef_session] = int(request.POST[clef_session])
+
+def correction_filtre_typologie(request, clef_session):
+    typologies_existantes = request.session['typologies']
+    if request.session['typologie'] not in [code for code, lib in typologies_existantes]:
+        request.session['typologie'] = 0
+
+def modification_filtre_annee(request, clef_session):    
+    request.session[clef_session] = int(request.POST[clef_session])
+
+def correction_filtre_annee(request, clef_session):
+    annees_existantes = request.session['annees']
     if request.session[clef_session] not in annees_existantes or (request.session[clef_session]==0):
-        request.session[clef_session] = min(annees_existantes)
+        annee = min(annees_existantes) if clef_session =='annee_min' else max(annees_existantes)
+        request.session[clef_session] = annee    
 
 def modification_filtre_valeur_fonciere(request, clef_session):
     valeur_borne = request.session['valeur_min_existante'] 
@@ -167,7 +184,15 @@ def modification_filtre_valeur_fonciere(request, clef_session):
     try:
         request.session[clef_session] = int(request.POST[clef_session])
     except Exception as e:
-        request.session[clef_session] = valeur_borne    
+        request.session[clef_session] = valeur_borne
+
+def correction_filtre_valeur_fonciere(request, clef_session):
+    valeur_min = request.session['valeur_min_existante']
+    valeur_max = request.session['valeur_max_existante']
+    if request.session[clef_session] > valeur_max:
+        request.session[clef_session] = valeur_max
+    if request.session[clef_session] < valeur_min:
+        request.session[clef_session] = valeur_min
 
 def mutations_de_la_page(page, mutations, nb_par_page):
     paginator = Paginator(mutations, nb_par_page)
