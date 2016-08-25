@@ -1,12 +1,15 @@
+import json
+
 from django.shortcuts import render, redirect
 from pg.pgbasics import *
-from outils.interrogation_bdd import Requeteur
-from .calcul.indicateurs import IndicateurDVF
+
 from main.territoire import integration 
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 from indicateur.models import Indicateur, ResultatIndicateur
 from indicateur.forms import IndicateurForm, SelectIndicateurForm
-import json
+
+from .indicateurs import calcul_indicateurs_actifs_format_xcharts
+
 
 '''
 PAGE AFFICHAGE INDICATEURS
@@ -14,12 +17,12 @@ PAGE AFFICHAGE INDICATEURS
 
 def indicateurs(request):
     '''
-     permet de générer la page des indicateurs
+    Permet de générer la page des indicateurs
      
-    Les clefs 'departement', 'epci', 'commune' de request.session permettent d'enregistrer la
-    selection en cours des entités du menu territoire.
-    
-    La clef 'config' de request.session enregistre l'id de la configuration active pour la base de données
+    request.session :
+    --------------- 
+    'departement', 'epci', 'commune' : conserve la selection en cours des entités du menu territoire.
+    'id_config' : 'id de la configuration active pour la base de données
     '''
     
     # integration des territoires si la base ne contient pas encore les entités départ./epci/communes
@@ -38,19 +41,16 @@ def indicateurs(request):
     config_active = ConfigurationBDD.objects.get(pk = request.session['id_config'])
         
     departements = config_active.departements_disponibles()
-    code_departement_actif = recuperation_code_departement_actif(request, departements, init)
-    epcis, communes = recuperation_epcis_communes(request, config_active, code_departement_actif, init)
-     
+    enregistrement_departement_selectionne_dans_session(request, departements, init)    
+    code_departement_selectionne = recuperation_code_departement_selectionne(request)
+    
+    epcis, communes = recuperation_epcis_communes(request, config_active, code_departement_selectionne)
+    enregistrement_epci_ou_commune_selectionne_dans_session(request, epcis, communes, init)
+         
     if not init:  
         territoires = generer_territoire_etude(request)        
         titre = creer_titre_format_html(territoires)
-        
-        indicateurs_actifs = recuperer_et_classer_indicateurs_actifs()
-        calculateur = Requeteur(*(config_active.parametres_bdd()), 
-                                type_base = config_active.type_bdd, 
-                                script = 'sorties/script_indvf.sql')
-        indicateursDVF = calcul_indicateurs(indicateurs_actifs, calculateur, territoires)
-        calculateur.deconnecter()
+        indicateursDVF = calcul_indicateurs_actifs_format_xcharts(territoires, config_active)     
     else:
         titre = ''
         indicateursDVF = []
@@ -62,42 +62,46 @@ def indicateurs(request):
                'titre': titre}
     return render(request, 'indicateurs.html', context)
 
-def recuperation_code_departement_actif(request, departements, init):            
+def enregistrement_departement_selectionne_dans_session(request, departements, init):
     if init:    
         request.session['departement'] = int(departements[0].pk)
     if 'departement' in request.POST:
         request.session['departement'] = int(request.POST['departement'])
+
+def recuperation_code_departement_selectionne(request):            
     return Departement.objects.get(pk=request.session['departement']).code
 
-def recuperation_epcis_communes(request, config_active, code_departement, init):
+def recuperation_epcis_communes(request, config_active, code_departement):
     epcis = config_active.epcis_disponibles(code_departement)
-    communes = config_active.communes_disponibles(code_departement)
+    communes = config_active.communes_disponibles(code_departement)    
+    return epcis, communes
+
+def enregistrement_epci_ou_commune_selectionne_dans_session(request, epcis, communes, init):
     if init:
         request.session['epci'] = int(epcis[0].pk)    
         request.session['commune'] = int(communes[0].pk)
-    return epcis, communes
+    if ('voir_epci' in request.POST) or ('ajout_epci' in request.POST):
+        request.session['epci'] = int(request.POST['epci'])
+    elif ('voir_commune' in request.POST) or ('ajout_commune' in request.POST):
+        request.session['commune'] = int(request.POST['commune'])
 
 def generer_territoire_etude(request):
     if 'voir_departement' in request.POST:
         t = Territoire.objects.territoire_comparaison_reinitialise()
         t.ajouter_departement(request.session['departement'])        
     elif 'voir_epci' in request.POST:
-        request.session['epci'] = int(request.POST['epci'])
         t = Territoire.objects.territoire_comparaison_reinitialise()
         t.ajouter_epci(request.session['epci'])        
     elif 'voir_commune' in request.POST:
-        request.session['commune'] = int(request.POST['commune'])
         t = Territoire.objects.territoire_comparaison_reinitialise()
         t.ajouter_commune(request.session['commune'])        
     elif 'ajout_departement' in request.POST:
         t = Territoire.objects.territoire_comparaison()
         t.ajouter_departement(request.session['departement'])
     elif 'ajout_epci' in request.POST:
-        request.session['epci'] = int(request.POST['epci'])
         t = Territoire.objects.territoire_comparaison()
         t.ajouter_epci(request.session['epci'])
     elif 'ajout_commune' in request.POST:
-        request.session['commune'] = int(request.POST['commune'])
         t = Territoire.objects.territoire_comparaison()
         t.ajouter_commune(request.session['commune'])
     else:
@@ -110,28 +114,6 @@ def creer_titre_format_html(territoires):
                       + territoire.nom 
                       + '</span>' for i, territoire in enumerate(territoires)])
     
-def recuperer_et_classer_indicateurs_actifs():
-    return Indicateur.objects.filter(actif=True).order_by('-code_typo', 
-                                                          'annee_debut', 
-                                                          'type_indic', 
-                                                          'periode', 
-                                                          'unite', 
-                                                          'variable', 
-                                                          'nom')
-
-
-def calcul_indicateurs(indicateurs_actifs, calculateur, territoires):
-    indicateursDVF = []
-    for num, indicateur in enumerate(indicateurs_actifs):
-        indic_dvf = IndicateurDVF(indicateur, territoires, calculateur)
-        i = {}            
-        i['graph'] = indic_dvf.graphique()
-        i['idgraph'] = 'graph' + str(num) 
-        i['type_graph'] = indicateur.type_graphe
-        i['tableau'] = indic_dvf.tableau()
-        i['nom'] = indic_dvf.titre()
-        indicateursDVF.append(i)
-    return indicateursDVF
         
 '''
 

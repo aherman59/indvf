@@ -1,12 +1,35 @@
-from pg.pgbasics import *
 from main.models import Departement, Epci, Commune, Territoire
-from indicateur.models import ResultatIndicateur 
+from indicateur.models import Indicateur, ResultatIndicateur
+from outils.interrogation_bdd import Requeteur
+
+def calcul_indicateurs_actifs_format_xcharts(territoires, config_active):
+        indicateurs_actifs = Indicateur.objects.indicateurs_actifs_tries()
+        requeteur = Requeteur(*(config_active.parametres_bdd()), 
+                                type_base = config_active.type_bdd, 
+                                script = 'sorties/script_indvf.sql')
+        indicateursDVF = []
+        for num, indicateur in enumerate(indicateurs_actifs):
+            indic_dvf = IndicateurDVF(indicateur, territoires, requeteur)
+            i = {}            
+            i['graph'] = indic_dvf.graphique()
+            i['idgraph'] = 'graph' + str(num) 
+            i['type_graph'] = indicateur.type_graphe
+            i['tableau'] = indic_dvf.tableau()
+            i['nom'] = indic_dvf.titre()
+            indicateursDVF.append(i)
+        requeteur.deconnecter()
+        return indicateursDVF 
 
 class IndicateurDVF():
 
-    def __init__(self, indicateur, territoires, calculateur):
+    def __init__(self, indicateur, territoires, requeteur):
+        '''
+        indicateur est une entree du modele Indicateur
+        territoires est une liste d'entrée pouvant être issue des modèles Département, Epci, Commune
+        requeteur est une instance de la classe outils.interrogation_bdd.Requeteur
+        '''
         self.donnees = []
-        self.calculateur = calculateur
+        self.calculateur = requeteur
         self.territoires = territoires
         self.id_indicateur = indicateur.id
         self.nom_indicateur = indicateur.nom

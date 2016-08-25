@@ -59,14 +59,12 @@ def recherche(request):
     else:
         init = False    
     
-    config_active = ConfigurationBDD.objects.get(pk = request.session['id_config'])
-    request.session['type_bdd'] = config_active.type_bdd
-    request.session['params'] = config_active.parametres_bdd() 
+    config_active = enregistrement_configuration_dans_session(request) 
      
     departements = config_active.departements_disponibles()
-    enregistrement_departement_selectionne_dans_session(request, departements, init)
-    
+    enregistrement_departement_selectionne_dans_session(request, departements, init)    
     code_departement_selectionne = recuperation_code_departement_selectionne(request)
+    
     epcis, communes = recuperation_epcis_communes(request, config_active, code_departement_selectionne)
     enregistrement_epci_ou_commune_selectionne_dans_session(request, epcis, communes, init)
     
@@ -85,6 +83,12 @@ def recherche(request):
                'communes' : communes,
                'charger_tableau': charger_tableau,}
     return render(request, 'recherche.html', context)
+
+def enregistrement_configuration_dans_session(request):
+    config_active = ConfigurationBDD.objects.get(pk = request.session['id_config'])
+    request.session['type_bdd'] = config_active.type_bdd
+    request.session['params'] = config_active.parametres_bdd()
+    return config_active
 
 def enregistrement_departement_selectionne_dans_session(request, departements, init):
     if init:    

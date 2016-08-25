@@ -1,7 +1,6 @@
 import json
 import os
 from collections import namedtuple
-
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse
@@ -21,17 +20,30 @@ fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
                     os.path.join(repertoire_ressources,'natcultspe.csv'))
 
 def formulaire_configuration(request):
+    '''
+    Permet de générer la page formulaire servant à renseigner 
+    les paramètres de connexion à la base de données
+    '''
     formulaire = ConfigForm()
     return _afficher_formulaire(request, formulaire)
 
-def _afficher_formulaire(request, formulaire):
-    constituer_etapes(request)    
-    context = {'etape':'0', 'formulaire':formulaire}
-    return render(request, 'formulaire_configuration.html', context)
-
 def etape_import(request, etape):
-    # Etapes intermédiaires - renvoie des données JSON traitées par le script jQuery du template etapes_import.html
+    '''
+    Permet d'afficher la page avec la barre de progression liées aux étapes d'importation des données dans la base
+    et les notifications liées.
+    
+    request.session :
+    --------------- 
+    'departements' : conservent la liste des départements identifiés dans les fichiers de données bruts DVF
+    'dossier' : chemin du dossier contenant les fichiers de données bruts DVF à importer dans la base de données
+    'parametres_connexion' : données de connexions à la base de données (sous forme de tuple)
+    'effacer_schemas_existants' : booleen précisant si les schemas existants doivent être effacés avant import
+    'geolocaliser' : boolean précisant si  il faut récupérer les parcelles sur cadastre.api.gouv.fr
+    'commune_a_geolocaliser' : liste des codes insee des communes dont il faut récupérer la géolocalisation
+    'proxy' : proxy renseigné par l'utilisateur
+    '''
     if request.is_ajax():
+    # Etapes intermédiaires - renvoie des données JSON traitées par le script jQuery du template etapes_import.html
         reconstituer_etapes(request)
         if etape == '1':
             etape_courante = renvoyer_etape(request, int(etape))
@@ -81,12 +93,23 @@ def etape_import(request, etape):
         return _afficher_formulaire(request, formulaire)
 
 def erreur(request):
+    '''
+    Permet d'afficher une page d'erreur
+    '''
     if 'erreur' in request.session:
         return _afficher_msg(request, request.session['erreur'], err=True)
     return _afficher_formulaire(request, ConfigForm())
 
 def fin_import(request):
+    '''
+    Permet d'afficher la page de fin d'importation
+    '''
     return _afficher_msg(request, "L'import des données DVF dans la base DVF+ est achevé.", err=False)
+
+def _afficher_formulaire(request, formulaire):
+    constituer_etapes(request)    
+    context = {'etape':'0', 'formulaire':formulaire}
+    return render(request, 'formulaire_configuration.html', context)
 
 def _afficher_msg(request, msg, err):
     context = {'msg': msg, 'err': err}
