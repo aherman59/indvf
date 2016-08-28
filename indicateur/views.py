@@ -128,19 +128,17 @@ def configuration_indicateur(request):
     # annulation 
     elif 'annulation' in request.POST:
         return redirect('indicateur:indicateurs')
-    # suppression
+    # suppression de la selection
     elif 'suppression' in request.POST:
         id_indicateur = int(request.POST['selection_indicateur'])
-        indicateur_choisi = Indicateur.objects.get(pk = id_indicateur)
-        indicateur_choisi.delete()
-        ResultatIndicateur.objects.filter(id_indicateur = id_indicateur).delete()
-        
+        Indicateur.objects.supprimer_indicateur_et_resultats_lies(id_indicateur)        
         return _charger_formulaire(request, IndicateurForm())
     # modification de la selection
     elif 'selection' in request.POST:
-        return _modification_selection(request)
-    # activation de la nouvelle configuration
-    if 'creation' in request.POST:
+        id_indicateur = int(request.POST['selection'])
+        return _modification_selection(request, id_indicateur)
+    # creation de l'indicateur
+    elif 'creation' in request.POST:
         id_indicateur = int(request.POST['selection_indicateur'])
         if id_indicateur == 0: # nouvelle entree
             indicateurform = IndicateurForm(request.POST)            
@@ -162,8 +160,7 @@ def _charger_formulaire(request, indicateurform, id_indicateur = 0):
                'id_indicateur' : id_indicateur, }
     return render(request, 'configuration_indicateur.html', context)
 
-def _modification_selection(request):
-    id_indicateur = int(request.POST['selection'])
+def _modification_selection(request, id_indicateur):
     indicateur = Indicateur.objects.get(pk = id_indicateur)
     formulaire = IndicateurForm(instance = indicateur)
     formulaire_selection = SelectIndicateurForm(initial = {'selection' : id_indicateur })

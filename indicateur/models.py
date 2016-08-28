@@ -9,6 +9,11 @@ class IndicateurManager(models.Manager):
         return self.filter(actif=True).order_by('-code_typo', 'annee_debut', 'type_indic', 
                                                 'periode', 'unite', 'variable', 'nom')
     
+    def supprimer_indicateur_et_resultats_lies(self, id_indicateur):
+        indicateur_choisi = self.get(pk = id_indicateur)
+        indicateur_choisi.delete()
+        ResultatIndicateur.objects.filter(id_indicateur = id_indicateur).delete()
+    
 class Indicateur(models.Model):
     
     TYPOLOGIE = (('999','Tout type de mutation'),
