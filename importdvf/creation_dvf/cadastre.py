@@ -238,9 +238,12 @@ class GeomDVF(PgOutils):
                 return False
         return True
     
-    def creer_index_geometriques(self):
+    def creer_index_et_contraintes_geometriques(self):
         for schema_departemental in self.schemas_departementaux:
-            valid, nb =self.creer_index_geometriques_pour_departement(schema_departemental)
+            valid, nb =self.creer_index_geometriques(schema_departemental)
+            if not valid:
+                return False
+            valid, nb =self.creer_contraintes_geometriques(schema_departemental)
             if not valid:
                 return False
         return True
@@ -258,7 +261,11 @@ class GeomDVF(PgOutils):
         pass
     
     @requete_sql
-    def creer_index_geometriques_pour_departement(self, schema_departemental):
+    def creer_index_geometriques(self, schema_departemental):
+        pass
+    
+    @requete_sql
+    def creer_contraintes_geometriques(self, schema_departemental):
         pass
     
 #eof

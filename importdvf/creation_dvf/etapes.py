@@ -163,7 +163,7 @@ def integration_geometries(geomdvf, effacer_schemas_existants):
                 valid_local = geomdvf.mise_a_jour_geometries_local_depuis('cadastre', 'parcellaire')
                 valid_parcelle = geomdvf.mise_a_jour_geometries_disposition_parcelle_depuis('cadastre', 'parcellaire')
                 valid_mutation = geomdvf.mise_a_jour_geometries_mutation()
-                valid_index = geomdvf.creer_index_geometriques()
+                valid_index = geomdvf.creer_index_et_contraintes_geometriques()
                 if not (valid_local and valid_parcelle and valid_mutation and valid_index):
                     return False, 'Impossible d\'intégrer les géométries dans DVF+.'
             else:
