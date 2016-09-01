@@ -1,6 +1,7 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+
 from outils import markdown2html
+from main.configuration import integrer_liens_doc_variables
 
 
 class DescriptionVariable(models.Model):
@@ -35,21 +36,9 @@ class DescriptionVariable(models.Model):
     
     def _conversion_html(self, champ):
         meta, html = markdown2html.convertir_markdown_en_html(champ)
-        html = self._integrer_liens_variables(html)
+        html = integrer_liens_doc_variables(html)
         html = markdown2html.ameliorer_tableaux_avec_bootstrap(html)
         html = markdown2html.centrer_images_avec_bootstrap(html)
-        return html
-    
-    def _integrer_liens_variables(self, html):
-        html_separe = html.split('@@')
-        html = ''
-        for i, elt in enumerate(html_separe):            
-            if (i%2 == 1):
-                table, variable = elt.split('|')
-                url = reverse('docdv3f:doc_variable', kwargs={'table': table, 'variable': variable})
-                html += '<a href="{1}">{0}</a>'.format(variable, url)
-            else:
-                html += elt
         return html
 
 class Variable(models.Model):

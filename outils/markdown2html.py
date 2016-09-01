@@ -16,7 +16,7 @@ def ameliorer_tableaux_avec_bootstrap(txt_html):
     return txt_html.replace('<table>', '<table class = "table table-condensed table-striped">')
 
 def centrer_images_avec_bootstrap(txt_html):
-    return txt_html.replace('<p><img', '<p class = "p-center"><img')    
+    return txt_html.replace('<p><img', '<p class = "p-center"><img style="max-width:100%; height:auto;"')    
 
 def convertir_html_brut_en_html_bootstrap(html_brut):
     html_bootstrap = ameliorer_tableaux_avec_bootstrap(html_brut)

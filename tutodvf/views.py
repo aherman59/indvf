@@ -4,7 +4,7 @@ from outils import markdown2html
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 
-from main.configuration import BASE_DIR
+from main.configuration import BASE_DIR, integrer_liens_doc_variables
 
 REPERTOIRE_FICHES = os.path.join(BASE_DIR, 'tutodvf', 'fiches')
 
@@ -30,6 +30,7 @@ def fiche(request, nom_fichier_md):
         print(e)
         return redirect('tutodvf:accueil')
     metadonnees, txt_html_brut = markdown2html.convertir_markdown_en_html(txt_fiche)
+    txt_html_brut = integrer_liens_doc_variables(txt_html_brut)
     txt_html_bootstrap = markdown2html.convertir_html_brut_en_html_bootstrap(txt_html_brut)
     context = {'contenu' : txt_html_bootstrap, 'meta' : metadonnees}
     return render(request, 'fiche.html', context)

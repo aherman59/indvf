@@ -1,5 +1,8 @@
 import os
 from collections import namedtuple
+
+from django.core.urlresolvers import reverse
+
 from main.models import ConfigurationBDD
 '''
 
@@ -8,6 +11,27 @@ VARIABLES POUR TOUTES LES APPLICATIONS
 '''
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+'''
+
+FONCTIONS POUR TOUTES LES APPLICATIONS
+
+'''
+
+def integrer_liens_doc_variables(html):
+    '''
+    utile pour les applications TutoDVF et DocDV3F
+    '''
+    html_separe = html.split('@@')
+    html = ''
+    for i, elt in enumerate(html_separe):            
+        if (i%2 == 1):
+            table, variable = elt.split('|')
+            url = reverse('docdv3f:doc_variable', kwargs={'table': table, 'variable': variable})
+            html += '<a href="{1}">{0}</a>'.format(variable, url)
+        else:
+            html += elt
+    return html
 
 '''
 
