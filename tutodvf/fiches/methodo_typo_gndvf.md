@@ -1,6 +1,6 @@
 Titre: Construire la typologie de bien du GnDVF à partir de DVF+
 Theme: Méthode
-Numero: 1
+Numero: 2
 Auteurs: Antoine Herman, Magali Journet, Bertrand Leroux - Cerema
 MAJ: 19/04/2016
 Contact: dv3f@cerema.fr

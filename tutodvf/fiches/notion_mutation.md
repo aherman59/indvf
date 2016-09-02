@@ -44,7 +44,13 @@ La date de mutation est le jour de la date de signature de l'acte notarié.
 
 ### Articles CGI
 
-blabla
+La taxation d’une mutation est effectuée en partie sur la base d'un ou plusieurs articles du code général des impôts (CGI). Même si son but premier n’est pas l’analyse et l’observation, chaque article CGI renvoit des informations spécifiques sur l’acheteur ou le vendeur et/ou sur le(s) bien(s) muté(s), qui peuvent être très intéressantes. Par exemple, certains codes renseignent sur le fait qu'il s'agit de VEFA, ou signalent que l’acheteur est un organisme HLM.  
+Cette donnée est très fiable, mais elle est incomplète : 
+
+* seuls 5 articles CGI peuvent être associés à une mutation dans DVF,
+* certains codes CGI n’ont pas été remontés dans DVF (en particulier ceux sur le monde agricole, ou les codes CGI valables que ponctuellement).
+
+Un travail d'exploitation des articles CGI a été mené par le GnDVF et permet une meilleure interprétation des articles CGI pour la ventilation des biens ayant muté (fiche 8 du Guide GnDVF).
 
 ## Mutations dans DVF+/DV3F 
 

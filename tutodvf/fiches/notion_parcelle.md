@@ -76,17 +76,46 @@ de Mode d’Occupation des Sols (MOS) local, multi-année. Lorsque l’on travai
 
 ### Surface de terrain ayant muté
 
-La surface du terrain ayant muté correspond la somme des surfaces des subdivisions fiscales (suf) composant la ou les parcelles ayant muté. 
+La surface du terrain ayant muté correspond à la somme des surfaces des subdivisions fiscales (suf) composant la ou les parcelles ayant muté.
+
+### Evolution de la parcelle dans le temps
+
+Le contour d'une parcelle est invariant dans le temps. Si il est modifié, alors la référence cadastrale de la parcelle change. Autrement dit, si un terrain est aménagée avec changement de contour de la parcelle (division, réunion, etc.) alors la parcelle d'origine disparaît et une ou des nouvelles parcelles apparaissent. 
+
+Attention, à l'inverse, la modification de la référence cadastrale ne signifie pas nécessairement une évolution de contour. Il peut s'agir d'une modification administrative telle qu'une fusion-absorbtion de commune. 
+ 
+Lors de la mutation, il est intéressant de savoir si le vendeur a effectué des aménagements de type réunion ou division sur la parcelle mutée pour notamment pouvoir lui attribuer un rôle d'aménageur. Si c'est le cas, on dit que la parcelle est "apparue sous le vendeur". De même, si l'acheteur a effectué des aménagements de type réunion ou division sur la parcelle mutée, on dit que la parcelle a "disparue sous l'acheteur". 
+
+Si l'acheteur ou le vendeur n'a effectué aucune division ou réunion, la parcelle est considérée comme "stable", même si sa référence cadastrale a pu changer.
 
 ## Parcelles dans DVF+/DV3F
 
-Dans DVF+/DV3F, chaque ligne de la table _disposition_parcelle_ représente une "disposition-parcelle", c'est-à-dire l'état d'une parcelle lors qu'elle mute ou qu'elle est concernée par une vente. Chaque disposition-parcelle est identifiée par un identifiant @@disposition_parcelle|iddispopar@@ (valeur entière). 
+### Identification et décompte de parcelles
 
-La référence cadastrale de la parcelle est spécifiée dans la variable @@disposition_parcelle|idpar@@. 
+Dans DVF+/DV3F, chaque ligne de la table _disposition_parcelle_ représente une "disposition-parcelle", c'est-à-dire l'état d'une parcelle lors qu'elle mute ou qu'elle est concernée par une vente. Chaque disposition-parcelle est identifiée par un identifiant @@disposition_parcelle|iddispopar@@ (valeur entière) et est rattachée à sa mutation par la variable @@disposition_parcelle|idmutation@@.
 
 Dans cette table _disposition_parcelle_, on retrouve les variables liées à :
 
-*
+* à la référence cadastrale de la parcelle : @@disposition_parcelle|idpar@@ qui se décompose en @@disposition_parcelle|coddep@@, @@disposition_parcelle|codcomm@@, @@disposition_parcelle|prefsect@@, @@disposition_parcelle|nosect@@, @@disposition_parcelle|noplan@@, 
+* au caractère muté ou non de la parcelle : @@disposition_parcelle|parcvendue@@.
+
+Dans la table mutation, des informations agrégées permettent de faciliter les décomptes et identifications :
+
+* des parcelles concernées par la mutation : @@mutation|nbpar@@ et @@mutation|l_idpar@@
+* des parcelles mutées : @@mutation|nbparmut@@ et @@mutation|l_idparmut@@
+
+A noter, que pour la table mutation de DV3F, la variable @@mutation|rapatffpar@@ indique si les informations issues des Fichiers fonciers pour les parcelles concernées ont bien été rapatriées. 
+
+### Géométrie de parcelles
+
+Les contours des parcelles sont disponibles à travers à les variables géométriques :
+
+* @@disposition_parcelle|geompar@@ pour la table disposition_parcelle,
+* @@mutation|geompar@@ et @@mutation|geomparmut@@ pour la table mutation.
+
+Une mutation comportant plusieurs parcelles aura une seule entité géographique rassemblant toutes les parcelles concernées (geompar) ou toutes les parcelles mutées (geomparmut) lors de cette mutation. La représentation géographique d'une mutation peut donc comporter des objets de contours disjoints.
+
+A noter que les géométries sont intégrées à partir de plusieurs millésimes de la BD Parcellaire (constitution d'un historique des parcelles) et complétées par les données disponibles sur cadastre.gouv.fr, permettant une exhaustivité maximale.
 
 ### Occupation de la parcelle
 
@@ -135,37 +164,21 @@ pour les parcelles mutées (@@disposition_parcelle|ffdcntagri@@, @@disposition_p
 Enfin, pour DV3F uniquement, et dans la table _mutation_, a été créé un indicateur d'occupation plus adapté à la détection de
 segment de marchés fonciers ou immobiliers (variable @@mutation|occupation@@).
 
+### Surface du terrain ayant muté
 
-### Définition de la surface terrain
+Il existe plusieurs variables décrivant la surface du terrain ayant muté dans DV3F :
+* @@mutation|sterr@@ qui correspond à la somme de toutes les surfaces des suf issues de DVF ayant muté pour une même mutation, 
+* @@mutation|ffsterr@@ qui correspond à la somme de toutes les surfaces des suf issues des Fichiers fonciers ayant muté pour une même mutation,
+* @@mutation|ffsparc@@ qui correspond à la somme des surfaces de parcelles issues des Fichiers fonciers (variable dcntpa) ayant muté.
 
-La surface du terrain ayant muté (sterr et ffster) est la somme des surfaces des subdivisions fiscales (suf) composant la parcelle. 
-ffsparc est la somme des surfaces des parcelles.
+Il peut exister des différences de surface entre sterr, ffsterr, ffsparc et la surface de l'entité géométrique correspondante mais cela reste marginal. Par contre, il est peut-être intéressant de s'assurer lorsqu'on travaille sur des échantillons ou de tres petits nombres de mutations que ces variables sont cohérentes entre elles.
 
-## Evolution de la parcelle dans le temps. 
-La surface de la parcelle est évaluée lors de la confection du plan (remaniement, remembrement) ou lors de tout document d’arpentage.
-Il peut exister des différences de surface entre ster/ffster, ffsparc et la surface calculé par l'objet géomatique (sgeom),
- mais cela reste marginal. Par contre, il est important lorsqu'on travaille sur des échantillons ou de tres petits nombres
- de mutations de regarder si toutes les variables sont cohérentes entre elles.
+### Parcelles apparues / disparues
 
-### Evolution de la parcelle dans le temps
-Les caractéristiques intrinsèques d'une parcelle sont statiques dans le temps. Si elle est modifiée / aménagée, alors son numéro est aussi modifié.
- Autrement dit, si une parcelle est aménagée (divisée, réunie, etc.) alors la parcelle d'origine disparaît et une ou des nouvelles parcelles 
- apparaissent. 
-Lors de la mutation, il est intéressant de savoir si le vendeur a effectué des aménagements sur la parcelle, car on peut alors lui attribuer un
- rôle d'aménageur. Si c'est le cas on dit que la parcelle est apparue sous le vendeur. 
-De même, lors de la mutation, il est intéressant de savoir si l'acheteur a effectué des aménagements sur la parcelle. On dit que la parcelle a 
-disparue sous l'acheteur.
-Une parcelle n'est pas considérée comme "aménagée", si sa modification est trop "légère" d'un point de vue aménageur ou administrative : 
-regroupement de communes, définitions de nouvelles sections, remaniement, etc. 
-Ont été retenus comme "aménagement": uniquement les divisions de parcelles, les réunions, et les transformations physiques dont on ne 
-connaissait pas la nature (division, réunion ou transfert).
-La méthode de détermination des modifications des parcelles s'appuie sur un travail de comparaison des millésimes des Fichiers fonciers. 
-Cette méthode statistique est très fiable pour les changements simples ou complexes (transformation administrative et physique en même temps).
- Par contre pour des doubles transformations physiques dans la même année, il est possible que certains cas aient été non retenus. Ce cas est
- cependant marginal.
+Dans DV3F, des méthodes de détermination de la stabilité des parcelles ont permis d'aboutir à la création de plusieurs indicateurs :
 
-## DVF+/DV3F
-BD parcellaire
-Une mutation comportant plusieurs parcelles aura une seul entité géographique rassemblant toutes les parcelles concernées (geompar)
- ou toutes les parcelles mutées (geomparmut) lors de cette mutation. La représentation géographique d'une mutation peut donc comporter 
- des objets de contours disjoints.
+* @@disposition_parcelle|stabilitep@@ pour la table _disposition_parcelle_
+* @@mutation|nbparapp@@ et @@mutation|nbpardisp@@ pour la table _mutation_
+
+La méthode de détermination des modifications des parcelles s'appuie sur un travail de comparaison des millésimes des Fichiers fonciers. **A FAIRE - (cf Fiche sur la détermination de la stabilité des biens)**
+

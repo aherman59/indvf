@@ -1,6 +1,6 @@
 Titre: Construire des indicateurs de prix à partir de DVF+
 Theme: Méthode
-Numero: 2
+Numero: 3
 Auteurs: Antoine Herman, Magali Journet - Cerema
 MAJ: 27/04/2016
 Contact: dv3f@cerema.fr
