@@ -4,11 +4,13 @@ from outils import markdown2html
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 
-from main.configuration import BASE_DIR, integrer_liens_doc_variables
+from main.configuration import BASE_DIR, integrer_liens_doc_variables, integrer_liens_tuto
 
 REPERTOIRE_FICHES = os.path.join(BASE_DIR, 'tutodvf', 'fiches')
+THEMES = {'Tutoriel': 'A', 'Base de données' : 'B', 'Méthode' : 'C', 'Variable' : 'D'}
 
 def accueil(request):
+    
     fiches = []        
     for fichier in os.listdir(REPERTOIRE_FICHES):
         if fichier.endswith('.md'):
@@ -18,10 +20,10 @@ def accueil(request):
                            'titre' : metadonnees.get('titre')[0].strip(), 
                            'lien' : './' + fichier[:-3],
                            'numero' : metadonnees.get('numero')[0]})
-            fiches = sorted(fiches, key=lambda x: x['theme'])
+            fiches = sorted(fiches, key=lambda x: THEMES[x['theme']])
     context = {'fiches' : fiches}
     return render(request, 'sommaire.html', context)
-    
+
 def fiche(request, nom_fichier_md):
     fiche = os.path.join(REPERTOIRE_FICHES, nom_fichier_md + '.md')
     try:
@@ -31,6 +33,7 @@ def fiche(request, nom_fichier_md):
         return redirect('tutodvf:accueil')
     metadonnees, txt_html_brut = markdown2html.convertir_markdown_en_html(txt_fiche)
     txt_html_brut = integrer_liens_doc_variables(txt_html_brut)
+    txt_html_brut = integrer_liens_tuto(txt_html_brut)
     txt_html_bootstrap = markdown2html.convertir_html_brut_en_html_bootstrap(txt_html_brut)
     context = {'contenu' : txt_html_bootstrap, 'meta' : metadonnees}
     return render(request, 'fiche.html', context)

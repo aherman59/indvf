@@ -7,17 +7,27 @@ Contact: dv3f@cerema.fr
 
 ## Définition et caractéristiques du local dans DVF
 
-### Définition du local
+### Définitio
 
-Le local est un ensemble de « différentes constructions qui, en raison de leur agencement, forment un ensemble immobilier homogène d’un même compte-propriétaire ». 
-« Ne sauraient être considérés comme constituant un local distinct, ni la pièce meublée d'un logement loué en meublé à un étudiant, ni les pièces occupées temporairement par un jeune ménage dans l'appartement des parents de l'un des conjoints, ni le garage d'une maison individuelle faisant l'objet à titre accidentel d'une location séparée, etc » 
-Un local peut être composé de plusieurs éléments bâtis. Les bâtiments publics comme les écoles, les hôpitaux… ne sont en général pas recensés dans l’application MAJIC puisqu’ils sont exonérés de taxe.
+Le local est un ensemble de :
+
+>> « différentes constructions qui, en raison de leur agencement, forment un ensemble immobilier homogène d’un même compte-propriétaire ». 
+>> 
+>> « Ne sauraient être considérés comme constituant un local distinct, ni la pièce meublée d'un logement loué en meublé à un étudiant, ni les pièces occupées temporairement par un jeune ménage dans l'appartement des parents de l'un des conjoints, ni le garage d'une maison individuelle faisant l'objet à titre accidentel d'une location séparée, etc » 
+
+Un local peut être composé de plusieurs éléments bâtis.
+
 Un local est différencié en 4 catégories selon sa forme physique : 
-- la maison,
-- l'appartement,
-- la dépendance (forcément liée à l'habitation),
-- l'activité (et ses dépendances), ne sont pas compris les activités primaires, sont compris et peuvent être différenciées, les activités secondaires et tertiaires.
-La différenciation entre maison, appartement, dépendance et activité est très fiable. 
+
+* la maison,
+* l'appartement,
+* la dépendance (forcément liée à l'habitation),
+* l'activité (et ses dépendances), ne sont pas compris les activités primaires, sont compris et peuvent être différenciées, les activités secondaires et tertiaires. 
+
+La différenciation entre maison, appartement, dépendance et activité est très fiable.
+
+Les bâtiments publics comme les écoles, les hôpitaux… ne sont en général pas recensés dans l’application MAJIC puisqu’ils sont exonérés de taxe.
+
 Un logement est le regroupement des maisons et appartements quel que soient leurs occupations (habitation, activité libérale, etc.). Attention, un logement n'est pas forcément une habitation. Par exemple une boulangerie peut être dans une maison. Inversement, une habitation peut être dans un local industriel (loft). Au final, dans les Fichiers fonciers, on peut constater que les locaux de type maison et appartement sont essentiellement à vocation d'habitation (99,4 % en France), même si quelques-uns peuvent être des locaux mixtes ou professionnels. De ce fait, le choix de l’une des définitions par rapport aux autres impacte peu les tendances ou les proportions dans DVF. Par contre elle est essentiel lorsque l’observation porte sur un nombre réduit de locaux.
 La présence du local dans DV3F peut prendre parfois un certain temps, encore plus lorsque ces données proviennent de Fichiers fonciers. C'est ce qu'on appelle le temps de latence. Ainsi, pour les logements neufs ou en VEFA, il est possible qu'aucun local ne soit décompté.
 En première lecture, on peut constater un nombre non négligeable de mutations DVF qui ont au moins un local que Fichiers fonciers ne trouvent pas. Ces différences concernent principalement les cas de VEFA, les mutations avant 2008 et les mutations après le dernier millésime des Fichiers fonciers qui ne peuvent être prises en compte par les Fichiers fonciers. Si on s'attreint à travailler sur une période en accord avec les Fichiers fonciers (2009-2014 par exemple), alors le taux d'erreur devient marginal. Par contre si l'analyse effectuée concerne uniquement les VEFA, ce taux n'est plus marginal.

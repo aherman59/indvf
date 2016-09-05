@@ -16,15 +16,25 @@ Ce groupe s’est réuni plusieurs fois et a associé, dès 2013, le CETE Nord-P
 Depuis, le Cerema a travaillé, pour le compte de la DGALN, à étoffer ce modèle en y ajoutant de nouvelles
 variables au sein d’un premier modèle, baptisé DVF+. 
 
-Il propose, par ailleurs, des outils et scripts, libres d'utilisation, pour l'importation et la structuration de la donnée brute DVF dans une base de données PostgreSQL selon ce modèle.
+Des outils et scripts, libres d'utilisation, sont, par ailleurs, proposés pour l'importation et la structuration de la donnée brute DVF dans une base de données PostgreSQL selon ce modèle.
 
-## Intérêt de DVF+
+## Intérêt d'une base de données DVF+
 
-Gérer de gros volume de données / Accéder facilement à l'information / Combiner facilement des informations 
+Les données DVF brutes fournies par la DGFiP sont livrées sous un format texte lisible depuis un éditeur de texte ou un
+tableur classique. Chaque ligne du fichier source est souvent une décomposition partielle d'une vente et comporte 43 champs qui mélangent des informations liées à différentes notions fiscales. Il devient très vite difficile de travailler à une analyse sérieuse à partir d'un tel fichier.
 
-Structurer la donnée (chaque table permet de représenter une unique notion de DVF et de rattacher les données qui y sont liées)
-Supprimer les données dupliquées, très présentes dans DVF
-Transformer une donnée d'origine fiscale en une donnée plus exploitable pour l'analyse foncière et immobilière
+L'intérêt de la mise en place d'un modèle de données permettant l'intégration des données DVF est multiple :
+
+* pouvoir gérer un gros volume de données,
+* structurer l'information,
+* accèder facilement et rapidement à l'information,
+* combiner facilement les différentes informations,
+* supprimer les doublons d'information,
+* faciliter l'enrichissement des informations.
+
+Le modèle DVF+ présente de tels atouts. En terme de structuration de la donnée initiale, chacune des tables du modèle représente une unique notion de DVF à laquelle sont affectées les données qui y sont directement liées. Cette structuration permet de supprimer les données dupliquées et de mettre en place des liaisons plutôt intuitives entre les tables. 
+
+Par ailleurs, le modèle DVF+ ajoute, à une donnée d'origine fiscale, une donnée plus exploitable pour l'observation foncière et immobilière en définissant des variables plus faciles d'utilisation.
 
 ## Tables constitutives du modèle
 
@@ -96,7 +106,7 @@ Quelques règles syntaxiques ont été mises en place sur les variables pour don
 | cod | code (postal, insee, etc...) |
 | s | surface |
 | nb | denombrement |
-|l_ | liste (type array) |
+| l_ | liste (type array) |
 | lib | libellé |
 
 A noter que toutes les variables comportent au maximum 10 caractères de manière à faciliter l'exportation au format shp.

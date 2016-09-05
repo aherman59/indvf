@@ -33,6 +33,22 @@ def integrer_liens_doc_variables(html):
             html += elt
     return html
 
+def integrer_liens_tuto(html):
+    '''
+    utile pour les applications TutoDVF et DocDV3F
+    '''
+    html_separe = html.split('@TUTO@')
+    html = ''
+    for i, elt in enumerate(html_separe):            
+        if (i%2 == 1):
+            fiche_tuto, descriptif = elt.split('|')
+            url = reverse('tutodvf:fiche', kwargs={'nom_fichier_md': fiche_tuto})
+            html += '<a href="{1}">{0}</a>'.format(descriptif, url)
+        else:
+            html += elt
+    return html
+
+
 '''
 
 GESTION DES APPLICATIONS POUR LE MENU PRINCIPAL
