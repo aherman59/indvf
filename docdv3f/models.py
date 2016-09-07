@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.urlresolvers import reverse
 from outils import markdown2html
 from main.configuration import integrer_liens_doc_variables
 

@@ -40,17 +40,17 @@ function sourceGeometrie(champgeom){
 var geomparLayer = new ol.layer.Vector({
     source: sourceGeometrie('geompar'),
     style: fct_styleParcellaire,
-    maxResolution:1
+    maxResolution:1.5
 });
 var geomparmutLayer = new ol.layer.Vector({
     source: sourceGeometrie('geomparmut'),
     style: fct_styleParcelles,
-    maxResolution:1
+    maxResolution:1.5
 });
 var geomlocmutLayer = new ol.layer.Vector({
     source: sourceGeometrie('geomlocmut'),
     style: fct_styleLocaux,
-    maxResolution:1
+    maxResolution:1.5
 });
 
 // définition de la carte
