@@ -1,6 +1,6 @@
 Titre: Installer PostgreSQL et PostGIS
 Theme: Base de données
-Numero: 3
+Numero: 1
 Auteurs: Antoine Herman - Cerema
 MAJ: 20/04/2016
 Contact: dv3f@cerema.fr

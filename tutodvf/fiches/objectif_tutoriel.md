@@ -1,4 +1,4 @@
-Titre: Objectifs des fiches Tutoriel
+Titre: Objectifs du tutoriel
 Theme: Tutoriel
 Numero: 0
 Auteurs: Magali Journet, Antoine Herman - Cerema
@@ -7,11 +7,13 @@ Contact: dv3f@cerema.fr
 
 ## Objectifs
 
-Les fiches Tutoriels proposées ici ont pour objectifs :
+Les fiches Tutoriel proposées ont pour objectifs :
 
 * de présenter brièvement ce qu'est DVF,
 * de proposer une description des notions principales autour de DVF et plus largement DV3F,
 * d'expliciter les liens entre ces différentes notions et les bases de données DVF+ et DV3F.
+
+Elles contiennent de véritables bases pour débuter avec DVF+/DV3F.  
 
 ## Pour compléter votre lecture...
 
@@ -21,4 +23,4 @@ Une littérature détaillée concernant les Fichiers fonciers est également dis
 
 ## Licence
 
-Tous les contenus proposées sont sous licence Creative Commons CC-BY-NC-SA.
+Tous les contenus proposés sont sous licence Creative Commons CC-BY-NC-SA.
