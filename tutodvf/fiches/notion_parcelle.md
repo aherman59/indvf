@@ -147,8 +147,7 @@ et _disposition_parcelle_ (@@disposition_parcelle|dcnt01@@ à @@disposition_parc
 Dans DV3F, ces mêmes catégories d'occupation ont également été rappatriées à partir des Fichiers fonciers pour les parcelles mutées 
 (@@mutation|l_ffdcnt@@ pour la table mutation et @@disposition_parcelle|ffdcnt01@@ @@disposition_parcelle|ffdcnt13@@ pour la table disposition_parcelle). 
 
-De plus, dans DVF+/DV3F, il est proposé un regroupement supplémentaire, qui s'appuie sur le retour d'expérience des Fichiers fonciers, 
-permettant de faciliter les analyses liées à l'occupation.
+De plus, dans DVF+/DV3F, il est proposé un regroupement supplémentaire, qui s'appuie sur le retour d'expérience des Fichiers fonciers, permettant de faciliter les analyses liées à l'occupation.
 Ce regroupement se décompose en 4 catégories :
 
 * dcntagri : agricole (dcnt01 à 04)

@@ -7,7 +7,7 @@ Contact: dv3f@cerema.fr
 
 ## Définition et caractéristiques du local dans DVF
 
-### Définitio
+### Définition
 
 Le local est un ensemble de :
 
@@ -17,23 +17,34 @@ Le local est un ensemble de :
 
 Un local peut être composé de plusieurs éléments bâtis.
 
-Un local est différencié en 4 catégories selon sa forme physique : 
+Il est référencé par un code numérique qui constitue un identifiant départemental unique pour le local.
+
+Le local est caractérisé par sa forme physique, son année de construction, sa surface et son nombre de pièces et dépendances. 
+
+### Typologie liée à la forme physique du local
+
+Un local est différencié, par la DGFiP, en 4 catégories selon sa forme physique : 
 
 * la maison,
 * l'appartement,
 * la dépendance (forcément liée à l'habitation),
-* l'activité (et ses dépendances), ne sont pas compris les activités primaires, sont compris et peuvent être différenciées, les activités secondaires et tertiaires. 
+* l'activité (et ses dépendances).
 
-La différenciation entre maison, appartement, dépendance et activité est très fiable.
+En ce qui concerne l'activité, les activités primaires ne sont pas observées. Via les Fichiers fonciers, il est possible de différencier les activités secondaires et tertiaires. 
 
-Les bâtiments publics comme les écoles, les hôpitaux… ne sont en général pas recensés dans l’application MAJIC puisqu’ils sont exonérés de taxe.
+La notion de logement regroupe les locaux de type maison ou appartement.
 
-Un logement est le regroupement des maisons et appartements quel que soient leurs occupations (habitation, activité libérale, etc.). Attention, un logement n'est pas forcément une habitation. Par exemple une boulangerie peut être dans une maison. Inversement, une habitation peut être dans un local industriel (loft). Au final, dans les Fichiers fonciers, on peut constater que les locaux de type maison et appartement sont essentiellement à vocation d'habitation (99,4 % en France), même si quelques-uns peuvent être des locaux mixtes ou professionnels. De ce fait, le choix de l’une des définitions par rapport aux autres impacte peu les tendances ou les proportions dans DVF. Par contre elle est essentiel lorsque l’observation porte sur un nombre réduit de locaux.
-La présence du local dans DV3F peut prendre parfois un certain temps, encore plus lorsque ces données proviennent de Fichiers fonciers. C'est ce qu'on appelle le temps de latence. Ainsi, pour les logements neufs ou en VEFA, il est possible qu'aucun local ne soit décompté.
-En première lecture, on peut constater un nombre non négligeable de mutations DVF qui ont au moins un local que Fichiers fonciers ne trouvent pas. Ces différences concernent principalement les cas de VEFA, les mutations avant 2008 et les mutations après le dernier millésime des Fichiers fonciers qui ne peuvent être prises en compte par les Fichiers fonciers. Si on s'attreint à travailler sur une période en accord avec les Fichiers fonciers (2009-2014 par exemple), alors le taux d'erreur devient marginal. Par contre si l'analyse effectuée concerne uniquement les VEFA, ce taux n'est plus marginal.
-En outre de sa catégorie, le local se caractérise par sa date de construction, son nombre de pièce, sa surface, ses dépendances. 
+### Logement et Habitation
 
-### Date de cosntruction d'un local et ancienneté
+
+Un logement n'est pas synonyme d'habitation. A titre d'exemple, une boulangerie peut être considérée comme un local de type maison. Inversement, une habitation peut être considérée comme un local d'activité secondaire (loft). Il a été constaté que les logements sont essentiellement à vocation d'habitation (99,4 % en France), même si quelques-uns peuvent être des locaux mixtes ou professionnels. 
+
+A l'exception de l'étude spécifique d'une forme particulière d'occupation (ex: loft), ces deux peuvent être confondues pour une analyse globale.
+
+Pour les habitations, l'occupation du local décrit s'il est loué, occupé par le propriétaire, vacant, etc. (au 1er janvier de chaque année). 
+
+
+### Date de construction d'un local et ancienneté
 
 La date de cosntruction n'est disponible que dans DV3F. Elle provient des Fichiers fonciers. 
 La date de construction est réputée très fiable pour les logements depuis 1970 et depuis 2003 pour l'activité. Attention cependant, certains locaux, et en particulier les activités peuvent ne pas vaoir de date de construction. 
@@ -107,3 +118,43 @@ Inversement certaines modifications n'induisent pas forcément des aménagements
 La méthode de détermination des modifications des locaux s'appuie sur un travail de comparaison des millésimes des Fichiers fonciers et sur la variable dnatcg. Cette méthode statistique manque encore de retours d'expériences pour confirmer sa fiabilité. Elle est donc à prendre avec précaution.
 
 ## Locaux dans DVF+/DV3F
+
+### Identification et décompte de locaux
+
+Dans DVF+/DV3F, chaque ligne de la table _local_ représente l'état d'un local lors de sa mutation. Chaque local est identifiée par un identifiant @@local|iddispoloc@@ (valeur entière) et est rattachée à sa mutation par la variable @@local|idmutation@@.
+
+Dans cette table _local_, on retrouve les variables liées à l'identité du local : @@local|idloc@@ qui est composé du code Insee de la commune auquel il apparaît et de la variable  @@local|identloc@@
+
+Dans la table mutation, des informations agrégées permettent de faciliter les décomptes et identifications des locaux ayant muté : @@mutation|nblocmut@@ et @@mutation|l_idlocmut@@.
+
+Attention, la présence du local dans DVF+/DV3F peut prendre parfois un certain temps. C'est ce qu'on appelle le temps de latence. Ainsi, pour les locaux neufs ou en VEFA, il est possible que ces derniers ne soient pas encore identifiés.
+
+Par ailleurs, on peut constater un nombre non négligeable de mutations DVF qui ont au moins un local non présent dans les Fichiers fonciers. Ces manques concernent principalement les cas de VEFA et les mutations après le dernier millésime des Fichiers fonciers disponible. Si on s'attreint à travailler sur une période en accord avec les Fichiers fonciers, alors le taux d'erreur devient marginal, sauf pour les VEFA. Il est possible de s'appuyer sur la variable @@mutation|rapatffloc@@ de la table _mutation_ pour savoir si les informations issues des Fichiers fonciers ont bien été rapatriées. 
+
+### Géométrie du local
+
+La géolocalisation du local dans DV3F n'est disponible qu'au travers du localisant de la parcelle qui le contient. Les géométries, de type point(s), sont disponibles à travers à les variables géométriques :
+
+* @@local|geomloc@@ pour la table local,
+* @@mutation|geomlocmut@@ pour la table mutation.
+
+Une mutation comportant plusieurs locaux aura une seule entité géographique rassemblant tous les locaux mutés (geomlocmut) lors de cette mutation. La représentation géographique d'une mutation peut donc comporter plusieurs points (qui peuvent se superposer).
+
+### Typologie liée à la forme physique du local
+
+Les variables DVF+ qui différencient les formes physiques du local sont :
+* @@local|codtyploc@@, @@local|libtyploc@@ pour la table _local_,
+* @@mutation|nblocmai@@, @@mutation|nblocapt@@, @@mutation|nblocdep@@, @@mutation|nblocact@@ pour la table _mutation_.
+
+Ces mêmes informations sont présentes dans les Fichiers fonciers et ont été rapatriées dans DV3F à travers les variables suivantes :
+* @@local|ffctyploc@@, @@local|ffltyploc@@ pour la table _local_,
+* @@mutation|ffnblocmai@@, @@mutation|ffnblocapt@@, @@mutation|ffnblocdep@@, @@mutation|ffnblocact@@ pour la table _mutation_.
+
+Globalement, l'ensemble sont très fiables et concordantes. Les derniers variables issues des Fichiers fonciers sont à privilégier lorsqu'il s'agit de travailler sur une analyse fine faisant appel à d'autres variables également issues des Fichiers fonciers (notion d'ancienneté, par exemple). 
+
+De plus, dans DVF+/DV3F, il est proposé une distinction supplémentaire selon le type d'activité:
+* @@local|ffcnatloc@@ et @@local|fflnatloc@@ pour la table _local_,
+* @@mutation|ffnbactsec@@, @@mutation|ffnbactter@@ pour la table _mutation_.
+
+
+

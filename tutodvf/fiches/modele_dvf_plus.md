@@ -20,8 +20,7 @@ Des outils et scripts, libres d'utilisation, sont, par ailleurs, proposés pour 
 
 ## Intérêt d'une base de données DVF+
 
-Les données DVF brutes fournies par la DGFiP sont livrées sous un format texte lisible depuis un éditeur de texte ou un
-tableur classique. Chaque ligne du fichier source est souvent une décomposition partielle d'une vente et comporte 43 champs qui mélangent des informations liées à différentes notions fiscales. Il devient très vite difficile de travailler à une analyse sérieuse à partir d'un tel fichier.
+Les données DVF brutes fournies par la DGFiP sont livrées sous un format texte lisible depuis un éditeur de texte ou un tableur classique. Chaque ligne du fichier source est souvent une décomposition partielle d'une vente et comporte 43 champs qui mélangent des informations liées à différentes notions fiscales. Il devient très vite difficile de travailler à une analyse sérieuse à partir d'un tel fichier.
 
 L'intérêt de la mise en place d'un modèle de données permettant l'intégration des données DVF est multiple :
 
