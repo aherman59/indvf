@@ -14,10 +14,14 @@
 				
 			<div class="panel-body">
 				<div class="col-sm-6">
+					{% if fiche_precedente %}
 					<a href="{{fiche_precedente.lien}}"><i class="fa fa-chevron-circle-left fa-2x" aria-hidden="true"></i></a>
+					{% endif %}
 				</div>
 				<div class="col-sm-6 text-right">
+					{% if fiche_suivante %}
 					<a href="{{fiche_suivante.lien}}"><i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true"></i></a>
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -52,10 +56,14 @@
 			
 		<div class="panel-body">
 			<div class="col-sm-6">
+				{% if fiche_precedente %}
 				<a href="{{fiche_precedente.lien}}"><i class="fa fa-chevron-circle-left fa-2x" aria-hidden="true"></i></a>
+				{% endif %}
 			</div>
 			<div class="col-sm-6 text-right">
+				{% if fiche_suivante %}
 				<a href="{{fiche_suivante.lien}}"><i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true"></i></a>
+				{% endif %}
 			</div>
 		</div>
 	</div>
