@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from outils import markdown2html
-from main.configuration import integrer_liens_doc_variables
+from main.configuration import integrer_liens_doc_variables, integrer_liens_tuto
 
 
 class DescriptionVariable(models.Model):
@@ -37,6 +37,7 @@ class DescriptionVariable(models.Model):
     def _conversion_html(self, champ):
         meta, html = markdown2html.convertir_markdown_en_html(champ)
         html = integrer_liens_doc_variables(html)
+        html = integrer_liens_tuto(html)
         html = markdown2html.ameliorer_tableaux_avec_bootstrap(html)
         html = markdown2html.centrer_images_avec_bootstrap(html)
         return html
