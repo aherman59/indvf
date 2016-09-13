@@ -166,6 +166,7 @@ segment de marchés fonciers ou immobiliers (variable @@mutation|occupation@@).
 ### Surface du terrain ayant muté
 
 Il existe plusieurs variables décrivant la surface du terrain ayant muté dans DV3F :
+
 * @@mutation|sterr@@ qui correspond à la somme de toutes les surfaces des suf issues de DVF ayant muté pour une même mutation, 
 * @@mutation|ffsterr@@ qui correspond à la somme de toutes les surfaces des suf issues des Fichiers fonciers ayant muté pour une même mutation,
 * @@mutation|ffsparc@@ qui correspond à la somme des surfaces de parcelles issues des Fichiers fonciers (variable dcntpa) ayant muté.

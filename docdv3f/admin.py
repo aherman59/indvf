@@ -2,6 +2,12 @@ from django.contrib import admin
 
 from docdv3f.models import DescriptionVariable, Variable, ValeurVariable, GroupementVariable
 
+# action d'administration pour copier des enregistrements existants
+def copier_enregistrement(modeladmin, request, queryset):
+    for objet in queryset:
+        objet.id = None
+        objet.save()
+copier_enregistrement.short_description = 'Copier les enregistrements sélectionnées'
 
 class VariableAdmin(admin.ModelAdmin):
     list_display = ('nom', 'type', 'table_associee', 'position','description_simplifiee', 'contrainte', 'description', 'code_modele')
@@ -39,6 +45,7 @@ class DescriptionVariableAdmin(admin.ModelAdmin):
            'fields': ('limites_precautions','fiabilite', 'amelioration')
         }),
     )
+    actions = [copier_enregistrement]
     
 class ValeurVariableAdmin(admin.ModelAdmin):
     list_display = ('description','valeur', 'detail')

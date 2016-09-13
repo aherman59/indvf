@@ -1,4 +1,4 @@
-Titre: ... et des locaux
+Titre: Faites le tour des locaux...
 Theme: Tutoriel
 Numero: 5
 Auteurs: Magali Journet, Antoine Herman - Cerema
