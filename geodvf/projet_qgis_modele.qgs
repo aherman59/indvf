@@ -330,7 +330,7 @@
     </maplayer>
     <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>local20160726090914356</id>
-      <datasource>dbname='dvf' host=localhost port=5432 user='user' sslmode=disable key='tid' table="dvf"."local" (geomloc) sql=</datasource>
+      <datasource>dbname='dv3f_v2' host=172.16.50.5 port=5432 user='postgres' sslmode=disable key='tid' table="dvf"."local" (geomloc) sql=</datasource>
       <shortname>local</shortname>
       <title></title>
       <abstract></abstract>
@@ -1243,7 +1243,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mutation20160726090852589</id>
-      <datasource>dbname='dvf' host=localhost port=5432 user='user' sslmode=disable key='tid' table="dvf"."mutation" (geomlocmut) sql=nblocmut>0</datasource>
+      <datasource>dbname='dv3f_v2' host=172.16.50.5 port=5432 user='postgres' sslmode=disable key='tid' table="dvf"."mutation" (geomlocmut) sql=nblocmut>0</datasource>
       <shortname>mutation</shortname>
       <title></title>
       <abstract></abstract>
@@ -2085,7 +2085,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mutation20160726090907257</id>
-      <datasource>dbname='dvf' host=localhost port=5432 user='user' sslmode=disable key='tid' table="dvf"."mutation" (geomparmut) sql=nblocmut=0 </datasource>
+      <datasource>dbname='dv3f_v2' host=172.16.50.5 port=5432 user='postgres' sslmode=disable key='tid' table="dvf"."mutation" (geomparmut) sql=nblocmut=0 </datasource>
       <shortname>mutation</shortname>
       <title></title>
       <abstract></abstract>
@@ -2775,7 +2775,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mutation_copier20160726091553588</id>
-      <datasource>dbname='dvf' host=localhost port=5432 user='user' sslmode=disable key='tid' table="dvf"."mutation" (geompar) sql=</datasource>
+      <datasource>dbname='dv3f_v2' host=172.16.50.5 port=5432 user='postgres' sslmode=disable key='tid' table="dvf"."mutation" (geompar) sql=</datasource>
       <shortname>mutation copier</shortname>
       <title></title>
       <abstract></abstract>
@@ -3684,7 +3684,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mutation_copier20160726094046693</id>
-      <datasource>dbname='dvf' host=localhost port=5432 user='user' sslmode=disable key='tid' table="dvf"."mutation" (geompar) sql=nblocmut>0</datasource>
+      <datasource>dbname='dv3f_v2' host=172.16.50.5 port=5432 user='postgres' sslmode=disable key='tid' table="dvf"."mutation" (geompar) sql=nblocmut>0</datasource>
       <shortname>mutation copier</shortname>
       <title></title>
       <abstract></abstract>

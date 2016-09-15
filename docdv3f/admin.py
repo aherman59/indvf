@@ -66,6 +66,8 @@ class ValeurVariableAdmin(admin.ModelAdmin):
         }),
     )
     
+    actions = [copier_enregistrement]
+    
 class GroupementVariableAdmin(admin.ModelAdmin):
     list_display = ('nom',)
     ordering = ('nom',)
