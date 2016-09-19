@@ -11,9 +11,9 @@ Déterminer l’évolution d'un bien (parcelle ou local) avant ou après une mut
 
 Pour l’analyse des marchés, l’évolution du bien muté peut être associée à 3 types d’évolution :
 
-* la stabilité : le bien est considéré comme stable si aucune modification structurelle n’a été effectuée sur celui-ci par le vendeur ou l’acheteur ;
-* l’apparition sous le vendeur : le bien est considéré comme apparu sous le vendeur en cas de fusion/division de biens, de modifications parcellaires (non administratives) ou de constructions de locaux **avant la vente** ;
-* la disparition sous l’acheteur : le bien est considéré comme disparu sous l’acheteur en cas de fusion/division de biens, de modifications parcellaires (non administratives) ou de démolitions de locaux **après la vente**.
+* la **stabilité** : le bien est considéré comme stable si aucune modification structurelle n’a été effectuée sur celui-ci par le vendeur ou l’acheteur ;
+* l’**apparition sous le vendeur** : le bien est considéré comme apparu sous le vendeur en cas de fusion/division de biens, de modifications parcellaires (non administratives) ou de constructions de locaux **avant la vente** ;
+* la **disparition sous l’acheteur** : le bien est considéré comme disparu sous l’acheteur en cas de fusion/division de biens, de modifications parcellaires (non administratives) ou de démolitions de locaux **après la vente**.
 
 Cette détermination concerne uniquement les biens qui ont muté. Par conséquent, les disparitions avant la vente ou les apparitions de locaux après la vente ne sont, ici, pas observées.
 
