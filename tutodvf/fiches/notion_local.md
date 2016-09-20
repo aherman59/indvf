@@ -207,22 +207,54 @@ Dans DV3F, il est possible d'avoir une décomposition plus fine des pièces :
 * @@local|ffnbpsea@@ pour les salles d'eau,
 * @@local|ffnbpann@@ pour les annexes.
 
-Attention, le terme "pièces principales d'habitation" dans Fichiers fonciers revêt une autre définition. Pour conserver le vocabulaire de DVF, la somme ffnbpsam + ffnbpcha issue des Fichiers fonciers a été également définie comme le nombre de pièces principales représentée par la variable @@local|ffnbpprinc@@. Elle est comparable à @@local|nbpprinc@@.
+Attention, le terme "pièces principales d'habitation" dans Fichiers fonciers revêt une autre définition. Pour conserver le vocabulaire de DVF, la somme ffnbpsam + ffnbpcha issue des Fichiers fonciers a été également définie comme le nombre de pièces principales dans DV3F, représentée par la variable @@local|ffnbpprinc@@. Elle est comparable à @@local|nbpprinc@@.
+
+Cette information a été remontée à la table mutation pour décompter les locaux en fonction de leur nombre de pièces : @@mutation|ffnbloc1pp@@, @@mutation|ffnbloc2pp@@, @@mutation|ffnbloc3pp@@, @@mutation|ffnbloc4pp@@ et @@mutation|ffnbloc5pp@@.
 
 On constate que certains locaux n'ont aucune pièce, ou bien 99 pièces. La détermination du nombre de pièce est donc subjectif et à prendre avec précaution. Par exemple, un studio peut correspondre à un aucune pièce ou à une pièce.
 
 
 ### Surfaces d'un local
 
-"Sbatmai", "sbatapt","sbatact","sapt1pp", etc. sont les surfaces par type de local (maison/appartement/activité) ou leur nombre de pièce. Ces surfaces ne regardent pas l'occupation du local. Ainsi une maison utilisée pour un cabinet médical et une habitation ne fera pas de différenciation de surface. "ffshab" et "ffspro" font justement cette différence, avec respectivement les surfaces dédiées à l'habitation et les surfaces dédiées à l'activité professionnelle. "ffsdep" donne la surface des dépendances isolées ou non.
+#### Les variables liées aux surfaces du local dans DVF+/DV3F
 
-Les notions liées à la surface sont identiques entre DVF et Fichiers fonciers, mais les intitulés sont trompeurs entre les deux bases. Dans DV3F, sbati = ffshab+ ffspro. La surface bâtie dans Fichiers fonciers  est égale à ffshab+ ffspro + ffsdep.
-A noter aussi que les dizaines puis les centaines sont davantage remplies que les autres valeurs, ce qui laisse à penser que les propriétaires ont pu arrondir la surface lors de leur déclaration.
+La surface réelle bâtie au sens de DVF est restituée par les variables @@local|sbati@@ de la table local et @@mutation|sbati@@ de la table mutation.
 
+Dans DV3F, les surfaces sont détaillées selon leur occupation :
 
-Pour approcher au plus près de la surface habitable,  il existe donc une fourchette haute et basse : 
-fourchette basse : s
-fourchette haute : ffshab + ffsdep
-Pour les maisons, la surface réelle est la surface déclarée par les contribuables. Comme ces informations ne sont pas toujours mises à jour, il est possible que les combles aménagés pour la partie d’habitation soient toujours considérés comme dépendances pour les Fichiers fonciers. De plus les dépendances isolées sont parfois transformées en lieu de vie (chambre pour l’adolescent, garage transformé en pièce de vie, etc.). De ce fait, la fourchette haute (ffshab + ffsdep) serait la plus appropriée pour les maisons. 
-A l’inverse, pour les appartements, ffshab serait la surface la plus approchante de la surface habitable. 
-L’utilisateur décidera quelle définition prendre en fonction de ses besoins.
+* la surface habitée : @@local|ffshab@@ pour la table local et @@mutation|ffshab@@ pour la table mutation,
+* la surface des dépendances (dépendances d'habitation ou isolées) : @@local|ffsdep@@ pour la table local et @@mutation|ffsdep@@ pour la table mutation,
+* la surface professionnelle (activités) : @@local|ffspro@@ pour la table local et @@mutation|ffspro@@ pour la table mutation. 
+
+La surface de l'ensemble des pièces du ou des locaux sont également rapatriés à partir des Fichiers fonciers dans DV3F. Il s'agit des variables @@local|ffsbati@@ de la table local et @@mutation|ffsbati@@ de la table mutation. Cette surface est la somme des surfaces des 3 occupations.
+
+Il est important de noter que sbati et ffsbati ne correspondent pas aux mêmes surfaces. Lorsque le rapatriement est bien effectué, on peut écrire les égalités suivantes :
+
+* sbati = ffshab + ffspro,
+* ffsbati = ffshab + ffspro + ffsdep.
+
+### Surface en fonction de la forme physique du local et nombre de pièces
+
+Dans DVF+/DV3F, pour faciliter l'analyse d'une mutation, la surface a été repartie selon la forme physique du local au travers des variables @@mutation|sbatmai@@, @@mutation|sbatapt@@ et @@mutation|sbatact@@.
+
+Pour les logements, la surface a aussi été repartie en fonction du nombre de pièces : @@mutation|sapt1pp@@, @@mutation|smai1pp@@, @@mutation|sapt2pp@@, @@mutation|smai2pp@@, @@mutation|sapt3pp@@, @@mutation|smai3pp@@, @@mutation|sapt4pp@@, @@mutation|smai4pp@@, @@mutation|sapt5pp@@ et @@mutation|smai5pp@@.
+
+### Surface Carrez
+
+La surface carrez est uniquement disponible pour les lots dans la table lot : @@lot|scarrez@@.
+
+### Approche de la surface habitable dans DV3F
+
+La surface habitable n'est pas disponible dans DV3F. 
+
+La surface réelle habitée ffshab de DV3F diffère de cette surface car :
+
+* elle comptabilise les surfaces sous plafond de moins d'1m80 
+* elle ne comptabilise aucune dépendance. 
+
+Sur ce premier point, il n'est pas possible de faire de correction car la présence de mansarde ne peut pas être détectée à l'aide des variables DV3F. Par contre, la surface des dépendances est disponible. On peut donc essayer de corriger la surface habitée pour approcher la surface habitable. A noter cependant que pour les maisons, les zones habitées et les zones de dépendances sont parfois confondues et peu actualisées fiscalement.
+
+Ainsi, pour approcher au plus près de la surface habitable, on peut donc imaginer les estimations haute et basse suivantes: 
+
+* estimation basse : ffshab + le minimum entre ffsdep/2 et 8m2,
+* estimation haute : ffshab + ffsdep.
