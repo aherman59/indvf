@@ -177,8 +177,8 @@ Il peut exister des différences de surface entre sterr, ffsterr, ffsparc et la 
 
 Dans DV3F, des méthodes de détermination de la stabilité des parcelles ont permis d'aboutir à la création de plusieurs indicateurs :
 
-* @@disposition_parcelle|stabilitep@@ pour la table _disposition_parcelle_
-* @@mutation|nbparapp@@ et @@mutation|nbpardisp@@ pour la table _mutation_
+* @@disposition_parcelle|stabilitep@@ pour la table _disposition_parcelle_,
+* @@mutation|nbparapp@@ et @@mutation|nbpardisp@@ pour la table _mutation_.
 
-La méthode de détermination des modifications des parcelles s'appuie sur un travail de comparaison des millésimes des Fichiers fonciers (cf @TUTO@stabilite_bien|Détermination de la stabilité des biens dans DV3F@TUTO@)
+La méthode de détermination des modifications des parcelles s'appuie sur un travail de comparaison des millésimes des Fichiers fonciers (cf @TUTO@stabilite_bien|Détermination de la stabilité des biens dans DV3F@TUTO@).
 

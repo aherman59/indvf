@@ -60,6 +60,23 @@ Globalement, dans DVF, le nombre de pièces principales se rattache aux "types" 
 
 Elle correspond, plus précisement, à la somme des pièces considérées comme des chambres ou des salles-à-manger. Un bureau ou une bibliothèque de taille suffisante sont considérés fiscalement comme une chambre. Une grande salle à manger peut être comptabilisée comme deux pièces.
 
+### Dépendances d'un logement
+
+La dépendance, au sens fiscal, renvoie à 2 définitions différentes :
+
+* soit un local en tant que tel : dans ce cas, la forme physique du local associé sera de type 'dépendance' (cf plus haut),
+* soit une partie d'un local de type 'maison' ou 'appartement'. Elle est soit intégrée au bâtiment principal, soit isolée (2 bâtis non reliés).
+
+La première définition est explicitée dans le paragraphe 'Typologie liée à la forme physique du local', plus haut. Cette partie concerne la seconde définition. 
+
+Les dépendances d'un logement sont détaillées dans les Fichiers fonciers mais n'existent pas dans la donnée source DVF. 
+
+Ces dépendances ne sont pas à confondre avec les dépendances non bâties (cours, passages, jardins, parcs, aires de stationnement collectives à ciel ouvert, terrains, etc.) qui peuvent aussi impacter le prix d'un bien mais qui ne sont  référencées ni dans les Fichiers fonciers, ni dans DVF.
+
+Un propriétaire n'a pas l'obligation de déclarer certains travaux (par exemple, un abri de jardin d'une superficie inférieure à 5m²). Ces dépendances bâties ne seront donc pas prises en compte.
+
+Par ailleurs, les données fiscales sont principalement basées sur les déclarations des particuliers. De ce fait, des incohérences existent avec la réalité. Par exemple, le propriétaire ne déclare pas qu'il a aménagé son grenier ou son garage en surface d’habitation (phénomène de surestimation des dépendances).
+
 ### Surfaces d'un local
 
 #### Surface réelle bâtie
@@ -103,32 +120,13 @@ Il n'est pas tenu compte de la superficie des combles non aménagés, caves, sou
 
 Autrement dit, la surface habitable diffère à la surface réelle en ne comptabilisant pas les surfaces dont la hauteur sous plafond est inférieure à 1,80m. Par contre, à la différence de la surface Carrez, elle comptabilise les pièces de moins de 8 m2.
 
+### Evolution du local dans le temps
 
-### Dépendances d'un local
+L'identifiant d'un local apparait lorsqu'il vient d'être construit, lorsqu'il subit une transformation importante (division, réunion, changement d'affectation, etc.) ou qu'il subit une modification du critère d'évaluation (procédure fiscale).
 
-Les dépendances dans DVF et Fichiers fonciers sont toujours des dépendances liées à l'habitation. 
-Il existe plusieurs catégories regroupées en 4 types : 
-- les garages/parkings/box,
-- les piscines,
-- les terrasses (ou toiture terrasse),
-- autres : bûcher,  buanderie, chambre de domestique, cellier, cave, grenier, grenier ou cave,  jardin d'hiver, pièce indépendante, remise, dépendance de local commun.
-N'ont pas été retenus les serres, et les éléments de pur agrément. 
-Les dépendances peuvent être intégrées au bâti principal, ou être isolées.
-Les dépendances importées des Fichiers fonciers sont des dépendances bâties, qu'il ne faut pas confondre avec les dépendances non bâties : cours, passages, jardins, parcs, aires de stationnement collectives à ciel ouvert, terrains, etc. qui peuvent aussi impacter le prix d'un bien mais qui ne sont pas référencés dans DV3F. 
-Un propriétaire n'a pas l'obligation de déclarer certains travaux (par exemple, son abri de jardin si sa superficie est inférieure à 5m²). Ces dépendances bâties ne seront pas prises en compte.
-Attention, les données des Fichiers fonciers sont des données fiscales basées en grande partie sur les déclarations des particuliers. De ce fait, des incohérences peuvent exister avec la réalité : 
-un propriétaire peut être en infraction et ne pas avoir déclaré certains travaux. Par exemple, le propriétaire ne déclare pas qu'il a aménagé son grenier en surface d’habitation (surestimation des dépendances).
-Certains champs de dépendance ont des usages très proches. Certains particuliers utilisent leur garage comme buanderie, tandis que d'autres l'utilisent pour leur voiture. Le classement dans un champ d'une pev n'assure pas que son occupation est conforme à ce classement.
-
-### Disparition local
-
-Un local peut muter plusieurs fois dans le temps, et changer de forme physique (agrandissement, réhabilitation, etc.). Cependant, si ces modifications sont trop importantes, alors les DGFiP préfère supprimer le numéro du local utilisé pour créer un ou des autres locaux. Autrement dit, si un local apparaît, c'est qu'il a subi une forte modification : construction, ajout de construction, démolition, division, réunion, etc.
-Lors de la mutation, il est intéressant de savoir si le vendeur a effectué des grosses modifications sur le local. On dit que le local est apparu sous le vendeur. 
-De même, lors de la mutation, il est intéressant de savoir si l'acheteur a effectué des grosses modifications sur le local. On dit que le local a disparu sous l'acheteur.
-Aucun trie sur la nature de la modification du local n'a été effectué. 
-Certaines modifications sont liés à des aménagements : construction, addition de construction, changement de consistance, changement d'affectation, etc. 
-Inversement certaines modifications n'induisent pas forcément des aménagements : modification suite à contentieux, modification des critères d'évaluation, etc.
-La méthode de détermination des modifications des locaux s'appuie sur un travail de comparaison des millésimes des Fichiers fonciers et sur la variable dnatcg. Cette méthode statistique manque encore de retours d'expériences pour confirmer sa fiabilité. Elle est donc à prendre avec précaution.
+L'identifiant d'un local disparait losqu'il est démoli, lorsqu'il subit une transformation importante (division, réunion, changement d'affectation, etc.) ou qu'il subit une modification du critère d'évaluation (procédure fiscale). 
+ 
+Lors de la mutation, il est intéressant de savoir si le vendeur a effectué des modifications lourdes sur les locaux existants ou en a construit de nouveaux. Si c'est le cas, on dit que le local est "apparu sous le vendeur". De même, si l'acheteur a effectué des modifications lourdes sur les locaux existants ou en a démoli, on dit que le local a "disparu sous l'acheteur". Le critère d'apparition peut servir à identifier des constructeurs tandis que le critère disparition peut servir à détecter d'éventuelles friches.
 
 ## Locaux dans DVF+/DV3F
 
@@ -156,6 +154,7 @@ Une mutation comportant plusieurs locaux aura une seule entité géographique ra
 ### Typologie liée à la forme physique du local
 
 Les variables DVF+ qui différencient les formes physiques du local sont :
+
 * @@local|codtyploc@@, @@local|libtyploc@@ pour la table _local_,
 * @@mutation|nblocmai@@, @@mutation|nblocapt@@, @@mutation|nblocdep@@, @@mutation|nblocact@@ pour la table _mutation_.
 
@@ -190,7 +189,6 @@ Par différence avec la variable @@local|anneemut@@, la variable d'ancienneté d
 
 Attention, environ 10 % des locaux ont une année de construction non renseignée (valeur 0), ce qui empêche la détermination de l'ancienneté. Ce chiffre est à relativiser par le fait qu'il concerne principalement les locaux d'activité.
 
-
 ### Nombre de pièces principales
 
 Le nombre de pièces principales dans DVF+/DV3F correspond à la variable @@local|nbpprinc@@. Les informations sur le nombre de pièces principales sont accessibles au niveau de la table mutation pour permettre de décompter plus facilement les appartements et maisons en fonction de leur nombre de pièces (T1 à T5+):
@@ -213,6 +211,15 @@ Cette information a été remontée à la table mutation pour décompter les loc
 
 On constate que certains locaux n'ont aucune pièce, ou bien 99 pièces. La détermination du nombre de pièce est donc subjectif et à prendre avec précaution. Par exemple, un studio peut correspondre à un aucune pièce ou à une pièce.
 
+### Dépendance d'un logement
+
+Les dépendances sont classées dans les Fichiers fonciers en une quinzaine de catégories dont les frontières entre certaines peuvent être floues. Dans DV3F, elles ont donc été regroupées en 5 catégories : 
+
+* les garages/parkings/box : @@local|ffnbpgarag@@ pour la table local et @@mutation|ffnbpgarag@@ pour la table mutation, 
+* les piscines: @@local|ffnbppisci@@ pour la table local et @@mutation|ffnbppisci@@ pour la table mutation,
+* les terrasses (ou toiture terrasse): @@local|ffnbpterra@@ pour la table local et @@mutation|ffnbpterra@@ pour la table mutation,
+* les serres et élements de pur agrément (terrain de tennis, etc.): @@local|ffnbpagrem@@ pour la table local.
+* les autres : bûcher,  buanderie, chambre de domestique, cellier, cave, grenier, grenier ou cave, jardin d'hiver, pièce indépendante, remise, dépendance de local commun. Cette catégorie correspond à la variable @@local|ffnbpcav@@ pour la table local et @@mutation|ffnbpcav@@ pour la table mutation.
 
 ### Surfaces d'un local
 
@@ -233,17 +240,17 @@ Il est important de noter que sbati et ffsbati ne correspondent pas aux mêmes s
 * sbati = ffshab + ffspro,
 * ffsbati = ffshab + ffspro + ffsdep.
 
-### Surface en fonction de la forme physique du local et nombre de pièces
+#### Surface en fonction de la forme physique du local et nombre de pièces
 
 Dans DVF+/DV3F, pour faciliter l'analyse d'une mutation, la surface a été repartie selon la forme physique du local au travers des variables @@mutation|sbatmai@@, @@mutation|sbatapt@@ et @@mutation|sbatact@@.
 
 Pour les logements, la surface a aussi été repartie en fonction du nombre de pièces : @@mutation|sapt1pp@@, @@mutation|smai1pp@@, @@mutation|sapt2pp@@, @@mutation|smai2pp@@, @@mutation|sapt3pp@@, @@mutation|smai3pp@@, @@mutation|sapt4pp@@, @@mutation|smai4pp@@, @@mutation|sapt5pp@@ et @@mutation|smai5pp@@.
 
-### Surface Carrez
+#### Surface Carrez
 
 La surface carrez est uniquement disponible pour les lots dans la table lot : @@lot|scarrez@@.
 
-### Approche de la surface habitable dans DV3F
+#### Approche de la surface habitable dans DV3F
 
 La surface habitable n'est pas disponible dans DV3F. 
 
@@ -258,3 +265,13 @@ Ainsi, pour approcher au plus près de la surface habitable, on peut donc imagin
 
 * estimation basse : ffshab + le minimum entre ffsdep/2 et 8m2,
 * estimation haute : ffshab + ffsdep.
+
+### Locaux apparus / disparus
+
+Dans DV3F, des méthodes de détermination de la stabilité des locaux ont permis d'aboutir à la création de plusieurs indicateurs :
+
+* @@local|stabilitel@@ pour la table _local_,
+* @@mutation|nblocapp@@ et @@mutation|nblocdisp@@ pour la table _mutation_.
+
+La méthode de détermination des modifications des locaux s'appuie sur un travail de comparaison des millésimes des Fichiers fonciers (cf @TUTO@stabilite_bien|Détermination de la stabilité des biens dans DV3F@TUTO@).
+
