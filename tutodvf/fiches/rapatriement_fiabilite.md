@@ -7,7 +7,7 @@ Contact: dv3f@cerema.fr
 
 ## Périmètre du rapatriement 
 
-La constitution de DV3F est basée sur le croisement des données DVF et des données Fichiers fonciers. Les objectif principaux de ce croisement sont de compléter les informations présentes dans DVF sur les biens vendus et d'apporter une information, totalement absente de DVF, sur les vendeurs et les acquéreurs de ces biens.  
+La constitution de DV3F est basée sur le croisement des données DVF et des données Fichiers fonciers. Les objectif principaux de ce croisement sont de compléter les informations présentes dans DVF sur les biens vendus et d'apporter une information, globalement absente de DVF, sur les vendeurs et les acquéreurs de ces biens.  
 
 Les données rapatriées des Fichiers fonciers concernent donc :
 

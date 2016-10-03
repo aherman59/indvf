@@ -12,8 +12,8 @@ Déterminer l’évolution d'un bien (parcelle ou local) avant ou après une mut
 Pour l’analyse des marchés, l’évolution du bien muté peut être associée à 3 types d’évolution :
 
 * la **stabilité** : le bien est considéré comme stable si aucune modification structurelle n’a été effectuée sur celui-ci par le vendeur ou l’acheteur ;
-* l’**apparition sous le vendeur** : le bien est considéré comme apparu sous le vendeur en cas de fusion/division de biens, de modifications parcellaires (non administratives) ou de constructions de locaux **avant la vente** ;
-* la **disparition sous l’acheteur** : le bien est considéré comme disparu sous l’acheteur en cas de fusion/division de biens, de modifications parcellaires (non administratives) ou de démolitions de locaux **après la vente**.
+* l’**apparition sous le vendeur** : le bien est considéré comme apparu sous le vendeur en cas de modification **avant la vente**. Cette modification revêt plusieurs types : réunion/division de parcelles, constructions de locaux, modifications importantes du local, etc. ; ;
+* la **disparition sous l’acheteur** :  le bien est considéré comme disparu sous l’acheteur en cas de modification **après la vente**. Cette modification revêt plusieurs types : réunion/division de parcelles, démolitions de locaux, modifications importantes du local, etc.
 
 Cette détermination concerne uniquement les biens qui ont muté. Par conséquent, les disparitions avant la vente ou les apparitions de locaux après la vente ne sont, ici, pas observées.
 
@@ -46,10 +46,10 @@ Les variables @@local|stabilitel@@ de la table local et @@disposition_parcelle|s
 
 | Modalité | Description    |
 |----------|----------------|
+| AD | Bien apparu sous le vendeur et disparu sous l’acheteur |
 | AN | Bien apparu sous le vendeur / Bien stable ou stabilité du bien non définie sous l’acheteur |
 | NN | Bien stable sous le vendeur et l’acheteur ou alors la stabilité du bien n’a pu être définie |
 | ND | Bien stable ou stabilité du bien non définie sous le vendeur / Bien disparu sous l’acheteur |
-| AD | Bien apparu sous le vendeur et disparu sous l’acheteur |
 
 Au niveau de la table mutation, les variables @@mutation|nbpardisp@@, @@mutation|nbparapp@@, @@mutation|nblocdisp@@, @@mutation|nblocapp@@ comptabilisent respectivement les parcelles et locaux qui sont disparus sous l'acheteur et apparus sous le vendeur. 
 
@@ -59,3 +59,7 @@ Ce choix méthodologique se base sur une analyse des différents millésimes des
 
 * le millésime d’apparition est un critère plus pertinent pour déterminer l’apparition que la première date de mutation (« jdatat ») apparaissant dans les Fichiers fonciers. D’abord, parce que le champ jdatat n’est pas systématiquement rempli alors que l’identifiant du bien l’est. Ensuite, parce qu’à la suite d’une transformation importante d’un bien, il est possible que la date de mutation de l’ancienne version du bien soit conservée.
 * le taux d’erreur relatif au temps de latence des mises à jour des Fichiers fonciers est relativement faible pour les locaux d’habitation (de l’ordre de 5%) ainsi que pour les parcelles (presque nul). 
+
+## Références
+
+* Utilisation de plusieurs millésimes des Fichiers fonciers - [Etude multi-millésimes](http://www.geoinformations.developpement-durable.gouv.fr/etude-multi-millesimes-a3388.html) - juin 2016 

@@ -33,7 +33,7 @@ L'intérêt de la mise en place d'un modèle de données permettant l'intégrati
 
 Le modèle DVF+ présente de tels atouts. En terme de structuration de la donnée initiale, chacune des tables du modèle représente une unique notion de DVF à laquelle sont affectées les données qui y sont directement liées. Cette structuration permet de supprimer les données dupliquées et de mettre en place des liaisons plutôt intuitives entre les tables. 
 
-Par ailleurs, le modèle DVF+ ajoute, à une donnée d'origine fiscale, une donnée plus exploitable pour l'observation foncière et immobilière en définissant des variables plus faciles d'utilisation.
+Par ailleurs, le modèle DVF+ ajoute, à une donnée d'origine fiscale, des variables issues de ces même données mais transformées ou agrégées pour permettre une exploitation plus aisée pour l'observation foncière et immobilière.
 
 ## Tables constitutives du modèle
 
@@ -93,7 +93,7 @@ Plusieurs catégories de variables existent au sein de "DVF+":
 
 Chacune des variables du modèle DVF+ est calculée uniquement à partir des données brutes de DVF, ces dernières étant d'ailleurs intégralement restituées par le modèle. Il n’y a pas de données exogènes à ce stade. Les variables calculées visent à pouvoir s’appliquer sur l’ensemble du territoire et à relever d’une méthodologie ne pouvant être remise en cause. 
 
-Ces variables restent plutôt intitutives pour correspondre à des éléments d’analyse représentatifs des besoins courants des utilisateurs. Elle permettent, à la fois, d’effectuer rapidement des calculs d’indicateur mais aussi d’aboutir à la mise en œuvre de méthodologies locales ou nationales plus complexes (ex: typologie de bien).
+Ces variables restent plutôt intitutives pour correspondre à des éléments d’analyse représentatifs des besoins courants des utilisateurs. Elle permettent, à la fois, d’effectuer rapidement des calculs d’indicateurs mais aussi d’aboutir à la mise en œuvre de méthodologies locales ou nationales plus complexes (ex: typologie de bien).
 
 ### Syntaxe des variables
 
