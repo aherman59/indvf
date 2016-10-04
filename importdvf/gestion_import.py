@@ -23,7 +23,7 @@ from collections import namedtuple
 from main.configuration import BASE_DIR
 
 from .creation_dvf import etapes
-from .creation_dvf.dvfclass import DVF, DVF_PLUS
+from dvf_plus.traitement.dvfclass import DVF, DVF_PLUS
 from .creation_dvf.cadastre import Cadastre, GeomDVF
 
 
