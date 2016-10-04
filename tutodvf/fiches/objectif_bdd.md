@@ -7,9 +7,9 @@ Contact: dv3f@cerema.fr
 
 ## Objectifs
 
-Les fiches "Base de données" regroupent les éléments liés à la mise en place de bases de données de type DVF+ et DV3F sous PostgreSQL et à la description des modèles correspondants. 
+Les fiches "Base de données" regroupent les éléments liés à la mise en place de bases de données de type DVF+ et DV3F sous PostgreSQL. 
 
-Les méthodes de construction des différentes variables de DVF+ et DV3F sont décrites dans la documentation (DocDV3F). Des fiches "Base de données" spécifiques ont été rédigées pour les méthodologies nécessitant des explications plus fournies.   
+Elles regroupent également des explications méthodologiques globales sur la manière dont est construit DV3F. Les méthodes de construction particulières liées à chacune des variables de DVF+ et ded DV3F sont décrites dans la documentation (DocDV3F).  
 
 ## Licence
 

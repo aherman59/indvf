@@ -9,8 +9,8 @@ Contact: dv3f@cerema.fr
 
 Les fiches Tutoriel proposées ont pour objectifs :
 
-* de présenter brièvement ce qu'est DVF,
-* de proposer une description des notions principales autour de DVF et plus largement DV3F,
+* de présenter brièvement ce que sont DVF, DVF+ et DV3F,
+* de proposer une description des notions principales autour de DVF et plus largement de DV3F,
 * d'expliciter les liens entre ces différentes notions et les bases de données DVF+ et DV3F.
 
 Elles contiennent de véritables bases pour débuter avec DVF+/DV3F.  
