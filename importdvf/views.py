@@ -24,19 +24,10 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse
 
-from main.configuration import BASE_DIR
-
 from importdvf.forms import ConfigForm
 
 from .creation_dvf import etapes
 from .gestion_import import *
-
-# Ressources
-repertoire_ressources = os.path.join(BASE_DIR, 'importdvf/creation_dvf/ressources') 
-fichier_gestion_csv = os.path.join(repertoire_ressources,'champs_dvf.csv')
-fichiers_annexes = (os.path.join(repertoire_ressources,'artcgil135b.csv'),
-                    os.path.join(repertoire_ressources,'natcult.csv'),
-                    os.path.join(repertoire_ressources,'natcultspe.csv'))
 
 def formulaire_configuration(request):
     '''
@@ -69,7 +60,7 @@ def etape_import(request, etape):
             reussite, fichiers_ordonnes, departements, erreurs = executer_etape(request, etape_courante)
             if reussite:
                 request.session['departements'] = departements
-                constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers_ordonnes)            
+                constituer_etapes_2(request, fichiers_ordonnes)            
                 data = {'description':etape_courante.description_prochaine_etape, 
                         'pourcentage':etape_courante.pourcentage, 
                         'etape_suivante':str(etape_courante.numero_suivant)}

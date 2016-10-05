@@ -54,14 +54,14 @@ def constituer_etapes(request):
                     ]
 
 
-def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers_ordonnes):
+def constituer_etapes_2(request, fichiers_ordonnes):
     '''
     Crée les étapes suivantes du traitement (jusqu'à l'integration éventuelle des géométries du cadastre) et les enregistre dans la session.
     '''
     etape_nt = _definition_etape()
     request.session['etapes'] = [
                     etape_nt(2, 300, '15', 'creation', 
-                                ('DVF', fichier_gestion_csv, fichiers_annexes, request.session['effacer_schemas_existants']), 
+                                ('DVF', request.session['effacer_schemas_existants']), 
                                 'Import des données sources DVF - Fichier {0}'.format(fichiers_ordonnes[0]))]
     l = len(fichiers_ordonnes)
     for index in range(l): 
@@ -77,24 +77,24 @@ def constituer_etapes_2(request, fichier_gestion_csv, fichiers_annexes, fichiers
     # creation des etapes DVF+
     request.session['etapes'].append(
                     etape_nt(302 + 2*(l-1), 4 , '30', 'creation_table_dvf_plus', 
-                                ('DVF+', fichier_gestion_csv, request.session['effacer_schemas_existants']), 
+                                ('DVF+', request.session['effacer_schemas_existants']), 
                                 'Calculs de la table local'))
     request.session['etapes'].append(
                     etape_nt(4, 5, '65', 'transformation', 
-                                ('DVF+', fichier_gestion_csv, 'local'), 
+                                ('DVF+', 'local'), 
                                 'Calculs de la table disposition_parcelle'))
     request.session['etapes'].append(
                     etape_nt(5, 6, '85', 'transformation', 
-                                ('DVF+', fichier_gestion_csv, 'disposition_parcelle'), 
+                                ('DVF+', 'disposition_parcelle'), 
                                 'Calculs de la table mutation'))
     request.session['etapes'].append(
                     etape_nt(6, 7, '95', 'transformation', 
-                                ('DVF+', fichier_gestion_csv, 'mutation'), 
+                                ('DVF+', 'mutation'), 
                                 'Renommage des tables'))
     (txt_descriptif, no_etape) = ('Constitution des données cadastrales', 8) if request.session['geolocaliser'] else ('Fin du traitement', 9999)
     request.session['etapes'].append(
                     etape_nt(7, no_etape, '100', 'renommage', 
-                                ('DVF+', fichier_gestion_csv, ['local', 'disposition_parcelle', 'mutation']), 
+                                ('DVF+', ['local', 'disposition_parcelle', 'mutation']), 
                                 txt_descriptif))
     if request.session['geolocaliser']:
         request.session['etapes'].append(

@@ -20,6 +20,9 @@
 import os
 import csv
 from datetime import datetime
+from dvf_plus.traitement import BASE_SQLITE
+from dvf_plus.traitement import FICHIERS_ANNEXES
+
 
 def fonction_a_executer(description):
     fonctions = {'verification': verification_donnees,
@@ -79,10 +82,10 @@ def _ordonner_fichiers_txt(fichiers):
     fichiers_ordonnes.reverse()
     return fichiers_ordonnes
 
-def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_existants):    
+def creation_tables(dvf, effacer_schemas_existants):    
     ## génération des schémas et tables
     dvf.start_script()
-    dvf.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
+    dvf.charger_gestionnaire_depuis_sqlite(BASE_SQLITE)
     if effacer_schemas_existants:
         valid, nb = dvf.effacer_schemas_commencant_par(dvf.prefixe_schemas_departementaux)
         if valid:
@@ -94,7 +97,7 @@ def creation_tables(dvf, fichier_gestion_csv, fichiers_annexes, effacer_schemas_
         if valid:
             valid_creation_table = dvf.creation_tables(recreer_tables_principales=False)
     if valid_creation_table:
-        valid_preparation = dvf.creation_tables_annexes(*fichiers_annexes)
+        valid_preparation = dvf.creation_tables_annexes(*FICHIERS_ANNEXES)
     dvf.ecrire_entete_log()
 
     if not valid_preparation:    
@@ -119,17 +122,17 @@ def integration_dans_dvf(dvf, table_src, fichier):
     else:
         return False, 'Impossible d\'integrer le fichier {0} dans la base.'.format(fichier)
 
-def creation_tables_dvf_plus(dvf_plus, fichier_gestion_csv, effacer_schemas_existants):
+def creation_tables_dvf_plus(dvf_plus, effacer_schemas_existants):
 
     dvf_plus.start_script()        
-    dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
+    dvf_plus.charger_gestionnaire_depuis_sqlite(BASE_SQLITE)
     valid_creation_table = dvf_plus.creation_tables_dvf_plus(recreer_tables_principales = effacer_schemas_existants)
     if valid_creation_table:    
         return True, 'Création des tables DVF+ effectuée.'
     else:
         return False, 'Echec de la création des tables DVF+.'
 
-def transformation(dvf_plus, fichier_gestion_csv, nom_table_dvf):
+def transformation(dvf_plus, nom_table_dvf):
 
         variables_jointure = {
                               'local' : 'iddispoloc', 
@@ -144,14 +147,14 @@ def transformation(dvf_plus, fichier_gestion_csv, nom_table_dvf):
         elif nom_table_dvf == 'mutation':
             valid = dvf_plus.effectuer_calculs_mutation()
         if valid:
-            dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)        
+            dvf_plus.charger_gestionnaire_depuis_sqlite(BASE_SQLITE)        
             valid_construction_table = dvf_plus.construire_tables_dvf_plus(nom_table_dvf, variables_jointure[nom_table_dvf])
             if valid_construction_table:            
                 return True, 'Modifications de la table {0} effectuée.'.format(nom_table_dvf)
         return False, 'Modifications de la table {0} non aboutie'.format(nom_table_dvf)
 
-def renommage(dvf_plus, fichier_gestion_csv, tables):
-    dvf_plus.charger_gestionnaire_depuis_csv(fichier_gestion_csv)
+def renommage(dvf_plus, tables):
+    dvf_plus.charger_gestionnaire_depuis_sqlite(BASE_SQLITE)
     valid = dvf_plus.transformation_tables_dvf()
     if valid:    
         return True, 'Renommage des tables.'
