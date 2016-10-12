@@ -23,7 +23,7 @@
                             <div class = "col-sm-10">
                                 <select class="form-control selecteur" name="typologie" id="select_typo">
                                     {% for code, lib in typologies %}
-                                    <option value="{{ code }}" {% if request.session.typologie == code %}selected{% endif %}>{{ lib }}</option>
+                                    <option value="{{ code }}" {% if request.session.parametres_filtre.typologie == code %}selected{% endif %}>{{ lib }}</option>
                                     {% endfor %}
 			                    </select> 
                             </div>                            
@@ -41,7 +41,7 @@
                             <div class = "col-sm-12">
                                 <select class="form-control selecteur" name="annee_min" id="select_annee_min">
                                     {% for an in annees %}
-                                    <option value="{{ an }}" {% if request.session.annee_min == an %}selected{% endif %}>{{ an }}</option>
+                                    <option value="{{ an }}" {% if request.session.parametres_filtre.annee_min == an %}selected{% endif %}>{{ an }}</option>
                                     {% endfor %}
 			                    </select> 
                             </div>                            
@@ -57,7 +57,7 @@
                             <div class = "col-sm-12">
                                 <select class="form-control selecteur" name="annee_max" id="select_annee_max">
                                     {% for an in annees %}
-                                    <option value="{{ an }}" {% if request.session.annee_max == an %}selected{% endif %}>{{ an }}</option>
+                                    <option value="{{ an }}" {% if request.session.parametres_filtre.annee_max == an %}selected{% endif %}>{{ an }}</option>
                                     {% endfor %}
 			                    </select> 
                             </div>                            
@@ -73,7 +73,7 @@
                         {% csrf_token %} 
                         <div class="form-group">
                             <div class = "col-sm-12">
-                                <input class="form-control" name="valeur_min" id="input_valeur_min" type="text" value="{{ request.session.valeur_min|separateur_millier }}"></input>
+                                <input class="form-control" name="valeur_min" id="input_valeur_min" type="text" value="{{ request.session.parametres_filtre.valeur_min|separateur_millier }}"></input>
                             </div>                            
                         </div>
                     </form>
@@ -85,7 +85,7 @@
                         {% csrf_token %} 
                         <div class="form-group">
                             <div class = "col-sm-12">
-                                <input class="form-control" name="valeur_max" id="input_valeur_max" type="text" value="{{ request.session.valeur_max|separateur_millier }}"></input>
+                                <input class="form-control" name="valeur_max" id="input_valeur_max" type="text" value="{{ request.session.parametres_filtre.valeur_max|separateur_millier }}"></input>
                             </div>                            
                         </div>
                     </form>

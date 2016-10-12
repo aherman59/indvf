@@ -20,33 +20,27 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from outils.interrogation_bdd import Requeteur
+from .filtre import ContexteFiltre
 
-from .filtre import modification_filtre
-from .filtre import correction_valeurs_filtre_incorrectes
+from .mutation import Mutations
 
 def maj_tableau(request, page, tri):
     '''
 
     REQUETE AJAX ACTUALISATION TABLEAU
 
-    '''    
-    mutations = Requeteur.transformer_mutations_en_namedtuple(request.session['mutations'])
-    modification_filtre(request)
-    correction_valeurs_filtre_incorrectes(request)
-    mutations = Requeteur.filtrer_mutations(mutations, 
-                                            typologie = request.session['typologie'],
-                                            annee_min = request.session['annee_min'],
-                                            annee_max = request.session['annee_max'],
-                                            valeur_min = request.session['valeur_min'],
-                                            valeur_max = request.session['valeur_max'],)
-    mutations = Requeteur.trier_mutations(mutations, tri)  
-    mutations = mutations_de_la_page(page, mutations, 50)    
+    '''
     
+    contexte = ContexteFiltre(request)
+    request.session['parametres_filtre'] = contexte.parametres    
+    
+    mutations = Mutations(request.session).avec_filtre(order_by=tri)
+    mutations = mutations_de_la_page(page, mutations, 50)       
+        
     context = {'mutations': mutations, 
                'tri' : tri,
-               'typologies' : request.session['typologies'],
-               'annees' : request.session['annees'],}
+               'typologies' : request.session['parametres_filtre']['typologies'],
+               'annees' : request.session['parametres_filtre']['annees'],}
     return render(request, 'tableau_mutations.html', context)
 
 def mutations_de_la_page(page, mutations, nb_par_page):
@@ -58,8 +52,6 @@ def mutations_de_la_page(page, mutations, nb_par_page):
     except EmptyPage:
         mutations = paginator.page(paginator.num_pages)
     return mutations
-
-
 
 def recherche_detaillee(request, id):
     '''

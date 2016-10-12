@@ -17,78 +17,83 @@
 
 '''
 
-def reinitialisation_parametres_filtre_dans_session(request):    
-    request.session['typologie'] = 0
-    request.session['annee_min'] = 0
-    request.session['annee_max'] = 0
-    reinitialisation_parametres_filtre_valeur_fonciere_min_max_dans_session(request)
+class ContexteFiltre():
     
-def reinitialisation_parametres_filtre_valeur_fonciere_min_max_dans_session(request):
-    request.session['valeur_min'] = 0
-    request.session['valeur_max'] = 10000000000
+    def __init__(self, request):
+        self.session = request.session
+        self.parametres = self.session['parametres_filtre'] if 'parametres_filtre' in self.session else dict()
+        self.main(request.POST)
+        
+    def initialiser_valeurs(self):
+        self.parametres['typologie'] = 0
+        self.parametres['annee_min'] = 0
+        self.parametres['annee_max'] = 0
+        self.parametres['valeur_min'] = 0
+        self.parametres['valeur_max'] = 10000000000
+        
+    def definir_modalites(self, mutations):
+        self.parametres['typologies'] = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) 
+                                                for mutation in mutations] + [(0, 'Tous')]), key = lambda x : x[1])    
+        self.parametres['annees'] = sorted(set([int(mutation.anneemut) for mutation in mutations]))
+        self.parametres['valeur_min_existante'] = min([float(mutation.valeurfonc) for mutation in mutations])
+        self.parametres['valeur_max_existante'] = max([float(mutation.valeurfonc) for mutation in mutations])
+        self.parametres['valeur_min'] = self.parametres['valeur_min_existante']
+        self.parametres['valeur_max'] = self.parametres['valeur_max_existante']
+        if self.parametres['annee_min'] == 0:
+            self.parametres['annee_min'] = min(self.parametres['annees'])
+        if self.parametres['annee_max'] == 0:
+            self.parametres['annee_max'] = max(self.parametres['annees'])    
 
-def calcul_et_enregistrement_modalites_filtre_dans_session(request):
-    request.session['typologies'] = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) 
-                                                for mutation in request.session['mutations']] + [(0, 'Tous')]), 
-                                           key = lambda x : x[1])    
-    request.session['annees'] = sorted(set([int(mutation.anneemut) 
-                                            for mutation in request.session['mutations']]))
-    request.session['valeur_min_existante'] = min([float(mutation.valeurfonc) 
-                                                   for mutation in request.session['mutations']])
-    request.session['valeur_max_existante'] = max([float(mutation.valeurfonc) 
-                                                   for mutation in request.session['mutations']])
-
-def modification_filtre(request):
-    fonctions_filtres = {'typologie': modification_filtre_typologie,
-                         'annee_min': modification_filtre_annee,
-                         'annee_max': modification_filtre_annee,
-                         'valeur_min': modification_filtre_valeur_fonciere,
-                         'valeur_max': modification_filtre_valeur_fonciere,
-                         }
-    for key, value in request.POST.items():
-        if key in fonctions_filtres.keys():
-            fonctions_filtres[key](request, key)
-
-def correction_valeurs_filtre_incorrectes(request):
-    fonctions_corrections = {'typologie': correction_filtre_typologie,
-                             'annee_min': correction_filtre_annee,
-                             'annee_max': correction_filtre_annee,
-                             'valeur_min': correction_filtre_valeur_fonciere,
-                             'valeur_max': correction_filtre_valeur_fonciere,
-                             }
-    for key, value in fonctions_corrections.items():
-        fonctions_corrections[key](request, key)
-
-def modification_filtre_typologie(request, clef_session):    
-    request.session[clef_session] = int(request.POST[clef_session])
-
-def correction_filtre_typologie(request, clef_session):
-    typologies_existantes = request.session['typologies']
-    if request.session['typologie'] not in [code for code, lib in typologies_existantes]:
-        request.session['typologie'] = 0
-
-def modification_filtre_annee(request, clef_session):    
-    request.session[clef_session] = int(request.POST[clef_session])
-
-def correction_filtre_annee(request, clef_session):
-    annees_existantes = request.session['annees']
-    if request.session[clef_session] not in annees_existantes or (request.session[clef_session]==0):
-        annee = min(annees_existantes) if clef_session =='annee_min' else max(annees_existantes)
-        request.session[clef_session] = annee    
-
-def modification_filtre_valeur_fonciere(request, clef_session):
-    valeur_borne = request.session['valeur_min_existante'] 
-    if clef_session == 'valeur_max':
-        valeur_borne = request.session['valeur_max_existante']
-    try:
-        request.session[clef_session] = int(request.POST[clef_session])
-    except Exception as e:
-        request.session[clef_session] = valeur_borne
-
-def correction_filtre_valeur_fonciere(request, clef_session):
-    valeur_min = request.session['valeur_min_existante']
-    valeur_max = request.session['valeur_max_existante']
-    if request.session[clef_session] > valeur_max:
-        request.session[clef_session] = valeur_max
-    if request.session[clef_session] < valeur_min:
-        request.session[clef_session] = valeur_min
+    def main(self, post):
+        if 'typologie' in post:
+            self.selection_typologie(post['typologie'])
+        elif 'annee_min' in post:
+            self.selection_annee_min(post['annee_min'])
+        elif 'annee_max' in post:
+            self.selection_annee_max(post['annee_max'])
+        elif 'valeur_min' in post:
+            self.selection_valeur_min(post['valeur_min'])
+        elif 'valeur_max' in post:
+            self.selection_valeur_max(post['valeur_max'])        
+    
+    def selection_typologie(self, code_typo):
+        code_typo = int(code_typo)        
+        if code_typo in [code for (code, libelle) in self.parametres['typologies']]:
+            self.parametres['typologie'] = code_typo
+        else:
+            self.parametres['typologie'] = 0
+    
+    def selection_annee_min(self, annee_min):
+        annee_min = int(annee_min)
+        if annee_min in self.parametres['annees']:
+            self.parametres['annee_min'] = annee_min
+        else:
+            self.parametres['annee_min'] = min(self.parametres['annees'])
+    
+    def selection_annee_max(self, annee_max):
+        annee_max = int(annee_max)
+        if annee_max in self.parametres['annees']:
+            self.parametres['annee_max'] = annee_max
+        else:
+            self.parametres['annee_max'] = max(self.parametres['annees'])
+    
+    def selection_valeur_min(self, valeur_min):
+        
+        try:
+            valeur_min = int(valeur_min)
+            if valeur_min >= self.parametres['valeur_min_existante']:
+                self.parametres['valeur_min'] = valeur_min
+            else:
+                self.parametres['valeur_min'] = self.parametres['valeur_min_existante']
+        except Exception as e:
+            self.parametres['valeur_min'] = self.parametres['valeur_min_existante']
+    
+    def selection_valeur_max(self, valeur_max):
+        try:
+            valeur_max = int(valeur_max)
+            if valeur_max <= self.parametres['valeur_max_existante']:
+                self.parametres['valeur_max'] = valeur_max
+            else:
+                self.parametres['valeur_max'] = self.parametres['valeur_max_existante']
+        except Exception as e:
+            self.parametres['valeur_max'] = self.parametres['valeur_max_existante']   

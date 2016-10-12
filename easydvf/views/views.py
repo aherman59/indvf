@@ -23,14 +23,11 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from outils.interrogation_bdd import Requeteur
-
 from main.territoire import integration
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 
-from .filtre import reinitialisation_parametres_filtre_dans_session
-from .filtre import reinitialisation_parametres_filtre_valeur_fonciere_min_max_dans_session
-from .filtre import calcul_et_enregistrement_modalites_filtre_dans_session
+from .filtre import ContexteFiltre
+from .mutation import Mutations
 
 '''
 
@@ -68,83 +65,107 @@ def recherche(request):
     # integration des territoires si la base ne contient pas encore les entités départ./epci/communes
     integration.integrer_territoires()
     
-    if request.method != 'POST' and request.get_full_path() == '/recherche/':
-        # page de démarrage 
-        init = True   
-        verif = ConfigurationBDD.objects.verifier_configuration_active()
-        if not verif.validation:
-             return redirect('main:configuration_bdd')
-        request.session['id_config'] = verif.id         
-    else:
-        init = False    
+    contexte = ContexteRecherche(request)
+    if not contexte.success:
+        return redirect('main:configuration_bdd')
     
-    config_active = enregistrement_configuration_dans_session(request) 
-     
-    departements = config_active.departements_disponibles()
-    enregistrement_departement_selectionne_dans_session(request, departements, init)    
-    code_departement_selectionne = recuperation_code_departement_selectionne(request)
-    
-    epcis, communes = recuperation_epcis_communes(request, config_active, code_departement_selectionne)
-    enregistrement_epci_ou_commune_selectionne_dans_session(request, epcis, communes, init)
-    
-    enregistrement_titre_et_mutations_dans_session(request, init)
-    
-    if init or ('departement' in request.POST):        
-        reinitialisation_parametres_filtre_dans_session(request)
-        charger_tableau = False       
-    else:        
-        reinitialisation_parametres_filtre_valeur_fonciere_min_max_dans_session(request)
-        calcul_et_enregistrement_modalites_filtre_dans_session(request)
-        charger_tableau =  True
-    
-    context = {'departements' : departements, 
-               'epcis' : epcis, 
-               'communes' : communes,
-               'charger_tableau': charger_tableau,}
+    request.session = contexte.request.session      
+    context = {'departements' : contexte.departements, 
+               'epcis' : contexte.epcis, 
+               'communes' : contexte.communes,
+               'charger_tableau': contexte.charger_tableau,}
     return render(request, 'recherche.html', context)
-
-def enregistrement_configuration_dans_session(request):
-    config_active = ConfigurationBDD.objects.get(pk = request.session['id_config'])
-    request.session['type_bdd'] = config_active.type_bdd
-    request.session['params'] = config_active.parametres_bdd()
-    return config_active
-
-def enregistrement_departement_selectionne_dans_session(request, departements, init):
-    if init:    
-        request.session['departement'] = int(departements[0].pk)
-    if 'departement' in request.POST:
-        request.session['departement'] = int(request.POST['departement'])
-
-def recuperation_code_departement_selectionne(request):            
-    return Departement.objects.get(pk=request.session['departement']).code
-
-def recuperation_epcis_communes(request, config_active, code_departement):
-    epcis = config_active.epcis_disponibles(code_departement)
-    communes = config_active.communes_disponibles(code_departement)    
-    return epcis, communes
-
-def enregistrement_epci_ou_commune_selectionne_dans_session(request, epcis, communes, init):
-    if init:
-        request.session['epci'] = int(epcis[0].pk)    
-        request.session['commune'] = int(communes[0].pk)
-    if 'voir_epci' in request.POST:
-        request.session['epci'] = int(request.POST['epci'])
-    if 'voir_commune' in request.POST:
-        request.session['commune'] = int(request.POST['commune'])
-
-def enregistrement_titre_et_mutations_dans_session(request, init):    
-    if init or ('departement' in request.POST):
-        titre = ''
-        codes_insee = []
-    if 'voir_epci' in request.POST:
-        titre = Epci.objects.get(pk = request.session['epci']).nom
-        codes_insee = [str(c.code) for c in Commune.objects.filter(epci = request.session['epci'])]       
-    elif 'voir_commune' in request.POST:
-        titre = Commune.objects.get(pk = request.session['commune']).nom
-        codes_insee = [str(Commune.objects.get(pk = request.session['commune']).code),]        
     
-    requeteur = Requeteur(*(request.session['params']), 
-                          type_base = request.session['type_bdd'], 
-                          script = 'sorties/requeteur_recherche.sql')            
-    request.session['titre'] = titre
-    request.session['mutations'] = requeteur.mutations(codes_insee) 
+    
+class ContexteRecherche():
+    
+    def __init__(self, request):
+        self.request = request
+        self.success = True
+        self.filtre = ContexteFiltre(self.request)
+        self.charger_tableau = False
+        self.main()
+    
+    def main(self):
+        if self.request.method != 'POST' and self.request.get_full_path() == '/recherche/': # page démarrage
+            self.configuration_initiale()
+        elif 'departement' in self.request.POST: # changement de département
+            self.selection_departement()
+        elif 'voir_epci' in self.request.POST: # choix d'un epci
+            self.selection_epci()
+            self.charger_tableau = True
+        elif 'voir_commune' in self.request.POST: # choix d'une commune
+            self.selection_commune()
+            self.charger_tableau = True
+        self.request.session['parametres_filtre'] = self.filtre.parametres
+    
+    @property
+    def config_active(self):
+        if self.request.session['id_config']:
+            return ConfigurationBDD.objects.get(pk = self.request.session['id_config'])
+        return None
+            
+    @property    
+    def departements(self):
+        if self.config_active:
+            return self.config_active.departements_disponibles()
+        return None
+    
+    @property
+    def code_departement(self):
+        return Departement.objects.get(pk=self.request.session['departement']).code
+    
+    @property     
+    def epcis(self):
+        if self.config_active:
+            return self.config_active.epcis_disponibles(self.code_departement)
+        return None
+    
+    @property     
+    def communes(self):
+        if self.config_active:
+            return self.config_active.communes_disponibles(self.code_departement)
+        return None
+    
+    def configuration_initiale(self):
+        verification = ConfigurationBDD.objects.verifier_configuration_active()
+        if verification.validation:
+            self.request.session['id_config'] = verification.id
+            self.request.session['type_bdd'] = self.config_active.type_bdd
+            self.request.session['params'] = self.config_active.parametres_bdd()
+            self.initialisation()
+        else:
+            self.success = False
+    
+    def selection_departement(self):
+        self.request.session['departement'] = int(self.request.POST['departement'])
+        self.initialisation()
+    
+    def selection_epci(self):
+        self.request.session['epci'] = int(self.request.POST['epci'])
+        self.request.session['titre'] = Epci.objects.get(pk = self.request.session['epci']).nom
+        codes_insee = [str(c.code) for c in Commune.objects.filter(epci = self.request.session['epci'])]
+        self.request.session['mutations'] = self.calcul_mutations(codes_insee)
+        self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
+    
+    def selection_commune(self):
+        self.request.session['commune'] = int(self.request.POST['commune'])
+        self.request.session['titre'] = Commune.objects.get(pk = self.request.session['commune']).nom
+        codes_insee = [str(Commune.objects.get(pk = self.request.session['commune']).code),]
+        self.request.session['mutations'] = self.calcul_mutations(codes_insee)
+        self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
+    
+    def initialisation(self):
+        self.request.session['titre'] = ''
+        self.request.session['mutations'] = []
+        self.filtre.initialiser_valeurs()
+    
+    def calcul_mutations(self, codes_insee):
+        return Mutations(self.request.session, codes_insee).as_list()
+    
+    
+
+
+
+    
+     

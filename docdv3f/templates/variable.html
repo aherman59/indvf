@@ -3,6 +3,10 @@
 
 {% block contenu %}
 
+<link rel="stylesheet" href="{% static 'highlight/styles/agate.css' %}">
+<script src="{% static 'highlight/highlight.pack.js' %}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 <div class="page-header">
 <h3>{{variable.nom}} <a href="{% url 'docdv3f:doc_table' variable.table_associee %}"><small> table {{variable.table_associee}}</small></a></h3>
 </div>
