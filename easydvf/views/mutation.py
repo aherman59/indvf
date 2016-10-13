@@ -89,6 +89,15 @@ class Mutation():
     def sbati(self):
         return str(self._sbati)
     
+    
+class DetailMutation():
+    
+    def __init__(self, idmutation, session):
+        pass
+
+    
+    
+    
 class RequeteurEasyDVF(PgOutils):
     
     def __init__(self, session, script = None):
@@ -112,4 +121,23 @@ class RequeteurEasyDVF(PgOutils):
         codtypbien = self.requete_sql['_CODTYPBIEN']
         libtypbien = self.requete_sql['_LIBTYPBIEN']
         return ("', '".join(codes_insee), codtypbien, libtypbien)
+    
+    def recuperer_mutation_detaillee(self, id):
+        if self.type_base == 'DV3F':
+            resultat = self.recuperer_mutation_detaillee_dv3f(id)
+        elif self.type_base == 'DVF+':
+            resultat = self.recuperer_mutation_detaillee_dvf_plus(id)
+        else:
+            return None
+        return list(resultat[0])
+    
+    @select_sql
+    def recuperer_mutation_detaillee_dv3f(self, id):
+        pass
+    
+    @select_sql_avec_modification_args
+    def recuperer_mutation_detaillee_dvf_plus(self, id):
+        libtypbien = self.requete_sql['_LIBTYPBIEN']
+        return (id, libtypbien)
+    
         

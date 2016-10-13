@@ -108,3 +108,29 @@ SELECT idmutation, datemut, anneemut, valeurfonc, sbati, sterr, nblocmut, nbparm
 FROM dvf.mutation
 WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
 
+## RECUPERER_MUTATION_DETAILLEE_DV3F
+SELECT idmutation,
+	   codservch, 
+	   refdoc, 
+	   datemut,
+	   valeurfonc,
+	   nblocmut,
+	   nblot, 
+	   nbparmut,
+	   nbvolmut, 
+	   libtypbien 
+FROM dvf.mutation WHERE idmutation = {0};
+
+## RECUPERER_MUTATION_DETAILLEE_DVF_PLUS
+SELECT idmutation,
+	   codservch, 
+	   refdoc, 
+	   datemut,
+	   valeurfonc,
+	   nblocmut,
+	   nblot, 
+	   nbparmut,
+	   nbvolmut, 
+	   {1} --libtypbien
+FROM dvf.mutation WHERE idmutation = {0};
+

@@ -29,8 +29,7 @@ def maj_tableau(request, page, tri):
 
     REQUETE AJAX ACTUALISATION TABLEAU
 
-    '''
-    
+    '''    
     contexte = ContexteFiltre(request)
     request.session['parametres_filtre'] = contexte.parametres    
     
@@ -59,6 +58,10 @@ def recherche_detaillee(request, id):
     REQUETE AJAX AFFICHAGE DETAIL MUTATION
 
     '''
+    m = DetailMutation(id, request.session)
+    reponse = {'mutation': m.mutation, 'locaux': m.locaux, 'parcelles': m.parcelles, 'adresses':m.adresses}
+    return render(request, 'detail_mutation.html', reponse)
+    
     requeteur = Requeteur(*(request.session['params']), type_base = request.session['type_bdd'], script = 'sorties/requeteur_recherche.sql')
     mutation = requeteur.mutation_detaillee(id) or []
     locaux = requeteur.locaux_detailles(id) or []
