@@ -100,6 +100,8 @@ class ContexteRecherche():
         self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
     
     def initialisation(self):
+        self.request.session['epci'] = 0
+        self.request.session['commune'] = 0
         self.request.session['titre'] = ''
         self.request.session['mutations'] = []
         self.filtre.initialiser_valeurs()

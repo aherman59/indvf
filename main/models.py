@@ -36,11 +36,7 @@ class ConfigurationManager(models.Manager):
         config_active = self.configuration_active()
         if not config_active:
             return None
-        return (config_active.hote, 
-                config_active.bdd, 
-                config_active.port, 
-                config_active.utilisateur, 
-                config_active.mdp)
+        return config_active.parametres_bdd()
     
     def type_bdd_active(self):
         config_active = self.configuration_active()
