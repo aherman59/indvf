@@ -21,19 +21,15 @@ import json
 from datetime import datetime
 
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 
 from main.territoire import integration
-from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 
-from .filtre import ContexteFiltre
+from .contexte import ContexteFiltre
+from .contexte import ContexteRecherche
 from .mutation import Mutations
-
-'''
-
-PAGE RECHERCHE
-
-'''
+from .mutation import DetailMutation
 
 def recherche(request):
     '''
@@ -65,107 +61,51 @@ def recherche(request):
     # integration des territoires si la base ne contient pas encore les entités départ./epci/communes
     integration.integrer_territoires()
     
-    contexte = ContexteRecherche(request)
-    if not contexte.success:
+    contexte_recherche = ContexteRecherche(request)
+    if not contexte_recherche.success:
         return redirect('main:configuration_bdd')
     
-    request.session = contexte.request.session      
-    context = {'departements' : contexte.departements, 
-               'epcis' : contexte.epcis, 
-               'communes' : contexte.communes,
-               'charger_tableau': contexte.charger_tableau,}
+    request.session = contexte_recherche.request.session      
+    context = {'departements' : contexte_recherche.departements, 
+               'epcis' : contexte_recherche.epcis, 
+               'communes' : contexte_recherche.communes,
+               'charger_tableau': contexte_recherche.charger_tableau,}
     return render(request, 'recherche.html', context)
-    
-    
-class ContexteRecherche():
-    
-    def __init__(self, request):
-        self.request = request
-        self.success = True
-        self.filtre = ContexteFiltre(self.request)
-        self.charger_tableau = False
-        self.main()
-    
-    def main(self):
-        if self.request.method != 'POST' and self.request.get_full_path() == '/recherche/': # page démarrage
-            self.configuration_initiale()
-        elif 'departement' in self.request.POST: # changement de département
-            self.selection_departement()
-        elif 'voir_epci' in self.request.POST: # choix d'un epci
-            self.selection_epci()
-            self.charger_tableau = True
-        elif 'voir_commune' in self.request.POST: # choix d'une commune
-            self.selection_commune()
-            self.charger_tableau = True
-        self.request.session['parametres_filtre'] = self.filtre.parametres
-    
-    @property
-    def config_active(self):
-        if self.request.session['id_config']:
-            return ConfigurationBDD.objects.get(pk = self.request.session['id_config'])
-        return None
-            
-    @property    
-    def departements(self):
-        if self.config_active:
-            return self.config_active.departements_disponibles()
-        return None
-    
-    @property
-    def code_departement(self):
-        return Departement.objects.get(pk=self.request.session['departement']).code
-    
-    @property     
-    def epcis(self):
-        if self.config_active:
-            return self.config_active.epcis_disponibles(self.code_departement)
-        return None
-    
-    @property     
-    def communes(self):
-        if self.config_active:
-            return self.config_active.communes_disponibles(self.code_departement)
-        return None
-    
-    def configuration_initiale(self):
-        verification = ConfigurationBDD.objects.verifier_configuration_active()
-        if verification.validation:
-            self.request.session['id_config'] = verification.id
-            self.request.session['type_bdd'] = self.config_active.type_bdd
-            self.request.session['params'] = self.config_active.parametres_bdd()
-            self.initialisation()
-        else:
-            self.success = False
-    
-    def selection_departement(self):
-        self.request.session['departement'] = int(self.request.POST['departement'])
-        self.initialisation()
-    
-    def selection_epci(self):
-        self.request.session['epci'] = int(self.request.POST['epci'])
-        self.request.session['titre'] = Epci.objects.get(pk = self.request.session['epci']).nom
-        codes_insee = [str(c.code) for c in Commune.objects.filter(epci = self.request.session['epci'])]
-        self.request.session['mutations'] = self.calcul_mutations(codes_insee)
-        self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
-    
-    def selection_commune(self):
-        self.request.session['commune'] = int(self.request.POST['commune'])
-        self.request.session['titre'] = Commune.objects.get(pk = self.request.session['commune']).nom
-        codes_insee = [str(Commune.objects.get(pk = self.request.session['commune']).code),]
-        self.request.session['mutations'] = self.calcul_mutations(codes_insee)
-        self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
-    
-    def initialisation(self):
-        self.request.session['titre'] = ''
-        self.request.session['mutations'] = []
-        self.filtre.initialiser_valeurs()
-    
-    def calcul_mutations(self, codes_insee):
-        return Mutations(self.request.session, codes_insee).as_list()
-    
-    
 
-
-
+def maj_tableau(request, page, tri):
+    '''
+    requete ajax pour l'actualisation du tableau
+    '''    
+    contexte_filtre = ContexteFiltre(request)
+    request.session['parametres_filtre'] = contexte_filtre.parametres    
     
-     
+    mutations = Mutations(request.session).avec_filtre(order_by=tri)
+    mutations = mutations_de_la_page(page, mutations, 50)       
+        
+    context = {'mutations': mutations, 
+               'tri' : tri,
+               'typologies' : request.session['parametres_filtre']['typologies'],
+               'annees' : request.session['parametres_filtre']['annees'],}
+    return render(request, 'tableau_mutations.html', context)
+
+def recherche_detaillee(request, id):
+    '''
+    requete ajax pour l'affichage du détail de la mutation
+    '''
+    detail = DetailMutation(id, request.session)
+    reponse = {'mutation': detail.mutation, 
+               'locaux': detail.locaux, 
+               'parcelles': detail.parcelles, 
+               'adresses':detail.adresses}
+    return render(request, 'detail_mutation.html', reponse)
+
+def mutations_de_la_page(page, mutations, nb_par_page):
+    paginator = Paginator(mutations, nb_par_page)
+    try:
+        mutations = paginator.page(page)
+    except PageNotAnInteger:
+        mutations = paginator.page(1)
+    except EmptyPage:
+        mutations = paginator.page(paginator.num_pages)
+    return mutations    
+  

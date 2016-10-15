@@ -1,6 +1,7 @@
 from datetime import datetime
 from pg.pgbasics import *
 
+
 class Mutations():
     
     def __init__(self, session, codes_insee=None):
@@ -13,6 +14,7 @@ class Mutations():
     
     def calcul(self, codes_insee, session): 
         mutations = RequeteurEasyDVF(session).recuperer_mutations(codes_insee)
+        print(mutations)
         return [Mutation(mutation).as_tuple() for mutation in mutations] # permet de formatter les champs date, etc.
     
     def as_list(self):
@@ -51,10 +53,40 @@ class Mutations():
         if tri.endswith('desc'):
             mutations_triees.reverse()
         return mutations_triees
-            
+    
+    def get(self, idmutation):
+        for mutation in self.mutations:
+            m = Mutation(mutation)
+            if int(m.id) == int(idmutation):
+                return m
+
+    
+class DetailMutation():
+    
+    def __init__(self, idmutation, session):
+        self.idmutation = idmutation
+        self.session = session
+        self.mutation = Mutations(session).get(idmutation)
+    
+    @property
+    def locaux(self):
+        locs = RequeteurEasyDVF(self.session).recuperer_locaux(self.idmutation)
+        return [Local(l) for l in locs]
+    
+    @property
+    def parcelles(self):
+        pars = RequeteurEasyDVF(self.session).recuperer_parcelles(self.idmutation)
+        return [Parcelle(p) for p in pars]
+    
+    @property
+    def adresses(self):
+        adrs = RequeteurEasyDVF(self.session).adresses_associees(self.idmutation)
+        return ', '.join(adrs)    
+
 class Mutation():
     
-    def __init__(self, mutation):
+    def __init__(self, mutation):        
+        self.dv3f = True if len(mutation) > 14 else False
         self.id = mutation[0]
         self._datemut = mutation[1]
         self.anneemut = mutation[2]
@@ -64,12 +96,19 @@ class Mutation():
         self.nblocmut = mutation[6]
         self.nbparmut = mutation[7]
         self.codtypbien = mutation[8]
-        self.libtypbien = mutation[9]                                      
+        self.libtypbien = mutation[9]
+        self.codservch = mutation[10]
+        self.refdoc = mutation[11]
+        self.nblot = mutation[12]
+        self.nbvolmut = mutation[13]
+                                                             
     
     def as_tuple(self):
         return (self.id, self.datemut, self.anneemut, 
                 self.valeurfonc, self.sbati, self.sterr, 
-                self.nblocmut, self.nbparmut, self.codtypbien, self.libtypbien)
+                self.nblocmut, self.nbparmut, 
+                self.codtypbien, self.libtypbien,
+                self.codservch, self.refdoc, self.nblot, self.nbvolmut)
     
     @property
     def datemut(self):
@@ -89,14 +128,31 @@ class Mutation():
     def sbati(self):
         return str(self._sbati)
     
+        
+class Local():
     
-class DetailMutation():
+    def __init__(self, local):
+        self.idloc = local[0]
+        self.idpar = local[1]
+        self._sbati = local[2]
+        self.nbpprinc = local[3]
+        self.libtyploc = local[4]
     
-    def __init__(self, idmutation, session):
-        pass
+    @property
+    def sbati(self):
+        return str(self._sbati)
 
+
+class Parcelle():
     
+    def __init__(self, parcelle):
+        self.idpar = parcelle[0]
+        self._sterr = parcelle[1]
     
+    @property
+    def sterr(self):
+        return str(self._sterr)
+
     
 class RequeteurEasyDVF(PgOutils):
     
@@ -122,22 +178,41 @@ class RequeteurEasyDVF(PgOutils):
         libtypbien = self.requete_sql['_LIBTYPBIEN']
         return ("', '".join(codes_insee), codtypbien, libtypbien)
     
-    def recuperer_mutation_detaillee(self, id):
+    def recuperer_locaux(self, idmutation):
         if self.type_base == 'DV3F':
-            resultat = self.recuperer_mutation_detaillee_dv3f(id)
+            resultat = self.recuperer_locaux_dv3f(idmutation)
         elif self.type_base == 'DVF+':
-            resultat = self.recuperer_mutation_detaillee_dvf_plus(id)
+            resultat = self.recuperer_locaux_dvf_plus(idmutation)
         else:
-            return None
-        return list(resultat[0])
+            return []
+        return resultat
     
     @select_sql
-    def recuperer_mutation_detaillee_dv3f(self, id):
+    def recuperer_locaux_dv3f(self, idmutation):
         pass
     
-    @select_sql_avec_modification_args
-    def recuperer_mutation_detaillee_dvf_plus(self, id):
-        libtypbien = self.requete_sql['_LIBTYPBIEN']
-        return (id, libtypbien)
+    @select_sql
+    def recuperer_locaux_dvf_plus(self, idmutation):
+        pass
+
+    def recuperer_parcelles(self, idmutation):
+        if self.type_base == 'DV3F':
+            resultat = self.recuperer_parcelles_dv3f(idmutation)
+        elif self.type_base == 'DVF+':
+            resultat = self.recuperer_parcelles_dvf_plus(idmutation)
+        else:
+            return []
+        return resultat
     
+    @select_sql
+    def recuperer_parcelles_dv3f(self, idmutation):
+        pass
+    
+    @select_sql
+    def recuperer_parcelles_dvf_plus(self, idmutation):
+        pass
+        
+    @select_sql_champ_unique
+    def adresses_associees(self, idmutation):
+        pass
         
