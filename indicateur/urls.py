@@ -19,7 +19,7 @@
 
 from django.conf.urls import url
 
-from . import views
+from .views import views
 
 urlpatterns = [
     url(r'^$', views.indicateurs, name='indicateurs'),

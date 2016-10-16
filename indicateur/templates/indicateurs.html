@@ -53,6 +53,7 @@
                         <div class="form-group">
                             <div class = "col-sm-10">
                                 <select class="form-control selecteur" name='epci'>
+                                	<option value="0">Sélectionner un EPCI...</option>
                                     {% for epci in epcis %}
                                     <option value="{{ epci.pk }}" {% if request.session.epci == epci.pk %}selected{% endif %}>{{ epci }}</option>
                                     {% endfor %}
@@ -74,7 +75,8 @@
                         <div class="form-group">
                             <div class = "col-sm-10">
                                 <select class="form-control selecteur" name='commune'>
-                                    {% for commune in communes %}
+                                	<option value="0">Sélectionner une commune...</option>
+                                	{% for commune in communes %}
                                     <option value="{{ commune.pk }}" {% if request.session.commune == commune.pk %}selected{% endif %}>{{ commune }}</option>
                                     {% endfor %}
 			                    </select>
@@ -94,7 +96,7 @@
 </div>
 
 
-{% if titre != '' %}
+{% if charger_indicateur %}
 
 <div class="row page-header" id="resultats">
         <h3><i class="fa fa-search"></i> Résultats pour {{titre|safe}}</h3>
