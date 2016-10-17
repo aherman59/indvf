@@ -36,17 +36,17 @@ class ContexteIndicateur():
         elif 'departement' in self.request.POST: # changement de département
             self.changement_departement()
             self.charger_indicateur = False
-        elif 'voir_departement' in self.request.POST: # choix d'un nouvel epci
+        elif 'voir_departement' in self.request.POST: # choix d'un nouveau département
             self.selection_departement(ajout=False)
         elif 'voir_epci' in self.request.POST: # choix d'un nouvel epci
             self.selection_epci(ajout=False)
         elif 'voir_commune' in self.request.POST: # choix d'une nouvelle commune
             self.selection_commune(ajout=False)
-        elif 'ajout_departement' in self.request.POST: # choix d'un nouvel epci
+        elif 'ajout_departement' in self.request.POST: # ajout d'un nouveau département
             self.selection_departement(ajout=True)
-        elif 'ajout_epci' in self.request.POST: # choix d'un nouvel epci
+        elif 'ajout_epci' in self.request.POST: # ajout d'un nouvel epci
             self.selection_epci(ajout=True)
-        elif 'ajout_commune' in self.request.POST: # choix d'une nouvelle commune
+        elif 'ajout_commune' in self.request.POST: # ajout d'une nouvelle commune
             self.selection_commune(ajout=True)
     
     @property
