@@ -1,6 +1,6 @@
 Titre: Construire des indicateurs de prix à partir de DVF+
 Theme: Méthode
-Numero: 3
+Numero: 4
 Auteurs: Antoine Herman, Magali Journet - Cerema
 MAJ: 27/04/2016
 Contact: dv3f@cerema.fr
@@ -95,26 +95,9 @@ CREATE VIEW dvf.typologie_bien AS(
 );
 ``` 
 
-### Exemple de calcul d'une moyenne de prix à l'échelle communale
+### Création d'une fonction médiane
 
-La requête suivante renvoie le prix moyen (en euros) d'un bien de type 'maison' à l'échelle de la commune de Lille (_code Insee : 59350_) :
-
-```sql
-SELECT round(avg(valeurfonc), 2) as prix_moyen_maison -- valeur arrondie à 2 décimales
-FROM dvf.typologie_bien
-WHERE libtypbien = 'BATI - MAISON' AND '59350' = ANY(l_codinsee);				
-```
-
-Pour travailler en euros constants, il suffit de remplacer _valeurfonc_ par _valeurfonc_euro_cst_ :
-```sql
-SELECT round(avg(valeurfonc_euro_cst), 2) as prix_moyen_maison -- valeur arrondie à 2 décimales
-FROM dvf.typologie_bien
-WHERE libtypbien = 'BATI - MAISON' AND '59350' = ANY(l_codinsee);				
-```
-
-### Exemple de calcul d'une médiane de prix à l'échelle communale
-
-La fonction permettant de renvoyer une médiane n'existe pas dans les versions de PostgreSQL antérieures à la 9.4. 
+La fonction permettant de renvoyer une médiane, très utile en analyse de prix, n'existe pas dans les versions de PostgreSQL antérieures à la 9.4. 
 Par conséquent, il faut d'abord définir plusieurs fonctions dans le schéma _dvf_.
   
 
@@ -203,6 +186,27 @@ La fonction  _dvf.mediane_ calculera la médiane.
 
 La fonction  _dvf.mediane_10_ exclura les 10 % de valeurs les plus hautes et les 10 % de valeurs les plus basses avant de calculer la médiane.
 
+### Exemples de calcul d'une moyenne de prix à l'échelle communale
+
+La requête suivante renvoie le prix moyen (en euros) d'un bien de type 'maison' à l'échelle de la commune de Lille (_code Insee : 59350_) :
+
+```sql
+SELECT round(avg(valeurfonc), 2) as prix_moyen_maison -- valeur arrondie à 2 décimales
+FROM dvf.typologie_bien
+WHERE libtypbien = 'BATI - MAISON' AND '59350' = ANY(l_codinsee);				
+```
+
+Pour travailler en euros constants, il suffit de remplacer _valeurfonc_ par _valeurfonc_euro_cst_ :
+```sql
+SELECT round(avg(valeurfonc_euro_cst), 2) as prix_moyen_maison -- valeur arrondie à 2 décimales
+FROM dvf.typologie_bien
+WHERE libtypbien = 'BATI - MAISON' AND '59350' = ANY(l_codinsee);				
+```
+
+### Exemples de calcul d'une médiane de prix
+
+#### A l'échelle communale
+
 La requête suivante renvoie ainsi le prix médian (en euros) d'un bien de type 'appartement' à l'échelle de la commune de Lille (_code Insee : 59350_) :
 
 ```sql
@@ -211,8 +215,7 @@ FROM dvf.typologie_bien
 WHERE libtypbien = 'BATI - APPART' AND '59350' = ANY(l_codinsee);				
 ```
 
-
-### Exemple de calcul d'une médiane annuelle de prix à l'échelle de plusieurs communes
+#### A l'échelle de plusieurs communes
 
 La requête suivante renvoie le prix médian (en euros par m2) par année d'un bien de type 'appartement' à l'échelle des communes de Lille (_59350_), Villeneuve d'Ascq (_59009_),
 Ronchin (_59507_), Lambersart (_59328_):

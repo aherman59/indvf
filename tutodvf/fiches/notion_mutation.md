@@ -2,7 +2,7 @@ Titre: La mutation, une notion-clef
 Theme: Tutoriel
 Numero: 4
 Auteurs: Magali Journet, Antoine Herman - Cerema
-MAJ: 31/08/2016
+MAJ: 18/10/2016
 Contact: dv3f@cerema.fr
 
 ## Définition et caractéristiques d'une mutation dans DVF
@@ -33,10 +33,11 @@ Une mutation peut revêtir plusieurs natures :
 
 ### Prix de la mutation
 
-Le prix ("valeur foncière" au sens de la DGFiP) de la mutation est le montant financier, à la date de la mutation, échangé
- entre le vendeur et l'acheteur pour permettre le transfert de propriété des biens. 
+Le prix ("valeur foncière" au sens de la DGFiP) de la mutation est le montant financier, à la date de la mutation, échangé entre le vendeur et l'acheteur pour permettre le transfert de propriété des biens. 
 Ce prix est en euros. Il comprend la TVA mais pas les frais de notaires, ou les biens meubles. 
 En matière d’expropriation, le prix indiqué comprend le montant de l’indemnité.
+
+Il faut savoir différencier le prix et la valeur. Dans DVF, est restitué le prix. Le prix est le montant inscrit lors de la vente. La valeur d’un objet est liée aux usages du bien et dépend de notre propre estimation (projection de l'usage). Une maison qui va être démolie et permettre la construction de 20 appartements, ne vaut pas forcément la même chose pour un promoteur que la même maison achetée pour y vivre par un particulier. 
 
 ### Date de la mutation 
 
