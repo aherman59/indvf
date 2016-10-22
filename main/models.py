@@ -151,6 +151,7 @@ class Departement(models.Model):
     def type(self):
         return 'departement'
     
+    @property
     def codes_insee(self):
         communes = Commune.objects.filter(departement = self)
         return [c.code for c in communes]
@@ -166,6 +167,7 @@ class Epci(models.Model):
     def type(self):
         return 'epci'
     
+    @property
     def codes_insee(self):
         communes = Commune.objects.filter(epci = self)
         return [c.code for c in communes]
@@ -187,6 +189,7 @@ class Commune(models.Model):
     def type(self):
         return 'commune'
     
+    @property
     def codes_insee(self):
         return [self.code]
 
@@ -228,8 +231,7 @@ class Territoire(models.Model):
         self.save()
 
     def lister_entites_administratives(self):
-        return (
-                list(self.departements.all()) 
+        return (list(self.departements.all()) 
                 + list(self.epcis.all()) 
                 + list(self.communes.all())
-                   )
+                )

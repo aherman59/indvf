@@ -34,10 +34,8 @@ class ContexteIndicateur():
         if self.request.method != 'POST' and self.request.get_full_path() == '/indicateur/': # page démarrage
             self.configuration_initiale()
             self.charger_indicateur = False
-        elif 'departement' in self.request.POST: # changement de département
-            self.changement_departement()
-            self.charger_indicateur = False
         elif 'voir_departement' in self.request.POST: # choix d'un nouveau département
+            print(self.request.POST)
             self.selection_departement(ajout=False)
         elif 'voir_epci' in self.request.POST: # choix d'un nouvel epci
             self.selection_epci(ajout=False)
@@ -49,6 +47,9 @@ class ContexteIndicateur():
             self.selection_epci(ajout=True)
         elif 'ajout_commune' in self.request.POST: # ajout d'une nouvelle commune
             self.selection_commune(ajout=True)
+        elif 'departement' in self.request.POST: # changement de département
+            self.changement_departement()
+            self.charger_indicateur = False
     
     @property
     def config_active(self):

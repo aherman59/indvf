@@ -122,13 +122,13 @@ class Resultat():
     
     def resultat_en_base(self, territoire, config_active):
         id_indicateur = self.indicateur.id
-        if not ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id):
+        if not ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id, territoire.type()):
             resultat = self.calcul(territoire, config_active)
             self.sauvegarde(resultat, territoire)
-        return ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id)
+        return ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id, territoire.type())
     
     def calcul(self, territoire, config_active):
-        codes_insee = territoire.codes_insee()
+        codes_insee = territoire.codes_insee
         c = RequeteurInDVF(*(config_active.parametres_bdd()), type_base=config_active.type_bdd, script = 'sorties/script_indvf.sql')
         c.creer_aggregat_mediane_10()
         resultat = c.calcul(self.indicateur, codes_insee)
