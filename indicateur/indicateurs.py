@@ -22,17 +22,16 @@ from indicateur.models import Indicateur, ResultatIndicateur
 
 from pg.pgbasics import *
 
-def calcul_indicateurs_actifs_format_xcharts(territoires, config_active):
+def indicateurs_actifs_format_xcharts(territoires, config_active):
         indicateurs_actifs = Indicateur.objects.indicateurs_actifs_tries()
         indicateursDVF = []
         for num, indicateur in enumerate(indicateurs_actifs):
             indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
-            i = {}            
-            i['graph'] = indic_dvf.graphique()
-            i['idgraph'] = 'graph' + str(num) 
-            i['type_graph'] = indicateur.type_graphe
-            i['tableau'] = indic_dvf.tableau()
-            i['nom'] = indic_dvf.titre()
+            i = {'idgraph': 'graph' + str(num),
+                 'type_graph' : indicateur.type_graphe,
+                 'graph'  : indic_dvf.graphique,
+                 'tableau': indic_dvf.tableau,
+                 'nom'    : indic_dvf.titre}            
             indicateursDVF.append(i)
         return indicateursDVF 
 
@@ -43,158 +42,71 @@ class IndicateurDVF():
         indicateur est une entree du modele Indicateur
         territoires est une liste d'entrée pouvant être issue des modèles Département, Epci, Commune
         '''
-        self.donnees = []
         self.config_active = config_active
         self.territoires = territoires
-        # parametres indicateur
-        self.id_indicateur = indicateur.id
-        self.nom_indicateur = indicateur.nom
-        self.type_indic = indicateur.type_indic
-        self.unite = indicateur.unite
-        self.periode = indicateur.periode
-        self.variable = indicateur.variable
-        self.annee_debut = indicateur.annee_debut
-        self.annee_fin = indicateur.annee_fin
-        self.code_typo = indicateur.code_typo
-        self.facteur_unite = 1
+        self.indicateur = indicateur
+        # calcul des valeurs
+        self.donnees = self.calcul()
+        self.facteur, self.prefixe = self.evaluer_prefixe_unite()
     
-    def code_insee(self, territoire):
-        if isinstance(territoire, Commune):
-            return [territoire.code]
-        elif isinstance(territoire, Epci):
-            communes = Commune.objects.filter(epci = territoire)
-            return [c.code for c in communes]
-        elif isinstance(territoire, Departement):
-            communes = Commune.objects.filter(departement = territoire)
-            return [c.code for c in communes]        
+    def calcul(self):
+        resultats = []
+        resultat_indicateur = Resultat(self.indicateur)
+        for t in self.territoires:
+            resultat = resultat_indicateur.resultat_en_base(t, self.config_active)
+            resultats.append(resultat)
+        return resultats
     
-    def titre(self):
-        self.evaluer_facteur_unite()
-        if self.facteur_unite == 1000000:
-            prefixe = 'M'
-        elif self.facteur_unite == 1000 :
-            prefixe = 'k'
-        elif self.facteur_unite == 1 :
-            prefixe = ''
-        unite = ' (' + prefixe + self.unite + ')' if self.unite else ''
-        return self.nom_indicateur + unite
-
+    def evaluer_prefixe_unite(self):
+        facteur_unite, prefixe = 1, ''
+        for d in self.donnees:
+            for x, y in d:
+                if y >= 1000000000:
+                    facteur_unite, prefixe = 1000000, 'M'
+                    return facteur_unite, prefixe
+                elif y >= 1000000:
+                    facteur_unite, prefixe = 1000, 'k'
+        return facteur_unite, prefixe
+    
+    @property
     def graphique(self):
-        if len(self.donnees) > 0:
-            self.evaluer_facteur_unite()
-            mini, maxi = self.min_max_echelle()
-            graph = {}
-            graph["xScale"] =  "ordinal"
-            graph["yScale"] = "linear"
-            graph["yMin"] = round(0.3 * mini/self.facteur_unite)
-            graph["yMax"] = round(1.12 * maxi/self.facteur_unite)
-            graph["main"] = []
-            for i, d in enumerate(self.donnees):
-                donnees_formatees = [{"x": x, "y": round(y/self.facteur_unite)} for (x, y) in d]
-                graph["main"].append({"className" : ".graph" + str(i), "data" : donnees_formatees})
-            return graph
-        else:
-            self.calcul()
-            return self.graphique()
+        mini, maxi = self.min_max_echelle()
+        graph = {"xScale": "ordinal",
+                 "yScale": "linear",
+                 "yMin"  : round(0.3 * mini/self.facteur),
+                 "yMax"  : round(1.12 * maxi/self.facteur)}
+        graph["main"] = []
+        for i, d in enumerate(self.donnees):
+            donnees_formatees = [{"x": x, "y": round(y/self.facteur)} for (x, y) in d]
+            graph["main"].append({"className" : ".graph" + str(i), "data" : donnees_formatees})
+        return graph
     
     def min_max_echelle(self):        
-        if len(self.donnees) > 0:
-            mini, maxi = 99999999999999999, 1
-            for d in self.donnees:
-                min_d = min(d, key = lambda x : x[1])
-                max_d = max(d, key = lambda x : x[1])
-                if min_d[1] < mini:
-                    mini = min_d[1]
-                if max_d[1] > maxi:
-                    maxi = max_d[1]
-            return mini, maxi
-        else :
-            self.calcul()
-            self.min_max_echelle()           
+        mini, maxi = 99999999999999999, 1
+        for d in self.donnees:
+            min_d = min(d, key = lambda x : x[1])
+            max_d = max(d, key = lambda x : x[1])
+            if min_d[1] < mini:
+                mini = min_d[1]
+            if max_d[1] > maxi:
+                maxi = max_d[1]
+        return mini, maxi
+    
+    @property    
+    def titre(self):
+        unite = ' (' + self.prefixe + self.indicateur.unite + ')' if self.indicateur.unite else ''
+        return self.indicateur.nom + unite          
 
+    @property
     def tableau(self):
-        if len(self.donnees) > 0:
-            unite = ' (en ' + self.unite + ')' if self.unite else ''
-            tableau = '<table class="table table-condensed table-striped">'
-            for i, d in enumerate(self.donnees):
-                if i == 0:
-                    tableau += '<tr><th class="text-center">' + unite + '</th>' + ''.join(['<th class="text-right">' + str(x) + '</th>' for (x, y) in d]) + '</tr>'
-                tableau += '<tr><th class="text-left"><span class="color' + str(i) + '-indvf">' + self.territoires[i].nom + '</th>' + ''.join(['<td class="text-right text-nowrap">' + self._separateur_millier(str(y)) + '</td>' for (x, y) in d]) + '</tr>' 
-            tableau += '</table>'
-            return tableau
-        else:
-            self.calcul()
-            return self.tableau()
-
-    def calcul(self):
-        for t in self.territoires:
-            calculs_disponibles = ResultatIndicateur.objects.filter(id_indicateur = self.id_indicateur).filter(id_territoire = t.id).filter(type_territoire = t.type())
-            if len(calculs_disponibles) > 0 :
-                calcul = self.reconstituer(calculs_disponibles)
-            else:
-                calculateur = RequeteurInDVF(*(self.config_active.parametres_bdd()), 
-                                type_base = self.config_active.type_bdd, 
-                                script = 'sorties/script_indvf.sql')
-                calculateur.creer_aggregat_mediane_10()
-                if (self.type_indic == 'somme' and self.periode == 'a'):
-                    calcul  = calculateur.calculer_somme_par_annee(self.variable, self.code_insee(t), self.code_typo)                         
-                elif (self.type_indic == 'somme' and self.periode == 'ma'):
-                    calcul = calculateur.calculer_somme_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin, self.code_typo)
-                elif (self.type_indic == 'compte' and self.periode == 'a'):
-                    calcul = calculateur.compter_par_annee(self.variable, self.code_insee(t), self.code_typo)
-                elif (self.type_indic == 'compte' and self.periode == 'ma'):
-                    calcul = calculateur.compter_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin, self.code_typo)
-                elif (self.type_indic == 'mediane_10' and self.periode == 'a'):
-                    calcul = calculateur.calculer_mediane_10_par_annee(self.variable, self.code_insee(t), self.code_typo)
-                elif (self.type_indic == 'mediane_10' and self.periode == 'ma'):
-                    calcul = calculateur.calculer_mediane_10_multi_annee(self.variable, self.code_insee(t), self.annee_debut, self.annee_fin, self.code_typo)
-                calculateur.deconnecter()
-                calcul = self.formatter_et_sauvegarder(calcul, t)
-            self.donnees.append(calcul)
-    
-    def evaluer_facteur_unite(self):
-        if len(self.donnees) > 0 :
-            for d in self.donnees:
-                for x, y in d:
-                    if y >= 1000000000:
-                        self.facteur_unite = 1000000
-                        return
-                    elif y >= 1000000:
-                        self.facteur_unite = 1000
-        else :
-            self.calcul()
-            self.evaluer_facteur_unite()
-
-    def formatter_et_sauvegarder(self, donnees, t):
-        if self.periode == 'a':
-            resultats = [(annee, int(resultat)) for annee, resultat in donnees if (int(annee) >= self.annee_debut and int(annee) <= self.annee_fin)]
-            for an in range(self.annee_debut, self.annee_fin + 1):
-                if an not in [annee for annee, resultat in resultats]:
-                    resultats.append((str(an), 0))
-                    r = ResultatIndicateur(id_territoire = t.id, type_territoire = t.type(), id_indicateur = self.id_indicateur, annee = an, resultat = 0)
-                    r.save()
-                else :
-                    valeur = [resultat for annee, resultat in resultats if an == annee][0]
-                    r = ResultatIndicateur(id_territoire = t.id, type_territoire = t.type(), id_indicateur = self.id_indicateur, annee = an, resultat = valeur)
-                    r.save()
-            return tuple(sorted(resultats, key = lambda x : int(x[0])))
-        elif self.periode == 'ma':
-            valeur = int(donnees[0][0]) or 0
-            r = ResultatIndicateur(id_territoire = t.id, type_territoire = t.type(), id_indicateur = self.id_indicateur, annee = None, resultat = valeur)
-            r.save()
-            return ((str(self.annee_debut) + ' - ' + str(self.annee_fin), valeur),)
-    
-    def reconstituer(self, calculs_disponibles):
-        if self.periode == 'a':
-            resultats = []
-            for an in range(self.annee_debut, self.annee_fin + 1):
-                if an in [calcul_disponible.annee for calcul_disponible in calculs_disponibles]:
-                    valeur = [calcul_disponible.resultat for calcul_disponible in calculs_disponibles if an == calcul_disponible.annee][0]
-                    resultats.append((str(an), valeur))
-            return tuple(sorted(resultats, key = lambda x : int(x[0])))
-        elif self.periode == 'ma':
-            valeur = calculs_disponibles[0].resultat        
-            return ((str(self.annee_debut) + ' - ' + str(self.annee_fin), valeur),)
+        unite = ' (en ' + self.indicateur.unite + ')' if self.indicateur.unite else ''
+        tableau = '<table class="table table-condensed table-striped">'
+        for i, d in enumerate(self.donnees):
+            if i == 0:
+                tableau += '<tr><th class="text-center">' + unite + '</th>' + ''.join(['<th class="text-right">' + str(x) + '</th>' for (x, y) in d]) + '</tr>'
+            tableau += '<tr><th class="text-left"><span class="color' + str(i) + '-indvf">' + self.territoires[i].nom + '</th>' + ''.join(['<td class="text-right text-nowrap">' + self._separateur_millier(str(y)) + '</td>' for (x, y) in d]) + '</tr>' 
+        tableau += '</table>'
+        return tableau
                     
     def _separateur_millier(self, nombre, sep = ' '):
         if nombre:
@@ -203,60 +115,125 @@ class IndicateurDVF():
             else:
                 return self._separateur_millier(nombre[:-3], sep) + sep + nombre[-3:]
 
-
+class Resultat():
+    
+    def __init__(self, indicateur):
+        self.indicateur = indicateur
+    
+    def resultat_en_base(self, territoire, config_active):
+        id_indicateur = self.indicateur.id
+        if not ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id):
+            resultat = self.calcul(territoire, config_active)
+            self.sauvegarde(resultat, territoire)
+        return ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id)
+    
+    def calcul(self, territoire, config_active):
+        codes_insee = territoire.codes_insee()
+        c = RequeteurInDVF(*(config_active.parametres_bdd()), type_base=config_active.type_bdd, script = 'sorties/script_indvf.sql')
+        c.creer_aggregat_mediane_10()
+        resultat = c.calcul(self.indicateur, codes_insee)
+        c.deconnecter()
+        return resultat
+    
+    def sauvegarde(self, resultat, territoire):
+        id_indicateur = self.indicateur.id
+        id_territoire = territoire.id
+        type_territoire = territoire.type()
+        if self.indicateur.periode == 'ma':
+            valeur = int(resultat[0][0]) or 0
+            r = ResultatIndicateur(id_territoire=id_territoire, 
+                                   type_territoire=type_territoire, 
+                                   id_indicateur=id_indicateur, 
+                                   annee=None, 
+                                   resultat=valeur)
+            r.save()
+        elif self.indicateur.periode == 'a':
+            annee_debut = self.indicateur.annee_debut
+            annee_fin = self.indicateur.annee_fin
+            for an in range(annee_debut, annee_fin + 1):
+                if an not in [annee for annee, val in resultat]:
+                    valeur = 0
+                else:
+                    valeur = [val for annee, val in resultat if an == annee][0]
+                r = ResultatIndicateur(id_territoire=id_territoire, 
+                                       type_territoire=type_territoire, 
+                                       id_indicateur=id_indicateur, 
+                                       annee=an, 
+                                       resultat=valeur)
+                r.save()                    
+    
 class RequeteurInDVF(PgOutils):
     
     def __init__(self, hote, base, port, utilisateur, motdepasse, type_base = None, script = None):
         super().__init__(hote, base, port, utilisateur, motdepasse, script)
         self.type_base = type_base
     
-    @requete_sql    
-    def creer_aggregat_mediane_10(self):
-        pass
+    def calcul(self, indicateur, codes_insee):
+        FONCTIONS_CALCUL = {('somme', 'ma')    : self.calculer_somme_multi_annee,
+                            ('somme', 'a')     : self.calculer_somme_par_annee,
+                            ('compte', 'ma')   : self.compter_multi_annee,
+                            ('compte', 'a')    : self.compter_par_annee,
+                            ('mediane_10','ma'): self.calculer_mediane_10_multi_annee,
+                            ('mediane_10','a') : self.calculer_mediane_10_par_annee,
+                            }
+        parametres_indicateur = (indicateur.type_indic, indicateur.periode)
+        return FONCTIONS_CALCUL[parametres_indicateur](indicateur, codes_insee)
     
-    @select_sql_avec_modification_args
-    def calculer_somme_par_annee(self, variable, codes_insee, code_typo):
-        code_typo = self.condition_code_typo(code_typo)
-        variables_typologie_dvf_plus = self.ajout_variables_typologies()
-        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
-
-    @select_sql_avec_modification_args
-    def calculer_somme_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
-        code_typo = self.condition_code_typo(code_typo)
-        variables_typologie_dvf_plus = self.ajout_variables_typologies()
-        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, variables_typologie_dvf_plus
-
-    @select_sql_avec_modification_args
-    def compter_par_annee(self, variable, codes_insee, code_typo):
-        code_typo = self.condition_code_typo(code_typo)
-        variables_typologie_dvf_plus = self.ajout_variables_typologies()
-        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
-
-    @select_sql_avec_modification_args
-    def compter_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
-        code_typo = self.condition_code_typo(code_typo)
-        variables_typologie_dvf_plus = self.ajout_variables_typologies()
-        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, variables_typologie_dvf_plus
-    
-    @select_sql_avec_modification_args
-    def calculer_mediane_10_par_annee(self, variable, codes_insee, code_typo):
-        code_typo = self.condition_code_typo(code_typo)
-        variables_typologie_dvf_plus = self.ajout_variables_typologies()
-        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
-    
-    @select_sql_avec_modification_args
-    def calculer_mediane_10_multi_annee(self, variable, codes_insee, annee_debut, annee_fin, code_typo):
-        code_typo = self.condition_code_typo(code_typo)
-        variables_typologie_dvf_plus = self.ajout_variables_typologies()
-        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, variables_typologie_dvf_plus
-    
-    def condition_code_typo(self, code_typo):
-        return '' if code_typo == '999' else " WHERE codtypbien='{0}' ".format(code_typo)
-    
-    def ajout_variables_typologies(self):
+    @property
+    def variables_typobien(self):
         if self.type_base == 'DV3F':
             return ''
         elif self.type_base == 'DVF+':
             codtypbien = self.requete_sql['_CODTYPBIEN']
             libtypbien = self.requete_sql['_LIBTYPBIEN']
             return ', ' + codtypbien + ', ' + libtypbien
+    
+    @requete_sql    
+    def creer_aggregat_mediane_10(self):
+        pass
+    
+    @select_sql_avec_modification_args
+    def calculer_somme_par_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition_code_typo(indicateur.code_typo)
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
+
+    @select_sql_avec_modification_args
+    def calculer_somme_multi_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition_code_typo(indicateur.code_typo)
+        annee_debut = indicateur.annee_debut
+        annee_fin = indicateur.annee_fin
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
+
+    @select_sql_avec_modification_args
+    def compter_par_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition_code_typo(indicateur.code_typo)
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
+
+    @select_sql_avec_modification_args
+    def compter_multi_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition_code_typo(indicateur.code_typo)
+        annee_debut = indicateur.annee_debut
+        annee_fin = indicateur.annee_fin
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
+
+    @select_sql_avec_modification_args
+    def calculer_mediane_10_par_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition_code_typo(indicateur.code_typo)
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
+    
+    @select_sql_avec_modification_args
+    def calculer_mediane_10_multi_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition_code_typo(indicateur.code_typo)
+        annee_debut = indicateur.annee_debut
+        annee_fin = indicateur.annee_fin
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
+    
+    def condition_code_typo(self, code_typo):
+        return '' if code_typo == '999' else " WHERE codtypbien='{0}' ".format(code_typo)
+    

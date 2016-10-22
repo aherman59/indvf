@@ -88,11 +88,7 @@ class ConfigurationBDD(models.Model):
         return self.nom_config
     
     def parametres_bdd(self):
-        return (self.hote, 
-                self.bdd, 
-                self.port, 
-                self.utilisateur, 
-                self.mdp)
+        return (self.hote, self.bdd, self.port, self.utilisateur, self.mdp)
     
     def activer(self):
         self.active = True
@@ -155,6 +151,10 @@ class Departement(models.Model):
     def type(self):
         return 'departement'
     
+    def codes_insee(self):
+        communes = Commune.objects.filter(departement = self)
+        return [c.code for c in communes]
+    
 class Epci(models.Model):
     nom = models.CharField(max_length=255)
     code = models.CharField(max_length=15, unique = True)
@@ -165,6 +165,10 @@ class Epci(models.Model):
     
     def type(self):
         return 'epci'
+    
+    def codes_insee(self):
+        communes = Commune.objects.filter(epci = self)
+        return [c.code for c in communes]
         
 class Commune(models.Model):
     nom = models.CharField(max_length=100)
@@ -182,6 +186,9 @@ class Commune(models.Model):
     
     def type(self):
         return 'commune'
+    
+    def codes_insee(self):
+        return [self.code]
 
 class TerritoireManager(models.Manager):
     

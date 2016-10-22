@@ -28,10 +28,10 @@ class IndicateurManager(models.Manager):
         return self.filter(actif=True).order_by('-code_typo', 'annee_debut', 'type_indic', 
                                                 'periode', 'unite', 'variable', 'nom')
     
-    def supprimer_indicateur_et_resultats_lies(self, id_indicateur):
+    def supprimer(self, id_indicateur):
         indicateur_choisi = self.get(pk = id_indicateur)
         indicateur_choisi.delete()
-        ResultatIndicateur.objects.filter(id_indicateur = id_indicateur).delete()
+        
     
 class Indicateur(models.Model):
     
@@ -82,10 +82,32 @@ class Indicateur(models.Model):
 
     def __str__(self):
         return self.nom
+
+
+class ResultatIndicateurManager(models.Manager):
     
+    def resultat_as_tuple(self, id_indicateur, id_territoire):
+        resultats = self.filter(id_indicateur = id_indicateur).filter(id_territoire = id_territoire)
+        if len(resultats) == 0:
+            return None
+        indicateur = Indicateur.objects.get(pk=id_indicateur)
+        annee_debut = indicateur.annee_debut
+        annee_fin = indicateur.annee_fin
+        if indicateur.periode == 'ma':
+            return ((str(annee_debut) + ' - ' + str(annee_fin), resultats[0].resultat),)
+        elif indicateur.periode == 'a':
+            r = [(str(result.annee), result.resultat) for result in resultats]
+            return tuple(sorted(r, key = lambda x : int(x[0])))
+    
+    def supprimer_resultats(self, id_indicateur):
+        self.filter(id_indicateur = id_indicateur).delete()             
+
+        
 class ResultatIndicateur(models.Model):
     id_territoire = models.IntegerField()
     type_territoire = models.CharField(max_length = 50)
     id_indicateur = models.IntegerField()
     annee = models.IntegerField(null = True)
     resultat = models.IntegerField()
+    
+    objects = ResultatIndicateurManager()

@@ -17,16 +17,11 @@
 
 '''
 
-import json
-
 from django.shortcuts import render, redirect
+
 from pg.pgbasics import *
-
 from main.territoire import integration 
-from indicateur.models import Indicateur, ResultatIndicateur
-from indicateur.forms import IndicateurForm, SelectIndicateurForm
-
-from .contexte import ContexteIndicateur
+from .contexte import ContexteIndicateur, ContexteConfigIndicateur
 
 '''
 PAGE AFFICHAGE INDICATEURS
@@ -59,57 +54,12 @@ def indicateurs(request):
                'charger_indicateur': contexte_indicateur.charger_indicateur}
     return render(request, 'indicateurs.html', context)
     
-        
-'''
-
-PAGE CONFIGURATION
-
-'''
 
 def configuration_indicateur(request):
-    # premier chargement de la page
-    if request.method != 'POST' or ('selection' in request.POST and request.POST['selection'] == ''):
-        return _charger_formulaire(request, IndicateurForm())
-    # annulation 
-    elif 'annulation' in request.POST:
+    contexte_configuration = ContexteConfigIndicateur(request)
+    if contexte_configuration.annulation:
         return redirect('indicateur:indicateurs')
-    # suppression de la selection
-    elif 'suppression' in request.POST:
-        id_indicateur = int(request.POST['selection_indicateur'])
-        Indicateur.objects.supprimer_indicateur_et_resultats_lies(id_indicateur)        
-        return _charger_formulaire(request, IndicateurForm())
-    # modification de la selection
-    elif 'selection' in request.POST:
-        id_indicateur = int(request.POST['selection'])
-        return _modification_selection(request, id_indicateur)
-    # creation de l'indicateur
-    elif 'creation' in request.POST:
-        id_indicateur = int(request.POST['selection_indicateur'])
-        if id_indicateur == 0: # nouvelle entree
-            indicateurform = IndicateurForm(request.POST)            
-        else: # mise à jour
-            indicateur_choisi = Indicateur.objects.get(pk = id_indicateur)
-            indicateurform = IndicateurForm(request.POST, instance = indicateur_choisi)
-        if indicateurform.is_valid():       
-            indicateurform.save()
-            ResultatIndicateur.objects.filter(id_indicateur = id_indicateur).delete()        
-            return _charger_formulaire(request, IndicateurForm())
-        else:
-            return _charger_formulaire(request, indicateurform, id_indicateur = id_indicateur)
-
-def _charger_formulaire(request, indicateurform, id_indicateur = 0):
-    formulaire = indicateurform
-    formulaire_selection = SelectIndicateurForm()    
-    context = {'formulaire':formulaire, 
-               'formulaire_selection' : formulaire_selection,
-               'id_indicateur' : id_indicateur, }
-    return render(request, 'configuration_indicateur.html', context)
-
-def _modification_selection(request, id_indicateur):
-    indicateur = Indicateur.objects.get(pk = id_indicateur)
-    formulaire = IndicateurForm(instance = indicateur)
-    formulaire_selection = SelectIndicateurForm(initial = {'selection' : id_indicateur })
-    context = {'formulaire':formulaire, 
-               'formulaire_selection' : formulaire_selection,
-               'id_indicateur' : id_indicateur,                }
+    context = {'formulaire': contexte_configuration.formulaire, 
+               'formulaire_selection' : contexte_configuration.formulaire_selection,
+               'id_indicateur' : contexte_configuration.id_indicateur, }
     return render(request, 'configuration_indicateur.html', context)
