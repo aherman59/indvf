@@ -41,11 +41,13 @@ def doc_variable(request, table, variable):
         variable = Variable.objects.get(table_associee = table, nom = variable)
     except:
         raise Http404('Variable inexistante')
-    # recupération des données de la variable (description, valeurs, variables associées
+    # recupération des données de la variable (description, valeurs, variables associées)
     desc_variable = variable.description
     valeurs_variable = ValeurVariable.objects.filter(description = desc_variable).order_by('valeur')
     groupements = GroupementVariable.objects.filter(variables_associees = variable)    
     context = {'variable':variable, 'desc_variable': desc_variable, 'valeurs_variable':valeurs_variable, 'groupements':groupements}
     return render(request, 'variable.html', context)
 
-    
+def recherche(request):
+    context = None
+    return render(request, 'recherche_doc.html', context)    
