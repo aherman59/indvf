@@ -72,7 +72,7 @@
 	</div>
 </div>
 
-{% ifnotequal valeurs_variable|length  0 %}
+{% if valeurs_variable|length != 0 %}
 <div class="panel panel-default">
     <div class="panel-heading">
 	    <h3 class="panel-title"><i class="fa fa-list-alt"></i> Modalités possibles</h3>
@@ -98,7 +98,7 @@
 
 	</div>
 </div>
-{% endifnotequal %}
+{% endif %}
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -140,7 +140,7 @@
 	</div>
 </div>
 
-{% ifnotequal groupements|length  0 %}
+{% if groupements|length != 0 %}
 <div class="panel panel-default">
     <div class="panel-heading">
 	    <h3 class="panel-title"><i class="fa fa-link"></i> Variables associées</h3>
@@ -158,6 +158,6 @@
 
 	</div>
 </div>
-{% endifnotequal %}
+{% endif %}
 
 {% endblock %} 

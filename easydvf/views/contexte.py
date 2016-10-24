@@ -59,7 +59,7 @@ class ContexteRecherche():
     def code_departement(self):
         if 'departement' in self.request.session:
             return Departement.objects.get(pk=self.request.session['departement']).code
-        return Departement.objects.order_by('id')[0].code
+        return self.config_active.departements_disponibles()[0].code
     
     @property     
     def epcis(self):

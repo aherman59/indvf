@@ -36,6 +36,8 @@ Une parcelle est dite "concernée" si elle est :
 * soit une parcelle qui ne subit aucun transfert total de propriété mais dont la propriété d'au moins un bien présent sur celle-ci 
 est transférée lors de la mutation (les cas les plus fréquents sont les ventes d'appartements).
 
+![*Parcelles mutées/concernées*](ressources/parcelle_mutee_concernee.png "Parcelles mutées/concernées")
+
 ### Notion de "disposition-parcelle"
 
 Une parcelle concernée par une mutation peut présenter des caractéristiques qui évoluent dans le temps (hormis son contour). Il est alors nécessaire d'identifier ces différents états : la « disposition-parcelle » représente l'état d'une parcelle à une date de mutation précise.
@@ -159,6 +161,11 @@ Les surfaces liées à ces regroupements sont disponibles pour les parcelles aya
 dans la table _disposition_parcelle_ (@@disposition_parcelle|dcntagri@@, @@disposition_parcelle|dcntsol@@, @@disposition_parcelle|dcntnat@@). 
 Dans DV3F, ces mêmes catégories d'occupation ont également été rappatriées à partir des Fichiers fonciers 
 pour les parcelles mutées (@@disposition_parcelle|ffdcntagri@@, @@disposition_parcelle|ffdcntsol@@, @@disposition_parcelle|ffdcntnat@@)
+
+Le schéma ci-après montre les deux niveaux de regroupement :
+
+![*Occupation du sol*](ressources/dcnt.png "Occupation du sol")
+
 
 Enfin, pour DV3F uniquement, et dans la table _mutation_, a été créé un indicateur d'occupation plus adapté à la détection de
 segment de marchés fonciers ou immobiliers (variable @@mutation|occupation@@).

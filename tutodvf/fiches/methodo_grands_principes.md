@@ -56,8 +56,8 @@ Autre exemple, si l'on travaille sur les jeux d'acteurs dans DV3F, que l'on souh
 
 Pour définir facilement sa période, la condition peut-être la suivante :
 ```sql
--- Pour une analyse sur la période 2010-2015
-SELECT * FROM dvf.mutation WHERE anneemut >= 2010 AND anneemut <= 2015;
+-- Pour une analyse sur la période 2010-2014
+SELECT * FROM dvf.mutation WHERE anneemut >= 2010 AND anneemut <= 2014;
 ```
 
 ### VEFA indéterminées, terrain miné...
@@ -100,7 +100,7 @@ SELECT * FROM dvf.mutation WHERE rapatffloc IS TRUE
 
 Si l'on a la possibilité d’utiliser des variables aux définitions identiques provenant de DVF et des Fichiers fonciers, il est possible que celles-ci divergent. A priori, à définition équivalente, les données provenant de DVF doivent être considérées comme plus fiables que les données importées des Fichiers fonciers. Mais très souvent, la combinaison avec d'autres données Fichiers fonciers permettent des analyses plus fines. Dans ce cas, il est conseillé de travailler uniquement avec des données provenant des Fichiers fonciers. 
 
-A titre d'exemple, si l'on veut observer le nombre d'appartements T2, la variable @@mutation|nbapt2pp@@ suffit mais si l'on veut avoir les appartements T2 neufs il vaut mieux utiliser @@mutation|ffnblocmai@@, @@mutation|ffnbloc2pp@@ et @@mutation|nblocneuf@@.
+A titre d'exemple, si l'on veut observer le nombre d'appartements T2, la variable @@mutation|nbapt2pp@@ suffit mais si l'on veut avoir les appartements T2 neufs il vaut mieux utiliser @@mutation|ffnblocapt@@, @@mutation|ffnbloc2pp@@ et @@mutation|nblocneuf@@.
 
 ### Gagner un maximum de confiance
 

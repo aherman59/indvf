@@ -16,12 +16,14 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 '''
-
+import re
 from django.shortcuts import render
 from django.http import Http404
+from django.db.models.query import Q
 
 from .description_tables import TABLES, lister_tables
 from .models import DescriptionVariable, Variable, ValeurVariable, GroupementVariable, integration_donnees_variables
+
 
 def accueil_doc(request):
     #integration_donnees_variables()
@@ -49,5 +51,29 @@ def doc_variable(request, table, variable):
     return render(request, 'variable.html', context)
 
 def recherche(request):
-    context = None
-    return render(request, 'recherche_doc.html', context)    
+    
+    if request.method == 'POST':
+        variables = []
+        if 'motclef' in request.POST:
+            mots_clefs = re.findall(r'[\w\+]+',str(request.POST['motclef']))
+            mots_clefs = [mot for mot in mots_clefs if (mot != '' and len(mot) >= 2)]
+            
+            # RECHERCHE VARIABLES 
+            if(len(mots_clefs) == 1):
+                variables = Variable.objects.filter(Q(nom__istartswith=mots_clefs[0])).distinct()
+            else:
+                y = Q()
+                for mot in mots_clefs:
+                    y = y & Q(nom__icontains=mot)
+                
+                variables = Variable.objects.filter(y).distinct().order_by('nom')
+                
+        context = {'mots_clefs': ' '.join(mots_clefs),
+                   'variables' : variables
+                   }
+        return render(request, 'recherche_doc.html', context)
+    else:
+        raise Http404('Méthode POST incorrecte')
+        
+        
+        

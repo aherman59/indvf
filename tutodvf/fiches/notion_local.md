@@ -2,7 +2,7 @@ Titre: Faites le tour des locaux...
 Theme: Tutoriel
 Numero: 7
 Auteurs: Magali Journet, Antoine Herman - Cerema
-MAJ: 31/08/2016
+MAJ: 24/10/2016
 Contact: dv3f@cerema.fr
 
 ## Définition et caractéristiques du local dans DVF
@@ -30,6 +30,8 @@ Un local est différencié, par la DGFiP, en 4 catégories selon sa forme physiq
 * la dépendance (forcément liée à l'habitation),
 * l'activité (et ses dépendances).
 
+![*Formes physiques d'un local*](ressources/forme_physique_local.png "Formes physiques d'un local")
+
 En ce qui concerne l'activité, les activités primaires ne sont pas observées. Via les Fichiers fonciers, il est possible de différencier les activités secondaires et tertiaires. 
 
 La notion de logement regroupe les locaux de type maison ou appartement.
@@ -38,6 +40,8 @@ La notion de logement regroupe les locaux de type maison ou appartement.
 
 
 Un logement (maison ou appartement) n'est pas synonyme d'habitation. A titre d'exemple, une boulangerie peut être considérée comme un logement. Inversement, une habitation peut être considérée comme un local d'activité secondaire (loft). Il a été constaté que les logements sont essentiellement à vocation d'habitation (99,4 % en France), même si quelques-uns peuvent être des locaux mixtes ou professionnels. 
+
+![*Logement et habitation*](ressources/logement_habitat.png "Logement et habitation")
 
 A l'exception de l'étude spécifique d'une forme particulière d'occupation (ex: loft), ces deux notions peuvent être confondues pour une analyse globale.
 
@@ -119,6 +123,8 @@ La surface habitable se définit, d'après le Code de la construction et de l'ha
 Il n'est pas tenu compte de la superficie des combles non aménagés, caves, sous-sols, remises, garages, terrasses, loggias, balcons, séchoirs extérieurs au logement, vérandas, volumes vitrés prévus à l'article R. 111-10, locaux communs et autres dépendances des logements, ni des parties de locaux d'une hauteur inférieure à 1,80 mètre. »
 
 Autrement dit, la surface habitable diffère à la surface réelle en ne comptabilisant pas les surfaces dont la hauteur sous plafond est inférieure à 1,80m. Par contre, à la différence de la surface Carrez, elle comptabilise les pièces de moins de 8 m2.
+
+![*Surfaces d'un local*](ressources/surface_local.png "Surfaces d'un local")
 
 ### Evolution du local dans le temps
 
@@ -205,6 +211,8 @@ Dans DV3F, il est possible d'avoir une décomposition plus fine des pièces :
 * @@local|ffnbpsea@@ pour les salles d'eau,
 * @@local|ffnbpann@@ pour les annexes.
 
+![*Pieces principales*](ressources/pieces_principales.png "Pieces principales")
+
 Attention, le terme "pièces principales d'habitation" dans Fichiers fonciers revêt une autre définition. Pour conserver le vocabulaire de DVF, la somme ffnbpsam + ffnbpcha issue des Fichiers fonciers a été également définie comme le nombre de pièces principales dans DV3F, représentée par la variable @@local|ffnbpprinc@@. Elle est comparable à @@local|nbpprinc@@.
 
 Cette information a été remontée à la table mutation pour décompter les locaux en fonction de leur nombre de pièces : @@mutation|ffnbloc1pp@@, @@mutation|ffnbloc2pp@@, @@mutation|ffnbloc3pp@@, @@mutation|ffnbloc4pp@@ et @@mutation|ffnbloc5pp@@.
@@ -220,6 +228,8 @@ Les dépendances sont classées dans les Fichiers fonciers en une quinzaine de c
 * les terrasses (ou toiture terrasse): @@local|ffnbpterra@@ pour la table local et @@mutation|ffnbpterra@@ pour la table mutation,
 * les serres et élements de pur agrément (terrain de tennis, etc.): @@local|ffnbpagrem@@ pour la table local.
 * les autres : bûcher,  buanderie, chambre de domestique, cellier, cave, grenier, grenier ou cave, jardin d'hiver, pièce indépendante, remise, dépendance de local commun. Cette catégorie correspond à la variable @@local|ffnbpcav@@ pour la table local et @@mutation|ffnbpcav@@ pour la table mutation.
+
+![*Pieces annexes*](ressources/pieces_annexes.png "Pieces annexes")
 
 ### Surfaces d'un local
 

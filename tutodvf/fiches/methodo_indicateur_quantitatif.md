@@ -134,7 +134,7 @@ Pour obtenir le montant, par an, des ventes de foncier non bâti sur le départe
 
 ```sql
 SELECT anneemut, to_char(sum(valeurfonc), '9 999 999 999 999.99') as montant_vente_non_bati
-FROM dvf.mutation 
+FROM dvf.typologie_bien 
 WHERE coddep = '59' 
 	AND nblocmut = 0 
 	AND nbvolmut = 0
@@ -145,7 +145,7 @@ ORDER BY anneemut;
 
 -- En utilisant la typologie de bien, les résultats seront similaires
 SELECT anneemut, to_char(sum(valeurfonc), '9 999 999 999 999.99') as montant_vente_non_bati
-FROM dvf.mutation 
+FROM dvf.typologie_bien 
 WHERE coddep = '59' AND libtypbien LIKE 'NON BATI -%'
 GROUP BY anneemut
 ORDER BY anneemut;
