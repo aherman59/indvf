@@ -10,14 +10,20 @@
 {% if variables|length > 0 %}
 
 {% for variable in variables %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-	    <h3 class="panel-title"><i class="fa fa-star-o"></i> {{variable.nom}}</h3>
-    </div>
-    <div class="panel-body">
-		<a><i class="fa fa-eye"></i> Voir</a>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+		    <h3 class="panel-title">
+		    	<i class="fa fa-star-o"></i> <a href="{{variable.url}}">{{variable.nom}}</a> ({{variable.type_fr}})
+		    </h3>
+	    </div>
+	    <div class="panel-body">
+	    <p>{{variable.description_simplifiee}}</p>
+		<p><a href="{{variable.url_table}}"><i class="fa fa-table"></i> table {{variable.table_associee}}</a> - 
+			position {{variable.position}} - 
+			modèle {{variable.modele}}
+		</p>
+		</div>
 	</div>
-</div>
 {% endfor %}
 
 {% else %}

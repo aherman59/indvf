@@ -35,21 +35,27 @@ class DescriptionVariable(models.Model):
     def __str__(self):
         return self.nom    
     
+    @property
     def description_html(self):
         return self._conversion_html(self.description)
     
+    @property
     def observation_html(self):
         return self._conversion_html(self.observation)
     
+    @property
     def construction_html(self):
         return self._conversion_html(self.construction)
     
+    @property
     def limites_precautions_html(self):
         return self._conversion_html(self.limites_precautions)
     
+    @property
     def fiabilite_html(self):
         return self._conversion_html(self.fiabilite)
     
+    @property
     def amelioration_html(self):
         return self._conversion_html(self.amelioration)
     
@@ -77,6 +83,15 @@ class Variable(models.Model):
     def __str__(self):
         return self.nom + ' (' + self.table_associee + ')'
     
+    @property
+    def url(self):
+        return reverse('docdv3f:doc_variable', kwargs={'table': self.table_associee, 'variable': self.nom,})
+    
+    @property
+    def url_table(self):
+        return reverse('docdv3f:doc_table', kwargs={'table': self.table_associee,})
+    
+    @property
     def type_fr(self):
         if self.type == 'serial':
             return 'Entier auto-incrémenté'
@@ -92,6 +107,7 @@ class Variable(models.Model):
             return 'Géométrie'
         return self.type
     
+    @property
     def contrainte_fr(self):
         if self.contrainte == 'PK':
             return 'Clef primaire'
@@ -107,6 +123,7 @@ class Variable(models.Model):
             return 'Contrainte de validation'
         return self.contrainte
     
+    @property
     def modele(self):
         if self.code_modele < 3:
             return 'DVF+ et DV3F'
@@ -130,18 +147,17 @@ class GroupementVariable(models.Model):
     def __str__(self):
         return self.nom
     
+    @property
     def lister_html(self):
         variables = self.variables_associees.all().order_by('table_associee', 'position')
         table = ''
         liste = '<p>'
         for i, variable in enumerate(variables):
             chgmt = True if table != variable.table_associee else False
-            table = variable.table_associee
-            url_table = reverse('docdv3f:doc_table', kwargs={'table': table,})
-            url = reverse('docdv3f:doc_variable', kwargs={'table': table, 'variable': variable.nom,})
+            table = variable.table_associee          
             liste += '</p><p>' if chgmt and i != 0 else ''
-            liste += ' table <a href="{1}"><b>{0}</b></a> : '.format(table, url_table) if chgmt else ' - '
-            liste += '<a href="{1}">{0}</a>'.format(variable.nom, url) 
+            liste += ' table <a href="{1}"><b>{0}</b></a> : '.format(table, variable.url_table) if chgmt else ' - '
+            liste += '<a href="{1}">{0}</a>'.format(variable.nom, variable.url) 
         liste +='</p>'   
         return liste
     
