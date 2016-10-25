@@ -14,7 +14,6 @@ class Mutations():
     
     def calcul(self, codes_insee, session): 
         mutations = RequeteurEasyDVF(session).recuperer_mutations(codes_insee)
-        print(mutations)
         return [Mutation(mutation).as_tuple() for mutation in mutations] # permet de formatter les champs date, etc.
     
     def as_list(self):

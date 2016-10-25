@@ -61,7 +61,7 @@ def integrer_liens_tuto(html):
     for i, elt in enumerate(html_separe):            
         if (i%2 == 1):
             fiche_tuto, descriptif = elt.split('|')
-            url = reverse('tutodvf:fiche', kwargs={'nom_fichier_md': fiche_tuto})
+            url = reverse('tutodvf:fiche', kwargs={'nom_fiche': fiche_tuto})
             html += '<a href="{1}">{0}</a>'.format(descriptif, url)
         else:
             html += elt

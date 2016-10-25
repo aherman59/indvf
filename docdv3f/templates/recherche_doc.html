@@ -13,15 +13,12 @@
 	<div class="panel panel-default">
 	    <div class="panel-heading">
 		    <h3 class="panel-title">
-		    	<i class="fa fa-star-o"></i> <a href="{{variable.url}}">{{variable.nom}}</a> ({{variable.type_fr}})
+		    	<i class="fa fa-star-o"></i> <a href="{{variable.url}}">{{variable.nom}}</a> (<a href="{{variable.url_table}}"><i class="fa fa-table"></i> {{variable.table_associee}}</a>)
 		    </h3>
 	    </div>
 	    <div class="panel-body">
-	    <p>{{variable.description_simplifiee}}</p>
-		<p><a href="{{variable.url_table}}"><i class="fa fa-table"></i> table {{variable.table_associee}}</a> - 
-			position {{variable.position}} - 
-			modèle {{variable.modele}}
-		</p>
+	    <p>{{variable.type_fr}} - {{variable.position}}e position - modèle {{variable.modele}}</p>
+	    <p>{{variable.description_simplifiee}}</p>		
 		</div>
 	</div>
 {% endfor %}

@@ -11,8 +11,10 @@
 		<th>N°</th>
 		<th>Nom</th>
 		<th>Description</th>
-		<th>Type</th>
-		<th></th>
+		<th>Type</th>		
+		<th>DVF+</th>
+		<th>DV3F</th>
+		<th>Contr.</th>
 	</tr>
 	{% for variable in variables %}
 	<tr>
@@ -20,7 +22,9 @@
 		<td><a href ="{% url 'docdv3f:doc_variable' table variable.nom %}">{{variable.nom}}</a></td>
 		<td>{{variable.description_simplifiee}}</td>
 		<td>{{variable.type_fr}}</td>
-		<td>{{variable.contrainte}}</td>
+		<td class="text-center">{% if variable.modele == 'DVF+ et DV3F' %}X{% else %} {% endif %}</td>
+		<td class="text-center">{% if variable.modele == 'DVF+ et DV3F' or variable.modele == 'DV3F' %}X{% else %} {% endif %}</td>
+		<td class="text-center">{{variable.contrainte}}</td>
 	</tr>
 	{% endfor %}
 </table>

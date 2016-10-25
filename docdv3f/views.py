@@ -60,7 +60,7 @@ def recherche(request):
         return render(request, 'recherche_doc.html', context)
     else:
         raise Http404('Méthode POST incorrecte')
-        
+      
 
 class ContexteRechercheDoc():
 
@@ -80,10 +80,7 @@ class ContexteRechercheDoc():
         return [mot for mot in mots_clefs if (mot != '' and len(mot) >= 2)]
     
     def resultat(self, mots_clefs):
-        if(len(mots_clefs) == 1):
-            return Variable.objects.filter(Q(nom__istartswith=mots_clefs[0])).distinct()
-        else:
-            y = Q()
-            for mot in mots_clefs:
-                y = y & Q(nom__icontains=mot)
-            return Variable.objects.filter(y).distinct().order_by('nom')
+        y = Q()
+        for mot in mots_clefs:
+            y = y & (Q(nom__icontains=mot) | Q(description_simplifiee__icontains=mot))
+        return Variable.objects.filter(y).distinct().order_by('nom')
