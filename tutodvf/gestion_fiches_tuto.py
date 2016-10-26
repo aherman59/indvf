@@ -31,13 +31,11 @@ class RepertoireTuto():
         if not os.path.isdir(repertoire):
             raise Exception('Répertoire {0} invalide'.format(repertoire))
         self.repertoire = repertoire
-        self.fiches = self.charger_fiches()
+        self._fiches = self.charger_fiches()
     
-    def charger_fiches(self):
-        fiches = [FicheTuto(self.repertoire, fichier) for fichier in os.listdir(self.repertoire) if fichier.endswith('.md')]
-        fiches_valides = self._fiches_valides(fiches)
-        fiches_valides_triees = self._trier_fiches(fiches_valides)
-        return fiches_valides_triees
+    @property
+    def fiches(self):
+        return self._fiches
     
     def fiche(self, nom_fiche):
         position_fiche = self._position(nom_fiche)
@@ -55,27 +53,72 @@ class RepertoireTuto():
             return self.fiches[position_fiche + 1]
         return None
     
+    def charger_fiches(self):
+        fiches = self._fiches_tuto()
+        fiches_valides = self._fiches_valides(fiches)
+        fiches_valides_triees = self._trier_fiches(fiches_valides)
+        return fiches_valides_triees 
+    
+    def _fiches_tuto(self):
+        for fichier in os.listdir(self.repertoire):
+            if fichier.endswith('.md'):
+                yield FicheTuto(self.repertoire, fichier)
+    
     def _fiches_valides(self, fiches):    
-        return [fiche for fiche in fiches if fiche.est_valide]        
+        return (fiche for fiche in fiches if fiche.est_valide)        
     
     def _trier_fiches(self, fiches):
         fiches = sorted(fiches, key=lambda x: x.numero) # tri par numero
         return sorted(fiches, key=lambda x: self.THEMES[x.theme]) # tri par rubrique
     
     def _position(self, nom_fiche):
-        return [i for i, fiche in enumerate(self.fiches) if fiche.nom_fiche == nom_fiche][0]
-    
+        return [i for i, fiche in enumerate(self.fiches) if fiche.nom_fiche == nom_fiche][0]    
     
 
 class FicheTuto():
     
     def __init__(self, repertoire, fichier):
-        self.chemin_fichier = os.path.join(repertoire, fichier)
-        if not os.path.isfile(self.chemin_fichier):
-            raise Exception('Fichier {0} inexistant'.format(self.chemin_fichier))
-        self.nom_fiche = fichier[:-3]
-        self.lien = './' + self.nom_fiche
+        self.fichier = fichier
+        self.chemin_fichier = self.validation_chemin_fichier(repertoire, fichier)
         self.est_valide = self.charger_fiche()
+
+    @property
+    def nom_fiche(self):
+        return self.fichier[:-3]
+    
+    @property
+    def lien(self):
+        return './' + self.nom_fiche
+    
+    @property
+    def theme(self):
+        return self._theme
+    
+    @property
+    def titre(self):
+        return self._titre
+    
+    @property
+    def numero(self):
+        return self._numero
+    
+    @property
+    def auteurs(self):
+        return self._auteurs
+    
+    @property
+    def maj(self):
+        return self._maj
+    
+    @property
+    def contenu(self):
+        return self._contenu
+    
+    def validation_chemin_fichier(self, repertoire, fichier):
+        chemin_fichier = os.path.join(repertoire, fichier)
+        if not os.path.isfile(chemin_fichier):
+            raise Exception('Fichier {0} inexistant'.format(chemin_fichier))
+        return chemin_fichier        
     
     def charger_fiche(self):
         try:
@@ -91,16 +134,16 @@ class FicheTuto():
             return False
     
     def construction_metadonnees(self, metadonnees):
-        self.theme = metadonnees.get('theme')[0].strip() 
-        self.titre = metadonnees.get('titre')[0].strip()
-        self.numero = metadonnees.get('numero')[0]        
-        self.auteurs = metadonnees.get('auteurs')[0].strip()
-        self.maj = metadonnees.get('maj')[0].strip()
+        self._theme = metadonnees.get('theme')[0].strip() 
+        self._titre = metadonnees.get('titre')[0].strip()
+        self._numero = metadonnees.get('numero')[0]        
+        self._auteurs = metadonnees.get('auteurs')[0].strip()
+        self._maj = metadonnees.get('maj')[0].strip()
     
     def construction_html(self, txt_html_brut):
         txt_html_brut = integrer_liens_doc_variables(txt_html_brut)
         txt_html_brut = integrer_liens_tuto(txt_html_brut)
-        self.contenu = markdown2html.convertir_html_brut_en_html_bootstrap(txt_html_brut)
+        self._contenu = markdown2html.convertir_html_brut_en_html_bootstrap(txt_html_brut)
                  
         
             

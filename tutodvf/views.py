@@ -19,14 +19,12 @@
 
 import os
 
-from django.shortcuts import render, redirect
-from django.template.response import TemplateResponse
+from django.shortcuts import render
 
 from main.configuration import BASE_DIR
 from .gestion_fiches_tuto import RepertoireTuto
 
 REPERTOIRE_FICHES = os.path.join(BASE_DIR, 'tutodvf', 'fiches')
-
 
 def accueil(request):
     fiches = RepertoireTuto(REPERTOIRE_FICHES).fiches        
