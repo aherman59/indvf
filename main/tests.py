@@ -35,12 +35,12 @@ class TestModelConfigurationBDD(TestCase):
     
     @classmethod
     def setUpClass(cls):
-        pgload = PgLoad(hote, base, utilisateur)
+        pgload = PgLoad(hote, base, utilisateur, mdp)
         pgload.charger_fichier_sql_dans_nouvelle_base(fichier_base_test)        
     
     @classmethod
     def tearDownClass(cls):
-        pgload = PgLoad(hote, base, utilisateur)
+        pgload = PgLoad(hote, base, utilisateur, mdp)
         pgload.effacer_base()
         
     def test_configuration_bdd_est_bien_cree_si_toutes_les_valeurs_sont_renseignees(self):
@@ -226,12 +226,12 @@ class TestMain(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        pgload = PgLoad(hote, base, utilisateur)
+        pgload = PgLoad(hote, base, utilisateur, mdp)
         pgload.charger_fichier_sql_dans_nouvelle_base(fichier_base_test)        
     
     @classmethod
     def tearDownClass(cls):
-        pgload = PgLoad(hote, base, utilisateur)
+        pgload = PgLoad(hote, base, utilisateur, mdp)
         pgload.effacer_base()
     
     '''

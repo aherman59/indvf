@@ -141,7 +141,7 @@ class TestDocDV3F(TestCase):
     def test_affichage_contrainte_clef_primaire(self):
         url = reverse('docdv3f:doc_table', kwargs={'table': 'mutation'})
         reponse = self.client.get(url)
-        self.assertContains(reponse, '<td>PK</td>', html=True)
+        self.assertContains(reponse, '<td class="text-center">PK</td>', html=True)
         
     '''        
         PAGE DOC VARIABLES

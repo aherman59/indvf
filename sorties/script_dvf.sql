@@ -3086,3 +3086,951 @@ DROP TABLE IF EXISTS source.tmp_calcul_lot CASCADE;
 
 DROP TABLE IF EXISTS source.tmp_0_tmp CASCADE;
 
+CREATE OR REPLACE FUNCTION array_supprimer_null(numlot VARCHAR[])
+  RETURNS VARCHAR[] AS
+$BODY$
+/*
+   Retourne un tableau en enlevant les valeurs NULL (à partir de la version 9.3, devient obsolète avec apparition de array_remove)
+  */
+DECLARE    
+    lot VARCHAR[];
+    resultat VARCHAR[];
+BEGIN
+        lot := numlot;        
+        FOR i IN 1..array_upper(lot,1)
+        LOOP
+            IF lot[i] IS NOT NULL THEN resultat := resultat || lot[i]; END IF;        
+        END LOOP;
+        RETURN resultat;
+END;
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION pgcd(valeurs integer[])
+  RETURNS integer AS
+$BODY$
+/*
+  Retourne le Plus Grand Commun Diviseur de l'ensemble des valeurs du tableau d'entier.
+  Si le tableau ne contient qu'un seul entier, Retourne sa valeur absolue.
+ 
+  Exemple : SELECT pgcd(ARRAY[14,28,49,70]);
+  7
+ */
+DECLARE
+    v integer[];
+    reste integer;
+    a integer;
+    b integer;
+    gcd integer;
+BEGIN
+    v := valeurs;
+    gcd := 0;
+    IF array_length(v,1) > 1 THEN        
+        a := v[1];    
+        FOR i IN 2..array_upper(v,1)
+        LOOP         
+            b:=v[i];
+            IF b<>0 THEN 
+                LOOP
+                    reste:=a%b;
+                    a:=b;
+                    b:=reste;
+                    EXIT WHEN reste=0;
+                END LOOP;
+                
+                IF abs(a) < gcd OR gcd = 0 THEN 
+                    gcd := abs(a);
+                    a := gcd;
+                END IF;
+                EXIT WHEN gcd=1;
+            ELSE
+                gcd=0;
+                EXIT;
+            END IF;    
+        END LOOP;
+    ELSE
+        gcd = abs(v[1]);
+    END IF;
+        RETURN gcd;
+END;
+$BODY$
+  LANGUAGE plpgsql; 
+
+-- Create a function that always returns the first non-NULL item
+CREATE OR REPLACE FUNCTION first_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $1;
+$$; 
+-- And then wrap an aggregate around it
+DROP AGGREGATE IF EXISTS first(anyelement);
+CREATE AGGREGATE FIRST (
+        sfunc    = public.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+CREATE OR REPLACE FUNCTION array_supprimer_null(numlot VARCHAR[])
+  RETURNS VARCHAR[] AS
+$BODY$
+/*
+   Retourne un tableau en enlevant les valeurs NULL (à partir de la version 9.3, devient obsolète avec apparition de array_remove)
+  */
+DECLARE    
+    lot VARCHAR[];
+    resultat VARCHAR[];
+BEGIN
+        lot := numlot;        
+        FOR i IN 1..array_upper(lot,1)
+        LOOP
+            IF lot[i] IS NOT NULL THEN resultat := resultat || lot[i]; END IF;        
+        END LOOP;
+        RETURN resultat;
+END;
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION pgcd(valeurs integer[])
+  RETURNS integer AS
+$BODY$
+/*
+  Retourne le Plus Grand Commun Diviseur de l'ensemble des valeurs du tableau d'entier.
+  Si le tableau ne contient qu'un seul entier, Retourne sa valeur absolue.
+ 
+  Exemple : SELECT pgcd(ARRAY[14,28,49,70]);
+  7
+ */
+DECLARE
+    v integer[];
+    reste integer;
+    a integer;
+    b integer;
+    gcd integer;
+BEGIN
+    v := valeurs;
+    gcd := 0;
+    IF array_length(v,1) > 1 THEN        
+        a := v[1];    
+        FOR i IN 2..array_upper(v,1)
+        LOOP         
+            b:=v[i];
+            IF b<>0 THEN 
+                LOOP
+                    reste:=a%b;
+                    a:=b;
+                    b:=reste;
+                    EXIT WHEN reste=0;
+                END LOOP;
+                
+                IF abs(a) < gcd OR gcd = 0 THEN 
+                    gcd := abs(a);
+                    a := gcd;
+                END IF;
+                EXIT WHEN gcd=1;
+            ELSE
+                gcd=0;
+                EXIT;
+            END IF;    
+        END LOOP;
+    ELSE
+        gcd = abs(v[1]);
+    END IF;
+        RETURN gcd;
+END;
+$BODY$
+  LANGUAGE plpgsql; 
+
+-- Create a function that always returns the first non-NULL item
+CREATE OR REPLACE FUNCTION first_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $1;
+$$; 
+-- And then wrap an aggregate around it
+DROP AGGREGATE IF EXISTS first(anyelement);
+CREATE AGGREGATE FIRST (
+        sfunc    = public.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+CREATE SCHEMA IF NOT EXISTS source;
+
+SET client_encoding = 'UTF8';
+SET datestyle = 'ISO, DMY';
+-- ******************************
+-- CREATION DE LA TABLE TEMPORAIRE VIDE POUR IMPORT DES DONNEES
+-- ******************************
+
+DROP TABLE IF EXISTS source.tmp;
+CREATE TABLE source.tmp
+(
+    code_service_ch character varying(7),
+    reference_document character varying(10),
+    "1_articles_cgi" character varying(20),
+    "2_articles_cgi" character varying(20),
+    "3_articles_cgi" character varying(20),
+    "4_articles_cgi" character varying(20),
+    "5_articles_cgi" character varying(20),
+    no_disposition integer,
+    date_mutation date,
+    nature_mutation character varying(34),
+    valeur_fonciere character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    no_voie integer,    
+    b_t_q character varying(1),        
+    type_de_voie character varying(4),    
+    code_voie character varying(4),        
+    voie character varying(254),        
+    code_postal character varying(5),    
+    commune character varying(254),    
+    code_departement character varying(3),    -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    code_commune character varying(3),        -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    prefixe_de_section character varying(3),    -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    section character varying(2),            -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    no_plan character varying(4),            -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    no_volume character varying(7),        
+    "1er_lot" character varying(7),
+    surface_carrez_du_1er_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "2eme_lot" character varying(7),
+    surface_carrez_du_2eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "3eme_lot" character varying(7),
+    surface_carrez_du_3eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "4eme_lot" character varying(7),
+    surface_carrez_du_4eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "5eme_lot" character varying(7),
+    surface_carrez_du_5eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    nombre_de_lots integer,
+    code_type_local integer,            
+    type_local character varying(254),
+    identifiant_local character varying(10),
+    surface_reelle_bati integer,
+    nombre_pieces_principales integer,
+    nature_culture character varying(2),            
+    nature_culture_speciale character varying(5),    
+    surface_terrain integer
+);
+
+REQUETE EN ECHEC : DROP TABLE IF EXISTS source.tmp_0;
+CREATE TABLE source.tmp_0 AS 
+(
+    SELECT
+        t.*
+    FROM(
+    
+        SELECT 
+            code_service_ch, reference_document,
+            concat(code_service_ch, '_', reference_document) AS idmutinvar, 
+            "1_articles_cgi", "2_articles_cgi", "3_articles_cgi", "4_articles_cgi", "5_articles_cgi", no_disposition, 
+            date_mutation, 
+            EXTRACT(YEAR FROM date_mutation)::integer as anneemut,
+            EXTRACT(MONTH FROM date_mutation)::integer as moismut,            
+            nature_mutation, 
+    
+            (replace(valeur_fonciere, ',', '.'))::numeric AS valeur_fonciere, 
+    
+                    no_voie, b_t_q, 
+            type_de_voie, code_voie, voie, lpad(code_postal,5,'0') AS code_postal, commune, 
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END AS code_departement,
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') ELSE lpad(COALESCE(code_commune,''), 2, '0') END AS code_commune,
+            lpad(COALESCE(prefixe_de_section,''), 3, '0') AS prefixe_de_section,
+            lpad(COALESCE(section,''), 2, '0') AS section,
+            lpad(COALESCE(no_plan,''), 4, '0') AS no_plan,
+            no_volume, 
+            "1er_lot", (replace(surface_carrez_du_1er_lot, ',', '.'))::numeric AS surface_carrez_du_1er_lot, 
+            "2eme_lot", (replace(surface_carrez_du_2eme_lot, ',', '.'))::numeric AS surface_carrez_du_2eme_lot, 
+            "3eme_lot", (replace(surface_carrez_du_3eme_lot, ',', '.'))::numeric AS surface_carrez_du_3eme_lot, 
+            "4eme_lot", (replace(surface_carrez_du_4eme_lot, ',', '.'))::numeric AS surface_carrez_du_4eme_lot, 
+            "5eme_lot", (replace(surface_carrez_du_5eme_lot, ',', '.'))::numeric AS surface_carrez_du_5eme_lot, 
+            nombre_de_lots, code_type_local, 
+            type_local, identifiant_local, surface_reelle_bati, nombre_pieces_principales, 
+            nature_culture, nature_culture_speciale, surface_terrain,
+            
+            CASE 
+                WHEN nature_culture LIKE 'T%' THEN 1
+                WHEN nature_culture LIKE 'P%' THEN 2
+                WHEN nature_culture = 'VE' THEN 3
+                WHEN nature_culture = 'VI' THEN 4
+                WHEN nature_culture LIKE 'B%' THEN 5
+                WHEN nature_culture LIKE 'L%' THEN 6
+                WHEN nature_culture = 'CA' THEN 7
+                WHEN nature_culture = 'E' THEN 8
+                WHEN nature_culture = 'J' THEN 9
+                WHEN nature_culture = 'AB' THEN 10
+                WHEN nature_culture = 'AG' THEN 11
+                WHEN nature_culture = 'CH' THEN 12
+                WHEN nature_culture = 'S' THEN 13
+            ELSE NULL 
+            END AS nodcnt,
+    
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END||
+                CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') ELSE lpad(COALESCE(code_commune,''), 2, '0') END||
+                lpad(COALESCE(prefixe_de_section,''), 3, '0')||lpad(COALESCE(section,''), 2, '0')||lpad(COALESCE(no_plan,''), 4, '0') 
+            AS idpar,
+            
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END||
+            CASE 
+                WHEN lpad(COALESCE(prefixe_de_section,''), 3, '0') = '000' THEN 
+                    CASE 
+                        WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') 
+                        ELSE lpad(COALESCE(code_commune,''), 2, '0') 
+                    END 
+                ELSE 
+                    CASE 
+                        WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(prefixe_de_section,''), 3, '0') 
+                        ELSE lpad(COALESCE(substring(prefixe_de_section from '..$'),''), 2, '0') 
+                    END 
+            END||
+            lpad(identifiant_local, 7, '0') AS idloc,
+    
+            CASE WHEN no_voie IS NULL THEN '' ELSE no_voie::varchar END || '$' ||
+                CASE WHEN b_t_q IS NULL THEN '' ELSE b_t_q END || '$' ||
+                CASE WHEN code_voie IS NULL THEN '' ELSE code_voie END || '$' ||
+                CASE WHEN type_de_voie IS NULL THEN '' ELSE type_de_voie END || '$' ||
+                CASE WHEN voie IS NULL THEN '' ELSE voie END || '$' ||
+                CASE WHEN code_postal IS NULL THEN '' ELSE code_postal END || '$' ||
+                CASE WHEN commune IS NULL THEN '' ELSE commune END 
+            AS idadr_tmp,
+            
+            CASE WHEN nature_culture IS NULL THEN '' ELSE nature_culture::varchar END || '$' ||
+                CASE WHEN nature_culture_speciale IS NULL THEN '' ELSE nature_culture_speciale::varchar END || '$' ||
+                CASE WHEN surface_terrain IS NULL THEN '' ELSE surface_terrain::varchar END
+            AS idsuf_tmp
+            
+        FROM 
+            source.tmp
+    ) t
+    LEFT JOIN dvf.mutation tt
+    ON t.idmutinvar = tt.idmutinvar
+    WHERE tt.idmutinvar IS NULL
+);
+
+REQUETE EN ECHEC : DROP TABLE IF EXISTS source.tmp CASCADE;
+
+CREATE OR REPLACE FUNCTION array_supprimer_null(numlot VARCHAR[])
+  RETURNS VARCHAR[] AS
+$BODY$
+/*
+   Retourne un tableau en enlevant les valeurs NULL (à partir de la version 9.3, devient obsolète avec apparition de array_remove)
+  */
+DECLARE    
+    lot VARCHAR[];
+    resultat VARCHAR[];
+BEGIN
+        lot := numlot;        
+        FOR i IN 1..array_upper(lot,1)
+        LOOP
+            IF lot[i] IS NOT NULL THEN resultat := resultat || lot[i]; END IF;        
+        END LOOP;
+        RETURN resultat;
+END;
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION pgcd(valeurs integer[])
+  RETURNS integer AS
+$BODY$
+/*
+  Retourne le Plus Grand Commun Diviseur de l'ensemble des valeurs du tableau d'entier.
+  Si le tableau ne contient qu'un seul entier, Retourne sa valeur absolue.
+ 
+  Exemple : SELECT pgcd(ARRAY[14,28,49,70]);
+  7
+ */
+DECLARE
+    v integer[];
+    reste integer;
+    a integer;
+    b integer;
+    gcd integer;
+BEGIN
+    v := valeurs;
+    gcd := 0;
+    IF array_length(v,1) > 1 THEN        
+        a := v[1];    
+        FOR i IN 2..array_upper(v,1)
+        LOOP         
+            b:=v[i];
+            IF b<>0 THEN 
+                LOOP
+                    reste:=a%b;
+                    a:=b;
+                    b:=reste;
+                    EXIT WHEN reste=0;
+                END LOOP;
+                
+                IF abs(a) < gcd OR gcd = 0 THEN 
+                    gcd := abs(a);
+                    a := gcd;
+                END IF;
+                EXIT WHEN gcd=1;
+            ELSE
+                gcd=0;
+                EXIT;
+            END IF;    
+        END LOOP;
+    ELSE
+        gcd = abs(v[1]);
+    END IF;
+        RETURN gcd;
+END;
+$BODY$
+  LANGUAGE plpgsql; 
+
+-- Create a function that always returns the first non-NULL item
+CREATE OR REPLACE FUNCTION first_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $1;
+$$; 
+-- And then wrap an aggregate around it
+DROP AGGREGATE IF EXISTS first(anyelement);
+CREATE AGGREGATE FIRST (
+        sfunc    = public.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+CREATE OR REPLACE FUNCTION array_supprimer_null(numlot VARCHAR[])
+  RETURNS VARCHAR[] AS
+$BODY$
+/*
+   Retourne un tableau en enlevant les valeurs NULL (à partir de la version 9.3, devient obsolète avec apparition de array_remove)
+  */
+DECLARE    
+    lot VARCHAR[];
+    resultat VARCHAR[];
+BEGIN
+        lot := numlot;        
+        FOR i IN 1..array_upper(lot,1)
+        LOOP
+            IF lot[i] IS NOT NULL THEN resultat := resultat || lot[i]; END IF;        
+        END LOOP;
+        RETURN resultat;
+END;
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION pgcd(valeurs integer[])
+  RETURNS integer AS
+$BODY$
+/*
+  Retourne le Plus Grand Commun Diviseur de l'ensemble des valeurs du tableau d'entier.
+  Si le tableau ne contient qu'un seul entier, Retourne sa valeur absolue.
+ 
+  Exemple : SELECT pgcd(ARRAY[14,28,49,70]);
+  7
+ */
+DECLARE
+    v integer[];
+    reste integer;
+    a integer;
+    b integer;
+    gcd integer;
+BEGIN
+    v := valeurs;
+    gcd := 0;
+    IF array_length(v,1) > 1 THEN        
+        a := v[1];    
+        FOR i IN 2..array_upper(v,1)
+        LOOP         
+            b:=v[i];
+            IF b<>0 THEN 
+                LOOP
+                    reste:=a%b;
+                    a:=b;
+                    b:=reste;
+                    EXIT WHEN reste=0;
+                END LOOP;
+                
+                IF abs(a) < gcd OR gcd = 0 THEN 
+                    gcd := abs(a);
+                    a := gcd;
+                END IF;
+                EXIT WHEN gcd=1;
+            ELSE
+                gcd=0;
+                EXIT;
+            END IF;    
+        END LOOP;
+    ELSE
+        gcd = abs(v[1]);
+    END IF;
+        RETURN gcd;
+END;
+$BODY$
+  LANGUAGE plpgsql; 
+
+-- Create a function that always returns the first non-NULL item
+CREATE OR REPLACE FUNCTION first_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $1;
+$$; 
+-- And then wrap an aggregate around it
+DROP AGGREGATE IF EXISTS first(anyelement);
+CREATE AGGREGATE FIRST (
+        sfunc    = public.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+CREATE SCHEMA IF NOT EXISTS source;
+
+SET client_encoding = 'UTF8';
+SET datestyle = 'ISO, DMY';
+-- ******************************
+-- CREATION DE LA TABLE TEMPORAIRE VIDE POUR IMPORT DES DONNEES
+-- ******************************
+
+DROP TABLE IF EXISTS source.tmp;
+CREATE TABLE source.tmp
+(
+    code_service_ch character varying(7),
+    reference_document character varying(10),
+    "1_articles_cgi" character varying(20),
+    "2_articles_cgi" character varying(20),
+    "3_articles_cgi" character varying(20),
+    "4_articles_cgi" character varying(20),
+    "5_articles_cgi" character varying(20),
+    no_disposition integer,
+    date_mutation date,
+    nature_mutation character varying(34),
+    valeur_fonciere character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    no_voie integer,    
+    b_t_q character varying(1),        
+    type_de_voie character varying(4),    
+    code_voie character varying(4),        
+    voie character varying(254),        
+    code_postal character varying(5),    
+    commune character varying(254),    
+    code_departement character varying(3),    -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    code_commune character varying(3),        -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    prefixe_de_section character varying(3),    -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    section character varying(2),            -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    no_plan character varying(4),            -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    no_volume character varying(7),        
+    "1er_lot" character varying(7),
+    surface_carrez_du_1er_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "2eme_lot" character varying(7),
+    surface_carrez_du_2eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "3eme_lot" character varying(7),
+    surface_carrez_du_3eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "4eme_lot" character varying(7),
+    surface_carrez_du_4eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "5eme_lot" character varying(7),
+    surface_carrez_du_5eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    nombre_de_lots integer,
+    code_type_local integer,            
+    type_local character varying(254),
+    identifiant_local character varying(10),
+    surface_reelle_bati integer,
+    nombre_pieces_principales integer,
+    nature_culture character varying(2),            
+    nature_culture_speciale character varying(5),    
+    surface_terrain integer
+);
+
+REQUETE EN ECHEC : DROP TABLE IF EXISTS source.tmp_0;
+CREATE TABLE source.tmp_0 AS 
+(
+    SELECT
+        t.*
+    FROM(
+    
+        SELECT 
+            code_service_ch, reference_document,
+            concat(code_service_ch, '_', reference_document) AS idmutinvar, 
+            "1_articles_cgi", "2_articles_cgi", "3_articles_cgi", "4_articles_cgi", "5_articles_cgi", no_disposition, 
+            date_mutation, 
+            EXTRACT(YEAR FROM date_mutation)::integer as anneemut,
+            EXTRACT(MONTH FROM date_mutation)::integer as moismut,            
+            nature_mutation, 
+    
+            (replace(valeur_fonciere, ',', '.'))::numeric AS valeur_fonciere, 
+    
+                    no_voie, b_t_q, 
+            type_de_voie, code_voie, voie, lpad(code_postal,5,'0') AS code_postal, commune, 
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END AS code_departement,
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') ELSE lpad(COALESCE(code_commune,''), 2, '0') END AS code_commune,
+            lpad(COALESCE(prefixe_de_section,''), 3, '0') AS prefixe_de_section,
+            lpad(COALESCE(section,''), 2, '0') AS section,
+            lpad(COALESCE(no_plan,''), 4, '0') AS no_plan,
+            no_volume, 
+            "1er_lot", (replace(surface_carrez_du_1er_lot, ',', '.'))::numeric AS surface_carrez_du_1er_lot, 
+            "2eme_lot", (replace(surface_carrez_du_2eme_lot, ',', '.'))::numeric AS surface_carrez_du_2eme_lot, 
+            "3eme_lot", (replace(surface_carrez_du_3eme_lot, ',', '.'))::numeric AS surface_carrez_du_3eme_lot, 
+            "4eme_lot", (replace(surface_carrez_du_4eme_lot, ',', '.'))::numeric AS surface_carrez_du_4eme_lot, 
+            "5eme_lot", (replace(surface_carrez_du_5eme_lot, ',', '.'))::numeric AS surface_carrez_du_5eme_lot, 
+            nombre_de_lots, code_type_local, 
+            type_local, identifiant_local, surface_reelle_bati, nombre_pieces_principales, 
+            nature_culture, nature_culture_speciale, surface_terrain,
+            
+            CASE 
+                WHEN nature_culture LIKE 'T%' THEN 1
+                WHEN nature_culture LIKE 'P%' THEN 2
+                WHEN nature_culture = 'VE' THEN 3
+                WHEN nature_culture = 'VI' THEN 4
+                WHEN nature_culture LIKE 'B%' THEN 5
+                WHEN nature_culture LIKE 'L%' THEN 6
+                WHEN nature_culture = 'CA' THEN 7
+                WHEN nature_culture = 'E' THEN 8
+                WHEN nature_culture = 'J' THEN 9
+                WHEN nature_culture = 'AB' THEN 10
+                WHEN nature_culture = 'AG' THEN 11
+                WHEN nature_culture = 'CH' THEN 12
+                WHEN nature_culture = 'S' THEN 13
+            ELSE NULL 
+            END AS nodcnt,
+    
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END||
+                CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') ELSE lpad(COALESCE(code_commune,''), 2, '0') END||
+                lpad(COALESCE(prefixe_de_section,''), 3, '0')||lpad(COALESCE(section,''), 2, '0')||lpad(COALESCE(no_plan,''), 4, '0') 
+            AS idpar,
+            
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END||
+            CASE 
+                WHEN lpad(COALESCE(prefixe_de_section,''), 3, '0') = '000' THEN 
+                    CASE 
+                        WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') 
+                        ELSE lpad(COALESCE(code_commune,''), 2, '0') 
+                    END 
+                ELSE 
+                    CASE 
+                        WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(prefixe_de_section,''), 3, '0') 
+                        ELSE lpad(COALESCE(substring(prefixe_de_section from '..$'),''), 2, '0') 
+                    END 
+            END||
+            lpad(identifiant_local, 7, '0') AS idloc,
+    
+            CASE WHEN no_voie IS NULL THEN '' ELSE no_voie::varchar END || '$' ||
+                CASE WHEN b_t_q IS NULL THEN '' ELSE b_t_q END || '$' ||
+                CASE WHEN code_voie IS NULL THEN '' ELSE code_voie END || '$' ||
+                CASE WHEN type_de_voie IS NULL THEN '' ELSE type_de_voie END || '$' ||
+                CASE WHEN voie IS NULL THEN '' ELSE voie END || '$' ||
+                CASE WHEN code_postal IS NULL THEN '' ELSE code_postal END || '$' ||
+                CASE WHEN commune IS NULL THEN '' ELSE commune END 
+            AS idadr_tmp,
+            
+            CASE WHEN nature_culture IS NULL THEN '' ELSE nature_culture::varchar END || '$' ||
+                CASE WHEN nature_culture_speciale IS NULL THEN '' ELSE nature_culture_speciale::varchar END || '$' ||
+                CASE WHEN surface_terrain IS NULL THEN '' ELSE surface_terrain::varchar END
+            AS idsuf_tmp
+            
+        FROM 
+            source.tmp
+    ) t
+    LEFT JOIN dvf.mutation tt
+    ON t.idmutinvar = tt.idmutinvar
+    WHERE tt.idmutinvar IS NULL
+);
+
+REQUETE EN ECHEC : DROP TABLE IF EXISTS source.tmp CASCADE;
+
+CREATE OR REPLACE FUNCTION array_supprimer_null(numlot VARCHAR[])
+  RETURNS VARCHAR[] AS
+$BODY$
+/*
+   Retourne un tableau en enlevant les valeurs NULL (à partir de la version 9.3, devient obsolète avec apparition de array_remove)
+  */
+DECLARE    
+    lot VARCHAR[];
+    resultat VARCHAR[];
+BEGIN
+        lot := numlot;        
+        FOR i IN 1..array_upper(lot,1)
+        LOOP
+            IF lot[i] IS NOT NULL THEN resultat := resultat || lot[i]; END IF;        
+        END LOOP;
+        RETURN resultat;
+END;
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION pgcd(valeurs integer[])
+  RETURNS integer AS
+$BODY$
+/*
+  Retourne le Plus Grand Commun Diviseur de l'ensemble des valeurs du tableau d'entier.
+  Si le tableau ne contient qu'un seul entier, Retourne sa valeur absolue.
+ 
+  Exemple : SELECT pgcd(ARRAY[14,28,49,70]);
+  7
+ */
+DECLARE
+    v integer[];
+    reste integer;
+    a integer;
+    b integer;
+    gcd integer;
+BEGIN
+    v := valeurs;
+    gcd := 0;
+    IF array_length(v,1) > 1 THEN        
+        a := v[1];    
+        FOR i IN 2..array_upper(v,1)
+        LOOP         
+            b:=v[i];
+            IF b<>0 THEN 
+                LOOP
+                    reste:=a%b;
+                    a:=b;
+                    b:=reste;
+                    EXIT WHEN reste=0;
+                END LOOP;
+                
+                IF abs(a) < gcd OR gcd = 0 THEN 
+                    gcd := abs(a);
+                    a := gcd;
+                END IF;
+                EXIT WHEN gcd=1;
+            ELSE
+                gcd=0;
+                EXIT;
+            END IF;    
+        END LOOP;
+    ELSE
+        gcd = abs(v[1]);
+    END IF;
+        RETURN gcd;
+END;
+$BODY$
+  LANGUAGE plpgsql; 
+
+-- Create a function that always returns the first non-NULL item
+CREATE OR REPLACE FUNCTION first_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $1;
+$$; 
+-- And then wrap an aggregate around it
+DROP AGGREGATE IF EXISTS first(anyelement);
+CREATE AGGREGATE FIRST (
+        sfunc    = public.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+CREATE OR REPLACE FUNCTION array_supprimer_null(numlot VARCHAR[])
+  RETURNS VARCHAR[] AS
+$BODY$
+/*
+   Retourne un tableau en enlevant les valeurs NULL (à partir de la version 9.3, devient obsolète avec apparition de array_remove)
+  */
+DECLARE    
+    lot VARCHAR[];
+    resultat VARCHAR[];
+BEGIN
+        lot := numlot;        
+        FOR i IN 1..array_upper(lot,1)
+        LOOP
+            IF lot[i] IS NOT NULL THEN resultat := resultat || lot[i]; END IF;        
+        END LOOP;
+        RETURN resultat;
+END;
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION pgcd(valeurs integer[])
+  RETURNS integer AS
+$BODY$
+/*
+  Retourne le Plus Grand Commun Diviseur de l'ensemble des valeurs du tableau d'entier.
+  Si le tableau ne contient qu'un seul entier, Retourne sa valeur absolue.
+ 
+  Exemple : SELECT pgcd(ARRAY[14,28,49,70]);
+  7
+ */
+DECLARE
+    v integer[];
+    reste integer;
+    a integer;
+    b integer;
+    gcd integer;
+BEGIN
+    v := valeurs;
+    gcd := 0;
+    IF array_length(v,1) > 1 THEN        
+        a := v[1];    
+        FOR i IN 2..array_upper(v,1)
+        LOOP         
+            b:=v[i];
+            IF b<>0 THEN 
+                LOOP
+                    reste:=a%b;
+                    a:=b;
+                    b:=reste;
+                    EXIT WHEN reste=0;
+                END LOOP;
+                
+                IF abs(a) < gcd OR gcd = 0 THEN 
+                    gcd := abs(a);
+                    a := gcd;
+                END IF;
+                EXIT WHEN gcd=1;
+            ELSE
+                gcd=0;
+                EXIT;
+            END IF;    
+        END LOOP;
+    ELSE
+        gcd = abs(v[1]);
+    END IF;
+        RETURN gcd;
+END;
+$BODY$
+  LANGUAGE plpgsql; 
+
+-- Create a function that always returns the first non-NULL item
+CREATE OR REPLACE FUNCTION first_agg ( anyelement, anyelement )
+RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
+        SELECT $1;
+$$; 
+-- And then wrap an aggregate around it
+DROP AGGREGATE IF EXISTS first(anyelement);
+CREATE AGGREGATE FIRST (
+        sfunc    = public.first_agg,
+        basetype = anyelement,
+        stype    = anyelement
+);
+CREATE SCHEMA IF NOT EXISTS source;
+
+SET client_encoding = 'UTF8';
+SET datestyle = 'ISO, DMY';
+-- ******************************
+-- CREATION DE LA TABLE TEMPORAIRE VIDE POUR IMPORT DES DONNEES
+-- ******************************
+
+DROP TABLE IF EXISTS source.tmp;
+CREATE TABLE source.tmp
+(
+    code_service_ch character varying(7),
+    reference_document character varying(10),
+    "1_articles_cgi" character varying(20),
+    "2_articles_cgi" character varying(20),
+    "3_articles_cgi" character varying(20),
+    "4_articles_cgi" character varying(20),
+    "5_articles_cgi" character varying(20),
+    no_disposition integer,
+    date_mutation date,
+    nature_mutation character varying(34),
+    valeur_fonciere character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    no_voie integer,    
+    b_t_q character varying(1),        
+    type_de_voie character varying(4),    
+    code_voie character varying(4),        
+    voie character varying(254),        
+    code_postal character varying(5),    
+    commune character varying(254),    
+    code_departement character varying(3),    -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    code_commune character varying(3),        -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    prefixe_de_section character varying(3),    -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    section character varying(2),            -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    no_plan character varying(4),            -- COMPLETE ENSUITE PAR DES "0" SI NECESSAIRE
+    no_volume character varying(7),        
+    "1er_lot" character varying(7),
+    surface_carrez_du_1er_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "2eme_lot" character varying(7),
+    surface_carrez_du_2eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "3eme_lot" character varying(7),
+    surface_carrez_du_3eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "4eme_lot" character varying(7),
+    surface_carrez_du_4eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    "5eme_lot" character varying(7),
+    surface_carrez_du_5eme_lot character varying,     -- PASSE EN NUMERIC ENSUITE APRES AVOIR REMPLACE LES VIRGULES PAR DES POINTS
+    nombre_de_lots integer,
+    code_type_local integer,            
+    type_local character varying(254),
+    identifiant_local character varying(10),
+    surface_reelle_bati integer,
+    nombre_pieces_principales integer,
+    nature_culture character varying(2),            
+    nature_culture_speciale character varying(5),    
+    surface_terrain integer
+);
+
+REQUETE EN ECHEC : DROP TABLE IF EXISTS source.tmp_0;
+CREATE TABLE source.tmp_0 AS 
+(
+    SELECT
+        t.*
+    FROM(
+    
+        SELECT 
+            code_service_ch, reference_document,
+            concat(code_service_ch, '_', reference_document) AS idmutinvar, 
+            "1_articles_cgi", "2_articles_cgi", "3_articles_cgi", "4_articles_cgi", "5_articles_cgi", no_disposition, 
+            date_mutation, 
+            EXTRACT(YEAR FROM date_mutation)::integer as anneemut,
+            EXTRACT(MONTH FROM date_mutation)::integer as moismut,            
+            nature_mutation, 
+    
+            (replace(valeur_fonciere, ',', '.'))::numeric AS valeur_fonciere, 
+    
+                    no_voie, b_t_q, 
+            type_de_voie, code_voie, voie, lpad(code_postal,5,'0') AS code_postal, commune, 
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END AS code_departement,
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') ELSE lpad(COALESCE(code_commune,''), 2, '0') END AS code_commune,
+            lpad(COALESCE(prefixe_de_section,''), 3, '0') AS prefixe_de_section,
+            lpad(COALESCE(section,''), 2, '0') AS section,
+            lpad(COALESCE(no_plan,''), 4, '0') AS no_plan,
+            no_volume, 
+            "1er_lot", (replace(surface_carrez_du_1er_lot, ',', '.'))::numeric AS surface_carrez_du_1er_lot, 
+            "2eme_lot", (replace(surface_carrez_du_2eme_lot, ',', '.'))::numeric AS surface_carrez_du_2eme_lot, 
+            "3eme_lot", (replace(surface_carrez_du_3eme_lot, ',', '.'))::numeric AS surface_carrez_du_3eme_lot, 
+            "4eme_lot", (replace(surface_carrez_du_4eme_lot, ',', '.'))::numeric AS surface_carrez_du_4eme_lot, 
+            "5eme_lot", (replace(surface_carrez_du_5eme_lot, ',', '.'))::numeric AS surface_carrez_du_5eme_lot, 
+            nombre_de_lots, code_type_local, 
+            type_local, identifiant_local, surface_reelle_bati, nombre_pieces_principales, 
+            nature_culture, nature_culture_speciale, surface_terrain,
+            
+            CASE 
+                WHEN nature_culture LIKE 'T%' THEN 1
+                WHEN nature_culture LIKE 'P%' THEN 2
+                WHEN nature_culture = 'VE' THEN 3
+                WHEN nature_culture = 'VI' THEN 4
+                WHEN nature_culture LIKE 'B%' THEN 5
+                WHEN nature_culture LIKE 'L%' THEN 6
+                WHEN nature_culture = 'CA' THEN 7
+                WHEN nature_culture = 'E' THEN 8
+                WHEN nature_culture = 'J' THEN 9
+                WHEN nature_culture = 'AB' THEN 10
+                WHEN nature_culture = 'AG' THEN 11
+                WHEN nature_culture = 'CH' THEN 12
+                WHEN nature_culture = 'S' THEN 13
+            ELSE NULL 
+            END AS nodcnt,
+    
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END||
+                CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') ELSE lpad(COALESCE(code_commune,''), 2, '0') END||
+                lpad(COALESCE(prefixe_de_section,''), 3, '0')||lpad(COALESCE(section,''), 2, '0')||lpad(COALESCE(no_plan,''), 4, '0') 
+            AS idpar,
+            
+            CASE WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_departement,''), 2, '0') ELSE code_departement END||
+            CASE 
+                WHEN lpad(COALESCE(prefixe_de_section,''), 3, '0') = '000' THEN 
+                    CASE 
+                        WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(code_commune,''), 3, '0') 
+                        ELSE lpad(COALESCE(code_commune,''), 2, '0') 
+                    END 
+                ELSE 
+                    CASE 
+                        WHEN code_departement NOT LIKE '97_' THEN lpad(COALESCE(prefixe_de_section,''), 3, '0') 
+                        ELSE lpad(COALESCE(substring(prefixe_de_section from '..$'),''), 2, '0') 
+                    END 
+            END||
+            lpad(identifiant_local, 7, '0') AS idloc,
+    
+            CASE WHEN no_voie IS NULL THEN '' ELSE no_voie::varchar END || '$' ||
+                CASE WHEN b_t_q IS NULL THEN '' ELSE b_t_q END || '$' ||
+                CASE WHEN code_voie IS NULL THEN '' ELSE code_voie END || '$' ||
+                CASE WHEN type_de_voie IS NULL THEN '' ELSE type_de_voie END || '$' ||
+                CASE WHEN voie IS NULL THEN '' ELSE voie END || '$' ||
+                CASE WHEN code_postal IS NULL THEN '' ELSE code_postal END || '$' ||
+                CASE WHEN commune IS NULL THEN '' ELSE commune END 
+            AS idadr_tmp,
+            
+            CASE WHEN nature_culture IS NULL THEN '' ELSE nature_culture::varchar END || '$' ||
+                CASE WHEN nature_culture_speciale IS NULL THEN '' ELSE nature_culture_speciale::varchar END || '$' ||
+                CASE WHEN surface_terrain IS NULL THEN '' ELSE surface_terrain::varchar END
+            AS idsuf_tmp
+            
+        FROM 
+            source.tmp
+    ) t
+    LEFT JOIN dvf.mutation tt
+    ON t.idmutinvar = tt.idmutinvar
+    WHERE tt.idmutinvar IS NULL
+);
+
+REQUETE EN ECHEC : DROP TABLE IF EXISTS source.tmp CASCADE;
+
