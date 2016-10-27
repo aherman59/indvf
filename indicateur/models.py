@@ -100,7 +100,10 @@ class ResultatIndicateurManager(models.Manager):
             return tuple(sorted(r, key = lambda x : int(x[0])))
     
     def supprimer_resultats(self, id_indicateur):
-        self.filter(id_indicateur = id_indicateur).delete()             
+        self.filter(id_indicateur = id_indicateur).delete()
+    
+    def supprimer_tout(self):
+        self.all().delete()             
 
         
 class ResultatIndicateur(models.Model):

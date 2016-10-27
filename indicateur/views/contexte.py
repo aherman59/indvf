@@ -128,6 +128,7 @@ class ContexteIndicateur():
         self.territoire(mise_a_zero=(not ajout)).ajouter_commune(self.request.session['commune']) 
     
     def initialisation(self):
+        self.request.session.pop('departement', None)
         self.request.session['epci'] = 0
         self.request.session['commune'] = 0
 

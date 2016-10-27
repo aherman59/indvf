@@ -48,6 +48,10 @@ class ConfigurationManager(models.Manager):
         for config in self.all():
             config.active = False
             config.save()
+        
+    def supprimer(self, id_config):
+        config_choisie = ConfigurationBDD.objects.get(pk = id_config)
+        config_choisie.delete()
     
     def verifier_configuration_active(self):
         '''

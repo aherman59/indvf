@@ -102,6 +102,7 @@ class ContexteRecherche():
         self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
     
     def initialisation(self):
+        self.request.session.pop('departement', None)
         self.request.session['epci'] = 0
         self.request.session['commune'] = 0
         self.request.session['titre'] = ''
