@@ -18,8 +18,10 @@
 '''
 
 import os
+import re
 
 from django.shortcuts import render
+from django.http import Http404
 
 from main.configuration import BASE_DIR
 from .gestion_fiches_tuto import RepertoireTuto
@@ -37,3 +39,32 @@ def fiche(request, nom_fiche):
                'fiche_suivante': repertoire.fiche_suivante(nom_fiche),
                'fiche_precedente': repertoire.fiche_precedente(nom_fiche)}
     return render(request, 'fiche.html', context)
+
+def recherche(request):    
+    if request.method == 'POST':
+        contexte_recherche = ContexteRechercheTuto(request.POST)                
+        context = {'mots_clefs': contexte_recherche.mots_clefs,
+                   'fiches' : contexte_recherche.fiches,}
+        return render(request, 'recherche_tuto.html', context)
+    else:
+        raise Http404('Méthode POST incorrecte')
+
+class ContexteRechercheTuto():
+
+    def __init__(self, post):
+        self.fiches = []
+        self.mots_clefs = '' 
+        if 'motclef' in post:
+            self.recherche(post['motclef'])
+    
+    def recherche(self, motclef):
+        mots_clefs = self.decoupage(motclef)
+        self.fiches = self.resultat(mots_clefs)
+        self.mots_clefs = ' '.join(mots_clefs)
+    
+    def decoupage(self, motclef):
+        mots_clefs = re.findall(r'[\w]+',str(motclef))
+        return [mot for mot in mots_clefs if (mot != '' and len(mot) >= 2)]
+    
+    def resultat(self, mots_clefs):
+        return RepertoireTuto(REPERTOIRE_FICHES).fiches_avec(mots_clefs)

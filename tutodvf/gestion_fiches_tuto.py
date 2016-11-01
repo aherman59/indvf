@@ -37,6 +37,9 @@ class RepertoireTuto():
     def fiches(self):
         return self._fiches
     
+    def fiches_avec(self, mots_clefs):
+        return [fiche for fiche in self._fiches if fiche.avec(mots_clefs)]
+                
     def fiche(self, nom_fiche):
         position_fiche = self._position(nom_fiche)
         return self.fiches[position_fiche]
@@ -114,6 +117,12 @@ class FicheTuto():
     def contenu(self):
         return self._contenu
     
+    def avec(self, mots_clefs):
+        for mot in mots_clefs:
+            if mot not in self._contenu:
+                return False
+        return True
+    
     def validation_chemin_fichier(self, repertoire, fichier):
         chemin_fichier = os.path.join(repertoire, fichier)
         if not os.path.isfile(chemin_fichier):
@@ -144,9 +153,4 @@ class FicheTuto():
         txt_html_brut = integrer_liens_doc_variables(txt_html_brut)
         txt_html_brut = integrer_liens_tuto(txt_html_brut)
         self._contenu = markdown2html.convertir_html_brut_en_html_bootstrap(txt_html_brut)
-                 
         
-            
-    
-    
-

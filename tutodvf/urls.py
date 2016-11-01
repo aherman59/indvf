@@ -23,5 +23,6 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.accueil, name='accueil'),
+    url(r'^recherche$', views.recherche, name='recherche'),
     url(r'^(?P<nom_fiche>[a-z0-9_]+)$', views.fiche, name = 'fiche')
 ]

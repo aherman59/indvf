@@ -1,0 +1,31 @@
+{% extends "base_tutodvf.html" %}
+{% load staticfiles %}
+
+{% block contenu %}
+
+<div class="page-header">
+	<h3>Résultats<small> {{mots_clefs}}</small></a></h3>
+</div>
+
+{% if fiches|length > 0 %}
+
+{% for fiche in fiches %}
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+		    <h3 class="panel-title">
+		    	<i class="fa fa-pencil-square-o"></i> <a href="{{fiche.lien}}">{{fiche.titre}}</a> - {{fiche.theme}} {{fiche.numero}} 
+		    </h3>
+	    </div>
+	    <div class="panel-body">
+	    <p>Test</p>		
+		</div>
+	</div>
+{% endfor %}
+
+{% else %}
+
+<h4>Aucun résultat trouvé pour {{mots_clefs}}.</h4>
+
+{% endif %}
+
+{% endblock %} 
