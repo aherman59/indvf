@@ -18,6 +18,7 @@
 '''
 
 import os
+import re
 from outils import markdown2html
 from main.configuration import integrer_liens_doc_variables, integrer_liens_tuto
 
@@ -122,6 +123,9 @@ class FicheTuto():
             if mot not in self._contenu:
                 return False
         return True
+    
+    def extrait(self, mot):
+        print([txt for txt in re.split('<[a-zA-Z0-9_ /:"=;.!*%-\',?]+>', self._contenu) if mot in txt])
     
     def validation_chemin_fichier(self, repertoire, fichier):
         chemin_fichier = os.path.join(repertoire, fichier)
