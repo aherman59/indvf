@@ -59,12 +59,14 @@ class ContexteRechercheTuto():
     
     def recherche(self, motclef):
         mots_clefs = self.decoupage(motclef)
-        self.fiches = self.resultat(mots_clefs)
         self.mots_clefs = ' '.join(mots_clefs)
+        self.fiches = self.resultat(mots_clefs)
+        for fiche in self.fiches:
+            fiche.extrait = fiche.extrait(mots_clefs)
     
     def decoupage(self, motclef):
         mots_clefs = re.findall(r'[\w]+',str(motclef))
-        return [mot for mot in mots_clefs if (mot != '' and len(mot) >= 2)]
+        return [mot for mot in mots_clefs if (mot != '' and len(mot) >= 3)]
     
     def resultat(self, mots_clefs):
         return RepertoireTuto(REPERTOIRE_FICHES).fiches_avec(mots_clefs)

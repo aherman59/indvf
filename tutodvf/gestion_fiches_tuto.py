@@ -120,12 +120,21 @@ class FicheTuto():
     
     def avec(self, mots_clefs):
         for mot in mots_clefs:
-            if mot not in self._contenu:
+            if ' ' +  mot not in self._contenu:
                 return False
         return True
     
-    def extrait(self, mot):
-        print([txt for txt in re.split('<[a-zA-Z0-9_ /:"=;.!*%-\',?]+>', self._contenu) if mot in txt])
+    def extrait(self, mots_clefs):
+        extraits = []
+        for mot in mots_clefs:
+            mot = ' ' + mot
+            extraits += [txt for txt in re.split(r'<[a-zA-Z0-9\_ /:"=;.!*%-\'+,?]+>', self._contenu) if mot in txt]
+        for mot in mots_clefs:
+            extraits = [extrait.replace(mot, '<b>{0}</b>'.format(mot)) for extrait in extraits]
+        extraits = list(set(extraits))
+        extraits = [extrait for extrait in extraits if all(mot in extrait for mot in mots_clefs)] + [extrait for extrait in extraits if not all(mot in extrait for mot in mots_clefs)]
+        extraits = ['...{0}...'.format(extrait) for extrait in extraits[:5]]
+        return ' '.join(extraits)
     
     def validation_chemin_fichier(self, repertoire, fichier):
         chemin_fichier = os.path.join(repertoire, fichier)
