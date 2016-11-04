@@ -19,6 +19,7 @@
 
 import os
 import re
+from html.parser import HTMLParser
 from outils import markdown2html
 from main.configuration import integrer_liens_doc_variables, integrer_liens_tuto
 
@@ -119,22 +120,15 @@ class FicheTuto():
         return self._contenu
     
     def avec(self, mots_clefs):
-        for mot in mots_clefs:
-            if ' ' +  mot not in self._contenu:
-                return False
-        return True
+        recherche = ParserRecherche(mots_clefs)
+        recherche.feed(self._contenu)
+        return recherche.success
     
     def extrait(self, mots_clefs):
-        extraits = []
-        for mot in mots_clefs:
-            mot = ' ' + mot
-            extraits += [txt for txt in re.split(r'<[a-zA-Z0-9\_ /:"=;.!*%-\'+,?]+>', self._contenu) if mot in txt]
-        for mot in mots_clefs:
-            extraits = [extrait.replace(mot, '<b>{0}</b>'.format(mot)) for extrait in extraits]
-        extraits = list(set(extraits))
-        extraits = [extrait for extrait in extraits if all(mot in extrait for mot in mots_clefs)] + [extrait for extrait in extraits if not all(mot in extrait for mot in mots_clefs)]
-        extraits = ['...{0}...'.format(extrait) for extrait in extraits[:5]]
-        return ' '.join(extraits)
+        recherche = ParserRecherche(mots_clefs)
+        recherche.feed(self._contenu)
+        if recherche.success:
+            return recherche.presentation_extraits
     
     def validation_chemin_fichier(self, repertoire, fichier):
         chemin_fichier = os.path.join(repertoire, fichier)
@@ -166,4 +160,40 @@ class FicheTuto():
         txt_html_brut = integrer_liens_doc_variables(txt_html_brut)
         txt_html_brut = integrer_liens_tuto(txt_html_brut)
         self._contenu = markdown2html.convertir_html_brut_en_html_bootstrap(txt_html_brut)
+
+
+class ParserRecherche(HTMLParser):
+    
+    def __init__(self, mots_clefs):
+        HTMLParser.__init__(self)
+        self.mots_clefs = mots_clefs
+        self._extraits =[]
+    
+    def handle_data(self, data):
+        HTMLParser.handle_data(self, data)
+        for mot in self.mots_clefs:
+            if mot in data:
+                self._extraits.append(data)
+    
+    @property
+    def success(self):
+        for mot in self.mots_clefs:
+            extraits_contenant_mot = [extrait for extrait in self._extraits if mot in extrait]
+            if len(extraits_contenant_mot) == 0:
+                return False
+        return True
+    
+    @property
+    def extraits(self):
+        return list(set(self._extraits))
+    
+    @property    
+    def presentation_extraits(self):
+        extraits = self.extraits
+        for mot in self.mots_clefs:
+            extraits = [extrait.replace(mot, '<b>{0}</b>'.format(mot)) for extrait in extraits]
+        extraits = [extrait for extrait in extraits if all(mot in extrait for mot in self.mots_clefs)] + [extrait for extrait in extraits if not all(mot in extrait for mot in self.mots_clefs)]
+        extraits = ['...{0}'.format(extrait) for extrait in extraits[:3]]
+        return ' '.join(extraits) + '<b>...</b>'
         
+                
