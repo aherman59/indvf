@@ -18,7 +18,6 @@
 '''
 
 import os
-import re
 from html.parser import HTMLParser
 from outils import markdown2html
 from main.configuration import integrer_liens_doc_variables, integrer_liens_tuto
