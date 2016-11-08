@@ -89,7 +89,7 @@ class ContexteIndicateur():
     @property
     def indicateurs(self):
         territoires = self.territoire().lister_entites_administratives()
-        if len(territoires):
+        if len(territoires) and self.charger_indicateur:
             return indicateurs_actifs_format_xcharts(territoires, self.config_active)
         return []
     
@@ -113,10 +113,11 @@ class ContexteIndicateur():
             self.success = False
     
     def changement_departement(self):
-        self.request.session['departement'] = int(self.request.POST['departement'])
         self.initialisation()
+        self.request.session['departement'] = int(self.request.POST['departement'])        
     
     def selection_departement(self, ajout):
+        self.request.session['departement'] = int(self.request.POST['departement'])
         self.territoire(mise_a_zero=(not ajout)).ajouter_departement(self.request.session['departement'])
     
     def selection_epci(self, ajout):

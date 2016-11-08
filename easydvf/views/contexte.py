@@ -84,8 +84,8 @@ class ContexteRecherche():
             self.success = False
     
     def selection_departement(self):
-        self.request.session['departement'] = int(self.request.POST['departement'])
         self.initialisation()
+        self.request.session['departement'] = int(self.request.POST['departement'])
     
     def selection_epci(self):
         self.request.session['epci'] = int(self.request.POST['epci'])
