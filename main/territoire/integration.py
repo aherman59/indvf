@@ -30,12 +30,12 @@ def integrer_territoires():
     fichier_epci_insee = os.path.join(BASE_DIR,'main/territoire/doc_insee/epci2015.csv')
     fichier_commune_insee = os.path.join(BASE_DIR,'main/territoire/doc_insee/code_insee_france2015.txt')
     fichier_historique_commune = os.path.join(BASE_DIR,'main/territoire/doc_insee/historiq2015.txt')
-    if len(Departement.objects.all()) == 0:
-        integrer_departements(fichier_departement_insee)
-    if len(Epci.objects.all()) == 0:
-        integrer_epcis(fichier_epci_insee)
-    if len(Commune.objects.all()) == 0:
-        integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier_epci_insee)    
+    #if len(Departement.objects.all()) == 0:
+    integrer_departements(fichier_departement_insee)
+    #if len(Epci.objects.all()) == 0:
+    integrer_epcis(fichier_epci_insee)
+    #if len(Commune.objects.all()) == 0:
+    integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier_epci_insee)    
 
 def integrer_departements(fichier_departement_insee):
     Departement.objects.all().delete()
@@ -139,3 +139,5 @@ def _nt_commune():
 
 def _nt_fusion_separation():
     return namedtuple('FusionSeparation', ['commune_absorbante', 'commune_emancipee', 'date_absorbtion', 'date_separation'])
+
+    
