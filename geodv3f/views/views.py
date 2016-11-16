@@ -21,8 +21,11 @@ import json
 from pg.pgbasics import *
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from outils.interrogation_bdd import Requeteur
-from main.models import ConfigurationBDD
+
+from .contexte import ContexteCarto
+from .geomutation import Centre
+from .geomutation import GeoMutations
+from .geomutation import DetailMutation
 
 def carto(request):
     '''
@@ -31,35 +34,42 @@ def carto(request):
     La clef 'params' de request.session conserve les paramètres de configuration de la bdd.
     '''
     
-    ## à retravailler sur modèle easydvf
-    verif = ConfigurationBDD.objects.verifier_configuration_active()
-    if not (verif.validation and verif.geobase):
+    contexte_carto = ContexteCarto(request)
+    if not contexte_carto.success:
         return redirect('main:configuration_bdd')
-    request.session['type_bdd'] = ConfigurationBDD.objects.type_bdd_active()
-    request.session['params'] = ConfigurationBDD.objects.parametres_bdd_active()
     
-    [x, y] = Requeteur(*(request.session['params']), type_base=request.session['type_bdd']).localisant_moyen(10000) 
-    context = {'localisant' : '[' + str(x) + ', ' + str(y) + ']'}
+    request.session = contexte_carto.request.session
+    context = {'localisant' : Centre(request.session).as_text()}
     return render(request, 'carto.html', context)
+    
 
-
-'''
-
-REQUETES AJAX pour envoi des informations géométriques 
-
-'''
-
-def requete_geom(request, geom, xmin, ymin, xmax, ymax):
+def requete_geom(request, nom_geometrie, xmin, ymin, xmax, ymax):
+    '''
+    requete ajax pour envoi des informations géométriques
+    
+    La clef 'geomutations' de request.session conserve les mutations dans l'emprise.'     
+    '''
+    emprise = [xmin, ymin, xmax, ymax]
+    geomutations = GeoMutations(request.session, nom_geometrie, emprise)
+    if nom_geometrie == 'geompar':
+        request.session['geomutations'] = geomutations.as_list()
+    return JsonResponse(geomutations.as_geojson())
+    '''
     geomutations = Requeteur(*(request.session['params']), type_base=request.session['type_bdd']).mutations_en_geojson(geom, xmin, ymin, xmax, ymax)
     return JsonResponse(geomutations)
-
-'''
-
-REQUETE AJAX AFFICHAGE DETAIL MUTATION
-
-'''
+    '''
 
 def requete_detail_mutation(request, id):
+    '''
+    requete ajax pour l'affichage du détail de la mutation   
+    '''
+    detail = DetailMutation(id, request.session)
+    reponse = {'mutation': detail.mutation, 
+               'locaux': detail.locaux, 
+               'parcelles': detail.parcelles, 
+               'adresses':detail.adresses}
+    return render(request, 'detail_mutation.html', reponse)
+
     requeteur = Requeteur(*(request.session['params']), type_base=request.session['type_bdd'])
     mutation = requeteur.mutation_detaillee(id) or []
     locaux = requeteur.locaux_detailles(id) or []

@@ -1,3 +1,80 @@
+## RECUPERER_MUTATIONS_DVF_PLUS
+SELECT 	idmutation, 
+		datemut, 
+		anneemut, 
+		valeurfonc, 
+		sbati, 
+		sterr, 
+		nblocmut, 
+		nbparmut, 
+		{1},{2}, --codtypbien, libtypbien
+		codservch, 
+	   	refdoc,
+	   	nblot, 
+	   	nbvolmut
+FROM dvf.mutation
+WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
+
+## RECUPERER_MUTATIONS_DV3F
+SELECT 	idmutation, 
+		datemut, 
+		anneemut, 
+		valeurfonc, 
+		sbati, 
+		sterr, 
+		nblocmut, 
+		nbparmut, 
+		codtypbien, 
+		libtypbien,
+		codservch, 
+	   	refdoc,
+	   	nblot, 
+	   	nbvolmut
+FROM dvf.mutation
+WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
+
+## RECUPERER_LOCAUX_DV3F
+SELECT idloc,
+	   idpar, 
+	   sbati,
+	   nbpprinc,
+	   libtyploc
+FROM dvf.local WHERE idmutation = {0}; 
+
+## RECUPERER_LOCAUX_DVF_PLUS
+SELECT idloc,
+	   idpar, 
+	   sbati,
+	   nbpprinc,
+	   libtyploc
+FROM dvf.local WHERE idmutation = {0}; 
+
+## RECUPERER_PARCELLES_DV3F
+SELECT idpar,
+	   dcnt01 + dcnt02 + dcnt03 + dcnt04 + dcnt05 + dcnt06 + dcnt07 + dcnt08 + dcnt09 + dcnt10 + dcnt11 + dcnt12 + dcnt13
+FROM dvf.disposition_parcelle WHERE parcvendue IS TRUE AND idmutation = {0}; 
+
+## RECUPERER_PARCELLES_DVF_PLUS
+SELECT idpar,
+	   dcnt01 + dcnt02 + dcnt03 + dcnt04 + dcnt05 + dcnt06 + dcnt07 + dcnt08 + dcnt09 + dcnt10 + dcnt11 + dcnt12 + dcnt13
+FROM dvf.disposition_parcelle WHERE parcvendue IS TRUE AND idmutation = {0};
+
+## ADRESSES_ASSOCIEES
+SELECT COALESCE(novoie::VARCHAR, '') || 
+		COALESCE(btq, '') || ' ' || 
+		COALESCE(typvoie, '') || ' ' || 
+		COALESCE(voie, '') || ' ' || 
+		COALESCE(codepostal, '') || ' ' || 
+		COALESCE(commune, '') 
+FROM dvf.adresse a
+JOIN
+(
+	SELECT idadresse AS idadresse FROM dvf.adresse_dispoparc WHERE idmutation = {0}
+	UNION
+	SELECT idadresse FROM dvf.adresse_local WHERE idmutation = {0}
+) t
+ON a.idadresse = t.idadresse
+
 ## _CODTYPBIEN
 CASE 
 	WHEN libnatmut = 'Echange' THEN '7' -- ON MET UNE CATEGORIE A PART POUR LES ECHANGES
@@ -97,80 +174,3 @@ CASE
 			END
 		ELSE 'NON DETERMINE'
 	END AS libtypbien
-
-## RECUPERER_MUTATIONS_DVF_PLUS
-SELECT 	idmutation, 
-		datemut, 
-		anneemut, 
-		valeurfonc, 
-		sbati, 
-		sterr, 
-		nblocmut, 
-		nbparmut, 
-		{1},{2}, --codtypbien, libtypbien
-		codservch, 
-	   	refdoc,
-	   	nblot, 
-	   	nbvolmut
-FROM dvf.mutation
-WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
-
-## RECUPERER_MUTATIONS_DV3F
-SELECT 	idmutation, 
-		datemut, 
-		anneemut, 
-		valeurfonc, 
-		sbati, 
-		sterr, 
-		nblocmut, 
-		nbparmut, 
-		codtypbien, 
-		libtypbien,
-		codservch, 
-	   	refdoc,
-	   	nblot, 
-	   	nbvolmut
-FROM dvf.mutation
-WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
-
-## RECUPERER_LOCAUX_DV3F
-SELECT idloc,
-	   idpar, 
-	   sbati,
-	   nbpprinc,
-	   libtyploc
-FROM dvf.local WHERE idmutation = {0}; 
-
-## RECUPERER_LOCAUX_DVF_PLUS
-SELECT idloc,
-	   idpar, 
-	   sbati,
-	   nbpprinc,
-	   libtyploc
-FROM dvf.local WHERE idmutation = {0}; 
-
-## RECUPERER_PARCELLES_DV3F
-SELECT idpar,
-	   dcnt01 + dcnt02 + dcnt03 + dcnt04 + dcnt05 + dcnt06 + dcnt07 + dcnt08 + dcnt09 + dcnt10 + dcnt11 + dcnt12 + dcnt13
-FROM dvf.disposition_parcelle WHERE parcvendue IS TRUE AND idmutation = {0}; 
-
-## RECUPERER_PARCELLES_DVF_PLUS
-SELECT idpar,
-	   dcnt01 + dcnt02 + dcnt03 + dcnt04 + dcnt05 + dcnt06 + dcnt07 + dcnt08 + dcnt09 + dcnt10 + dcnt11 + dcnt12 + dcnt13
-FROM dvf.disposition_parcelle WHERE parcvendue IS TRUE AND idmutation = {0};
-
-## ADRESSES_ASSOCIEES
-SELECT COALESCE(novoie::VARCHAR, '') || 
-		COALESCE(btq, '') || ' ' || 
-		COALESCE(typvoie, '') || ' ' || 
-		COALESCE(voie, '') || ' ' || 
-		COALESCE(codepostal, '') || ' ' || 
-		COALESCE(commune, '') 
-FROM dvf.adresse a
-JOIN
-(
-	SELECT idadresse AS idadresse FROM dvf.adresse_dispoparc WHERE idmutation = {0}
-	UNION
-	SELECT idadresse FROM dvf.adresse_local WHERE idmutation = {0}
-) t
-ON a.idadresse = t.idadresse
