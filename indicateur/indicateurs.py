@@ -195,13 +195,13 @@ class RequeteurInDVF(PgOutils):
     @select_sql_avec_modification_args
     def calculer_somme_par_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
-        code_typo = self.condition_code_typo(indicateur.code_typo)
+        code_typo = self.condition(indicateur)
         return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
 
     @select_sql_avec_modification_args
     def calculer_somme_multi_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
-        code_typo = self.condition_code_typo(indicateur.code_typo)
+        code_typo = self.condition(indicateur)
         annee_debut = indicateur.annee_debut
         annee_fin = indicateur.annee_fin
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
@@ -209,13 +209,13 @@ class RequeteurInDVF(PgOutils):
     @select_sql_avec_modification_args
     def compter_par_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
-        code_typo = self.condition_code_typo(indicateur.code_typo)
+        code_typo = self.condition(indicateur)
         return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
 
     @select_sql_avec_modification_args
     def compter_multi_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
-        code_typo = self.condition_code_typo(indicateur.code_typo)
+        code_typo = self.condition(indicateur)
         annee_debut = indicateur.annee_debut
         annee_fin = indicateur.annee_fin
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
@@ -223,17 +223,23 @@ class RequeteurInDVF(PgOutils):
     @select_sql_avec_modification_args
     def calculer_mediane_10_par_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
-        code_typo = self.condition_code_typo(indicateur.code_typo)
+        code_typo = self.condition(indicateur)
         return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
     
     @select_sql_avec_modification_args
     def calculer_mediane_10_multi_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
-        code_typo = self.condition_code_typo(indicateur.code_typo)
+        code_typo = self.condition(indicateur)
         annee_debut = indicateur.annee_debut
         annee_fin = indicateur.annee_fin
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
     
-    def condition_code_typo(self, code_typo):
-        return '' if code_typo == '999' else " WHERE codtypbien='{0}' ".format(code_typo)
+    def condition(self, indicateur):
+        condition = '' if indicateur.code_typo == '999' else " WHERE codtypbien='{0}' ".format(indicateur.code_typo)
+        try:
+            denominateur = indicateur.variable.split('/')[1]
+            condition_denominateur = ' {0} != 0 '.format(denominateur)
+            return 'WHERE ' + condition_denominateur if not condition else condition + 'AND' + condition_denominateur
+        except IndexError as e:
+            return condition
     

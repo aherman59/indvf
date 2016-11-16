@@ -34,7 +34,7 @@ CASE
 			WHEN nblocact > 0 THEN
 				CASE 
 					WHEN nblocapt > 0 OR nblocmai > 0 OR nblocdep > 0 THEN '111'  -- correspond à la catégorie HABITAT/ECO de la typologie GNDVF
-					WHEN nblocapt = 0 AND nblocmai = 0 AND nblocdep = 0 THEN '111' 
+					WHEN nblocapt = 0 AND nblocmai = 0 AND nblocdep = 0 THEN '112' 
 				END
 			WHEN nblocdep > 0 AND nblocapt = 0 AND nblocmai = 0 AND nblocact = 0 THEN '142'
 			WHEN nblocapt > 0 AND nblocmai > 0 AND nblocact = 0 THEN '143' -- correspond à la catégorie HABITAT MIXTE de la typologie GNDVF

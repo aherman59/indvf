@@ -146,5 +146,17 @@ class ControleBDD(PgOutils):
     def lister_codes_insee_commune(self, departement):
         pass
     
+    def tester_variable_mutation(self, variable):
+        try:
+            denominateur = variable.split('/')[1]
+            condition_denominateur = ' WHERE {0} != 0 '.format(denominateur)
+        except IndexError as e:
+            condition_denominateur = ''
+        requete_test = '''SELECT {0} FROM dvf.mutation {1} LIMIT 1;'''.format(variable, condition_denominateur)
+        if not self.execution_et_recuperation(requete_test):
+            return False
+        return True
+             
+    
         
     

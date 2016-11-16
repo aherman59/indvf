@@ -18,6 +18,7 @@
 '''
 
 from django import forms
+from main.models import ConfigurationBDD
 from indicateur.models import Indicateur
 
 class IndicateurForm(forms.ModelForm):
@@ -42,8 +43,8 @@ class IndicateurForm(forms.ModelForm):
             'unite' : forms.TextInput(attrs={'class':"form-control", 'placeholder':""}),
             'variable' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"valeurfonc"}),
             'periode' : forms.Select(attrs={'class':"form-control"}),
-            'annee_debut' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"2010"}),
-            'annee_fin' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"2013"}),
+            'annee_debut' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"2011"}),
+            'annee_fin' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"2015"}),
             'code_typo' : forms.Select(attrs={'class':"form-control"}),
             'type_graphe': forms.Select(attrs={'class':"form-control"}),
             'actif': forms.CheckboxInput(attrs={'class':"form-control"}),
@@ -52,11 +53,18 @@ class IndicateurForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(IndicateurForm, self).clean()
         
+        # controle années
         annee_debut = cleaned_data.get('annee_debut')
         annee_fin = cleaned_data.get('annee_fin')
-        
         if int(annee_debut) >= int(annee_fin):
             self.add_error('__all__', "L'année de début est supérieure ou égale à l'année de fin.")
+        
+        # controle validité variable
+        variable = cleaned_data.get('variable')   
+        config_active = ConfigurationBDD.objects.configuration_active()
+        success = config_active.controleur_bdd().tester_variable_mutation(variable)
+        if not success:
+            self.add_error('__all__', 'Variable mal définie')        
         
         return cleaned_data
         
