@@ -40,11 +40,11 @@ class ConfigBDDForm(forms.ModelForm):
             'hote' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"localhost"}),
             'bdd' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"base_dvf"}),
             'utilisateur' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"postgres"}),
-            'mdp' : forms.TextInput(attrs={'class':"form-control"}),
+            'mdp' : forms.PasswordInput(attrs={'class':"form-control", 'placeholder':""}, render_value=True),
             'port' : forms.TextInput(attrs={'class':"form-control", 'placeholder':"5432"}),
             'type_bdd': forms.Select(attrs={'class':"form-control"}),
         }
-
+    
     def clean(self):
         cleaned_data = super(ConfigBDDForm, self).clean()
         hote = cleaned_data.get('hote') or ''

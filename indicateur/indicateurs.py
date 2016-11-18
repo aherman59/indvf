@@ -54,22 +54,32 @@ class IndicateurDVF():
         resultat_indicateur = Resultat(self.indicateur)
         for t in self.territoires:
             resultat = resultat_indicateur.resultat_en_base(t, self.config_active)
+            if resultat is None:
+                return None
             resultats.append(resultat)
         return resultats
     
     def evaluer_prefixe_unite(self):
-        facteur_unite, prefixe = 1, ''
-        for d in self.donnees:
-            for x, y in d:
-                if y >= 1000000000:
-                    facteur_unite, prefixe = 1000000, 'M'
-                    return facteur_unite, prefixe
-                elif y >= 1000000:
-                    facteur_unite, prefixe = 1000, 'k'
+        facteur_unite, prefixe = 1, '' 
+        if self.donnees is not None:       
+            for d in self.donnees:
+                for x, y in d:
+                    if y >= 1000000000:
+                        facteur_unite, prefixe = 1000000, 'M'
+                        return facteur_unite, prefixe
+                    elif y >= 1000000:
+                        facteur_unite, prefixe = 1000, 'k'
         return facteur_unite, prefixe
+    
+    @property    
+    def titre(self):
+        unite = ' (' + self.prefixe + self.indicateur.unite + ')' if self.indicateur.unite else ''
+        return self.indicateur.nom + unite
     
     @property
     def graphique(self):
+        if self.donnees is None:
+            return None
         mini, maxi = self.min_max_echelle()
         graph = {"xScale": "ordinal",
                  "yScale": "linear",
@@ -90,15 +100,12 @@ class IndicateurDVF():
                 mini = min_d[1]
             if max_d[1] > maxi:
                 maxi = max_d[1]
-        return mini, maxi
-    
-    @property    
-    def titre(self):
-        unite = ' (' + self.prefixe + self.indicateur.unite + ')' if self.indicateur.unite else ''
-        return self.indicateur.nom + unite          
+        return mini, maxi          
 
     @property
     def tableau(self):
+        if self.donnees is None:
+            return None
         unite = ' (en ' + self.indicateur.unite + ')' if self.indicateur.unite else ''
         tableau = '<table class="table table-condensed table-striped">'
         for i, d in enumerate(self.donnees):
@@ -124,6 +131,8 @@ class Resultat():
         id_indicateur = self.indicateur.id
         if not ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id, territoire.type()):
             resultat = self.calcul(territoire, config_active)
+            if resultat is None:
+                return None
             self.sauvegarde(resultat, territoire)
         return ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id, territoire.type())
     

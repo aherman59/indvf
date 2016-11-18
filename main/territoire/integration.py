@@ -43,6 +43,7 @@ def integrer_departements(fichier_departement_insee):
         lignes = csv.reader(f, delimiter = ';')
         for ligne in lignes:
             d = Departement(nom=ligne[2],code=ligne[1])
+            print(d)
             d.save()
 
 def integrer_epcis(fichier_epci_insee):
@@ -54,6 +55,7 @@ def integrer_epcis(fichier_epci_insee):
             if len(Epci.objects.filter(code = str(ligne[2]))) == 0:
                 code_departement = ligne[0][:3] if str(ligne[0]).startswith('97') else ligne[0][:2].lower()
                 e = Epci(nom=ligne[3], code=ligne[2], departement=Departement.objects.get(code = code_departement))
+                print(e)
                 e.save()
 
 def integrer_communes(fichier_commune_insee, fichier_historique_commune, fichier_epci_insee):
@@ -103,6 +105,8 @@ def correspondance_epci_communes(fichier_epci_insee):
     return commune_epci
 
 def recuperer_fusion_separation_communes(fichier_historique_commune, date_minimale = '01-01-2005'):
+    code_absorption = ['310', '311', '330', '331', '332', '333', '350', '351']
+    code_separation = ['210']
     fusions_separations = {}
     nt_comm2 = _nt_fusion_separation()
     with open(fichier_historique_commune, 'r', encoding = 'utf-8') as f:
@@ -111,13 +115,13 @@ def recuperer_fusion_separation_communes(fichier_historique_commune, date_minima
         for ligne in lignes:
             if ligne[6] != '':
                 if datetime.strptime(ligne[6],'%d-%M-%Y')>= datetime.strptime(date_minimale, '%d-%M-%Y'):
-                    if ligne[8] in ('21', '31', '33'):
+                    if ligne[8] in code_absorption + code_separation:
                         code_departement = ligne[0].zfill(2)
                         code_commune = ligne[3].zfill(3) if not ligne[5].startswith('97') else ligne[6].zfill(2)
-                        commune_absorbante = ligne[13].zfill(5) if ligne[8] in ('31','33') else None
-                        commune_emancipee = ligne[13].zfill(5) if ligne[8] == '21' else None 
-                        date_absorbtion = datetime.strptime(ligne[6],'%d-%M-%Y') if ligne[8] in ('31','33') else None
-                        date_separation = datetime.strptime(ligne[6],'%d-%M-%Y') if ligne[8] == '21' else None
+                        commune_absorbante = ligne[13].zfill(5) if ligne[8] in code_absorption else None
+                        commune_emancipee = ligne[13].zfill(5) if ligne[8] in code_separation else None 
+                        date_absorbtion = datetime.strptime(ligne[6],'%d-%M-%Y') if ligne[8] in code_absorption else None
+                        date_separation = datetime.strptime(ligne[6],'%d-%M-%Y') if ligne[8] in code_separation else None
                         fusions_separations[code_departement + code_commune] =  nt_comm2(commune_absorbante, commune_emancipee, date_absorbtion, date_separation)
     return fusions_separations
 

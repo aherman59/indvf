@@ -54,13 +54,13 @@ class IndicateurForm(forms.ModelForm):
         cleaned_data = super(IndicateurForm, self).clean()
         
         # controle années
-        annee_debut = cleaned_data.get('annee_debut')
-        annee_fin = cleaned_data.get('annee_fin')
+        annee_debut = cleaned_data.get('annee_debut') or 0
+        annee_fin = cleaned_data.get('annee_fin') or 0
         if int(annee_debut) >= int(annee_fin):
             self.add_error('__all__', "L'année de début est supérieure ou égale à l'année de fin.")
         
         # controle validité variable
-        variable = cleaned_data.get('variable')   
+        variable = cleaned_data.get('variable') or ''   
         config_active = ConfigurationBDD.objects.configuration_active()
         success = config_active.controleur_bdd().tester_variable_mutation(variable)
         if not success:

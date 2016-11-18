@@ -109,12 +109,16 @@
 	        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> {{i.nom}}</h3>
         </div>
         <div class="panel-body">
+        	{% if i.graph %}
             <div class = "col-xs-12 col-sm-6 vcenter">
                 <figure style="width: 480px; height: 250px;" id="{{i.idgraph}}"></figure>
             </div><!--
             --><div class = "col-xs-12 col-sm-6 vcenter">
                 {{i.tableau|safe}}
             </div>
+            {% else %}
+            <i>Cet indicateur n'a pas pu être calculé.</i>
+            {% endif %}
         </div>
     </div>
 		  <script>

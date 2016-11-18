@@ -102,7 +102,9 @@ class ContexteConfigBDD():
             configform.save()
             self.activation(config_choisie)
         else:
+            self.id_config = id_config
             self.formulaire = configform
+            self.formulaire_selection = SelectConfigBDDForm(initial = {'selection' : id_config })
     
     def activation(self, config):
         ConfigurationBDD.objects.desactiver_configurations()

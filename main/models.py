@@ -136,14 +136,14 @@ class ConfigurationBDD(models.Model):
     
     def communes_disponibles(self, departement):
         controleurbdd = self.controleur_bdd()
-        communes = controleurbdd.lister_codes_insee_commune(departement)
-        return Commune.objects.filter(code__in=communes)
+        communes = controleurbdd.lister_codes_insee_commune(departement.upper())
+        return Commune.objects.filter(code__in=communes).filter(code_actualite__in=['1', '2', '5']).order_by('nom')
         
     def epcis_disponibles(self, departement):
         controleurbdd = self.controleur_bdd()
-        communes = controleurbdd.lister_codes_insee_commune(departement)
-        epcis = Commune.objects.filter(code__in=communes).values_list('epci', flat=True)
-        return Epci.objects.filter(pk__in = epcis)
+        communes = controleurbdd.lister_codes_insee_commune(departement.upper())
+        epcis = Commune.objects.filter(code__in=communes).filter(code_actualite__in=['1', '2', '5']).values_list('epci', flat=True)
+        return Epci.objects.filter(pk__in = epcis).order_by('nom')
 
 class Departement(models.Model):
     nom = models.CharField(max_length=100)
