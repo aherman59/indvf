@@ -17,7 +17,9 @@
 
 '''
 import re
+import csv
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.http import Http404
 from django.db.models.query import Q
 
@@ -38,9 +40,9 @@ def doc_table(request, table):
     nom_tables_permises = lister_tables()
     if table not in nom_tables_permises:
         raise Http404('Table inexistante')             
-    variables = Variable.objects.filter(table_associee = table)
+    variables = Variable.objects.filter(table_associee = table).order_by('position')
     return render(request, 'table.html', locals())
-
+        
 def doc_variable(request, table, variable):
     try:
         variable = Variable.objects.get(table_associee = table, nom = variable)
@@ -60,6 +62,31 @@ def recherche(request):
         return render(request, 'recherche_doc.html', context)
     else:
         raise Http404('Méthode POST incorrecte')
+
+"""
+
+EXPORT CSV DE LA DOCUMENTATION
+
+"""
+
+def doc_table_csv(request, table):
+    nom_tables_permises = lister_tables()
+    if table not in nom_tables_permises:
+        raise Http404('Table inexistante')             
+    variables = Variable.objects.filter(table_associee = table).order_by('position')    
+    entete = ['Position', 'Nom', 'Table']
+    lignes = [(v.position, v.nom, v.table_associee) for v in variables]        
+    return reponse_csv('{0}.csv'.format(table), lignes, entete)
+
+def reponse_csv(nom_fichier, lignes, entete = None):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachement; filename="{0}"'.format(nom_fichier)
+    writer = csv.writer(response)
+    if entete:
+        writer.writerow(entete)
+    for ligne in lignes:
+        writer.writerow(ligne)
+    return response
       
 
 class ContexteRechercheDoc():
