@@ -74,14 +74,14 @@ def doc_table_csv(request, table):
     if table not in nom_tables_permises:
         raise Http404('Table inexistante')             
     variables = Variable.objects.filter(table_associee = table).order_by('position')    
-    entete = ['Position', 'Nom', 'Table']
-    lignes = [(v.position, v.nom, v.table_associee) for v in variables]        
+    entete = ['Table', 'Position', 'Nom', 'Description', 'Modèle', 'Contrainte']
+    lignes = [(v.table_associee, v.position, v.nom, v.description_simplifiee, v.modele, v.contrainte) for v in variables]        
     return reponse_csv('{0}.csv'.format(table), lignes, entete)
 
 def reponse_csv(nom_fichier, lignes, entete = None):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachement; filename="{0}"'.format(nom_fichier)
-    writer = csv.writer(response)
+    writer = csv.writer(response, delimiter=';')
     if entete:
         writer.writerow(entete)
     for ligne in lignes:

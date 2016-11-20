@@ -19,8 +19,16 @@
 		{% for table in groupe_table.desc_table %}
 		<tr>
 			{% for nom, description in table.items %}
-			<td width="20%"><a href = "{% url 'docdv3f:doc_table' nom %}">{{nom}}</a></td>
-			<td>{{description}}</td>
+			<td width="20%" style="vertical-align: middle;"><a href="{% url 'docdv3f:doc_table' nom %}">{{nom}}</a></td>
+			<td style="vertical-align: middle;">{{description}}</td>
+			<td width="5%">
+				<a href="{% url 'docdv3f:doc_table_csv' nom %}">
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-circle fa-stack-1x"></i>
+						<i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+			</td>
 			{% endfor %}
 		</tr>	
 		{% endfor %}

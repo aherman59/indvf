@@ -22,6 +22,7 @@ from .views import views
 
 urlpatterns = [
     url(r'^$', views.recherche, name='recherche'),
+    url(r'^csv/$', views.mutations_csv, name='mutations_csv'),
     url(r'^detail/(?P<id>[0-9]+)$', views.recherche_detaillee, name='recherche_detaillee'),
     url(r'^modification_affichage_table/(?P<tri>[A-z]+)/(?P<page>[0-9]+)$', views.maj_tableau, name='maj_tableau'),
 ]

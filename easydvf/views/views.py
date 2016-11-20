@@ -17,6 +17,7 @@
 
 '''
 
+import csv
 import json
 from datetime import datetime
 
@@ -107,5 +108,28 @@ def mutations_de_la_page(page, mutations, nb_par_page):
         mutations = paginator.page(1)
     except EmptyPage:
         mutations = paginator.page(paginator.num_pages)
-    return mutations    
+    return mutations
+
+
+"""
+
+EXPORT CSV DES MUTATIONS
+
+"""
+
+def mutations_csv(request):             
+    mutations = Mutations(request.session).as_objet()    
+    entete = ['Date mutation', 'Type Bien']
+    lignes = [(m.datemut, m.libtypbien) for m in mutations]        
+    return reponse_csv('sortie.csv', lignes, entete)
+
+def reponse_csv(nom_fichier, lignes, entete = None):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachement; filename="{0}"'.format(nom_fichier)
+    writer = csv.writer(response, delimiter=';')
+    if entete:
+        writer.writerow(entete)
+    for ligne in lignes:
+        writer.writerow(ligne)
+    return response    
   
