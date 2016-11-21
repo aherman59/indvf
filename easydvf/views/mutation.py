@@ -19,8 +19,11 @@ class Mutations():
     def as_list(self):
         return self.mutations
         
-    def as_objet(self):
-        return [Mutation(mutation) for mutation in self.mutations]
+    def as_objet(self, order_by = None):        
+        mutations = [Mutation(mutation) for mutation in self.mutations]
+        if order_by:
+            return self.trier(mutations, order_by)
+        return mutations
     
     def avec_filtre(self, order_by='id'):
         mutations = self.as_objet()
@@ -35,6 +38,7 @@ class Mutations():
         return self.trier(mutations, order_by)
     
     def trier(self, mutations, tri):
+        mutations_triees = mutations
         if tri.startswith('id'):
             mutations_triees = sorted(mutations, key=lambda x: x.id)
         elif tri.startswith('datemut'):

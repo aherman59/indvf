@@ -118,9 +118,9 @@ EXPORT CSV DES MUTATIONS
 """
 
 def mutations_csv(request):             
-    mutations = Mutations(request.session).as_objet()    
-    entete = ['Date mutation', 'Type Bien']
-    lignes = [(m.datemut, m.libtypbien) for m in mutations]        
+    mutations = Mutations(request.session).as_objet(order_by = 'datemut')    
+    entete = ['Identifiant', 'Code Service', 'Référence Acte', 'Date mutation', 'Type de Bien', 'Valeur Foncière', 'Nb locaux vendus', 'Nb parcelles vendues']
+    lignes = [(m.id, m.codservch, m.refdoc, m.datemut, m.libtypbien, m.valeurfonc, m.nblocmut, m.nbparmut) for m in mutations]        
     return reponse_csv('sortie.csv', lignes, entete)
 
 def reponse_csv(nom_fichier, lignes, entete = None):

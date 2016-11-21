@@ -1,7 +1,13 @@
 {% load general_extras %}
 
 <div class="row page-header" id="resultats">
-        <h3><i class="fa fa-search"></i> Résultats pour {{request.session.titre}}</h3>
+        <h3><i class="fa fa-search"></i> Résultats pour {{request.session.titre}}
+        <small><a href="{% url 'easydvf:mutations_csv' %}" alt="Export CSV" title="Export CSV">	
+			<span class="fa-stack fa-lg">
+				<i class="fa fa-circle fa-stack-1x"></i>
+				<i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
+			</span>
+		</a></small></h3>
 </div>
 
 <div class="panel panel-default">
