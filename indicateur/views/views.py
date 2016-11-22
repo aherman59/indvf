@@ -18,6 +18,7 @@
 '''
 
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
 from pg.pgbasics import *
 from main.territoire import integration 
@@ -63,3 +64,29 @@ def configuration_indicateur(request):
                'formulaire_selection' : contexte_configuration.formulaire_selection,
                'id_indicateur' : contexte_configuration.id_indicateur, }
     return render(request, 'configuration_indicateur.html', context)
+
+
+"""
+
+EXPORT CSV DES INDICATEURS
+
+"""
+
+def indicateurs_csv(request):             
+    contexte_indicateur = ContexteIndicateur(request)
+    print(contexte_indicateur.indicateurs_csv)   
+    return reponse_csv('sortie.csv', contexte_indicateur.indicateurs_csv)
+
+def reponse_csv(nom_fichier, indicateurs):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachement; filename="{0}"'.format(nom_fichier)
+    writer = csv.writer(response, delimiter=';')
+    for indicateur in indicateurs:
+        writer.writerow([indicateur['nom']])
+        donnees = indicateur['donnees']
+        for i, donnee in enumerate(donnees):
+            if i == 0:
+                writer.writerow([indicateur['unite']]+[d[0] for d in donnee])
+            writer.writerow([indicateur['territoires'][i]]+[d[1] for d in donnee])
+        writer.writerow([])
+    return response    

@@ -23,5 +23,6 @@ from .views import views
 
 urlpatterns = [
     url(r'^$', views.indicateurs, name='indicateurs'),
+    url(r'^csv$', views.indicateurs_csv, name='indicateurs_csv'),
     url(r'^configuration_indicateur$', views.configuration_indicateur, name='configuration_indicateur')
 ]

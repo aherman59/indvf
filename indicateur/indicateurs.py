@@ -27,11 +27,23 @@ def indicateurs_actifs_format_xcharts(territoires, config_active):
         indicateursDVF = []
         for num, indicateur in enumerate(indicateurs_actifs):
             indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
-            i = {'idgraph': 'graph' + str(num),
+            i = {'idgraph'    : 'graph' + str(num),
                  'type_graph' : indicateur.type_graphe,
-                 'graph'  : indic_dvf.graphique,
-                 'tableau': indic_dvf.tableau,
-                 'nom'    : indic_dvf.titre}            
+                 'graph'      : indic_dvf.graphique,
+                 'tableau'    : indic_dvf.tableau,
+                 'nom'        : indic_dvf.titre + indic_dvf.unite(prefixe=True),}            
+            indicateursDVF.append(i)
+        return indicateursDVF
+
+def indicateurs_actifs_format_csv(territoires, config_active):
+        indicateurs_actifs = Indicateur.objects.indicateurs_actifs_tries()
+        indicateursDVF = []
+        for num, indicateur in enumerate(indicateurs_actifs):
+            indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
+            i = {'unite'  : indic_dvf.unite(prefixe=False),
+                 'donnees': indic_dvf.donnees,
+                 'territoires' : [t.nom for t in indic_dvf.territoires],
+                 'nom'    : indic_dvf.titre,}            
             indicateursDVF.append(i)
         return indicateursDVF 
 
@@ -71,10 +83,16 @@ class IndicateurDVF():
                         facteur_unite, prefixe = 1000, 'k'
         return facteur_unite, prefixe
     
+    def unite(self, prefixe=True):
+        if not self.indicateur.unite:
+            return ''
+        if prefixe : 
+            return ' (' + self.prefixe + self.indicateur.unite + ')'
+        return ' (' + self.indicateur.unite + ')'
+    
     @property    
     def titre(self):
-        unite = ' (' + self.prefixe + self.indicateur.unite + ')' if self.indicateur.unite else ''
-        return self.indicateur.nom + unite
+        return self.indicateur.nom
     
     @property
     def graphique(self):
@@ -106,14 +124,13 @@ class IndicateurDVF():
     def tableau(self):
         if self.donnees is None:
             return None
-        unite = ' (en ' + self.indicateur.unite + ')' if self.indicateur.unite else ''
         tableau = '<table class="table table-condensed table-striped">'
         for i, d in enumerate(self.donnees):
             if i == 0:
-                tableau += '<tr><th class="text-center">' + unite + '</th>' + ''.join(['<th class="text-right">' + str(x) + '</th>' for (x, y) in d]) + '</tr>'
+                tableau += '<tr><th class="text-center">' + self.unite(prefixe=False) + '</th>' + ''.join(['<th class="text-right">' + str(x) + '</th>' for (x, y) in d]) + '</tr>'
             tableau += '<tr><th class="text-left"><span class="color' + str(i) + '-indvf">' + self.territoires[i].nom + '</th>' + ''.join(['<td class="text-right text-nowrap">' + self._separateur_millier(str(y)) + '</td>' for (x, y) in d]) + '</tr>' 
         tableau += '</table>'
-        return tableau
+        return tableau        
                     
     def _separateur_millier(self, nombre, sep = ' '):
         if nombre:

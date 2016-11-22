@@ -99,7 +99,13 @@
 {% if charger_indicateur %}
 
 <div class="row page-header" id="resultats">
-        <h3><i class="fa fa-search"></i> Résultats pour {{titre|safe}}</h3>
+        <h3><i class="fa fa-search"></i> Résultats pour {{titre|safe}}<small> 
+        <a href="{% url 'indicateur:indicateurs_csv' %}" alt="Export CSV" title="Export CSV">	
+		<span class="fa-stack fa-lg">
+		<i class="fa fa-circle fa-stack-1x"></i>
+		<i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
+		</span>
+		</a></small></h3>
 </div>
 
 {% for i in indicateursDVF %}

@@ -21,6 +21,7 @@ from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 from indicateur.models import Indicateur, ResultatIndicateur
 from indicateur.forms import IndicateurForm, SelectIndicateurForm
 from indicateur.indicateurs import indicateurs_actifs_format_xcharts
+from indicateur.indicateurs import indicateurs_actifs_format_csv
 
 class ContexteIndicateur():
     
@@ -91,6 +92,13 @@ class ContexteIndicateur():
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
             return indicateurs_actifs_format_xcharts(territoires, self.config_active)
+        return []
+    
+    @property
+    def indicateurs_csv(self):
+        territoires = self.territoire().lister_entites_administratives()
+        if len(territoires) and self.charger_indicateur:
+            return indicateurs_actifs_format_csv(territoires, self.config_active)
         return []
     
     @property
