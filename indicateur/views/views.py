@@ -65,7 +65,6 @@ def configuration_indicateur(request):
                'id_indicateur' : contexte_configuration.id_indicateur, }
     return render(request, 'configuration_indicateur.html', context)
 
-
 """
 
 EXPORT CSV DES INDICATEURS
@@ -74,7 +73,6 @@ EXPORT CSV DES INDICATEURS
 
 def indicateurs_csv(request):             
     contexte_indicateur = ContexteIndicateur(request)
-    print(contexte_indicateur.indicateurs_csv)   
     return reponse_csv('sortie.csv', contexte_indicateur.indicateurs_csv)
 
 def reponse_csv(nom_fichier, indicateurs):
