@@ -4,7 +4,28 @@ FROM dvf.disposition_parcelle
 WHERE geomloc IS NOT NULL 
 LIMIT {0}
 
-## RECUPERER_MUTATIONS_AVEC_GEOMETRIE
+## RECUPERER_MUTATIONS_DV3F_AVEC_GEOMETRIE
+SELECT idmutation, 
+		datemut, 
+		anneemut, 
+		valeurfonc, 
+		sbati, 
+		sterr, 
+		nblocmut, 
+		nbparmut,
+		codtypbien, libtypbien,
+		codservch, 
+	   	refdoc,
+	   	nblot, 
+	   	nbvolmut,
+		ST_ASGEOJSON({0}),
+		l_nomv::TEXT[],
+		l_noma::TEXT[]
+FROM dvf.mutation 
+WHERE {0} IS NOT NULL 
+AND {0} && ST_MAKEENVELOPE({1}, {2}, {3}, {4}, {5});
+
+## RECUPERER_MUTATIONS_DVF_PLUS_AVEC_GEOMETRIE
 SELECT idmutation, 
 		datemut, 
 		anneemut, 

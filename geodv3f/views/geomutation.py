@@ -77,14 +77,17 @@ class GeoMutation():
         self.refdoc = mutation[11]
         self.nblot = mutation[12]
         self.nbvolmut = mutation[13]
-        self.geometrie = mutation[14]                                                     
+        self.geometrie = mutation[14]
+        self._l_nomv = mutation[15] if self.dv3f else None
+        self._l_noma = mutation[16] if self.dv3f else None                                                     
     
     def as_tuple(self):
         return (self.id, self.datemut, self.anneemut, 
                 self.valeurfonc, self.sbati, self.sterr, 
                 self.nblocmut, self.nbparmut, 
                 self.codtypbien, self.libtypbien,
-                self.codservch, self.refdoc, self.nblot, self.nbvolmut, self.geometrie)
+                self.codservch, self.refdoc, self.nblot, self.nbvolmut, 
+                self.geometrie, self.l_nomv, self.l_noma)
     
     def as_geojson(self):
         entite = {}
@@ -103,6 +106,22 @@ class GeoMutation():
                                 }
         entite['geometry'] = json.loads(self.geometrie)
         return entite
+    
+    @property
+    def l_nomv(self):
+        if isinstance(self._l_nomv, str):
+            return self._l_nomv
+        if not self._l_nomv:
+            return '--' if not self.dv3f else 'Non rapatrié'
+        return ', '.join(self._l_nomv).replace('_X_', 'Personne physique anonymisée')
+    
+    @property
+    def l_noma(self):
+        if isinstance(self._l_noma, str):
+            return self._l_noma
+        if not self._l_noma:
+            return '--' if not self.dv3f else 'Non rapatrié'
+        return ', '.join(self._l_noma).replace('_X_', 'Personne physique anonymisée')
     
     @property
     def datemut(self):
@@ -170,8 +189,22 @@ class RequeteurGeoDV3F(PgOutils):
     def recuperer_point_central(self, limit):
         pass
     
-    @select_sql_avec_modification_args
     def recuperer_mutations_avec_geometrie(self, champ_geometrie, emprise, epsg='2154'):
+        if self.type_base == 'DV3F':
+            resultat = self.recuperer_mutations_dv3f_avec_geometrie(champ_geometrie, emprise, epsg)
+        elif self.type_base == 'DVF+':
+            resultat = self.recuperer_mutations_dvf_plus_avec_geometrie(champ_geometrie, emprise, epsg)
+        else:
+            return []
+        return resultat
+    
+    @select_sql_avec_modification_args
+    def recuperer_mutations_dv3f_avec_geometrie(self, champ_geometrie, emprise, epsg='2154'):
+        [xmin, ymin, xmax, ymax] = emprise
+        return champ_geometrie, xmin, ymin, xmax, ymax, epsg
+    
+    @select_sql_avec_modification_args
+    def recuperer_mutations_dvf_plus_avec_geometrie(self, champ_geometrie, emprise, epsg='2154'):
         [xmin, ymin, xmax, ymax] = emprise
         codtypbien = self.requete_sql['_CODTYPBIEN']
         libtypbien = self.requete_sql['_LIBTYPBIEN']

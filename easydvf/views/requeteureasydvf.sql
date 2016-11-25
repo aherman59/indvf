@@ -30,8 +30,8 @@ SELECT 	idmutation,
 	   	refdoc,
 	   	nblot, 
 	   	nbvolmut,
-		l_nomv::VARCHAR[],
-		l_noma::VARCHAR[]
+		l_nomv::TEXT[],
+		l_noma::TEXT[]
 FROM dvf.mutation
 WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
 

@@ -88,7 +88,7 @@ class DetailMutation():
 
 class Mutation():
     
-    def __init__(self, mutation):        
+    def __init__(self, mutation):     
         self.dv3f = True if len(mutation) > 14 else False
         self.id = mutation[0]
         self._datemut = mutation[1]
@@ -135,15 +135,19 @@ class Mutation():
     
     @property
     def l_nomv(self):
+        if isinstance(self._l_nomv, str):
+            return self._l_nomv
         if not self._l_nomv:
-            return ''
-        return ', '.join(self._l_nomv)
+            return '--' if not self.dv3f else 'Non rapatrié'
+        return ', '.join(self._l_nomv).replace('_X_', 'Personne physique anonymisée')
     
     @property
     def l_noma(self):
+        if isinstance(self._l_noma, str):
+            return self._l_noma
         if not self._l_noma:
-            return ''
-        return ', '.join(self._l_noma)
+            return '--' if not self.dv3f else 'Non rapatrié'
+        return ', '.join(self._l_noma).replace('_X_', 'Personne physique anonymisée')
         
 class Local():
     

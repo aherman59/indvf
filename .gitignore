@@ -1,4 +1,6 @@
 /db.sqlite3
+__pycache/*
+*.py[cod]
 /docdv3f/__pycache__/*
 /docdv3f/migrations/__pycache__/*
 /easydvf/__pycache__/*
