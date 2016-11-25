@@ -104,6 +104,8 @@ class Mutation():
         self.refdoc = mutation[11]
         self.nblot = mutation[12]
         self.nbvolmut = mutation[13]
+        self._l_nomv = mutation[14] if self.dv3f else None
+        self._l_noma = mutation[15] if self.dv3f else None
                                                              
     
     def as_tuple(self):
@@ -111,7 +113,7 @@ class Mutation():
                 self.valeurfonc, self.sbati, self.sterr, 
                 self.nblocmut, self.nbparmut, 
                 self.codtypbien, self.libtypbien,
-                self.codservch, self.refdoc, self.nblot, self.nbvolmut)
+                self.codservch, self.refdoc, self.nblot, self.nbvolmut, self.l_nomv, self.l_noma)
     
     @property
     def datemut(self):
@@ -131,6 +133,17 @@ class Mutation():
     def sbati(self):
         return str(self._sbati)
     
+    @property
+    def l_nomv(self):
+        if not self._l_nomv:
+            return ''
+        return ', '.join(self._l_nomv)
+    
+    @property
+    def l_noma(self):
+        if not self._l_noma:
+            return ''
+        return ', '.join(self._l_noma)
         
 class Local():
     
