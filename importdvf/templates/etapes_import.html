@@ -33,19 +33,21 @@
              $('.vide').trigger('click', '1');
         });
         $('.vide').click(function(event, etape) {            
-            //if (etape == '9999') window.location.href = '/import/fin_import';
             if (etape == undefined) etape = '1';
              $.getJSON('/import/step/' + etape, function(data) {
-             		   if (etape == '9999') window.location.href = '/import/fin_import';
-                       if (data.erreur) window.location.href = '/import/erreur';
-                       $('#description_etape').html(data.description);
-                       $('#pourcentage').html(data.pourcentage + ' %');
-                       $('#barre_progression').css('width', data.pourcentage + '%');
-                       $('#barre_progression').attr('aria-valuenow', data.pourcentage);
-                       if (data.warning) $('.list-group').append('<li class="list-group-item list-group-item-warning">'+ data.warning +'</li>');
-                       $('.list-group').append('<li class="list-group-item list-group-item-success">'+ data.message +'</li>');
-                       $('.vide').trigger('click', data.etape_suivante);
-                       
+             		   if (etape == '9999') {
+             			   window.location.href = '/import/fin_import';
+             		   }             		   
+             		   else {
+	                       if (data.erreur) window.location.href = '/import/erreur';
+	                       $('#description_etape').html(data.description);
+	                       $('#pourcentage').html(data.pourcentage + ' %');
+	                       $('#barre_progression').css('width', data.pourcentage + '%');
+	                       $('#barre_progression').attr('aria-valuenow', data.pourcentage);
+	                       if (data.warning) $('.list-group').append('<li class="list-group-item list-group-item-warning">'+ data.warning +'</li>');
+	                       $('.list-group').append('<li class="list-group-item list-group-item-success">'+ data.message +'</li>');
+	                       $('.vide').trigger('click', data.etape_suivante);
+             		   }
               });
 
         });  

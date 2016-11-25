@@ -244,7 +244,7 @@ class ContexteImportAjax():
         if not success:
             return self.code_erreur('cada2')
         
-        if  nb_communes == (indice + 1):
+        if nb_communes == (indice + 1):
             self.definition_etape_suivante(12, 75 ,'Intégration des géométries dans DVF+')
         else:
             commune_suivante = communes[indice + 1]
