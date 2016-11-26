@@ -27,6 +27,9 @@ from .geomutation import Centre
 from .geomutation import GeoMutations
 from .geomutation import DetailMutation
 
+from geodv3f.api_adresse import RechercheAdresse
+
+
 def carto(request):
     '''
     permet de générer la page avec la cartographie
@@ -54,10 +57,6 @@ def requete_geom(request, nom_geometrie, xmin, ymin, xmax, ymax):
     if nom_geometrie == 'geompar':
         request.session['geomutations'] = geomutations.as_list()
     return JsonResponse(geomutations.as_geojson())
-    '''
-    geomutations = Requeteur(*(request.session['params']), type_base=request.session['type_bdd']).mutations_en_geojson(geom, xmin, ymin, xmax, ymax)
-    return JsonResponse(geomutations)
-    '''
 
 def requete_detail_mutation(request, id):
     '''
@@ -70,15 +69,19 @@ def requete_detail_mutation(request, id):
                'adresses':detail.adresses}
     return render(request, 'detail_mutation.html', reponse)
 
-    requeteur = Requeteur(*(request.session['params']), type_base=request.session['type_bdd'])
-    mutation = requeteur.mutation_detaillee(id) or []
-    locaux = requeteur.locaux_detailles(id) or []
-    parcelles = requeteur.parcelles_detaillees(id) or []
-    adresses = requeteur.adresses_associees(id) or []
-    return render(request, 'detail_mutation.html', {'mutation':mutation, 
-                                                    'locaux': locaux,
-                                                    'parcelles' : parcelles, 
-                                                    'adresses': ', '.join(adresses)})
 
+def requete_adresse(request):
+    '''
+    requete ajax pour le traitement de l'adresse
+    '''
+    adresse = request.GET['adresse']
+    recherche = RechercheAdresse()
+    recherche.texte(adresse)
+    adresse = recherche.meilleure_adresse
+    if adresse:
+        reponse = {'x':adresse.x, 'y':adresse.y, 'erreur': False}
+    else:
+        reponse = {'erreur': True}
+    return JsonResponse(reponse)
 
 # eof

@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^$', views.carto, name='carto'),
     url(r'^requete/(?P<nom_geometrie>[A-z]+)/(?P<xmin>[0-9.-]+)/(?P<ymin>[0-9.-]+)/(?P<xmax>[0-9.-]+)/(?P<ymax>[0-9.-]+)$', views.requete_geom, name = 'requete_geom'),
     url(r'^detail/(?P<id>[0-9]+)$', views.requete_detail_mutation, name='requete_detail'),
+    url(r'^adresse$', views.requete_adresse, name='requete_adresse'),
 ]
