@@ -49,7 +49,8 @@ SELECT idloc,
 	   idpar, 
 	   sbati,
 	   nbpprinc,
-	   libtyploc
+	   libtyploc,
+	   ffancst
 FROM dvf.local WHERE idmutation = {0}; 
 
 ## RECUPERER_LOCAUX_DVF_PLUS

@@ -126,8 +126,9 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>Type</th>
                 <th class="text-center">
-	                <i class="fa fa-sort-asc" tri="id"></i> idmutation <i class="fa fa-sort-desc" tri="id_desc"></i>
+	                <i class="fa fa-sort-asc" tri="id"></i> id <i class="fa fa-sort-desc" tri="id_desc"></i>
                 </th>                
                 <th class="text-center">
 	                <i class="fa fa-sort-asc" tri="datemut"></i> Date de mutation <i class="fa fa-sort-desc" tri="datemut_desc"></i>
@@ -146,13 +147,15 @@
                 </th>
                 <th class="text-center">
 	                <i class="fa fa-sort-asc" tri="nbparmut"></i> Parcelles vendues <i class="fa fa-sort-desc" tri="nbparmut_desc"></i>
-                </th>          
+                </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for mutation in mutations %}
             <tr id="{{mutation.id}}" class="accordion-toggle mutation" data-toggle="collapse" data-parent="#recherche" data-target=".detail_{{mutation.id}}">
                 <td>{{forloop.counter}}</td>
+                <td>{{mutation.libtypbien}}</td>
                 <td class="text-center">{{mutation.id}}</td>                
                 <td class="text-center">{{mutation.datemut}}</td>
                 <td class="text-center">{{mutation.valeurfonc|separateur_millier}}</td>
@@ -164,7 +167,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="9" class="hiddenRow">
+                <td colspan="10" class="hiddenRow">
                     <div class="accordion-body collapse detail_{{mutation.id}}" id="accordion2">                         
                     </div>
                 </td>

@@ -141,18 +141,35 @@ class GeoMutation():
     def sbati(self):
         return str(self._sbati)
 
+
 class Local():
     
     def __init__(self, local):
+        self.dv3f = True if len(local) > 5 else False
         self.idloc = local[0]
         self.idpar = local[1]
         self._sbati = local[2]
-        self.nbpprinc = local[3]
+        self._nbpprinc = local[3]
         self.libtyploc = local[4]
+        self._ffancst = local[5] if self.dv3f else None
     
     @property
     def sbati(self):
+        if self._sbati is None:
+            return '--'
         return str(self._sbati)
+    
+    @property
+    def nbpprinc(self):
+        if self._nbpprinc is None:
+            return '--'
+        return str(self._nbpprinc)
+    
+    @property
+    def ffancst(self):
+        if self._ffancst is None:
+            return '--' if not self.dv3f else 'Non rapatrié'
+        return str(self._ffancst)
 
 
 class Parcelle():
