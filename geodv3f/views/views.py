@@ -75,13 +75,16 @@ def requete_adresse(request):
     requete ajax pour le traitement de l'adresse
     '''
     adresse = request.GET['adresse']
-    recherche = RechercheAdresse()
-    recherche.texte(adresse)
-    adresse = recherche.meilleure_adresse
-    if adresse:
-        reponse = {'x':adresse.x, 'y':adresse.y, 'erreur': False}
-    else:
+    if not adresse:
         reponse = {'erreur': True}
+    else:
+        recherche = RechercheAdresse()
+        recherche.texte(adresse)
+        resultat = recherche.meilleure_adresse
+        if resultat:
+            reponse = {'x':resultat.x, 'y':resultat.y, 'erreur': False}
+        else:
+            reponse = {'erreur': True}
     return JsonResponse(reponse)
 
 # eof

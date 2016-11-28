@@ -15,10 +15,10 @@
 	  	<input type="text" id="input-adresse" class="form-control" placeholder="Aller à l'adresse...">
 	  	<span class="input-group-btn">
 	      <button class="btn btn-default" id="bouton-adresse" type="button">Go!</button>
-	    </span>
+	    </span>	    
 	  </div>
 	</div><!-- /.col-lg-6 -->
-	<div class="col-lg-6"></div><!-- /.col-lg-6 -->
+	<div class="col-lg-6"><div class="alert alert-danger hidden" id="msg-erreur"></div></div><!-- /.col-lg-6 -->
 </div>
 </div>
 </div><!-- /.row -->
@@ -100,7 +100,7 @@ var map = new ol.Map({
 });
 map.addControl(new ol.control.ZoomSlider());
 
-
+// Centrer la carte sur adresse
 function centrer_carte(long, lat) {
     map.getView().setCenter(ol.proj.transform([long, lat], 'EPSG:4326', 'EPSG:2154'));
     map.getView().setZoom(19);
@@ -109,16 +109,7 @@ function centrer_carte(long, lat) {
 $('#input-adresse').keydown(function (e) {
     if (e.keyCode == 13) {
         e.preventDefault();
-        adresse = $(this).val();
-        $.ajax({
-            url : '/geo/adresse',
-            type : 'GET',
-            data : 'adresse=' + adresse,
-            dataType : 'json',
-            success : function(resultat, statut){           
-     		 if (!resultat['erreur']) {centrer_carte(resultat['x'], resultat['y']);}
-            }
-         });
+        $('#bouton-adresse').click();
     }
 });
 
@@ -130,7 +121,14 @@ $('#bouton-adresse').click(function(){
         data : 'adresse=' + adresse,
         dataType : 'json',
         success : function(resultat, statut){           
- 		 if (!resultat['erreur']) {centrer_carte(resultat['x'], resultat['y']);}
+ 		 if (!resultat['erreur']) {
+ 		 	centrer_carte(resultat['x'], resultat['y']); 
+ 		 	$('#msg-erreur').html('');
+ 		 	$('#msg-erreur').addClass('hidden');
+ 		 }
+ 		 else {
+ 		 	$('#msg-erreur').html('Adresse non déterminée'); 
+ 		 	$('#msg-erreur').removeClass('hidden');};
         }
      });
 });
