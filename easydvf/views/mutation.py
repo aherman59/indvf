@@ -34,8 +34,10 @@ class Mutations():
             mutations = [m for m in mutations if int(m.anneemut) >= parametres['annee_min']]
         if parametres['annee_max'] != 0:
             mutations = [m for m in mutations if int(m.anneemut) <= parametres['annee_max']]
-        mutations = [m for m in mutations if parametres['valeur_min'] <= float(m.valeurfonc) <= parametres['valeur_max']]
-        return self.trier(mutations, order_by)
+        mutations_sans_valfonc = [m for m in mutations if m.valeurfonc == '--']
+        mutations_avec_valfonc = [m for m in mutations if m.valeurfonc != '--']
+        mutations = [m for m in mutations_avec_valfonc if parametres['valeur_min'] <= float(m.valeurfonc) <= parametres['valeur_max']]
+        return self.trier(mutations + mutations_sans_valfonc, order_by)
     
     def trier(self, mutations, tri):
         mutations_triees = mutations
@@ -44,9 +46,11 @@ class Mutations():
         elif tri.startswith('datemut'):
             mutations_triees = sorted(mutations, key=lambda x: datetime.strptime(x.datemut, '%d/%m/%Y'))
         elif tri.startswith('valeurfonc'):
-            mutations_triees = sorted(mutations, key=lambda x: float(x.valeurfonc))
-        elif tri.startswith('sbati'):
-            mutations_triees = sorted(mutations, key=lambda x: int(x.sbati))
+            mutations_sans_valfonc = [m for m in mutations if m.valeurfonc == '--']
+            mutations_avec_valfonc = [m for m in mutations if m.valeurfonc != '--']
+            mutations_triees = sorted(mutations_avec_valfonc, key=lambda x: float(x.valeurfonc)) + mutations_sans_valfonc
+        elif tri.startswith('sbati'):            
+            mutations_triees = sorted(mutations, key=lambda x: int(x.sbati)) 
         elif tri.startswith('nblocmut'):
             mutations_triees = sorted(mutations, key=lambda x: int(x.nblocmut))
         elif tri.startswith('sterr'):
@@ -123,7 +127,7 @@ class Mutation():
     
     @property
     def valeurfonc(self):
-        return str(self._valeurfonc)
+        return str(self._valeurfonc) if self._valeurfonc != 'None' else '--'
     
     @property
     def sterr(self):

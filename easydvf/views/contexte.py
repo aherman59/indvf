@@ -131,8 +131,9 @@ class ContexteFiltre():
         self.parametres['typologies'] = sorted(set([(int(mutation.codtypbien), mutation.libtypbien.capitalize()) 
                                                 for mutation in mutations] + [(0, 'Tous')]), key = lambda x : x[1])    
         self.parametres['annees'] = sorted(set([int(mutation.anneemut) for mutation in mutations]))
-        self.parametres['valeur_min_existante'] = min([float(mutation.valeurfonc) for mutation in mutations])
-        self.parametres['valeur_max_existante'] = max([float(mutation.valeurfonc) for mutation in mutations])
+        valeurs_foncieres = [mutation.valeurfonc for mutation in mutations if mutation.valeurfonc != '--']
+        self.parametres['valeur_min_existante'] = min([float(val) for val in valeurs_foncieres])
+        self.parametres['valeur_max_existante'] = max([float(val) for val in valeurs_foncieres])
         self.parametres['valeur_min'] = self.parametres['valeur_min_existante']
         self.parametres['valeur_max'] = self.parametres['valeur_max_existante']
         if self.parametres['annee_min'] == 0:
