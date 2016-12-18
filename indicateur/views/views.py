@@ -18,6 +18,7 @@
 '''
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from pg.pgbasics import *
@@ -28,6 +29,7 @@ from .contexte import ContexteIndicateur, ContexteConfigIndicateur
 PAGE AFFICHAGE INDICATEURS
 ''' 
 
+@login_required
 def indicateurs(request):
     '''
     Permet de générer la page des indicateurs
@@ -56,6 +58,7 @@ def indicateurs(request):
     return render(request, 'indicateurs.html', context)
     
 
+@login_required
 def configuration_indicateur(request):
     contexte_configuration = ContexteConfigIndicateur(request)
     if contexte_configuration.annulation:

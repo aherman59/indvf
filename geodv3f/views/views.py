@@ -20,6 +20,7 @@
 import json
 from pg.pgbasics import *
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 from .contexte import ContexteCarto
@@ -29,7 +30,7 @@ from .geomutation import DetailMutation
 
 from geodv3f.api_adresse import RechercheAdresse
 
-
+@login_required
 def carto(request):
     '''
     permet de générer la page avec la cartographie
