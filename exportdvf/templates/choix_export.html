@@ -1,0 +1,29 @@
+{% extends "base_export.html" %}
+{% load staticfiles %}
+ 
+{% block contenu %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Choix de l'export</h3>
+        </div>
+        <div class="panel-body">
+           <div class="media">
+			  <div class="media-left media-middle">
+					<a href="{% url 'exportdvf:projet_qgis' %}">
+					  <img class="media-object" width="64px" src="{% static 'img/exportdvf/logo_qgis.png' %}" alt="logo_qgis">
+					</a>
+			  </div>
+				  <div class="media-body">
+				    <h4 class="media-heading">Projet QGis</h4>
+				     Un projet QGis "prêt à l'emploi", configuré pour se connecter à la base DV3F active.
+				     <br/><i>Nécessite QGis 2.14 ou ></i>
+				  </div>
+			  </div>
+        </div>
+        <div class="vide"></div>
+    </div>
+
+{% endblock %}
+
+
+

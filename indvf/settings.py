@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'docdv3f',
     'tutodvf',
     'geodv3f',
+    'exportdvf',
 ]
 
 MIDDLEWARE_CLASSES = [

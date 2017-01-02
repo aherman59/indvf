@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^doc/', include('docdv3f.urls', namespace='docdv3f')),
     url(r'^tuto/', include('tutodvf.urls', namespace='tutodvf')),
     url(r'^geo/', include('geodv3f.urls', namespace='geodv3f')),
+    url(r'^export/', include('exportdvf.urls', namespace='exportdvf')),
     url(r'^admin/', admin.site.urls),
 ]
