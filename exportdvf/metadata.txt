@@ -1,0 +1,6 @@
+nom=ExportDVF
+description=Application permettant des exports de données DVF+ ou DV3F sous différents formats (shp, ods, xls, pdf) 
+version=1.0
+classe_fa=fa fa-sign-out 
+image = img/export.jpg 
+url=exportdvf:choix

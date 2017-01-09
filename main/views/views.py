@@ -24,17 +24,7 @@ from main.views.contexte import ContexteConfigBDD
 
 def applications(request):
     Appli = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
-    
-    applis = recuperer_metadonnees_applications_disponibles()
-
-    # Pour mémoire, applications à créer mais pas encore de modules et donc métadonnées disponibles.
-    applis += [Appli(nom='ExportDVF',
-                       description='Application permettant des exports de données DVF+ ou DV3F sous différents formats (shp, ods, xls, pdf)', 
-                       version='1.0', 
-                       classe_fa='fa fa-map', 
-                       image = 'img/export.jpg', 
-                       url='import:formulaire_configuration'),]
-    
+    applis = recuperer_metadonnees_applications_disponibles()    
     context = {'applis':applis}
     return render(request, 'applications.html', context)
 

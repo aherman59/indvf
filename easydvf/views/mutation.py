@@ -109,8 +109,7 @@ class Mutation():
         self.nblot = mutation[12]
         self.nbvolmut = mutation[13]
         self._l_nomv = mutation[14] if self.dv3f else None
-        self._l_noma = mutation[15] if self.dv3f else None
-                                                             
+        self._l_noma = mutation[15] if self.dv3f else None                                                     
     
     def as_tuple(self):
         return (self.id, self.datemut, self.anneemut, 

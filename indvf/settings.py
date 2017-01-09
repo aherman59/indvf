@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'main',
     'importdvf',
     'indicateur',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'docdv3f',
     'tutodvf',
     'geodv3f',
+    'exportdvf',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -129,4 +131,5 @@ STATICFILES_DIRS = (
  os.path.join(BASE_DIR, 'static/'),
 )
 
+LOGIN_URL = '/main/connexion/'
 

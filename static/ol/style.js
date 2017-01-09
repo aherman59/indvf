@@ -41,6 +41,8 @@ var styles_parcelles = {
 		'121': styleParcelle('#990000', 'rgba(153, 0, 0, 0.2)'),
 		// Industriel/Commercial
 		'111': styleParcelle('#00994C', 'rgba(0, 153, 76, 0.2)'),
+		// Logement + Industriel/Commercial
+		'112': styleParcelle('#00994C', 'rgba(0, 153, 76, 0.2)'),
 		// Dependances
 		'142': styleParcelle('#FF3333', 'rgba(255, 102, 102, 0.2)'),
 		// Terrains à Batir
@@ -54,7 +56,9 @@ var styles_parcelles = {
 		// Terrains artificialisés
 		'221': styleParcelle('#BDB76B', 'rgba(189, 183, 107, 0.2)'),
 		// Terrains mixtes
-		'231': styleParcelle('#556B2F', 'rgba(85, 107, 47, 0.2)'),		
+		'231': styleParcelle('#556B2F', 'rgba(85, 107, 47, 0.2)'),
+		// Terrains non déterminés
+		'241': styleParcelle('#C0C0C0', 'rgba(192, 192, 192, 0.2)'),		
 };
 
 var styles_locaux = {
@@ -72,6 +76,8 @@ var styles_locaux = {
 		'33': styleLocal('\uf015', '#333300', '18'),
 		// Industriel/Commercial
 		'111': styleLocal('\uf275', '#00994C', '18'),
+		// Logement + Industriel/Commercial
+		'112': styleLocal('\uf275', '#00994C', '18'),
 		// Dependances
 		'142': styleLocal('\uf1e1', '#FF3333', '18'),
 };

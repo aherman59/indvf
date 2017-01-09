@@ -22,6 +22,7 @@ import json
 from datetime import datetime
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 
@@ -32,6 +33,7 @@ from .contexte import ContexteRecherche
 from .mutation import Mutations
 from .mutation import DetailMutation
 
+@login_required
 def recherche(request):
     '''
     Permet de générer la page de résultat des mutations
