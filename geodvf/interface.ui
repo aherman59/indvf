@@ -6,40 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>572</width>
-    <height>398</height>
+    <width>650</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="OK_Annuler">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>360</y>
-     <width>221</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
   <widget class="QTabWidget" name="ONGLETS">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>531</width>
-     <height>331</height>
+     <width>621</width>
+     <height>421</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Mutation">
     <attribute name="title">
@@ -48,8 +32,8 @@
     <widget class="QLineEdit" name="libnatmut">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>140</y>
+       <x>170</x>
+       <y>200</y>
        <width>161</width>
        <height>21</height>
       </rect>
@@ -62,7 +46,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>143</y>
+       <y>200</y>
        <width>141</width>
        <height>16</height>
       </rect>
@@ -75,50 +59,50 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Natures de la mutation :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="typologie">
+    <widget class="QLineEdit" name="libtypbien">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>20</y>
-       <width>121</width>
-       <height>18</height>
+       <x>10</x>
+       <y>18</y>
+       <width>341</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>typologie</string>
+      <string>typologie des biens</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="typologie1">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>121</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>typologie1</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="typologie2">
      <property name="geometry">
       <rect>
-       <x>190</x>
-       <y>20</y>
+       <x>160</x>
+       <y>50</y>
        <width>121</width>
-       <height>18</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>typologie2</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="typologie3">
-     <property name="geometry">
-      <rect>
-       <x>330</x>
-       <y>20</y>
-       <width>121</width>
-       <height>18</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>typologie3</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="valeurfonc">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>50</y>
+       <x>120</x>
+       <y>80</y>
        <width>81</width>
        <height>18</height>
       </rect>
@@ -134,7 +118,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>52</y>
+       <y>82</y>
        <width>101</width>
        <height>16</height>
       </rect>
@@ -150,8 +134,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QLabel" name="anneemut">
      <property name="geometry">
       <rect>
-       <x>215</x>
-       <y>52</y>
+       <x>270</x>
+       <y>82</y>
        <width>51</width>
        <height>16</height>
       </rect>
@@ -168,7 +152,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>231</y>
+       <y>260</y>
        <width>281</width>
        <height>16</height>
       </rect>
@@ -184,8 +168,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QLabel" name="Date_signature_doc">
      <property name="geometry">
       <rect>
-       <x>215</x>
-       <y>75</y>
+       <x>270</x>
+       <y>105</y>
        <width>111</width>
        <height>16</height>
       </rect>
@@ -202,9 +186,9 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>251</y>
+       <y>280</y>
        <width>41</width>
-       <height>20</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -215,7 +199,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>276</y>
+       <y>310</y>
        <width>401</width>
        <height>21</height>
       </rect>
@@ -227,9 +211,9 @@ p, li { white-space: pre-wrap; }
     <widget class="QLineEdit" name="anneemut">
      <property name="geometry">
       <rect>
-       <x>263</x>
-       <y>50</y>
-       <width>50</width>
+       <x>410</x>
+       <y>80</y>
+       <width>71</width>
        <height>18</height>
       </rect>
      </property>
@@ -241,7 +225,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>250</x>
-       <y>170</y>
+       <y>230</y>
        <width>81</width>
        <height>18</height>
       </rect>
@@ -254,7 +238,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>172</y>
+       <y>230</y>
        <width>231</width>
        <height>16</height>
       </rect>
@@ -271,7 +255,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>254</y>
+       <y>280</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -287,8 +271,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QLabel" name="INSEE_communes">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>280</y>
+       <x>20</x>
+       <y>310</y>
        <width>61</width>
        <height>16</height>
       </rect>
@@ -301,41 +285,11 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;N° INSEE :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QLabel" name="Nombre_sites">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>202</y>
-       <width>221</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Nombre de sites de la mutation :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="multisite">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>200</y>
-       <width>81</width>
-       <height>18</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>multisite</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="Euros">
      <property name="geometry">
       <rect>
-       <x>196</x>
-       <y>52</y>
+       <x>200</x>
+       <y>80</y>
        <width>16</width>
        <height>16</height>
       </rect>
@@ -344,17 +298,17 @@ p, li { white-space: pre-wrap; }
       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;€&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  €&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="datemut">
      <property name="geometry">
       <rect>
-       <x>330</x>
-       <y>73</y>
-       <width>80</width>
-       <height>18</height>
+       <x>410</x>
+       <y>103</y>
+       <width>91</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
@@ -364,8 +318,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QLabel" name="Surface_terrain">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>110</y>
+       <x>270</x>
+       <y>140</y>
        <width>91</width>
        <height>16</height>
       </rect>
@@ -381,9 +335,9 @@ p, li { white-space: pre-wrap; }
     <widget class="QLabel" name="Surface_habitable">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>110</y>
-       <width>151</width>
+       <x>10</x>
+       <y>140</y>
+       <width>131</width>
        <height>16</height>
       </rect>
      </property>
@@ -398,10 +352,10 @@ p, li { white-space: pre-wrap; }
     <widget class="QLineEdit" name="sterr">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>108</y>
-       <width>80</width>
-       <height>18</height>
+       <x>409</x>
+       <y>138</y>
+       <width>91</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -411,14 +365,100 @@ p, li { white-space: pre-wrap; }
     <widget class="QLineEdit" name="sbati">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>108</y>
+       <x>150</x>
+       <y>138</y>
        <width>91</width>
        <height>18</height>
       </rect>
      </property>
      <property name="text">
       <string>sbati</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Euros_m2_bati_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;€/m² de surface bâtie :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="e_m2_bati">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>170</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>e_m2_bati</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Euros_m2_bati_3">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>170</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;€/m² de terrain :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="e_m2_terr">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>170</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>e_m2_terr</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="typologie3">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>50</y>
+       <width>131</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>typologie3</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="typologie4">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>50</y>
+       <width>131</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>typologie4</string>
      </property>
     </widget>
    </widget>
@@ -431,12 +471,12 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>3</x>
        <y>10</y>
-       <width>521</width>
-       <height>291</height>
+       <width>611</width>
+       <height>381</height>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="batis">
       <attribute name="title">
@@ -462,8 +502,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLabel" name="Nb_locaux">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>70</y>
+         <x>20</x>
+         <y>40</y>
          <width>81</width>
          <height>16</height>
         </rect>
@@ -480,7 +520,7 @@ p, li { white-space: pre-wrap; }
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>100</y>
+         <y>70</y>
          <width>91</width>
          <height>16</height>
         </rect>
@@ -497,7 +537,7 @@ p, li { white-space: pre-wrap; }
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>130</y>
+         <y>100</y>
          <width>121</width>
          <height>16</height>
         </rect>
@@ -514,7 +554,7 @@ p, li { white-space: pre-wrap; }
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>160</y>
+         <y>130</y>
          <width>121</width>
          <height>16</height>
         </rect>
@@ -527,28 +567,11 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Nb de dépendances :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLabel" name="Nb_locaux_hab">
-       <property name="geometry">
-        <rect>
-         <x>265</x>
-         <y>102</y>
-         <width>161</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Nb de locaux d'habitation :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="Nb_locaux_ind_comm">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>190</y>
+         <x>20</x>
+         <y>160</y>
          <width>241</width>
          <height>16</height>
         </rect>
@@ -564,26 +587,25 @@ p, li { white-space: pre-wrap; }
       <widget class="QLabel" name="Nb_pieces_principales">
        <property name="geometry">
         <rect>
-         <x>270</x>
-         <y>120</y>
-         <width>101</width>
-         <height>41</height>
+         <x>240</x>
+         <y>40</y>
+         <width>171</width>
+         <height>16</height>
         </rect>
        </property>
        <property name="text">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Nombre de &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;pièces principales :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Nombre de pièces principales :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QLabel" name="Surface_loc_ind_comm">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>210</y>
+         <x>160</x>
+         <y>180</y>
          <width>101</width>
          <height>16</height>
         </rect>
@@ -599,8 +621,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="nblocmut">
        <property name="geometry">
         <rect>
-         <x>110</x>
-         <y>70</y>
+         <x>150</x>
+         <y>40</y>
          <width>60</width>
          <height>17</height>
         </rect>
@@ -612,8 +634,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="nblocmai">
        <property name="geometry">
         <rect>
-         <x>115</x>
-         <y>98</y>
+         <x>150</x>
+         <y>70</y>
          <width>60</width>
          <height>17</height>
         </rect>
@@ -625,8 +647,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="nblocapt">
        <property name="geometry">
         <rect>
-         <x>142</x>
-         <y>128</y>
+         <x>150</x>
+         <y>100</y>
          <width>60</width>
          <height>17</height>
         </rect>
@@ -638,8 +660,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="nblocdep">
        <property name="geometry">
         <rect>
-         <x>145</x>
-         <y>158</y>
+         <x>150</x>
+         <y>130</y>
          <width>60</width>
          <height>17</height>
         </rect>
@@ -648,37 +670,11 @@ p, li { white-space: pre-wrap; }
         <string>nblocdep</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="nlochab">
-       <property name="geometry">
-        <rect>
-         <x>420</x>
-         <y>100</y>
-         <width>60</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>nlochab</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="nblocact">
-       <property name="geometry">
-        <rect>
-         <x>255</x>
-         <y>190</y>
-         <width>60</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>nblocact</string>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="nbpprinc">
        <property name="geometry">
         <rect>
-         <x>390</x>
-         <y>130</y>
+         <x>420</x>
+         <y>40</y>
          <width>81</width>
          <height>20</height>
         </rect>
@@ -690,113 +686,23 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="sbatact">
        <property name="geometry">
         <rect>
-         <x>250</x>
-         <y>210</y>
-         <width>91</width>
-         <height>17</height>
+         <x>290</x>
+         <y>180</y>
+         <width>71</width>
+         <height>20</height>
         </rect>
        </property>
        <property name="text">
         <string>sbatact</string>
        </property>
       </widget>
-      <widget class="QLabel" name="Surface_reele_batie">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>38</y>
-         <width>221</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Surface réelle bâtie habitable (en m²) :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="sbatihab">
-       <property name="geometry">
-        <rect>
-         <x>245</x>
-         <y>38</y>
-         <width>71</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>sbatihab</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="Euros_m2_bati">
-       <property name="geometry">
-        <rect>
-         <x>325</x>
-         <y>38</y>
-         <width>131</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;€/m² de surface bâtie :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="Euros_m2_bati_hab">
-       <property name="geometry">
-        <rect>
-         <x>268</x>
-         <y>70</y>
-         <width>191</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;€/m² de surface bâtie habitable :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="e_m2_bati_hab">
-       <property name="geometry">
-        <rect>
-         <x>459</x>
-         <y>68</y>
-         <width>51</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>e_m2_bati_hab</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="e_m2_bati">
-       <property name="geometry">
-        <rect>
-         <x>459</x>
-         <y>38</y>
-         <width>51</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>e_m2_bati</string>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="l_idlocmut">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>240</y>
+         <x>100</x>
+         <y>210</y>
          <width>381</width>
-         <height>20</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="text">
@@ -806,8 +712,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLabel" name="Nb_maisons_2">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>230</y>
+         <x>20</x>
+         <y>210</y>
          <width>91</width>
          <height>31</height>
         </rect>
@@ -821,24 +727,24 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;de locaux :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
+      <widget class="QLineEdit" name="nblocact">
+       <property name="geometry">
+        <rect>
+         <x>289</x>
+         <y>160</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>nblocact</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="parcellessubdivisionsfiscales">
       <attribute name="title">
        <string>parcelles / subdivisions fiscales</string>
       </attribute>
-      <widget class="QLineEdit" name="lib_natcultmod">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>150</y>
-         <width>421</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>lib_natcultmod</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="Nb_parcelles">
        <property name="geometry">
         <rect>
@@ -861,7 +767,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>150</x>
          <y>68</y>
-         <width>41</width>
+         <width>51</width>
          <height>17</height>
         </rect>
        </property>
@@ -886,25 +792,25 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Caractérisation des biens non bâtis :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="natcultmod">
+      <widget class="QLineEdit" name="occupation">
        <property name="geometry">
         <rect>
-         <x>190</x>
-         <y>110</y>
-         <width>251</width>
-         <height>17</height>
+         <x>150</x>
+         <y>100</y>
+         <width>291</width>
+         <height>20</height>
         </rect>
        </property>
        <property name="text">
-        <string>natcultmod</string>
+        <string>occupation</string>
        </property>
       </widget>
       <widget class="QLabel" name="Nb_subdi_fiscales">
        <property name="geometry">
         <rect>
-         <x>200</x>
+         <x>20</x>
          <y>30</y>
-         <width>121</width>
+         <width>201</width>
          <height>31</height>
         </rect>
        </property>
@@ -912,18 +818,17 @@ p, li { white-space: pre-wrap; }
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Nombre de &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;subdivisions fiscales : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Nombre de subdivisions fiscales : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="nbsuf">
        <property name="geometry">
         <rect>
-         <x>320</x>
-         <y>30</y>
-         <width>41</width>
-         <height>17</height>
+         <x>220</x>
+         <y>37</y>
+         <width>51</width>
+         <height>20</height>
         </rect>
        </property>
        <property name="text">
@@ -934,7 +839,7 @@ p, li { white-space: pre-wrap; }
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>110</y>
+         <y>100</y>
          <width>171</width>
          <height>16</height>
         </rect>
@@ -943,8 +848,8 @@ p, li { white-space: pre-wrap; }
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Nature de culture modifiée : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Occupation :  &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QLabel" name="Lib_nature_cult_mod">
@@ -964,85 +869,24 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Libellés de nature de culture modifiée  et surfaces (en m2) correspondantes:  &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLabel" name="Part_surface_dom">
-       <property name="geometry">
-        <rect>
-         <x>200</x>
-         <y>70</y>
-         <width>111</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;Part de la surface &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;dominante (en%) :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="surface_natcultmod">
+      <widget class="QLineEdit" name="l_dcnt">
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>190</y>
-         <width>421</width>
+         <y>200</y>
+         <width>481</width>
          <height>20</height>
         </rect>
        </property>
        <property name="text">
-        <string>surface_natcultmod</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="part_surface_dominante">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>80</y>
-         <width>51</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>nature_culture_modifie</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="Euros_m2_terrain">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>40</y>
-         <width>111</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; font-style:italic; color:#00007f;&quot;&gt;€/m² de terrain :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="e_m2_terrain">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>40</y>
-         <width>41</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>e_m2_terrain</string>
+        <string>l_dcnt</string>
        </property>
       </widget>
       <widget class="QLabel" name="Nb_maisons_3">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>210</y>
+         <y>250</y>
          <width>91</width>
          <height>31</height>
         </rect>
@@ -1059,10 +903,10 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="l_idparmut">
        <property name="geometry">
         <rect>
-         <x>130</x>
-         <y>220</y>
+         <x>140</x>
+         <y>230</y>
          <width>371</width>
-         <height>20</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="text">
@@ -1072,10 +916,10 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="l_idpar">
        <property name="geometry">
         <rect>
-         <x>130</x>
-         <y>240</y>
+         <x>140</x>
+         <y>270</y>
          <width>371</width>
-         <height>20</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="text">
@@ -1086,9 +930,9 @@ p, li { white-space: pre-wrap; }
        <property name="geometry">
         <rect>
          <x>90</x>
-         <y>220</y>
+         <y>240</y>
          <width>46</width>
-         <height>13</height>
+         <height>16</height>
         </rect>
        </property>
        <property name="text">
@@ -1098,14 +942,31 @@ p, li { white-space: pre-wrap; }
       <widget class="QLabel" name="label_2">
        <property name="geometry">
         <rect>
-         <x>80</x>
-         <y>240</y>
+         <x>90</x>
+         <y>280</y>
          <width>46</width>
-         <height>13</height>
+         <height>16</height>
         </rect>
        </property>
        <property name="text">
         <string>supports</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="Liste_culture">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>150</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Terres - Prés - Vergers - Vignes - Bois - Landes - Carrières - Eaux - Jardins - Terrains à bâtir - Terrains d'agrément - Chemin de fer - Sol&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </widget>
@@ -1211,36 +1072,6 @@ p, li { white-space: pre-wrap; }
     <attribute name="title">
      <string>Imposition</string>
     </attribute>
-    <widget class="QLineEdit" name="lib_article_cgis">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>130</y>
-       <width>371</width>
-       <height>111</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>lib_article_cgis</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Libelles_articles_CGI">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>108</y>
-       <width>331</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Libellés des articles du Code Général des Impôts :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="nbartcgi">
      <property name="geometry">
       <rect>
@@ -1302,6 +1133,79 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="Libelle_art_CGI">
+    <attribute name="title">
+     <string>Libelle Code CGI</string>
+    </attribute>
+    <widget class="QLabel" name="Libelles_articles_CGI_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>331</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;color:#ac0000;&quot;&gt;Libellés des articles du Code Général des Impôts :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="Liste_culture_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>601</width>
+       <height>341</height>
+      </rect>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1049*1 &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;     : CGI 1049 *1 : Acquisition par une société HLM autre qu'un office public&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1115&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;           : CGI 1115 : Exo DE sur achats avec engagement de revente&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1115*1 &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;     : CGI 1115*1 : Acquisitions par les marchands de biens&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1115*2    &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  : CGI 1115*2 : Echanges par les marchands de biens&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1137&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;           : CGI 1137 : Acquisitions en vue reboisement&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594D*1  &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  : CGI 1594 D *1 : MTO Immeuble ou de droits immobiliers &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594D*2  &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  : CGI 1594 D * 2 : Vente de terrain à bâtir&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQA&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;    : CGI 1594 FquinquièsA : Ventes par marchands de biens dimmeubles achevés dans les 5 ans &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQA*1&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 1594 F quinquies A *1 : Vente d'immeuble dans les 5 ans de l'achèvement,TVA perçue en SIE&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQA*2&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 1594 F quinquies A *2 : Vente en état futur d'achèvement d'un immeuble, TVA perçue en SIE&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQa   &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  : CGI 1594Fquinquiesa : Droit de 0,60% sur MTO d'immeuble soumises à TVA déposée sur CA3 &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQB   &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  : CGI 1594 FquinquièsB : Droit de 0,60% sur MTO d'immeuble rénovation urbaine&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQD&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;     : CGI 1594 FquinquièsD : Droit  de 0,60% sur MTO d'immeuble rural&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQE   &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;   : CGI 1594 FquinquièsE : Acquisitions jeunes agriculteurs ds territoires ruraux de dvpmt prioritaire &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQE I    &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 1594 FQE I: Acquisitions par jeunes agriculteurs bénéficiaires des aides à l'installation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQE II &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; : CGI 1594 FQE II: Acquisitions en vue de donner à bail à de jeunes agriculteurs&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQF    &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  : CGI 1594 FquinquièsF: Droit  de 0,60% sur MTO terres incultes, abandonnées&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594FQG&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;     : CGI 1594 FquinquièsG : Droit de 0,60% sur ATO immeuble par SAFER et SICA (DOM)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594Fter    &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; : CGI 1594Fter : abattement voté conseil général sur MTO immeuble habitation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594H &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;         : CGI 1594 H: Acquisitions logements par HLM ou SEM&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594Ibis      &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 1594 I bis : Acquisition dans DOM, d'un immeuble avec engagement de l'affecter à usage d'hôtel&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;1594OGA   &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  : CGI 1594OGA : exo enregistrement sur MTO terrains et immeubles soumises à TVA&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;257-7-1*2   &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 257-7-1 *2 :  Vente en état futur d'achèvement TVA 19,60%, TPF à 0,6% et salaire à 0,1%&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;257-7-1*3   &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 257-7-1 *3 : Vente de terrain à bâtir soumise à la TVA 19,60 %, DF à 125 EUR et salaire à 0,1%&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;278 sexies I.1&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; : CGI 278 sexies-I.1: Vente aux HLM de terrain à bâtir. TVA à 5,50%, DFà 125 EUR et salaire à 0,05 %&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;278 sexies I.2&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; : CGI 278 sexies-I.2 : Vente aux HLM. TVA au taux  de 5,50 %, DFà 125 EUR et salaire à 0,05 %&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;278 sexies I.3&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; : CGI 278 sexies-I.3: ventes de logements sociaux neufs à usage locatif&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;278bis&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;          : CGI 278 bis : TVA au taux réduit&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;278sex-I    &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; : CGI 278 sexiès I : TVA au taux réduit sur ATO de TAB et logements sociaux&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;278sexIAM &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 278 sexiès IAM : TVA réduite sur ATO de TAB avec TPF à 0,60% en Alsace Moselle&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;296-1-a-*1 &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 296-1-a *1 : Vente aux HLM immeuble, terrain à bâtir, soumise à TVA ds les DOM (hors Guyane)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;296-1-a-*2 &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 296-1-a *2 : VEFA aux HLM d'immeuble, soumise à TVA dans les DOM (hors Guyane)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;296-1-b-*2 &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;: CGI 296-1-b *2 : VEFA d'un immeuble soumise à TVA 8,50% situé dans les DOM (hors Guyane)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;691bis&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;          : CGI 691 bis : Acquisition de TAB soumise à droit fixe de 125 EUR - TVA sur CA3&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;810-IV      &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;    : CGI 810-IV : Droit fixe exigible sur apports soumis à TVA&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="Informations">
     <attribute name="title">
      <string>Informations</string>
@@ -1311,8 +1215,8 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>471</width>
-       <height>261</height>
+       <width>591</width>
+       <height>371</height>
       </rect>
      </property>
      <property name="html">
@@ -1320,38 +1224,21 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#ac0000;&quot;&gt;Sources&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#ac0000;&quot;&gt;:&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;  &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;exploitation des fichiers DVF&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#980d14;&quot;&gt;Réalisation &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#980d14;&quot;&gt;:&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;  mars 2015&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#ac0000;&quot;&gt;Sources&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#ac0000;&quot;&gt;:&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;  &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;exploitation des fichiers DV3F&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#980d14;&quot;&gt;Réalisation &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#980d14;&quot;&gt;:&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;  décembre 2016&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Pôle de Compétence et d'Innovation &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;&amp;quot;Foncier et Stratégies Foncières&amp;quot;&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#980d14;&quot;&gt;Conception &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#980d14;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Direction Territoriale Méditerranée (DTer Méd.) du Cerema&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Bertrand LEROUX&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; color:#00007f;&quot;&gt;bertrand.leroux@cerema.fr&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Stéphane HOUDAYER&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; color:#00007f;&quot;&gt;stephane.houdayer@cerema.fr&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#980d14;&quot;&gt;Conception &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#980d14;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Cerema&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Antoine HERMAN&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;, Cerema Nord-Picardie - Développement, Conception, Rédaction &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Magali JOURNET&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;, Cerema Nord-Picardie - Conception, Rédaction&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Bertrand LEROUX&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;, Cerema Méditerranée - Développement, Conception, Rédaction&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Jérôme Douché&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;, Cerema Nord-Picardie - Développement, Relecture&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Christine ALPIN&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;, Cerema Méditerrannée - Interface Qgis&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Stéphane HOUDAYER&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;, Cerema Méditerranée - Interface Qgis&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </widget>
   </widget>
-  <zorder>ONGLETS</zorder>
-  <zorder>OK_Annuler</zorder>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>OK_Annuler</sender>
-   <signal>rejected()</signal>
-   <receiver>Dialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
