@@ -388,7 +388,7 @@
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>localtypo20161213114546557</id>
-      <datasource>dbname='dv3fexpe' host=172.23.210.147 port=5432 user='aherman' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql=</datasource>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql=</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -1673,7 +1673,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>locaux_copier20161213115608037</id>
-      <datasource>dbname='dv3fexpe' host=172.23.210.147 port=5432 user='aherman' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql=</datasource>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql=</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -3349,7 +3349,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>locaux_typologie3_copier20161213124343039</id>
-      <datasource>dbname='dv3fexpe' host=172.23.210.147 port=5432 user='aherman' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql="localseul" and "codtyploc" IN (1,2)</datasource>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql="localseul" and "codtyploc" IN (1,2)</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -4411,7 +4411,7 @@ def my_form_open(dialog, layer, feature):
         <ymax>6449171.16000000014901161</ymax>
       </extent>
       <id>mutation_non_bâtie_copier20161213133631486</id>
-      <datasource>dbname='dv3fexpe' host=172.23.210.147 port=5432 user='aherman' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geomparmut" (geomparmut) sql=nblocmut=0 and not "vefa"</datasource>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geomparmut" (geomparmut) sql=nblocmut=0 and not "vefa"</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -5467,7 +5467,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="1" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mutations_copier20161213110656658</id>
-      <datasource>dbname='dv3fexpe' host=172.23.210.147 port=5432 user='aherman' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geompar" (geompar) sql=</datasource>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geompar" (geompar) sql=</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -6618,7 +6618,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mutationtypo20161213114314292</id>
-      <datasource>dbname='dv3fexpe' host=172.23.210.147 port=5432 user='aherman' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geomlocmut" (geomlocmut) sql=</datasource>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geomlocmut" (geomlocmut) sql=</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -7763,7 +7763,7 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="1" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mutationtypo20161213114427645</id>
-      <datasource>dbname='dv3fexpe' host=172.23.210.147 port=5432 user='aherman' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo" (geompar) sql=nblocmut>0 </datasource>
+	<datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo" (geompar) sql=nblocmut>0 </datasource>
       <keywordList>
         <value></value>
       </keywordList>

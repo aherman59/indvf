@@ -78,12 +78,14 @@ class ExportQGis():
         with open(projet_modele, 'r', encoding='utf-8') as modele:
             with open(projet_modif, 'w', encoding='utf-8', newline='\n') as sortie:
                 for ligne in modele:
-                    if "dbname='dv3f_mini'" in ligne:
-                        ligne = ligne.replace("dv3f_mini", base)
-                    if "host=172.16.50.5" in ligne:
-                        ligne = ligne.replace("172.16.50.5", hote)
-                    if "port=5432" in ligne:
-                        ligne = ligne.replace("5432", port)
+                    if "dbname='XXXX'" in ligne:
+                        ligne = ligne.replace("XXXX", base, 1)
+                    if "host=XXXX" in ligne:
+                        ligne = ligne.replace("XXXX", hote, 1)
+                    if "port=XXXX" in ligne:
+                        ligne = ligne.replace("XXXX", port, 1)
+                    if "user='XXXX'" in ligne:
+                        ligne = ligne.replace("XXXX", utilisateur, 1)
                     sortie.write(ligne)                         
             
     def flux_archive(self):

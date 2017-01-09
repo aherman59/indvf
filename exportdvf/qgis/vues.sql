@@ -1,4 +1,4 @@
-/* 
+﻿/* 
 Ajout vues pour l'analyse et la visualisation sous Qgis
 */
 
@@ -328,9 +328,6 @@ CREATE OR REPLACE VIEW dvf.mutationtypo AS
             ELSE mutation.geomlocmut
         END), 4326)) AS ybati_4326
    FROM dvf.mutation;
-
-ALTER TABLE dvf.mutationtypo
-  OWNER TO bleroux;
 
 
 --------------------------------- View: dvf.localtypo
