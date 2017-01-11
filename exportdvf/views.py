@@ -19,7 +19,12 @@ def choix(request):
 
 @login_required
 def projet_qgis(request):
-    export_qgis = ExportQGis(request.session)     
+    if request.session['type_bdd'] != 'DV3F':
+        return render(request, 'choix_export.html', None)
+    requeteur_export = RequeteurExportQGis(request.session['params'])
+    requeteur_export.generer_vues_qgis()
+    box = requeteur_export.box()
+    export_qgis = ExportQGis(request.session, box)     
     response = HttpResponse(export_qgis.flux_archive(), content_type='application/zip')
     response['Content-Disposition'] = 'attachment; filename={0}'.format(export_qgis.nom_prj('zip'))
     export_qgis.nettoyer()
@@ -54,10 +59,11 @@ class ExportQGis():
     
     REPERTOIRE_QGIS = os.path.join(BASE_DIR, 'exportdvf', 'qgis')
     
-    def __init__(self, session):
+    def __init__(self, session, box):
         # à faire : verifier DV3F
         self.type_bdd = session['type_bdd']
         self.params = session['params']
+        self.box = box
             
     def nom_prj(self, extension):
         base = self.params[1]
@@ -69,6 +75,18 @@ class ExportQGis():
     
     def chemin(self, fichier):
         return os.path.join(self.REPERTOIRE_QGIS, fichier)
+
+    def flux_archive(self):
+        self.modifier_projet_avec_params_bdd()
+        fichiers = [self.nom_prj('qgs'), 'interface.ui']        
+        with zipfile.ZipFile(self.chemin_archive, 'w') as z:
+            for fichier in fichiers:
+                z.write(self.chemin(fichier), os.path.join('projet_qgis',fichier))
+        return open(self.chemin_archive, 'rb')
+    
+    def nettoyer(self):
+        os.remove(self.chemin_archive)
+        os.remove(self.chemin(self.nom_prj('qgs')))
             
     def modifier_projet_avec_params_bdd(self):
         # creation vues à prévoir
@@ -87,23 +105,17 @@ class ExportQGis():
                     if "user='XXXX'" in ligne:
                         ligne = ligne.replace("XXXX", utilisateur, 1)
                     sortie.write(ligne)                         
-            
-    def flux_archive(self):
-        self.modifier_projet_avec_params_bdd()
-        fichiers = [self.nom_prj('qgs'), 'interface.ui']        
-        with zipfile.ZipFile(self.chemin_archive, 'w') as z:
-            for fichier in fichiers:
-                z.write(self.chemin(fichier), os.path.join('projet_qgis',fichier))
-        return open(self.chemin_archive, 'rb')
-    
-    def nettoyer(self):
-        os.remove(self.chemin_archive)
-        os.remove(self.chemin(self.nom_prj('qgs')))
 
-class VuesExportQGis(PgOutils):
+
+class RequeteurExportQGis(PgOutils):
     
-    def __init__(self):
+    def __init__(self, params, script = None):
+        super().__init__(*params, script=script)
+    
+    @requete_sql
+    def generer_vues_qgis(self):
         pass
-        
     
+    def box(self):
+        pass
         
