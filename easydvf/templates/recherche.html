@@ -87,12 +87,21 @@ $(window).load(function() {
        url : '/recherche/modification_affichage_table/id/1',
        type : 'GET',
        dataType : 'html',
+       beforeSend: function() {
+    	   $("body").css("cursor", "progress");	
+       },
        success : function(code_html, statut){  
-		 $('#tableau_mutations').html(code_html);
+    	   $('#tableau_mutations').html(code_html);
+    	   $("body").css("cursor", "default");	
        }
     });
 });
+
 {% endif %}
+
+$("form").on('submit', function(){
+	$("body").css("cursor", "progress");
+});
 
 </script>
 {% endblock %} 
