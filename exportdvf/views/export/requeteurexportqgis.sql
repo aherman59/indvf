@@ -1,4 +1,13 @@
-﻿/* 
+## BOX
+SELECT MIN(ST_XMIN(geompar)) AS XMIN, 
+	   MIN(ST_YMIN(geompar)) AS YMIN, 
+	   MAX(ST_XMAX(geompar)) AS XMAX, 
+	   MAX(ST_YMAX(geompar)) AS YMAX 
+FROM dvf.mutation
+WHERE geompar IS NOT NULL
+
+## GENERER_VUES_QGIS
+/* 
 Ajout vues pour l'analyse et la visualisation sous Qgis
 */
 
@@ -7,8 +16,7 @@ Ajout vues pour l'analyse et la visualisation sous Qgis
 -- renommage de certains champs dont le nom exécédait 10 car
 -- passage en st-multi de toutes les géométries
 
-DROP VIEW IF EXISTS dvf.mutationtypo CASCADE ;
-
+DROP VIEW IF EXISTS dvf.mutationtypo CASCADE;
 CREATE OR REPLACE VIEW dvf.mutationtypo AS 
  SELECT mutation.idmutation,
     mutation.idmutinvar,
@@ -21,25 +29,25 @@ CREATE OR REPLACE VIEW dvf.mutationtypo AS
     mutation.coddep,
     mutation.libnatmut,
     mutation.nbartcgi,
-    mutation.l_artcgi::text,
+    mutation.l_artcgi,
     mutation.vefa,
     mutation.valeurfonc,
     mutation.nbdispo,
     mutation.nblot,
     mutation.nbcomm,
-    mutation.l_codinsee::text,
+    mutation.l_codinsee,
     mutation.nbsection,
-    mutation.l_section::text,
+    mutation.l_section,
     mutation.nbpar,
-    mutation.l_idpar::text,
+    mutation.l_idpar,
     mutation.nbparmut,
-    mutation.l_idparmut::text,
+    mutation.l_idparmut,
     mutation.nbsuf,
     mutation.sterr,
-    mutation.l_dcnt::text,
+    mutation.l_dcnt,
     mutation.nbvolmut,
     mutation.nblocmut,
-    mutation.l_idlocmut::text,
+    mutation.l_idlocmut,
     mutation.nblocmai,
     mutation.nblocapt,
     mutation.nblocdep,
@@ -68,17 +76,17 @@ CREATE OR REPLACE VIEW dvf.mutationtypo AS
     mutation.smai3pp,
     mutation.smai4pp,
     mutation.smai5pp,
-    mutation.l_idv::text,
-    mutation.l_nomv::text,
+    mutation.l_idv,
+    mutation.l_nomv,
     mutation.codtypprov,
     mutation.fiabmaxv,
-    mutation.l_ida::text,
-    mutation.l_noma::text,
+    mutation.l_ida,
+    mutation.l_noma,
     mutation.codtypproa,
     mutation.fiabmaxa,
     mutation.ffsparc,
     mutation.ffsterr,
-    mutation.l_ffdcnt::text,
+    mutation.l_ffdcnt,
     mutation.nbpardisp,
     mutation.nbparapp,
     mutation.ffnblocmai,
@@ -336,10 +344,7 @@ CREATE OR REPLACE VIEW dvf.mutationtypo AS
 
 
 -- View: dvf.localtypo
-
--- DROP VIEW dvf.localtypo;
-
-
+DROP VIEW IF EXISTS dvf.localtypo CASCADE;
 CREATE OR REPLACE VIEW dvf.localtypo AS 
  SELECT local.iddispoloc,
     local.iddispopar,
@@ -490,7 +495,7 @@ CREATE OR REPLACE VIEW dvf.localtypo AS
             WHEN local.ffancst IS NULL THEN NULL::text
             ELSE NULL::text
         END::character varying(14) AS periode_const,
-    "substring"(local.idloc::text, 1, 5) AS idcom,
+    "substring"(local.idpar::text, 1, 5) AS idcom,
     st_x(st_centroid(
         CASE
             WHEN st_isempty(local.geomloc) THEN NULL::geometry
@@ -513,13 +518,13 @@ CREATE OR REPLACE VIEW dvf.localtypo AS
         END), 4326)) AS ybati_4326
    FROM dvf.mutationtypo,
     dvf.local
-  WHERE local.idmutation = mutationtypo.idmutation;
-
+  WHERE local.idmutation = mutationtypo.idmutation and local.coddep=mutationtypo.coddep;
+-- attention si plusieurs livraisons les idmutation ne sont plus uniques!!
   
 -------------------------------------------------- View: dvf.mutationtypo_geomlocmut
 -- vue de la vue mutationtypo avec une seule géomtrie
--- DROP VIEW dvf.mutationtypo_geomlocmut;
 
+DROP VIEW IF EXISTS dvf.mutationtypo_geomlocmut CASCADE;
 CREATE OR REPLACE VIEW dvf.mutationtypo_geomlocmut AS 
  SELECT mutationtypo.idmutation,
     mutationtypo.idmutinvar,
@@ -532,25 +537,25 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geomlocmut AS
     mutationtypo.coddep,
     mutationtypo.libnatmut,
     mutationtypo.nbartcgi,
-    mutationtypo.l_artcgi,
+    mutationtypo.l_artcgi::text,
     mutationtypo.vefa,
     mutationtypo.valeurfonc,
     mutationtypo.nbdispo,
     mutationtypo.nblot,
     mutationtypo.nbcomm,
-    mutationtypo.l_codinsee,
+    mutationtypo.l_codinsee::text,
     mutationtypo.nbsection,
-    mutationtypo.l_section,
+    mutationtypo.l_section::text,
     mutationtypo.nbpar,
-    mutationtypo.l_idpar,
+    mutationtypo.l_idpar::text,
     mutationtypo.nbparmut,
-    mutationtypo.l_idparmut,
+    mutationtypo.l_idparmut::text,
     mutationtypo.nbsuf,
     mutationtypo.sterr,
-    mutationtypo.l_dcnt,
+    mutationtypo.l_dcnt::text,
     mutationtypo.nbvolmut,
     mutationtypo.nblocmut,
-    mutationtypo.l_idlocmut,
+    mutationtypo.l_idlocmut::text,
     mutationtypo.nblocmai,
     mutationtypo.nblocapt,
     mutationtypo.nblocdep,
@@ -579,17 +584,17 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geomlocmut AS
     mutationtypo.smai3pp,
     mutationtypo.smai4pp,
     mutationtypo.smai5pp,
-    mutationtypo.l_idv,
-    mutationtypo.l_nomv,
+    mutationtypo.l_idv::text,
+    mutationtypo.l_nomv::text,
     mutationtypo.codtypprov,
     mutationtypo.fiabmaxv,
-    mutationtypo.l_ida,
-    mutationtypo.l_noma,
+    mutationtypo.l_ida::text,
+    mutationtypo.l_noma::text,
     mutationtypo.codtypproa,
     mutationtypo.fiabmaxa,
     mutationtypo.ffsparc,
     mutationtypo.ffsterr,
-    mutationtypo.l_ffdcnt,
+    mutationtypo.l_ffdcnt::text,
     mutationtypo.nbpardisp,
     mutationtypo.nbparapp,
     mutationtypo.ffnblocmai,
@@ -650,8 +655,7 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geomlocmut AS
 
  -------------------------------------------------- View: dvf.mutationtypo_geompar
 
--- DROP VIEW dvf.mutationtypo_geompar;
-
+DROP VIEW IF EXISTS dvf.mutationtypo_geompar CASCADE;
 CREATE OR REPLACE VIEW dvf.mutationtypo_geompar AS 
  SELECT mutationtypo.idmutation,
     mutationtypo.idmutinvar,
@@ -664,25 +668,25 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geompar AS
     mutationtypo.coddep,
     mutationtypo.libnatmut,
     mutationtypo.nbartcgi,
-    mutationtypo.l_artcgi,
+    mutationtypo.l_artcgi::text,
     mutationtypo.vefa,
     mutationtypo.valeurfonc,
     mutationtypo.nbdispo,
     mutationtypo.nblot,
     mutationtypo.nbcomm,
-    mutationtypo.l_codinsee,
+    mutationtypo.l_codinsee::text,
     mutationtypo.nbsection,
-    mutationtypo.l_section,
+    mutationtypo.l_section::text,
     mutationtypo.nbpar,
-    mutationtypo.l_idpar,
+    mutationtypo.l_idpar::text,
     mutationtypo.nbparmut,
-    mutationtypo.l_idparmut,
+    mutationtypo.l_idparmut::text,
     mutationtypo.nbsuf,
     mutationtypo.sterr,
-    mutationtypo.l_dcnt,
+    mutationtypo.l_dcnt::text,
     mutationtypo.nbvolmut,
     mutationtypo.nblocmut,
-    mutationtypo.l_idlocmut,
+    mutationtypo.l_idlocmut::text,
     mutationtypo.nblocmai,
     mutationtypo.nblocapt,
     mutationtypo.nblocdep,
@@ -711,17 +715,17 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geompar AS
     mutationtypo.smai3pp,
     mutationtypo.smai4pp,
     mutationtypo.smai5pp,
-    mutationtypo.l_idv,
-    mutationtypo.l_nomv,
+    mutationtypo.l_idv::text,
+    mutationtypo.l_nomv::text,
     mutationtypo.codtypprov,
     mutationtypo.fiabmaxv,
-    mutationtypo.l_ida,
-    mutationtypo.l_noma,
+    mutationtypo.l_ida::text,
+    mutationtypo.l_noma::text,
     mutationtypo.codtypproa,
     mutationtypo.fiabmaxa,
     mutationtypo.ffsparc,
     mutationtypo.ffsterr,
-    mutationtypo.l_ffdcnt,
+    mutationtypo.l_ffdcnt::text,
     mutationtypo.nbpardisp,
     mutationtypo.nbparapp,
     mutationtypo.ffnblocmai,
@@ -782,8 +786,7 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geompar AS
 
 ------------------------------------------ View: dvf.mutationtypo_geomparmut
 
--- DROP VIEW dvf.mutationtypo_geomparmut;
-
+DROP VIEW IF EXISTS dvf.mutationtypo_geomparmut CASCADE;
 CREATE OR REPLACE VIEW dvf.mutationtypo_geomparmut AS 
  SELECT mutationtypo.idmutation,
     mutationtypo.idmutinvar,
@@ -796,25 +799,25 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geomparmut AS
     mutationtypo.coddep,
     mutationtypo.libnatmut,
     mutationtypo.nbartcgi,
-    mutationtypo.l_artcgi,
+    mutationtypo.l_artcgi::text,
     mutationtypo.vefa,
     mutationtypo.valeurfonc,
     mutationtypo.nbdispo,
     mutationtypo.nblot,
     mutationtypo.nbcomm,
-    mutationtypo.l_codinsee,
+    mutationtypo.l_codinsee::text,
     mutationtypo.nbsection,
-    mutationtypo.l_section,
+    mutationtypo.l_section::text,
     mutationtypo.nbpar,
-    mutationtypo.l_idpar,
+    mutationtypo.l_idpar::text,
     mutationtypo.nbparmut,
-    mutationtypo.l_idparmut,
+    mutationtypo.l_idparmut::text,
     mutationtypo.nbsuf,
     mutationtypo.sterr,
-    mutationtypo.l_dcnt,
+    mutationtypo.l_dcnt::text,
     mutationtypo.nbvolmut,
     mutationtypo.nblocmut,
-    mutationtypo.l_idlocmut,
+    mutationtypo.l_idlocmut::text,
     mutationtypo.nblocmai,
     mutationtypo.nblocapt,
     mutationtypo.nblocdep,
@@ -843,17 +846,17 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geomparmut AS
     mutationtypo.smai3pp,
     mutationtypo.smai4pp,
     mutationtypo.smai5pp,
-    mutationtypo.l_idv,
-    mutationtypo.l_nomv,
+    mutationtypo.l_idv::text,
+    mutationtypo.l_nomv::text,
     mutationtypo.codtypprov,
     mutationtypo.fiabmaxv,
-    mutationtypo.l_ida,
-    mutationtypo.l_noma,
+    mutationtypo.l_ida::text,
+    mutationtypo.l_noma::text,
     mutationtypo.codtypproa,
     mutationtypo.fiabmaxa,
     mutationtypo.ffsparc,
     mutationtypo.ffsterr,
-    mutationtypo.l_ffdcnt,
+    mutationtypo.l_ffdcnt::text,
     mutationtypo.nbpardisp,
     mutationtypo.nbparapp,
     mutationtypo.ffnblocmai,
@@ -910,6 +913,4 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geomparmut AS
     mutationtypo.xbati_4326,
     mutationtypo.ybati_4326
    FROM dvf.mutationtypo;
-
-
  

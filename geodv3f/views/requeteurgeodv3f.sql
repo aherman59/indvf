@@ -1,8 +1,8 @@
 ## RECUPERER_POINT_CENTRAL
-SELECT avg(st_x(geomloc)::numeric), avg(st_y(geomloc)::numeric) 
-FROM dvf.disposition_parcelle 
-WHERE geomloc IS NOT NULL 
-LIMIT {0}
+SELECT avg(st_x(geomloc)::numeric), avg(st_y(geomloc)::numeric)
+FROM (SELECT geomloc from dvf.disposition_parcelle
+WHERE geomloc IS NOT NULL
+LIMIT {0}) t
 
 ## RECUPERER_MUTATIONS_DV3F_AVEC_GEOMETRIE
 SELECT idmutation, 

@@ -1,6 +1,6 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis projectname="GeoDVF" version="2.16.3">
-  <title>GeoDVF</title>
+<qgis projectname="" version="2.16.3">
+  <title></title>
   <autotransaction active="0"/>
   <evaluateDefaultValues active="0"/>
   <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
@@ -9,63 +9,48 @@
       <customproperties/>
       <layer-tree-group expanded="1" checked="Qt::Unchecked" name="nature de mutation">
         <customproperties/>
-        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="mutations_copier20161213110656658" name="mutations">
+        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="mutations_copier201701131650077389833" name="mutations">
           <customproperties>
             <property key="showFeatureCount" value="0"/>
           </customproperties>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="marchés immobiliers bâtis">
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="marchés immobiliers bâtis">
         <customproperties/>
-        <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="mutationtypo20161213114314292" name="mutation bâtie ponctuel">
+        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="mutationtypo2017011316500774023277" name="mutation bâtie ponctuel">
           <customproperties/>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="mutationtypo20161213114427645" name="mutation bâtie parcelle">
+        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="mutationtypo201701131650077427910" name="mutation bâtie parcelle">
           <customproperties/>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="localtypo20161213114546557" name="locaux">
+        <layer-tree-layer expanded="1" checked="Qt::Checked" id="localtypo2017011316500774411294" name="locaux">
           <customproperties/>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="locaux_typologie3_copier20161213124343039" name="logements (hors lot)">
-          <customproperties/>
-        </layer-tree-layer>
-        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="locaux_copier20161213115608037" name="test locaux typologie3">
+        <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="locaux_typologie3_copier2017011316500775216376" name="logements (hors lot)">
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::Checked" name="marchés fonciers non bâtis">
+      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="marchés fonciers non bâtis">
         <customproperties/>
-        <layer-tree-layer expanded="1" checked="Qt::Checked" id="mutation_non_bâtie_copier20161213133631486" name="mutation non bâtie">
+        <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="mutation_non_bâtie_copier201701131650077566686" name="mutation non bâtie">
           <customproperties>
             <property key="showFeatureCount" value="0"/>
           </customproperties>
         </layer-tree-layer>
       </layer-tree-group>
-    </layer-tree-group>
-    <layer-tree-group expanded="1" checked="Qt::Unchecked" name="Fonds de plan">
-      <customproperties/>
-      <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="OpenLayers_plugin_layer2016070614111605216536" name="Bing Aerial">
-        <customproperties/>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="OpenStreetMap20161017114527036" name="OpenStreetMap">
-        <customproperties/>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="OpenLayers_plugin_layer2016070614111605226759" name="Google Streets">
-        <customproperties/>
-      </layer-tree-layer>
     </layer-tree-group>
   </layer-tree-group>
   <relations/>
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>578666.0580000001937151</xmin>
-      <ymin>6039830.77825000043958426</ymin>
-      <xmax>1257924.58199999993667006</xmax>
-      <ymax>6459155.07175000105053186</ymax>
+      <xmin>1183210.83916607196442783</xmin>
+      <ymin>6104506.31659424584358931</ymin>
+      <xmax>1183411.22159450710751116</xmax>
+      <ymax>6104959.39676762465387583</ymax>
     </extent>
     <rotation>0</rotation>
-    <projections>1</projections>
+    <projections>0</projections>
     <destinationsrs>
       <spatialrefsys>
         <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
@@ -79,120 +64,16 @@
       </spatialrefsys>
     </destinationsrs>
     <rendermaptile>0</rendermaptile>
-    <layer_coordinate_transform_info>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Numéros_de_voie20160706140821545"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_sec_local220161014190959033"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_com_local20161014145914360"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Établissements_publics20160706140821588"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Lieux_dits20160706140820745"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutations_copier20161213110656658"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_non_batie_surf20160919145442498"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Objets_ponctuels20160706140821374"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Niveau_1_copier20150312115746937"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="commune_france20160919143247063"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="com_corse20160919145135808"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="OpenLayers_plugin_layer2016070614111605216536"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Immeuble_copier20150312132534171"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation20160726090907257"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Lieux_dits___étiquettes_20150313162453890"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_local_copier20150312124136796"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Voies__routes_et_chemins20160706140820395"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_copier20160726094046693"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_mutation_copier20150312114948828"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_mutation20150312130646875"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Immeuble_copier20150312132339234"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Bâti20150313162452046"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="parcelle20161021231012124"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="parcelle20161021231018249"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Objets_linéaires20160706140821468"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="OpenLayers_plugin_layer2016070614111605218701"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Lieux_dits___étiquettes_20160706140820787"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_local20150312114843953"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Noms_de_voies20160706140820440"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_non_batie_surf20160919144756931"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Photographies_aériennes__Couleurs_____Données_BdOrtho___Copyright_IGN_201607061411160526026"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_com_local_copier_copier20161014201645976"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="SCEXP25_2014_CORSE_L93_C1020161124081026646"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_mutation_copier20150312114938625"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Sections__étiquettes_20160706140820879"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_iris_local_copier20161014184559307"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="locaux_copier20161213115608037"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_batie_pct20160919143844425"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_mutation_copier20150312114951343"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Objets_linéaires__étiquettes_20160706140821509"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="local20160726090914356"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation20160726091129997"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Subdivisions_fiscales__étiquette_20150313162451828"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Parcelles20160706140820658"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="contour_commune_r9420161014105246767"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Immeuble_copier20150312131113093"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Subdivisions_fiscales__étiquette_20160706140820570"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutationtypo20161213114427645"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Bornes20160706140820922"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutationtypo20161213114037668"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="locaux20160919144702262"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_niv2_bâtie_copier20160726095100661"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_sec_local_copier20161014184553779"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Bâti20150317112047921"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Immeuble_copier20150312130509687"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutationtypo20161213114314292"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="locaux_typologie3_copier20161213124343039"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="contour_r9420161020094735727"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_non_bâtie_copier20161213133631486"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Surfaces20160706140821266"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_iris_local220161014190959021"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_mutation20150312114844421"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_batie_surf20160919144025540"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_com_local_copier20161014190027628"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Secteurs20160706140820490"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Appartement_copier20150312125454718"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Surfaces__étiquettes_20160706140821328"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_local_copier20150312124133687"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_copier20160726091553588"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Terrains_à_bâtir_copier20150312152751250"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Commune20160706140820195"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="dvf_agg_sec20161130114519213"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Cours_d_eau20160706140821106"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_sec_local20161014145914382"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Tronçons_de_route20160706140821183"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Sections20160706140820833"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutationtypo20161213110415068"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Unités_foncières20160706140821633"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Repères_géodésiques20160706140820997"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation_non_batie_surf20160919152129783"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Croix20160706140820961"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Immeuble_copier_copier20150312132548625"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="localtypo20161213114546557"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Objets_ponctuels__étiquettes_20160706140821423"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="parcelle20161021231018260"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Maison_copier20150312110524846"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Tronçons_de_route__étiquettes_20160706140821223"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_com_local220161014190958997"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Subdivisions_fiscales20160706140820531"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Murs__fossés__clotûres20160706140821059"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Les_natures_de_mutation_copier20150312125224718"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Cours_d_eau__étiquettes_20160706140821141"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="geo_mutation_copier20150312114955718"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="mutation20160726090852589"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Maison_copier20150312130330875"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="agg_iris_local20161014145914392"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Appartement_copier20150312125720375"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Bâti20160706140820618"/>
-      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Parcelles__étiquettes_20160706140820698"/>
-    </layer_coordinate_transform_info>
+    <layer_coordinate_transform_info/>
   </mapcanvas>
   <layer-tree-canvas>
     <custom-order enabled="0">
-      <item>OpenLayers_plugin_layer2016070614111605216536</item>
-      <item>OpenLayers_plugin_layer2016070614111605226759</item>
-      <item>OpenStreetMap20161017114527036</item>
-      <item>mutations_copier20161213110656658</item>
-      <item>mutationtypo20161213114314292</item>
-      <item>mutationtypo20161213114427645</item>
-      <item>localtypo20161213114546557</item>
-      <item>locaux_copier20161213115608037</item>
-      <item>locaux_typologie3_copier20161213124343039</item>
-      <item>mutation_non_bâtie_copier20161213133631486</item>
+      <item>mutations_copier201701131650077389833</item>
+      <item>mutationtypo2017011316500774023277</item>
+      <item>mutationtypo201701131650077427910</item>
+      <item>localtypo2017011316500774411294</item>
+      <item>locaux_typologie3_copier2017011316500775216376</item>
+      <item>mutation_non_bâtie_copier201701131650077566686</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
@@ -200,194 +81,44 @@
       <legendgroup open="true" checked="Qt::Unchecked" name="nature de mutation">
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="mutations" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="mutations_copier20161213110656658" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="mutations_copier201701131650077389833" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::Unchecked" name="marchés immobiliers bâtis">
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="mutation bâtie ponctuel" showFeatureCount="0">
-          <filegroup open="true" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="mutationtypo20161213114314292" visible="0"/>
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="marchés immobiliers bâtis">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="mutation bâtie ponctuel" showFeatureCount="0">
+          <filegroup open="false" hidden="false">
+            <legendlayerfile isInOverview="0" layerid="mutationtypo2017011316500774023277" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="mutation bâtie parcelle" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="mutationtypo20161213114427645" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="mutationtypo201701131650077427910" visible="0"/>
           </filegroup>
         </legendlayer>
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="locaux" showFeatureCount="0">
-          <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="localtypo20161213114546557" visible="0"/>
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="locaux" showFeatureCount="0">
+          <filegroup open="true" hidden="false">
+            <legendlayerfile isInOverview="0" layerid="localtypo2017011316500774411294" visible="1"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="logements (hors lot)" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="locaux_typologie3_copier20161213124343039" visible="0"/>
-          </filegroup>
-        </legendlayer>
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="test locaux typologie3" showFeatureCount="0">
-          <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="locaux_copier20161213115608037" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="locaux_typologie3_copier2017011316500775216376" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::Checked" name="marchés fonciers non bâtis">
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mutation non bâtie" showFeatureCount="0">
+      <legendgroup open="true" checked="Qt::Unchecked" name="marchés fonciers non bâtis">
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="mutation non bâtie" showFeatureCount="0">
           <filegroup open="true" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="mutation_non_bâtie_copier20161213133631486" visible="1"/>
+            <legendlayerfile isInOverview="0" layerid="mutation_non_bâtie_copier201701131650077566686" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
-    </legendgroup>
-    <legendgroup open="true" checked="Qt::Unchecked" name="Fonds de plan">
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Bing Aerial" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="OpenLayers_plugin_layer2016070614111605216536" visible="0"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="OpenStreetMap" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="OpenStreetMap20161017114527036" visible="0"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Google Streets" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="OpenLayers_plugin_layer2016070614111605226759" visible="0"/>
-        </filegroup>
-      </legendlayer>
     </legendgroup>
   </legend>
   <projectlayers>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="plugin" hasScaleBasedVisibilityFlag="0" name="openlayers">
-      <extent>
-        <xmin>-20037508.33999999985098839</xmin>
-        <ymin>-20037508.33999999985098839</ymin>
-        <xmax>20037508.33999999985098839</xmax>
-        <ymax>20037508.33999999985098839</ymax>
-      </extent>
-      <id>OpenLayers_plugin_layer2016070614111605216536</id>
-      <datasource>E:/Urbansimul_projetQgis/manosque</datasource>
-      <shortname>OpenLayers plugin layer</shortname>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>Bing Aerial</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs</proj4>
-          <srsid>3857</srsid>
-          <srid>3857</srid>
-          <authid>EPSG:3857</authid>
-          <description>WGS 84 / Pseudo Mercator</description>
-          <projectionacronym>merc</projectionacronym>
-          <ellipsoidacronym>WGS84</ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <customproperties>
-        <property key="ol_layer_type" value="Bing Aerial"/>
-      </customproperties>
-    </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="plugin" hasScaleBasedVisibilityFlag="0" name="openlayers">
-      <extent>
-        <xmin>-20037508.33999999985098839</xmin>
-        <ymin>-20037508.33999999985098839</ymin>
-        <xmax>20037508.33999999985098839</xmax>
-        <ymax>20037508.33999999985098839</ymax>
-      </extent>
-      <id>OpenLayers_plugin_layer2016070614111605226759</id>
-      <datasource>E:/Urbansimul_projetQgis/manosque</datasource>
-      <shortname>OpenLayers plugin layer</shortname>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>Google Streets</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs</proj4>
-          <srsid>3857</srsid>
-          <srid>3857</srid>
-          <authid>EPSG:3857</authid>
-          <description>WGS 84 / Pseudo Mercator</description>
-          <projectionacronym>merc</projectionacronym>
-          <ellipsoidacronym>WGS84</ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <customproperties>
-        <property key="ol_layer_type" value="Google Streets"/>
-      </customproperties>
-    </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-      <extent>
-        <xmin>-20037508.33999999985098839</xmin>
-        <ymin>-20037508.33999999985098839</ymin>
-        <xmax>20037508.33999999985098839</xmax>
-        <ymax>20037508.33999999985098839</ymax>
-      </extent>
-      <id>OpenStreetMap20161017114527036</id>
-      <datasource>&lt;GDAL_WMS>
-  &lt;Service name="TMS">
-    &lt;ServerUrl>http://tile.openstreetmap.org/${z}/${x}/${y}.png&lt;/ServerUrl>
-  &lt;/Service>
-  &lt;DataWindow>
-    &lt;UpperLeftX>-20037508.34&lt;/UpperLeftX>
-    &lt;UpperLeftY>20037508.34&lt;/UpperLeftY>
-    &lt;LowerRightX>20037508.34&lt;/LowerRightX>
-    &lt;LowerRightY>-20037508.34&lt;/LowerRightY>
-    &lt;TileLevel>19&lt;/TileLevel>
-    &lt;TileCountX>1&lt;/TileCountX>
-    &lt;TileCountY>1&lt;/TileCountY>
-    &lt;YOrigin>top&lt;/YOrigin>
-  &lt;/DataWindow>
-  &lt;Projection>EPSG:3857&lt;/Projection>
-  &lt;BlockSizeX>256&lt;/BlockSizeX>
-  &lt;BlockSizeY>256&lt;/BlockSizeY>
-  &lt;BandsCount>3&lt;/BandsCount>
-  &lt;Cache />
-&lt;/GDAL_WMS>
-</datasource>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>OpenStreetMap</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs</proj4>
-          <srsid>3857</srsid>
-          <srid>3857</srid>
-          <authid>EPSG:3857</authid>
-          <description>WGS 84 / Pseudo Mercator</description>
-          <projectionacronym>merc</projectionacronym>
-          <ellipsoidacronym>WGS84</ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <customproperties>
-        <property key="identify/format" value="Value"/>
-        <property key="ol_layer_type" value="OpenStreetMap"/>
-      </customproperties>
-      <provider>gdal</provider>
-      <noData>
-        <noDataList bandNo="1" useSrcNoData="0"/>
-        <noDataList bandNo="2" useSrcNoData="0"/>
-        <noDataList bandNo="3" useSrcNoData="0"/>
-      </noData>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
-      </map-layer-style-manager>
-      <pipe>
-        <rasterrenderer opacity="1" alphaBand="-1" blueBand="3" greenBand="2" type="multibandcolor" redBand="1">
-          <rasterTransparency/>
-        </rasterrenderer>
-        <brightnesscontrast brightness="0" contrast="0"/>
-        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
-        <rasterresampler maxOversampling="2"/>
-      </pipe>
-      <blendMode>0</blendMode>
-    </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>localtypo20161213114546557</id>
+      <id>localtypo2017011316500774411294</id>
       <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql=</datasource>
       <keywordList>
         <value></value>
@@ -1418,7 +1149,7 @@
         </symbol>
       </SingleCategoryDiagramRenderer>
       <DiagramLayerSettings yPosColumn="-1" showColumn="0" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
-      <annotationform>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</annotationform>
+      <annotationform>.</annotationform>
       <aliases>
         <alias field="anciennete" index="39" name=""/>
         <alias field="anneemut" index="12" name=""/>
@@ -1641,7 +1372,7 @@
       <editform>./interface.ui</editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
-      <editforminitfilepath>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</editforminitfilepath>
+      <editforminitfilepath>.</editforminitfilepath>
       <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
 """
 Les formulaires QGIS peuvent avoir une fonction Python qui sera appelée à l'ouverture du formulaire.
@@ -1672,1683 +1403,13 @@ def my_form_open(dialog, layer, feature):
       </conditionalstyles>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>locaux_copier20161213115608037</id>
-      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql=</datasource>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>test locaux typologie3</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
-          <srsid>145</srsid>
-          <srid>2154</srid>
-          <authid>EPSG:2154</authid>
-          <description>RGF93 / Lambert-93</description>
-          <projectionacronym>lcc</projectionacronym>
-          <ellipsoidacronym>GRS80</ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <provider encoding="UTF-8">postgres</provider>
-      <previewExpression></previewExpression>
-      <vectorjoins/>
-      <layerDependencies/>
-      <expressionfields/>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
-      </map-layer-style-manager>
-      <edittypes>
-        <edittype widgetv2type="TextEdit" name="iddispoloc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="iddispopar">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="idpar">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="idmutation">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="idloc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="identloc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="codtyploc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="libtyploc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbpprinc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="sbati">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="coddep">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="datemut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="anneemut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="moismut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbmutjour">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbmutannee">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="datemutpre">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_idmutpre">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="datemutsui">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_idmutsui">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffidcpv">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="fiabilitev">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_idv">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbdroiprov">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_nomv">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbdroigesv">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_nomgesv">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="codtypprov">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffidcpa">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="fiabilitea">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_ida">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbdroiproa">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_noma">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbdroigesa">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_nomgesa">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="codtypproa">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffdatemut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="exactffdvf">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffancst">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="anciennete">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffidbat">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffcodinsee">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffcommune">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnovoie">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffbtq">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffvoie">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="fftyppdl">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffclascad">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffvalloc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffcodeval">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="fflibeval">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffcchgeval">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffdchgeval">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="stabilitel">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffctyploc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffltyploc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffcnatloc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="fflnatloc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffcodnace">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="fflibnace">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="fflochab">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffoccv">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffocca">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffshab">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffsdep">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffspro">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffsbati">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpsam">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpcha">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpcu8">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpcu9">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpsea">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpann">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpprinc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpgarag">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpagrem">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpterra">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbppisci">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffnbpcav">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffanref">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffanvend">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ffanach">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="srcgeom">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="parcvect">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="sterr">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="segmusage">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="codtypbien">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="libtypbien">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nblocmut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="libnatmut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbdispo">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbcomm">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_codinsee">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nblocmai">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nblocapt">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nblocdep">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nblocact">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="sbatact">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_idlocmut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbsuf">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbparmut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_idparmut">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_idpar">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="refdoc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="codservch">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_artcgi">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="nbartcgi">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="valeurfonc">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="e_m2_terr">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="e_m2_bati">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="e_m2_bat_h">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="occupation">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="l_dcnt">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="pres_lot">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="typologie1">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="typologie2">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="typologie3">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="typologie4">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="localseul">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="periode_const">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="idcom">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="xbati">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ybati">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="xbati_4326">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ybati_4326">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-      </edittypes>
-      <renderer-v2 attr="typologie3" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
-        <categories>
-          <category render="true" symbol="0" value="2APP" label="2APP"/>
-          <category render="true" symbol="1" value="ACT" label="ACT"/>
-          <category render="true" symbol="2" value="APP" label="APP"/>
-          <category render="true" symbol="3" value="APP-ACT" label="APP-ACT"/>
-          <category render="true" symbol="4" value="Bâti indéfini" label="Bâti indéfini"/>
-          <category render="true" symbol="5" value="BATIAGRI" label="BATIAGRI"/>
-          <category render="true" symbol="6" value="BATI-Autres" label="BATI-Autres"/>
-          <category render="true" symbol="7" value="DEP" label="DEP"/>
-          <category render="true" symbol="8" value="DEPs" label="DEPs"/>
-          <category render="true" symbol="9" value="IMM RESID" label="IMM RESID"/>
-          <category render="true" symbol="10" value="MI-ACT" label="MI-ACT"/>
-          <category render="true" symbol="11" value="MIE" label="MIE"/>
-          <category render="true" symbol="12" value="MIJ" label="MIJ"/>
-          <category render="true" symbol="13" value="MIs-APPs" label="MIs-APPs"/>
-          <category render="true" symbol="14" value="MITs" label="MITs"/>
-          <category render="true" symbol="15" value="MIV" label="MIV"/>
-          <category render="true" symbol="16" value="MIVs" label="MIVs"/>
-          <category render="true" symbol="17" value="MIXTE HAB-ACT" label="MIXTE HAB-ACT"/>
-          <category render="true" symbol="18" value="PRE Bati" label="PRE Bati"/>
-          <category render="true" symbol="19" value="T Bati" label="T Bati"/>
-          <category render="true" symbol="20" value="TAB" label="TAB"/>
-          <category render="true" symbol="21" value="VE Bati" label="VE Bati"/>
-          <category render="true" symbol="22" value="VEFA-2APP" label="VEFA-2APP"/>
-          <category render="true" symbol="23" value="VEFA-ACT" label="VEFA-ACT"/>
-          <category render="true" symbol="24" value="VEFA-ACTs" label="VEFA-ACTs"/>
-          <category render="true" symbol="25" value="VEFA-APP" label="VEFA-APP"/>
-          <category render="true" symbol="26" value="VEFA-APPs" label="VEFA-APPs"/>
-          <category render="true" symbol="27" value="VEFA-Autres" label="VEFA-Autres"/>
-          <category render="true" symbol="28" value="VEFA-MI" label="VEFA-MI"/>
-          <category render="true" symbol="29" value="VEFA-MIs" label="VEFA-MIs"/>
-          <category render="true" symbol="30" value="VI Bati" label="VI Bati"/>
-          <category render="true" symbol="31" value="Volume" label="Volume"/>
-          <category render="true" symbol="32" value="" label=""/>
-        </categories>
-        <symbols>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="247,251,255,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="1">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="241,248,254,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="10">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="182,212,234,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="11">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="172,208,230,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="12">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="163,204,227,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="13">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="152,199,224,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="14">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="139,192,221,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="15">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="127,185,219,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="16">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="115,179,216,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="17">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="103,172,213,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="18">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="93,165,209,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="19">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="84,158,205,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="2">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="235,244,252,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="20">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="74,151,201,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="21">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="64,144,197,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="22">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="56,137,193,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="23">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="48,129,189,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="24">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="40,121,185,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="25">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="32,113,181,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="26">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="26,104,174,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="27">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="19,96,168,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="28">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="13,88,161,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="29">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="8,79,153,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="3">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="229,240,250,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="30">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="8,68,138,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="31">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="8,58,122,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="32">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="8,48,107,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="4">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="223,236,248,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="5">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="218,232,246,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="6">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="212,228,244,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="7">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="206,224,242,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="8">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="200,221,240,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="9">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="192,217,237,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-        </symbols>
-        <source-symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="166,85,210,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="no"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="area"/>
-              <prop k="size" v="3"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-        </source-symbol>
-        <colorramp type="gradient" name="[source]">
-          <prop k="color1" v="247,251,255,255"/>
-          <prop k="color2" v="8,48,107,255"/>
-          <prop k="discrete" v="0"/>
-          <prop k="stops" v="0.13;222,235,247,255:0.26;198,219,239,255:0.39;158,202,225,255:0.52;107,174,214,255:0.65;66,146,198,255:0.78;33,113,181,255:0.9;8,81,156,255"/>
-        </colorramp>
-        <invertedcolorramp value="0"/>
-        <rotation/>
-        <sizescale scalemethod="diameter"/>
-      </renderer-v2>
-      <labeling type="simple"/>
-      <customproperties>
-        <property key="embeddedWidgets/count" value="0"/>
-        <property key="labeling" value="pal"/>
-        <property key="labeling/addDirectionSymbol" value="false"/>
-        <property key="labeling/angleOffset" value="0"/>
-        <property key="labeling/blendMode" value="0"/>
-        <property key="labeling/bufferBlendMode" value="0"/>
-        <property key="labeling/bufferColorA" value="255"/>
-        <property key="labeling/bufferColorB" value="255"/>
-        <property key="labeling/bufferColorG" value="255"/>
-        <property key="labeling/bufferColorR" value="255"/>
-        <property key="labeling/bufferDraw" value="false"/>
-        <property key="labeling/bufferJoinStyle" value="64"/>
-        <property key="labeling/bufferNoFill" value="false"/>
-        <property key="labeling/bufferSize" value="1"/>
-        <property key="labeling/bufferSizeInMapUnits" value="false"/>
-        <property key="labeling/bufferSizeMapUnitMaxScale" value="0"/>
-        <property key="labeling/bufferSizeMapUnitMinScale" value="0"/>
-        <property key="labeling/bufferSizeMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/bufferTransp" value="0"/>
-        <property key="labeling/centroidInside" value="false"/>
-        <property key="labeling/centroidWhole" value="false"/>
-        <property key="labeling/decimals" value="3"/>
-        <property key="labeling/displayAll" value="false"/>
-        <property key="labeling/dist" value="0"/>
-        <property key="labeling/distInMapUnits" value="false"/>
-        <property key="labeling/distMapUnitMaxScale" value="0"/>
-        <property key="labeling/distMapUnitMinScale" value="0"/>
-        <property key="labeling/distMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/drawLabels" value="true"/>
-        <property key="labeling/enabled" value="true"/>
-        <property key="labeling/fieldName" value="CASE WHEN &quot;valeurfonc&quot;>&quot;sbati&quot; THEN  &quot;typologie3&quot;||'\n'||&quot;valeurfonc&quot;||' €\n'||round( &quot;e_m2_bati&quot; )||' €/m²' ELSE &quot;typologie3&quot;||'\n'||&quot;valeurfonc&quot;||' €\n'||( &quot;e_m2_bati&quot;) || ' €/m²' END "/>
-        <property key="labeling/fitInPolygonOnly" value="false"/>
-        <property key="labeling/fontBold" value="false"/>
-        <property key="labeling/fontCapitals" value="0"/>
-        <property key="labeling/fontFamily" value="MS Shell Dlg 2"/>
-        <property key="labeling/fontItalic" value="false"/>
-        <property key="labeling/fontLetterSpacing" value="0"/>
-        <property key="labeling/fontLimitPixelSize" value="false"/>
-        <property key="labeling/fontMaxPixelSize" value="10000"/>
-        <property key="labeling/fontMinPixelSize" value="3"/>
-        <property key="labeling/fontSize" value="8.25"/>
-        <property key="labeling/fontSizeInMapUnits" value="false"/>
-        <property key="labeling/fontSizeMapUnitMaxScale" value="0"/>
-        <property key="labeling/fontSizeMapUnitMinScale" value="0"/>
-        <property key="labeling/fontSizeMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/fontStrikeout" value="false"/>
-        <property key="labeling/fontUnderline" value="false"/>
-        <property key="labeling/fontWeight" value="50"/>
-        <property key="labeling/fontWordSpacing" value="0"/>
-        <property key="labeling/formatNumbers" value="false"/>
-        <property key="labeling/isExpression" value="true"/>
-        <property key="labeling/labelOffsetInMapUnits" value="true"/>
-        <property key="labeling/labelOffsetMapUnitMaxScale" value="0"/>
-        <property key="labeling/labelOffsetMapUnitMinScale" value="0"/>
-        <property key="labeling/labelOffsetMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/labelPerPart" value="false"/>
-        <property key="labeling/leftDirectionSymbol" value="&lt;"/>
-        <property key="labeling/limitNumLabels" value="false"/>
-        <property key="labeling/maxCurvedCharAngleIn" value="20"/>
-        <property key="labeling/maxCurvedCharAngleOut" value="-20"/>
-        <property key="labeling/maxNumLabels" value="2000"/>
-        <property key="labeling/mergeLines" value="false"/>
-        <property key="labeling/minFeatureSize" value="0"/>
-        <property key="labeling/multilineAlign" value="0"/>
-        <property key="labeling/multilineHeight" value="1"/>
-        <property key="labeling/namedStyle" value="Normal"/>
-        <property key="labeling/obstacle" value="true"/>
-        <property key="labeling/obstacleFactor" value="1"/>
-        <property key="labeling/obstacleType" value="0"/>
-        <property key="labeling/offsetType" value="0"/>
-        <property key="labeling/placeDirectionSymbol" value="0"/>
-        <property key="labeling/placement" value="0"/>
-        <property key="labeling/placementFlags" value="0"/>
-        <property key="labeling/plussign" value="false"/>
-        <property key="labeling/predefinedPositionOrder" value="TR,TL,BR,BL,R,L,TSR,BSR"/>
-        <property key="labeling/preserveRotation" value="true"/>
-        <property key="labeling/previewBkgrdColor" value="#ffffff"/>
-        <property key="labeling/priority" value="5"/>
-        <property key="labeling/quadOffset" value="4"/>
-        <property key="labeling/repeatDistance" value="0"/>
-        <property key="labeling/repeatDistanceMapUnitMaxScale" value="0"/>
-        <property key="labeling/repeatDistanceMapUnitMinScale" value="0"/>
-        <property key="labeling/repeatDistanceMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/repeatDistanceUnit" value="1"/>
-        <property key="labeling/reverseDirectionSymbol" value="false"/>
-        <property key="labeling/rightDirectionSymbol" value=">"/>
-        <property key="labeling/scaleMax" value="5000"/>
-        <property key="labeling/scaleMin" value="1"/>
-        <property key="labeling/scaleVisibility" value="true"/>
-        <property key="labeling/shadowBlendMode" value="6"/>
-        <property key="labeling/shadowColorB" value="0"/>
-        <property key="labeling/shadowColorG" value="0"/>
-        <property key="labeling/shadowColorR" value="0"/>
-        <property key="labeling/shadowDraw" value="false"/>
-        <property key="labeling/shadowOffsetAngle" value="135"/>
-        <property key="labeling/shadowOffsetDist" value="1"/>
-        <property key="labeling/shadowOffsetGlobal" value="true"/>
-        <property key="labeling/shadowOffsetMapUnitMaxScale" value="0"/>
-        <property key="labeling/shadowOffsetMapUnitMinScale" value="0"/>
-        <property key="labeling/shadowOffsetMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/shadowOffsetUnits" value="1"/>
-        <property key="labeling/shadowRadius" value="1.5"/>
-        <property key="labeling/shadowRadiusAlphaOnly" value="false"/>
-        <property key="labeling/shadowRadiusMapUnitMaxScale" value="0"/>
-        <property key="labeling/shadowRadiusMapUnitMinScale" value="0"/>
-        <property key="labeling/shadowRadiusMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/shadowRadiusUnits" value="1"/>
-        <property key="labeling/shadowScale" value="100"/>
-        <property key="labeling/shadowTransparency" value="30"/>
-        <property key="labeling/shadowUnder" value="0"/>
-        <property key="labeling/shapeBlendMode" value="0"/>
-        <property key="labeling/shapeBorderColorA" value="255"/>
-        <property key="labeling/shapeBorderColorB" value="128"/>
-        <property key="labeling/shapeBorderColorG" value="128"/>
-        <property key="labeling/shapeBorderColorR" value="128"/>
-        <property key="labeling/shapeBorderWidth" value="0"/>
-        <property key="labeling/shapeBorderWidthMapUnitMaxScale" value="0"/>
-        <property key="labeling/shapeBorderWidthMapUnitMinScale" value="0"/>
-        <property key="labeling/shapeBorderWidthMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/shapeBorderWidthUnits" value="1"/>
-        <property key="labeling/shapeDraw" value="false"/>
-        <property key="labeling/shapeFillColorA" value="255"/>
-        <property key="labeling/shapeFillColorB" value="255"/>
-        <property key="labeling/shapeFillColorG" value="255"/>
-        <property key="labeling/shapeFillColorR" value="255"/>
-        <property key="labeling/shapeJoinStyle" value="64"/>
-        <property key="labeling/shapeOffsetMapUnitMaxScale" value="0"/>
-        <property key="labeling/shapeOffsetMapUnitMinScale" value="0"/>
-        <property key="labeling/shapeOffsetMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/shapeOffsetUnits" value="1"/>
-        <property key="labeling/shapeOffsetX" value="0"/>
-        <property key="labeling/shapeOffsetY" value="0"/>
-        <property key="labeling/shapeRadiiMapUnitMaxScale" value="0"/>
-        <property key="labeling/shapeRadiiMapUnitMinScale" value="0"/>
-        <property key="labeling/shapeRadiiMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/shapeRadiiUnits" value="1"/>
-        <property key="labeling/shapeRadiiX" value="0"/>
-        <property key="labeling/shapeRadiiY" value="0"/>
-        <property key="labeling/shapeRotation" value="0"/>
-        <property key="labeling/shapeRotationType" value="0"/>
-        <property key="labeling/shapeSVGFile" value=""/>
-        <property key="labeling/shapeSizeMapUnitMaxScale" value="0"/>
-        <property key="labeling/shapeSizeMapUnitMinScale" value="0"/>
-        <property key="labeling/shapeSizeMapUnitScale" value="0,0,0,0,0,0"/>
-        <property key="labeling/shapeSizeType" value="0"/>
-        <property key="labeling/shapeSizeUnits" value="1"/>
-        <property key="labeling/shapeSizeX" value="0"/>
-        <property key="labeling/shapeSizeY" value="0"/>
-        <property key="labeling/shapeTransparency" value="0"/>
-        <property key="labeling/shapeType" value="0"/>
-        <property key="labeling/substitutions" value="&lt;substitutions/>"/>
-        <property key="labeling/textColorA" value="255"/>
-        <property key="labeling/textColorB" value="0"/>
-        <property key="labeling/textColorG" value="0"/>
-        <property key="labeling/textColorR" value="0"/>
-        <property key="labeling/textTransp" value="0"/>
-        <property key="labeling/upsidedownLabels" value="0"/>
-        <property key="labeling/useSubstitutions" value="false"/>
-        <property key="labeling/wrapChar" value=""/>
-        <property key="labeling/xOffset" value="0"/>
-        <property key="labeling/yOffset" value="0"/>
-        <property key="labeling/zIndex" value="0"/>
-        <property key="variableNames" value="_fields_"/>
-        <property key="variableValues" value=""/>
-      </customproperties>
-      <blendMode>0</blendMode>
-      <featureBlendMode>5</featureBlendMode>
-      <layerTransparency>0</layerTransparency>
-      <displayfield>id_local</displayfield>
-      <label>0</label>
-      <labelattributes>
-        <label fieldname="" text="Étiquette"/>
-        <family fieldname="" name="MS Shell Dlg 2"/>
-        <size fieldname="" units="pt" value="12"/>
-        <bold fieldname="" on="0"/>
-        <italic fieldname="" on="0"/>
-        <underline fieldname="" on="0"/>
-        <strikeout fieldname="" on="0"/>
-        <color fieldname="" red="0" blue="0" green="0"/>
-        <x fieldname=""/>
-        <y fieldname=""/>
-        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
-        <angle fieldname="" value="0" auto="0"/>
-        <alignment fieldname="" value="center"/>
-        <buffercolor fieldname="" red="255" blue="255" green="255"/>
-        <buffersize fieldname="" units="pt" value="1"/>
-        <bufferenabled fieldname="" on=""/>
-        <multilineenabled fieldname="" on=""/>
-        <selectedonly on=""/>
-      </labelattributes>
-      <SingleCategoryDiagramRenderer diagramType="Pie" sizeLegend="0" attributeLegend="1">
-        <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" sizeScale="0,0,0,0,0,0" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" lineSizeScale="0,0,0,0,0,0" sizeType="MM" lineSizeType="MM" minScaleDenominator="100000">
-          <fontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
-          <attribute field="" color="#000000" label=""/>
-        </DiagramCategory>
-        <symbol alpha="1" clip_to_extent="1" type="marker" name="sizeSymbol">
-          <layer pass="0" class="SimpleMarker" locked="0">
-            <prop k="angle" v="0"/>
-            <prop k="color" v="255,0,0,255"/>
-            <prop k="horizontal_anchor_point" v="1"/>
-            <prop k="joinstyle" v="bevel"/>
-            <prop k="name" v="circle"/>
-            <prop k="offset" v="0,0"/>
-            <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-            <prop k="offset_unit" v="MM"/>
-            <prop k="outline_color" v="0,0,0,255"/>
-            <prop k="outline_style" v="solid"/>
-            <prop k="outline_width" v="0"/>
-            <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-            <prop k="outline_width_unit" v="MM"/>
-            <prop k="scale_method" v="diameter"/>
-            <prop k="size" v="2"/>
-            <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-            <prop k="size_unit" v="MM"/>
-            <prop k="vertical_anchor_point" v="1"/>
-          </layer>
-        </symbol>
-      </SingleCategoryDiagramRenderer>
-      <DiagramLayerSettings yPosColumn="-1" showColumn="0" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
-      <annotationform>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</annotationform>
-      <aliases>
-        <alias field="anciennete" index="39" name=""/>
-        <alias field="anneemut" index="12" name=""/>
-        <alias field="coddep" index="10" name=""/>
-        <alias field="codtyploc" index="6" name=""/>
-        <alias field="codtypproa" index="35" name=""/>
-        <alias field="codtypprov" index="27" name=""/>
-        <alias field="datemut" index="11" name=""/>
-        <alias field="datemutpre" index="16" name=""/>
-        <alias field="datemutsui" index="18" name=""/>
-        <alias field="exactffdvf" index="37" name=""/>
-        <alias field="ffanach" index="81" name=""/>
-        <alias field="ffancst" index="38" name=""/>
-        <alias field="ffanref" index="79" name=""/>
-        <alias field="ffanvend" index="80" name=""/>
-        <alias field="ffbtq" index="44" name=""/>
-        <alias field="ffcchgeval" index="51" name=""/>
-        <alias field="ffclascad" index="47" name=""/>
-        <alias field="ffcnatloc" index="56" name=""/>
-        <alias field="ffcodeval" index="49" name=""/>
-        <alias field="ffcodinsee" index="41" name=""/>
-        <alias field="ffcodnace" index="58" name=""/>
-        <alias field="ffcommune" index="42" name=""/>
-        <alias field="ffctyploc" index="54" name=""/>
-        <alias field="ffdatemut" index="36" name=""/>
-        <alias field="ffdchgeval" index="52" name=""/>
-        <alias field="ffidbat" index="40" name=""/>
-        <alias field="ffidcpa" index="28" name=""/>
-        <alias field="ffidcpv" index="20" name=""/>
-        <alias field="fflibeval" index="50" name=""/>
-        <alias field="fflibnace" index="59" name=""/>
-        <alias field="fflnatloc" index="57" name=""/>
-        <alias field="fflochab" index="60" name=""/>
-        <alias field="ffltyploc" index="55" name=""/>
-        <alias field="ffnbpagrem" index="75" name=""/>
-        <alias field="ffnbpann" index="72" name=""/>
-        <alias field="ffnbpcav" index="78" name=""/>
-        <alias field="ffnbpcha" index="68" name=""/>
-        <alias field="ffnbpcu8" index="69" name=""/>
-        <alias field="ffnbpcu9" index="70" name=""/>
-        <alias field="ffnbpgarag" index="74" name=""/>
-        <alias field="ffnbppisci" index="77" name=""/>
-        <alias field="ffnbpprinc" index="73" name=""/>
-        <alias field="ffnbpsam" index="67" name=""/>
-        <alias field="ffnbpsea" index="71" name=""/>
-        <alias field="ffnbpterra" index="76" name=""/>
-        <alias field="ffnovoie" index="43" name=""/>
-        <alias field="ffocca" index="62" name=""/>
-        <alias field="ffoccv" index="61" name=""/>
-        <alias field="ffsbati" index="66" name=""/>
-        <alias field="ffsdep" index="64" name=""/>
-        <alias field="ffshab" index="63" name=""/>
-        <alias field="ffspro" index="65" name=""/>
-        <alias field="fftyppdl" index="46" name=""/>
-        <alias field="ffvalloc" index="48" name=""/>
-        <alias field="ffvoie" index="45" name=""/>
-        <alias field="fiabilitea" index="29" name=""/>
-        <alias field="fiabilitev" index="21" name=""/>
-        <alias field="iddispoloc" index="0" name=""/>
-        <alias field="iddispopar" index="1" name=""/>
-        <alias field="identloc" index="5" name="identifiant du local"/>
-        <alias field="idloc" index="4" name=""/>
-        <alias field="idmutation" index="3" name=""/>
-        <alias field="idpar" index="2" name=""/>
-        <alias field="l_ida" index="30" name=""/>
-        <alias field="l_idmutpre" index="17" name=""/>
-        <alias field="l_idmutsui" index="19" name=""/>
-        <alias field="l_idv" index="22" name=""/>
-        <alias field="l_noma" index="32" name=""/>
-        <alias field="l_nomgesa" index="34" name=""/>
-        <alias field="l_nomgesv" index="26" name=""/>
-        <alias field="l_nomv" index="24" name=""/>
-        <alias field="libtyploc" index="7" name=""/>
-        <alias field="moismut" index="13" name=""/>
-        <alias field="nbdroigesa" index="33" name=""/>
-        <alias field="nbdroigesv" index="25" name=""/>
-        <alias field="nbdroiproa" index="31" name=""/>
-        <alias field="nbdroiprov" index="23" name=""/>
-        <alias field="nbmutannee" index="15" name=""/>
-        <alias field="nbmutjour" index="14" name=""/>
-        <alias field="nbpprinc" index="8" name=""/>
-        <alias field="parcvect" index="83" name=""/>
-        <alias field="sbati" index="9" name=""/>
-        <alias field="srcgeom" index="82" name=""/>
-        <alias field="stabilitel" index="53" name=""/>
-      </aliases>
-      <excludeAttributesWMS/>
-      <excludeAttributesWFS/>
-      <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
-        <columns>
-          <column width="-1" hidden="0" type="field" name="iddispoloc"/>
-          <column width="-1" hidden="0" type="field" name="iddispopar"/>
-          <column width="-1" hidden="0" type="field" name="idpar"/>
-          <column width="-1" hidden="0" type="field" name="idmutation"/>
-          <column width="-1" hidden="0" type="field" name="idloc"/>
-          <column width="-1" hidden="0" type="field" name="identloc"/>
-          <column width="-1" hidden="0" type="field" name="codtyploc"/>
-          <column width="-1" hidden="0" type="field" name="libtyploc"/>
-          <column width="-1" hidden="0" type="field" name="nbpprinc"/>
-          <column width="-1" hidden="0" type="field" name="sbati"/>
-          <column width="-1" hidden="0" type="field" name="coddep"/>
-          <column width="-1" hidden="0" type="field" name="datemut"/>
-          <column width="-1" hidden="0" type="field" name="anneemut"/>
-          <column width="-1" hidden="0" type="field" name="moismut"/>
-          <column width="-1" hidden="0" type="field" name="nbmutjour"/>
-          <column width="-1" hidden="0" type="field" name="nbmutannee"/>
-          <column width="-1" hidden="0" type="field" name="datemutpre"/>
-          <column width="-1" hidden="0" type="field" name="l_idmutpre"/>
-          <column width="-1" hidden="0" type="field" name="datemutsui"/>
-          <column width="-1" hidden="0" type="field" name="l_idmutsui"/>
-          <column width="-1" hidden="0" type="field" name="ffidcpv"/>
-          <column width="-1" hidden="0" type="field" name="fiabilitev"/>
-          <column width="-1" hidden="0" type="field" name="l_idv"/>
-          <column width="-1" hidden="0" type="field" name="nbdroiprov"/>
-          <column width="-1" hidden="0" type="field" name="l_nomv"/>
-          <column width="-1" hidden="0" type="field" name="nbdroigesv"/>
-          <column width="-1" hidden="0" type="field" name="l_nomgesv"/>
-          <column width="-1" hidden="0" type="field" name="codtypprov"/>
-          <column width="-1" hidden="0" type="field" name="ffidcpa"/>
-          <column width="-1" hidden="0" type="field" name="fiabilitea"/>
-          <column width="-1" hidden="0" type="field" name="l_ida"/>
-          <column width="-1" hidden="0" type="field" name="nbdroiproa"/>
-          <column width="-1" hidden="0" type="field" name="l_noma"/>
-          <column width="-1" hidden="0" type="field" name="nbdroigesa"/>
-          <column width="-1" hidden="0" type="field" name="l_nomgesa"/>
-          <column width="-1" hidden="0" type="field" name="codtypproa"/>
-          <column width="-1" hidden="0" type="field" name="ffdatemut"/>
-          <column width="-1" hidden="0" type="field" name="exactffdvf"/>
-          <column width="-1" hidden="0" type="field" name="ffancst"/>
-          <column width="-1" hidden="0" type="field" name="anciennete"/>
-          <column width="-1" hidden="0" type="field" name="ffidbat"/>
-          <column width="-1" hidden="0" type="field" name="ffcodinsee"/>
-          <column width="-1" hidden="0" type="field" name="ffcommune"/>
-          <column width="-1" hidden="0" type="field" name="ffnovoie"/>
-          <column width="-1" hidden="0" type="field" name="ffbtq"/>
-          <column width="-1" hidden="0" type="field" name="ffvoie"/>
-          <column width="-1" hidden="0" type="field" name="fftyppdl"/>
-          <column width="-1" hidden="0" type="field" name="ffclascad"/>
-          <column width="-1" hidden="0" type="field" name="ffvalloc"/>
-          <column width="-1" hidden="0" type="field" name="ffcodeval"/>
-          <column width="-1" hidden="0" type="field" name="fflibeval"/>
-          <column width="-1" hidden="0" type="field" name="ffcchgeval"/>
-          <column width="-1" hidden="0" type="field" name="ffdchgeval"/>
-          <column width="-1" hidden="0" type="field" name="stabilitel"/>
-          <column width="-1" hidden="0" type="field" name="ffctyploc"/>
-          <column width="-1" hidden="0" type="field" name="ffltyploc"/>
-          <column width="-1" hidden="0" type="field" name="ffcnatloc"/>
-          <column width="-1" hidden="0" type="field" name="fflnatloc"/>
-          <column width="-1" hidden="0" type="field" name="ffcodnace"/>
-          <column width="-1" hidden="0" type="field" name="fflibnace"/>
-          <column width="-1" hidden="0" type="field" name="fflochab"/>
-          <column width="-1" hidden="0" type="field" name="ffoccv"/>
-          <column width="-1" hidden="0" type="field" name="ffocca"/>
-          <column width="-1" hidden="0" type="field" name="ffshab"/>
-          <column width="-1" hidden="0" type="field" name="ffsdep"/>
-          <column width="-1" hidden="0" type="field" name="ffspro"/>
-          <column width="-1" hidden="0" type="field" name="ffsbati"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpsam"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpcha"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpcu8"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpcu9"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpsea"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpann"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpprinc"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpgarag"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpagrem"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpterra"/>
-          <column width="-1" hidden="0" type="field" name="ffnbppisci"/>
-          <column width="-1" hidden="0" type="field" name="ffnbpcav"/>
-          <column width="-1" hidden="0" type="field" name="ffanref"/>
-          <column width="-1" hidden="0" type="field" name="ffanvend"/>
-          <column width="-1" hidden="0" type="field" name="ffanach"/>
-          <column width="-1" hidden="0" type="field" name="srcgeom"/>
-          <column width="-1" hidden="0" type="field" name="parcvect"/>
-          <column width="-1" hidden="1" type="actions"/>
-          <column width="-1" hidden="0" type="field" name="sterr"/>
-          <column width="-1" hidden="0" type="field" name="segmusage"/>
-          <column width="-1" hidden="0" type="field" name="codtypbien"/>
-          <column width="-1" hidden="0" type="field" name="libtypbien"/>
-          <column width="-1" hidden="0" type="field" name="nblocmut"/>
-          <column width="-1" hidden="0" type="field" name="libnatmut"/>
-          <column width="-1" hidden="0" type="field" name="nbdispo"/>
-          <column width="-1" hidden="0" type="field" name="nbcomm"/>
-          <column width="-1" hidden="0" type="field" name="l_codinsee"/>
-          <column width="-1" hidden="0" type="field" name="nblocmai"/>
-          <column width="-1" hidden="0" type="field" name="nblocapt"/>
-          <column width="-1" hidden="0" type="field" name="nblocdep"/>
-          <column width="-1" hidden="0" type="field" name="nblocact"/>
-          <column width="-1" hidden="0" type="field" name="sbatact"/>
-          <column width="-1" hidden="0" type="field" name="l_idlocmut"/>
-          <column width="-1" hidden="0" type="field" name="nbsuf"/>
-          <column width="-1" hidden="0" type="field" name="nbparmut"/>
-          <column width="-1" hidden="0" type="field" name="l_idparmut"/>
-          <column width="-1" hidden="0" type="field" name="l_idpar"/>
-          <column width="-1" hidden="0" type="field" name="refdoc"/>
-          <column width="-1" hidden="0" type="field" name="codservch"/>
-          <column width="-1" hidden="0" type="field" name="l_artcgi"/>
-          <column width="-1" hidden="0" type="field" name="nbartcgi"/>
-          <column width="-1" hidden="0" type="field" name="valeurfonc"/>
-          <column width="-1" hidden="0" type="field" name="e_m2_terrain"/>
-          <column width="-1" hidden="0" type="field" name="e_m2_bati"/>
-          <column width="-1" hidden="0" type="field" name="e_m2_bati_hab"/>
-          <column width="-1" hidden="0" type="field" name="occupation"/>
-          <column width="-1" hidden="0" type="field" name="l_dcnt"/>
-          <column width="-1" hidden="0" type="field" name="presence_lot"/>
-          <column width="-1" hidden="0" type="field" name="typologie1"/>
-          <column width="-1" hidden="0" type="field" name="typologie2"/>
-          <column width="-1" hidden="0" type="field" name="typologie3"/>
-          <column width="-1" hidden="0" type="field" name="typologie4"/>
-          <column width="-1" hidden="0" type="field" name="localseul"/>
-          <column width="-1" hidden="0" type="field" name="periode_const"/>
-          <column width="-1" hidden="0" type="field" name="idcom"/>
-          <column width="-1" hidden="0" type="field" name="xbati"/>
-          <column width="-1" hidden="0" type="field" name="ybati"/>
-          <column width="-1" hidden="0" type="field" name="xbati_mercator"/>
-          <column width="-1" hidden="0" type="field" name="ybati_mercator"/>
-        </columns>
-      </attributetableconfig>
-      <editform>./interface.ui</editform>
-      <editforminit/>
-      <editforminitcodesource>0</editforminitcodesource>
-      <editforminitfilepath>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</editforminitfilepath>
-      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
-"""
-Les formulaires QGIS peuvent avoir une fonction Python qui sera appelée à l'ouverture du formulaire.
-
-Utilisez cette fonction pour ajouter plus de fonctionnalités à vos formulaires.
-
-Entrez le nom de la fonction dans le champ
-"Fonction d'initialisation Python"
-Voici un exemple à suivre:
-"""
-from PyQt4.QtGui import QWidget
-
-def my_form_open(dialog, layer, feature):
-⇥geom = feature.geometry()
-⇥control = dialog.findChild(QWidget, "MyLineEdit")
-]]></editforminitcode>
-      <featformsuppress>0</featformsuppress>
-      <editorlayout>uifilelayout</editorlayout>
-      <attributeEditorForm>
-        <attributeEditorContainer name="local" groupBox="0" columnCount="1">
-          <attributeEditorField index="5" name="identloc"/>
-        </attributeEditorContainer>
-      </attributeEditorForm>
-      <widgets/>
-      <conditionalstyles>
-        <rowstyles/>
-        <fieldstyles/>
-      </conditionalstyles>
-    </maplayer>
-    <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>locaux_typologie3_copier20161213124343039</id>
+      <extent>
+        <xmin>1161152.92999999993480742</xmin>
+        <ymin>6049873.00999999977648258</ymin>
+        <xmax>1242192.28000000002793968</xmax>
+        <ymax>6233109.25</ymax>
+      </extent>
+      <id>locaux_typologie3_copier2017011316500775216376</id>
       <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='iddispoloc' estimatedmetadata=true table="dvf"."localtypo" (geomloc) sql="localseul" and "codtyploc" IN (1,2)</datasource>
       <keywordList>
         <value></value>
@@ -4150,7 +2211,7 @@ def my_form_open(dialog, layer, feature):
         </symbol>
       </SingleCategoryDiagramRenderer>
       <DiagramLayerSettings yPosColumn="-1" showColumn="0" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
-      <annotationform>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</annotationform>
+      <annotationform>.</annotationform>
       <aliases>
         <alias field="anciennete" index="39" name=""/>
         <alias field="anneemut" index="12" name=""/>
@@ -4351,12 +2412,9 @@ def my_form_open(dialog, layer, feature):
           <column width="-1" hidden="0" type="field" name="l_artcgi"/>
           <column width="-1" hidden="0" type="field" name="nbartcgi"/>
           <column width="-1" hidden="0" type="field" name="valeurfonc"/>
-          <column width="-1" hidden="0" type="field" name="e_m2_terrain"/>
           <column width="-1" hidden="0" type="field" name="e_m2_bati"/>
-          <column width="-1" hidden="0" type="field" name="e_m2_bati_hab"/>
           <column width="-1" hidden="0" type="field" name="occupation"/>
           <column width="-1" hidden="0" type="field" name="l_dcnt"/>
-          <column width="-1" hidden="0" type="field" name="presence_lot"/>
           <column width="-1" hidden="0" type="field" name="typologie1"/>
           <column width="-1" hidden="0" type="field" name="typologie2"/>
           <column width="-1" hidden="0" type="field" name="typologie3"/>
@@ -4366,14 +2424,17 @@ def my_form_open(dialog, layer, feature):
           <column width="-1" hidden="0" type="field" name="idcom"/>
           <column width="-1" hidden="0" type="field" name="xbati"/>
           <column width="-1" hidden="0" type="field" name="ybati"/>
-          <column width="-1" hidden="0" type="field" name="xbati_mercator"/>
-          <column width="-1" hidden="0" type="field" name="ybati_mercator"/>
+          <column width="-1" hidden="0" type="field" name="e_m2_terr"/>
+          <column width="-1" hidden="0" type="field" name="e_m2_bat_h"/>
+          <column width="-1" hidden="0" type="field" name="pres_lot"/>
+          <column width="-1" hidden="0" type="field" name="xbati_4326"/>
+          <column width="-1" hidden="0" type="field" name="ybati_4326"/>
         </columns>
       </attributetableconfig>
       <editform>./interface.ui</editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
-      <editforminitfilepath>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</editforminitfilepath>
+      <editforminitfilepath>.</editforminitfilepath>
       <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
 """
 Les formulaires QGIS peuvent avoir une fonction Python qui sera appelée à l'ouverture du formulaire.
@@ -4405,13 +2466,13 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="1" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <extent>
-        <xmin>594838.88000000000465661</xmin>
+        <xmin>1160838.30000000004656613</xmin>
         <ymin>6049814.69000000040978193</ymin>
         <xmax>1241751.76000000000931323</xmax>
-        <ymax>6449171.16000000014901161</ymax>
+        <ymax>6233112.08999999985098839</ymax>
       </extent>
-      <id>mutation_non_bâtie_copier20161213133631486</id>
-      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geomparmut" (geomparmut) sql=nblocmut=0 and not "vefa"</datasource>
+      <id>mutation_non_bâtie_copier201701131650077566686</id>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo" (geomparmut) sql=nblocmut=0 and not "vefa"</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -4744,6 +2805,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="rapatffpar">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="geomlocmut">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="geompar">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="rolev">
@@ -5196,7 +3263,7 @@ def my_form_open(dialog, layer, feature):
         </symbol>
       </SingleCategoryDiagramRenderer>
       <DiagramLayerSettings yPosColumn="-1" showColumn="0" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
-      <annotationform>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</annotationform>
+      <annotationform>.</annotationform>
       <aliases>
         <alias field="anneemut" index="6" name=""/>
         <alias field="coddep" index="8" name=""/>
@@ -5231,6 +3298,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="ffsterr" index="67" name=""/>
         <alias field="fiabmaxa" index="65" name=""/>
         <alias field="fiabmaxv" index="61" name=""/>
+        <alias field="geomlocmut" index="103" name=""/>
+        <alias field="geompar" index="104" name=""/>
         <alias field="idmutation" index="0" name=""/>
         <alias field="idmutinvar" index="1" name=""/>
         <alias field="idnatmut" index="2" name=""/>
@@ -5284,8 +3353,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="rapatffloc" index="101" name=""/>
         <alias field="rapatffpar" index="102" name=""/>
         <alias field="refdoc" index="4" name=""/>
-        <alias field="rolea" index="104" name=""/>
-        <alias field="rolev" index="103" name=""/>
+        <alias field="rolea" index="106" name=""/>
+        <alias field="rolev" index="105" name=""/>
         <alias field="sapt1pp" index="48" name=""/>
         <alias field="sapt2pp" index="49" name=""/>
         <alias field="sapt3pp" index="50" name=""/>
@@ -5295,7 +3364,7 @@ def my_form_open(dialog, layer, feature):
         <alias field="sbatapt" index="46" name=""/>
         <alias field="sbati" index="44" name=""/>
         <alias field="sbatmai" index="45" name=""/>
-        <alias field="segmusage" index="105" name=""/>
+        <alias field="segmusage" index="107" name=""/>
         <alias field="smai1pp" index="53" name=""/>
         <alias field="smai2pp" index="54" name=""/>
         <alias field="smai3pp" index="55" name=""/>
@@ -5418,10 +3487,7 @@ def my_form_open(dialog, layer, feature):
           <column width="-1" hidden="0" type="field" name="rolev"/>
           <column width="-1" hidden="0" type="field" name="rolea"/>
           <column width="-1" hidden="0" type="field" name="segmusage"/>
-          <column width="-1" hidden="0" type="field" name="e_m2_terrain"/>
           <column width="-1" hidden="0" type="field" name="e_m2_bati"/>
-          <column width="-1" hidden="0" type="field" name="e_m2_bati_hab"/>
-          <column width="-1" hidden="0" type="field" name="presence_lot"/>
           <column width="-1" hidden="0" type="field" name="typologie1"/>
           <column width="-1" hidden="0" type="field" name="typologie2"/>
           <column width="-1" hidden="0" type="field" name="typologie3"/>
@@ -5432,15 +3498,19 @@ def my_form_open(dialog, layer, feature):
           <column width="-1" hidden="0" type="field" name="y_mercator"/>
           <column width="-1" hidden="0" type="field" name="xbati"/>
           <column width="-1" hidden="0" type="field" name="ybati"/>
-          <column width="-1" hidden="0" type="field" name="xbati_mercator"/>
-          <column width="-1" hidden="0" type="field" name="ybati_mercator"/>
           <column width="-1" hidden="1" type="actions"/>
+          <column width="-1" hidden="0" type="field" name="e_m2_terr"/>
+          <column width="-1" hidden="0" type="field" name="e_m2_bat_h"/>
+          <column width="-1" hidden="0" type="field" name="pres_lot"/>
+          <column width="-1" hidden="0" type="field" name="typologie4"/>
+          <column width="-1" hidden="0" type="field" name="xbati_4326"/>
+          <column width="-1" hidden="0" type="field" name="ybati_4326"/>
         </columns>
       </attributetableconfig>
       <editform>./interface.ui</editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
-      <editforminitfilepath>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</editforminitfilepath>
+      <editforminitfilepath>.</editforminitfilepath>
       <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
 """
 Les formulaires QGIS peuvent avoir une fonction Python qui sera appelée à l'ouverture du formulaire.
@@ -5466,8 +3536,8 @@ def my_form_open(dialog, layer, feature):
       </conditionalstyles>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="1" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>mutations_copier20161213110656658</id>
-      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geompar" (geompar) sql=</datasource>
+      <id>mutations_copier201701131650077389833</id>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo" (geompar) sql=</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -5800,6 +3870,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="rapatffpar">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="geomlocmut">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="geomparmut">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="rolev">
@@ -6285,6 +4361,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="ffsterr" index="67" name="surface de terrain ayant muté (selon Fichiers fonciers)"/>
         <alias field="fiabmaxa" index="65" name="Vrai si la fiabilité est maximale (=4) pour l’ensemble des données acheteurs remontées"/>
         <alias field="fiabmaxv" index="61" name="Vrai si la fiabilité est maximale (=3) pour l’ensemble des données vendeurs remontées"/>
+        <alias field="geomlocmut" index="103" name=""/>
+        <alias field="geomparmut" index="104" name=""/>
         <alias field="idmutation" index="0" name=""/>
         <alias field="idmutinvar" index="1" name=""/>
         <alias field="idnatmut" index="2" name=""/>
@@ -6338,8 +4416,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="rapatffloc" index="101" name="Vrai si l'ensemble des locaux ayant muté ont été rapatrié depuis les Fichiers fonciers"/>
         <alias field="rapatffpar" index="102" name="Vrai si l'ensemble des parcelles ayant muté ont été rapatrié depuis les Fichiers fonciers"/>
         <alias field="refdoc" index="4" name="référence d'enregistrement du document (acte de vente)"/>
-        <alias field="rolea" index="104" name="rôle de l'acheteur pour la mutation"/>
-        <alias field="rolev" index="103" name="rôle du vendeur pour la mutation"/>
+        <alias field="rolea" index="106" name="rôle de l'acheteur pour la mutation"/>
+        <alias field="rolev" index="105" name="rôle du vendeur pour la mutation"/>
         <alias field="sapt1pp" index="48" name="surface de l'ensemble des appartements avec 1 pièce principale ayant muté"/>
         <alias field="sapt2pp" index="49" name="surface de l'ensemble des appartements avec 2 pièces principales ayant muté"/>
         <alias field="sapt3pp" index="50" name="surface de l'ensemble des appartements avec 3 pièces principales ayant muté"/>
@@ -6349,7 +4427,7 @@ def my_form_open(dialog, layer, feature):
         <alias field="sbatapt" index="46" name="surface de l'ensemble des appartements ayant muté"/>
         <alias field="sbati" index="44" name="surface de l'ensemble du bâti ayant muté"/>
         <alias field="sbatmai" index="45" name="surface de l'ensemble des maisons ayant muté"/>
-        <alias field="segmusage" index="105" name="code segmentation de changement d'usage de l'EPF Nord Pas de Calais - SCAFR"/>
+        <alias field="segmusage" index="107" name="code segmentation de changement d'usage de l'EPF Nord Pas de Calais - SCAFR"/>
         <alias field="smai1pp" index="53" name="surface de l'ensemble des maisons avec 1 pièce principale ayant muté"/>
         <alias field="smai2pp" index="54" name="surface de l'ensemble des maisons avec 2 pièces principales ayant muté"/>
         <alias field="smai3pp" index="55" name="surface de l'ensemble des maisons avec 3 pièces principales ayant muté"/>
@@ -6530,7 +4608,7 @@ def my_form_open(dialog, layer, feature):
           <attributeEditorField index="0" name="idmutation"/>
           <attributeEditorField index="1" name="idmutinvar"/>
           <attributeEditorField index="17" name="l_codinsee"/>
-          <attributeEditorField index="105" name="segmusage"/>
+          <attributeEditorField index="107" name="segmusage"/>
         </attributeEditorContainer>
         <attributeEditorContainer name="Nature des biens" groupBox="0" columnCount="0">
           <attributeEditorContainer name="locaux" groupBox="1" columnCount="0">
@@ -6605,9 +4683,9 @@ def my_form_open(dialog, layer, feature):
           <attributeEditorField index="63" name="l_noma"/>
           <attributeEditorField index="64" name="codtypproa"/>
           <attributeEditorField index="65" name="fiabmaxa"/>
-          <attributeEditorField index="103" name="rolev"/>
-          <attributeEditorField index="104" name="rolea"/>
-          <attributeEditorField index="105" name="segmusage"/>
+          <attributeEditorField index="105" name="rolev"/>
+          <attributeEditorField index="106" name="rolea"/>
+          <attributeEditorField index="107" name="segmusage"/>
         </attributeEditorContainer>
       </attributeEditorForm>
       <widgets/>
@@ -6617,8 +4695,8 @@ def my_form_open(dialog, layer, feature):
       </conditionalstyles>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="0" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>mutationtypo20161213114314292</id>
-      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo_geomlocmut" (geomlocmut) sql=</datasource>
+      <id>mutationtypo2017011316500774023277</id>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo" (geomlocmut) sql=</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -6951,6 +5029,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="rapatffpar">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="geomparmut">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="geompar">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="rolev">
@@ -7492,7 +5576,7 @@ def my_form_open(dialog, layer, feature):
         </symbol>
       </SingleCategoryDiagramRenderer>
       <DiagramLayerSettings yPosColumn="-1" showColumn="0" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
-      <annotationform>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</annotationform>
+      <annotationform>.</annotationform>
       <aliases>
         <alias field="anneemut" index="6" name=""/>
         <alias field="coddep" index="8" name=""/>
@@ -7527,6 +5611,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="ffsterr" index="67" name=""/>
         <alias field="fiabmaxa" index="65" name=""/>
         <alias field="fiabmaxv" index="61" name=""/>
+        <alias field="geompar" index="104" name=""/>
+        <alias field="geomparmut" index="103" name=""/>
         <alias field="idmutation" index="0" name=""/>
         <alias field="idmutinvar" index="1" name=""/>
         <alias field="idnatmut" index="2" name=""/>
@@ -7580,8 +5666,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="rapatffloc" index="101" name=""/>
         <alias field="rapatffpar" index="102" name=""/>
         <alias field="refdoc" index="4" name=""/>
-        <alias field="rolea" index="104" name=""/>
-        <alias field="rolev" index="103" name=""/>
+        <alias field="rolea" index="106" name=""/>
+        <alias field="rolev" index="105" name=""/>
         <alias field="sapt1pp" index="48" name=""/>
         <alias field="sapt2pp" index="49" name=""/>
         <alias field="sapt3pp" index="50" name=""/>
@@ -7591,7 +5677,7 @@ def my_form_open(dialog, layer, feature):
         <alias field="sbatapt" index="46" name=""/>
         <alias field="sbati" index="44" name=""/>
         <alias field="sbatmai" index="45" name=""/>
-        <alias field="segmusage" index="105" name=""/>
+        <alias field="segmusage" index="107" name=""/>
         <alias field="smai1pp" index="53" name=""/>
         <alias field="smai2pp" index="54" name=""/>
         <alias field="smai3pp" index="55" name=""/>
@@ -7736,7 +5822,7 @@ def my_form_open(dialog, layer, feature):
       <editform>./interface.ui</editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
-      <editforminitfilepath>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</editforminitfilepath>
+      <editforminitfilepath>.</editforminitfilepath>
       <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
 """
 Les formulaires QGIS peuvent avoir une fonction Python qui sera appelée à l'ouverture du formulaire.
@@ -7762,8 +5848,8 @@ def my_form_open(dialog, layer, feature):
       </conditionalstyles>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="100000" maximumScale="1e+08" simplifyDrawingHints="1" readOnly="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>mutationtypo20161213114427645</id>
-	<datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo" (geompar) sql=nblocmut>0 </datasource>
+      <id>mutationtypo201701131650077427910</id>
+      <datasource>dbname='XXXX' host=XXXX port=XXXX user='XXXX' sslmode=disable key='idmutation' estimatedmetadata=true table="dvf"."mutationtypo" (geompar) sql=nblocmut>0 </datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -8678,7 +6764,7 @@ def my_form_open(dialog, layer, feature):
         </symbol>
       </SingleCategoryDiagramRenderer>
       <DiagramLayerSettings yPosColumn="-1" showColumn="0" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
-      <annotationform>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</annotationform>
+      <annotationform>.</annotationform>
       <aliases>
         <alias field="anneemut" index="6" name=""/>
         <alias field="coddep" index="8" name=""/>
@@ -8924,7 +7010,7 @@ def my_form_open(dialog, layer, feature):
       <editform>./interface.ui</editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
-      <editforminitfilepath>../../../../../Users/bertrand.leroux/Documents/Projets2015/16-EPF PACA réunion des DG des EPFs 20160706/Demo_Manosque</editforminitfilepath>
+      <editforminitfilepath>.</editforminitfilepath>
       <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
 """
 Les formulaires QGIS peuvent avoir une fonction Python qui sera appelée à l'ouverture du formulaire.
@@ -8951,88 +7037,39 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
   </projectlayers>
   <properties>
-    <Variables>
-      <variableNames type="QStringList"/>
-      <variableValues type="QStringList"/>
-    </Variables>
-    <WMSContactPerson type="QString"></WMSContactPerson>
-    <WMSOnlineResource type="QString"></WMSOnlineResource>
-    <WMSUseLayerIDs type="bool">false</WMSUseLayerIDs>
-    <WMSContactOrganization type="QString"></WMSContactOrganization>
-    <WMSKeywordList type="QStringList">
-      <value></value>
-    </WMSKeywordList>
-    <WFSUrl type="QString"></WFSUrl>
+    <Measurement>
+      <DistanceUnits type="QString">meters</DistanceUnits>
+      <AreaUnits type="QString">m2</AreaUnits>
+    </Measurement>
+    <SpatialRefSys>
+      <ProjectCRSProj4String type="QString">+proj=longlat +datum=WGS84 +no_defs</ProjectCRSProj4String>
+      <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
+      <ProjectCRSID type="int">3452</ProjectCRSID>
+      <ProjectionsEnabled type="int">0</ProjectionsEnabled>
+    </SpatialRefSys>
     <Paths>
       <Absolute type="bool">false</Absolute>
     </Paths>
-    <WMSServiceTitle type="QString"></WMSServiceTitle>
-    <WFSLayers type="QStringList"/>
-    <WMSRestrictedLayers type="QStringList"/>
-    <WMSContactMail type="QString"></WMSContactMail>
-    <WMSRestrictedComposers type="QStringList"/>
-    <PositionPrecision>
-      <DecimalPlaces type="int">2</DecimalPlaces>
-      <Automatic type="bool">true</Automatic>
-      <DegreeFormat type="QString">MU</DegreeFormat>
-    </PositionPrecision>
-    <WCSUrl type="QString"></WCSUrl>
-    <qgis2web>
-      <Maxzoomlevel type="int">27</Maxzoomlevel>
-      <Showpopupsonhover type="int">0</Showpopupsonhover>
-      <Basemaps type="QString"></Basemaps>
-      <Exportfolder type="QString">C:\Users\BERTRA~1.LER\AppData\Local\Temp\qgis2web</Exportfolder>
-      <Precision type="int">0</Precision>
-      <Measuretool type="int">1</Measuretool>
-      <Addlayerslist type="int">1</Addlayerslist>
-      <Highlightonhover type="int">0</Highlightonhover>
-      <MatchprojectCRS type="int">0</MatchprojectCRS>
-      <Addaddresssearch type="int">1</Addaddresssearch>
-      <Minzoomlevel type="int">0</Minzoomlevel>
-      <Geolocateuser type="int">1</Geolocateuser>
-      <MinifyGeoJSONfiles type="int">1</MinifyGeoJSONfiles>
-      <Extent type="int">0</Extent>
-      <Restricttoextent type="int">1</Restricttoextent>
-      <Template type="int">0</Template>
-      <Addscalebar type="int">1</Addscalebar>
-      <Mappinglibrarylocation type="int">0</Mappinglibrarylocation>
-    </qgis2web>
-    <WMSContactPhone type="QString"></WMSContactPhone>
-    <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
-    <WMSServiceAbstract type="QString"></WMSServiceAbstract>
-    <WMSContactPosition type="QString"></WMSContactPosition>
-    <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
-    <Measure>
-      <Ellipsoid type="QString">NONE</Ellipsoid>
-    </Measure>
-    <WMSPrecision type="QString">8</WMSPrecision>
-    <WFSTLayers>
-      <Insert type="QStringList"/>
-      <Update type="QStringList"/>
-      <Delete type="QStringList"/>
-    </WFSTLayers>
     <Gui>
       <SelectionColorBluePart type="int">0</SelectionColorBluePart>
       <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
       <CanvasColorRedPart type="int">255</CanvasColorRedPart>
       <SelectionColorRedPart type="int">255</SelectionColorRedPart>
-      <SelectionColorAlphaPart type="int">150</SelectionColorAlphaPart>
+      <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
       <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
       <CanvasColorBluePart type="int">255</CanvasColorBluePart>
     </Gui>
     <Digitizing>
       <DefaultSnapToleranceUnit type="int">2</DefaultSnapToleranceUnit>
       <LayerSnappingList type="QStringList">
-        <value>localtypo20161213114546557</value>
-        <value>locaux_copier20161213115608037</value>
-        <value>locaux_typologie3_copier20161213124343039</value>
-        <value>mutation_non_bâtie_copier20161213133631486</value>
-        <value>mutations_copier20161213110656658</value>
-        <value>mutationtypo20161213114314292</value>
-        <value>mutationtypo20161213114427645</value>
+        <value>mutations_copier201701131650077389833</value>
+        <value>mutationtypo2017011316500774023277</value>
+        <value>mutationtypo201701131650077427910</value>
+        <value>localtypo2017011316500774411294</value>
+        <value>locaux_typologie3_copier2017011316500775216376</value>
+        <value>mutation_non_bâtie_copier201701131650077566686</value>
       </LayerSnappingList>
       <LayerSnappingEnabledList type="QStringList">
-        <value>disabled</value>
         <value>disabled</value>
         <value>disabled</value>
         <value>disabled</value>
@@ -9049,10 +7086,8 @@ def my_form_open(dialog, layer, feature):
         <value>2</value>
         <value>2</value>
         <value>2</value>
-        <value>2</value>
       </LayerSnappingToleranceUnitList>
       <LayerSnapToList type="QStringList">
-        <value>to_vertex_and_segment</value>
         <value>to_vertex_and_segment</value>
         <value>to_vertex_and_segment</value>
         <value>to_vertex_and_segment</value>
@@ -9069,41 +7104,15 @@ def my_form_open(dialog, layer, feature):
         <value>0.000000</value>
         <value>0.000000</value>
         <value>0.000000</value>
-        <value>0.000000</value>
       </LayerSnappingToleranceList>
     </Digitizing>
-    <Identify>
-      <disabledLayers type="QStringList"/>
-    </Identify>
-    <Macros>
-      <pythonCode type="QString"></pythonCode>
-    </Macros>
-    <WMSAccessConstraints type="QString">None</WMSAccessConstraints>
-    <WCSLayers type="QStringList"/>
+    <PositionPrecision>
+      <DecimalPlaces type="int">2</DecimalPlaces>
+      <Automatic type="bool">true</Automatic>
+    </PositionPrecision>
     <Legend>
       <filterByMap type="bool">false</filterByMap>
     </Legend>
-    <SpatialRefSys>
-      <ProjectCRSProj4String type="QString">+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</ProjectCRSProj4String>
-      <ProjectCrs type="QString">EPSG:2154</ProjectCrs>
-      <ProjectCRSID type="int">145</ProjectCRSID>
-      <ProjectionsEnabled type="int">1</ProjectionsEnabled>
-    </SpatialRefSys>
-    <DefaultStyles>
-      <Fill type="QString"></Fill>
-      <Line type="QString"></Line>
-      <Marker type="QString"></Marker>
-      <RandomColors type="bool">true</RandomColors>
-      <AlphaInt type="int">255</AlphaInt>
-      <ColorRamp type="QString"></ColorRamp>
-    </DefaultStyles>
-    <WMSFees type="QString">conditions unknown</WMSFees>
-    <WMSImageQuality type="int">90</WMSImageQuality>
-    <Measurement>
-      <DistanceUnits type="QString">meters</DistanceUnits>
-      <AreaUnits type="QString">m2</AreaUnits>
-    </Measurement>
-    <WMSUrl type="QString"></WMSUrl>
   </properties>
   <visibility-presets/>
 </qgis>

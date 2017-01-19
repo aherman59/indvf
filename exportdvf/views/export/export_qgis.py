@@ -1,66 +1,16 @@
 import os
+import re
 import zipfile
 import io
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 
 from pg.pgbasics import *
 from main.configuration import BASE_DIR
-from main.models import ConfigurationBDD
-
-@login_required
-def choix(request):
-    contexte_export = ContexteExport(request)
-    if not contexte_export.success:
-        return redirect('main:configuration_bdd')    
-    request.session = contexte_export.request.session    
-    return render(request, 'choix_export.html', None) 
-
-@login_required
-def projet_qgis(request):
-    if request.session['type_bdd'] != 'DV3F':
-        return render(request, 'choix_export.html', None)
-    requeteur_export = RequeteurExportQGis(request.session['params'])
-    requeteur_export.generer_vues_qgis()
-    box = requeteur_export.box()
-    export_qgis = ExportQGis(request.session, box)     
-    response = HttpResponse(export_qgis.flux_archive(), content_type='application/zip')
-    response['Content-Disposition'] = 'attachment; filename={0}'.format(export_qgis.nom_prj('zip'))
-    export_qgis.nettoyer()
-    return response
-
-class ContexteExport():
-    
-    def __init__(self, request):
-        self.request = request
-        self.success = True
-        self.main()
-        
-    def main(self):
-        self.configuration_initiale()
-    
-    @property
-    def config_active(self):
-        if self.request.session['id_config']:
-            return ConfigurationBDD.objects.get(pk = self.request.session['id_config'])
-        return None
-    
-    def configuration_initiale(self):
-        verification = ConfigurationBDD.objects.verifier_configuration_active()
-        if verification.validation:
-            self.request.session['id_config'] = verification.id
-            self.request.session['type_bdd'] = self.config_active.type_bdd
-            self.request.session['params'] = self.config_active.parametres_bdd()
-        else:
-            self.success = False
 
 class ExportQGis():
     
     REPERTOIRE_QGIS = os.path.join(BASE_DIR, 'exportdvf', 'qgis')
     
     def __init__(self, session, box):
-        # à faire : verifier DV3F
         self.type_bdd = session['type_bdd']
         self.params = session['params']
         self.box = box
@@ -85,7 +35,6 @@ class ExportQGis():
         return open(self.chemin_archive, 'rb')
     
     def nettoyer(self):
-        os.remove(self.chemin_archive)
         os.remove(self.chemin(self.nom_prj('qgs')))
             
     def modifier_projet_avec_params_bdd(self):
@@ -104,6 +53,18 @@ class ExportQGis():
                         ligne = ligne.replace("XXXX", port, 1)
                     if "user='XXXX'" in ligne:
                         ligne = ligne.replace("XXXX", utilisateur, 1)
+                    if 'xmin' in ligne:
+                        xmin = str(self.box[0]).replace(',','.')
+                        ligne = re.sub('<xmin>[0-9.,]{1,}</xmin>', '<xmin>{0}</xmin>'.format(xmin), ligne)
+                    if 'ymin' in ligne:
+                        ymin = str(self.box[1]).replace(',','.')
+                        ligne = re.sub('<ymin>[0-9.,]{1,}</ymin>', '<ymin>{0}</ymin>'.format(ymin), ligne)
+                    if 'xmax' in ligne:
+                        xmax = str(self.box[2]).replace(',','.')
+                        ligne = re.sub('<xmax>[0-9.,]{1,}</xmax>', '<xmax>{0}</xmax>'.format(xmax), ligne)
+                    if 'ymax' in ligne:
+                        ymax = str(self.box[3]).replace(',','.')
+                        ligne = re.sub('<ymax>[0-9.,]{1,}</ymax>', '<ymax>{0}</ymax>'.format(ymax), ligne)
                     sortie.write(ligne)                         
 
 
@@ -116,6 +77,12 @@ class RequeteurExportQGis(PgOutils):
     def generer_vues_qgis(self):
         pass
     
+    def emprise(self):
+        # xmin, ymin, xmax, ymax
+        box = (self.box())[0] if self.box() else (100000, 6000000, 1200000, 7100000)
+        return list(box)
+    
+    @select_sql
     def box(self):
         pass
         
