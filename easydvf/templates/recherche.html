@@ -17,7 +17,7 @@
                         {% csrf_token %} 
                         <div class="form-group">
                             <div class = "col-sm-10">
-                                <select class="form-control selecteur" name='departement' onChange="submit()">
+                                <select class="form-control selecteur" id="departement" name="departement" onChange="submit()">
                                     {% for departement in departements %}
                                     <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
                                     {% endfor %}
@@ -87,21 +87,27 @@ $(window).load(function() {
        url : '/recherche/modification_affichage_table/id/1',
        type : 'GET',
        dataType : 'html',
-       beforeSend: function() {
-    	   $("body").css("cursor", "progress");	
-       },
        success : function(code_html, statut){  
     	   $('#tableau_mutations').html(code_html);
-    	   $("body").css("cursor", "default");	
        }
     });
 });
 
 {% endif %}
 
-$("form").on('submit', function(){
-	$("body").css("cursor", "progress");
+$(document).on({
+    ajaxStart: function() { $("body").css("cursor", "wait");},
+     ajaxStop: function() { $("body").css("cursor", "default");}    
 });
 
+
+$("form").submit(function(){
+	$("body").css("cursor", "wait");
+});
+
+$("select#departement").change(function(){
+		$("body").css("cursor", "wait");
+});
 </script>
+
 {% endblock %} 

@@ -186,15 +186,11 @@ function affichage_infos_mutations(){
 		$.ajax({
 	       	url : '/geo/detail/' + entite.get('idmutation'),
 	       	type : 'GET',
-	       	dataType : 'html',
-	       	beforeSend: function() {
-	       		$("body").css("cursor", "progress");	
-            },
+	       	dataType : 'html',	       	
 	       	success : function(code_html, statut){
 	       		if (init) $('#tableau_mutation').empty();
 	       		$('#tableau_mutation').append(code_html);
 	       		init = false;
-	       		$("body").css("cursor", "default");	
 	       }
 	    });
 	});
@@ -206,6 +202,11 @@ map.on('click', function(event) {
 		$(element).hide();
 	}
 	$('#tableau_mutation').html('Aucune mutation selectionnée.');
+});
+
+$(document).on({
+    ajaxStart: function() { $("body").css("cursor", "wait");},
+     ajaxStop: function() { $("body").css("cursor", "default");}    
 });
 
 </script>
