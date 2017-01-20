@@ -19,7 +19,7 @@
                         {% csrf_token %} 
                         <div class="form-group">
                             <div class = "col-sm-10">
-                                <select class="form-control selecteur" name='departement' onChange="submit()">
+                                <select class="form-control selecteur" id="departement" name="departement" onChange="submit()">
                                     {% for departement in departements %}
                                     <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
                                     {% endfor %}
@@ -134,5 +134,16 @@
 {% endfor %}
 
 {% endif %}
+
+<script type="text/javascript">
+
+$("form").submit(function(){
+	$("body").css("cursor", "wait");
+});
+
+$("select#departement").change(function(){
+		$("body").css("cursor", "wait");
+});
+</script>
 
 {% endblock %}
