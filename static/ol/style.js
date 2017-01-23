@@ -40,9 +40,9 @@ var styles_parcelles = {
 		// Apparts
 		'121': styleParcelle('#990000', 'rgba(153, 0, 0, 0.2)'),
 		// Industriel/Commercial
-		'111': styleParcelle('#00994C', 'rgba(0, 153, 76, 0.2)'),
-		// Logement + Industriel/Commercial
 		'112': styleParcelle('#00994C', 'rgba(0, 153, 76, 0.2)'),
+		// Logement + Industriel/Commercial
+		'111': styleParcelle('#0066CC', 'rgba(0, 153, 76, 0.2)'),
 		// Dependances
 		'142': styleParcelle('#FF3333', 'rgba(255, 102, 102, 0.2)'),
 		// Terrains à Batir
@@ -75,9 +75,9 @@ var styles_locaux = {
 		// Vefa - Maison(s)
 		'33': styleLocal('\uf015', '#333300', '18'),
 		// Industriel/Commercial
-		'111': styleLocal('\uf275', '#00994C', '18'),
-		// Logement + Industriel/Commercial
 		'112': styleLocal('\uf275', '#00994C', '18'),
+		// Logement + Industriel/Commercial
+		'111': styleLocal('\uf275', '#0066CC', '18'),
 		// Dependances
 		'142': styleLocal('\uf1e1', '#FF3333', '18'),
 };

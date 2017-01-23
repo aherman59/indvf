@@ -31,8 +31,37 @@
 	</div>
 </div>
 
+<div class="btn-group dropup">
+  	<button type="button" class="btn btn-info">Légende</button>
+  	<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   	 <span class="caret"></span>
+  	  <span class="sr-only">Toggle Dropdown</span>
+  	</button>
+  	<ul class="dropdown-menu">
+		<li><a href="#"><i class="fa fa-fw fa-home" aria-hidden="true" style="color:#0066CC;"></i> Maison</a></li>
+   		<li><a href="#"><i class="fa fa-fw fa-building" aria-hidden="true" style="color:#FF8000;"></i> Appartement</a></li>
+		<li><a href="#"><i class="fa fa-fw fa-home" aria-hidden="true" style="color:#660033;"></i> Maisons</a></li>
+   		<li><a href="#"><i class="fa fa-fw fa-building" aria-hidden="true" style="color:#990000;"></i> Appartements</a></li>
+		<li><a href="#"><i class="fa fa-fw fa-home" aria-hidden="true" style="color:#333300;"></i> Maison(s) - Vefa</a></li>
+   		<li><a href="#"><i class="fa fa-fw fa-fw fa-building" aria-hidden="true" style="color:#333300;"></i> Appartement(s) - Vefa</a></li>
+   		<li><a href="#"><i class="fa fa-fw fa-fw fa-industry" aria-hidden="true" style="color:#00994C;"></i> Industrie/Commerce</a></li>
+   		<li><a href="#"><i class="fa fa-fw fa-fw fa-industry" aria-hidden="true" style="color:#0066CC;"></i> Logement + Industrie/Commerce</a></li>
+   		<li><a href="#"><i class="fa fa-fw fa-fw fa-share-alt-square" aria-hidden="true" style="color:#FF3333;"></i> Dépendance</a></li>
+    	<li role="separator" class="divider"></li>
+   	 	<li><a href="#"><i class="fa fa-fw fa-stop" aria-hidden="true" style="color:#00CCCC; opacity:0.5;"></i> Terrain agricole</a></li>
+   	 	<li><a href="#"><i class="fa fa-fw fa-stop" aria-hidden="true" style="color:#32CD32; opacity:0.5;"></i> Terrain forestier</a></li>
+   	 	<li><a href="#"><i class="fa fa-fw fa-stop" aria-hidden="true" style="color:#D2691E; opacity:0.5;"></i> Terrain naturel</a></li>
+   	 	<li><a href="#"><i class="fa fa-fw fa-stop" aria-hidden="true" style="color:#660066; opacity:0.5;"></i> Terrain à batir</a></li>
+   	 	<li><a href="#"><i class="fa fa-fw fa-stop" aria-hidden="true" style="color:#BDB76B; opacity:0.5;"></i> Terrain artificialisé</a></li>
+   	 	<li><a href="#"><i class="fa fa-fw fa-stop" aria-hidden="true" style="color:#556B2F; opacity:0.5;"></i> Terrain mixte</a></li>
+   	 	<li><a href="#"><i class="fa fa-fw fa-stop" aria-hidden="true" style="color:#C0C0C0; opacity:0.5;"></i> Terrain non déterminé</a></li>
+  	</ul>
+</div>
+
 <div id="info_mutation" class="info-mutation"></div>
 
+
+<div class="row espace-pied">
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title"><i class="fa fa-search"></i> Détail</h3>
@@ -41,6 +70,8 @@
 		<div id="tableau_mutation">Aucune mutation selectionnée.</div>
 	</div>
 </div>
+</div>
+
 
 <script src="{% static 'ol/style.js' %}"></script>
 <script>
