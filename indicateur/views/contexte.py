@@ -111,6 +111,7 @@ class ContexteIndicateur():
         return ''
     
     def configuration_initiale(self):
+        _ = Territoire.objects.territoire_comparaison_reinitialise()
         verification = ConfigurationBDD.objects.verifier_configuration_active()
         if verification.validation:
             self.request.session['id_config'] = verification.id

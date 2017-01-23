@@ -37,10 +37,8 @@ class ContexteRecherche():
             self.selection_departement()
         elif 'voir_epci' in self.request.POST: # choix d'un epci
             self.selection_epci()
-            self.charger_tableau = True
         elif 'voir_commune' in self.request.POST: # choix d'une commune
             self.selection_commune()
-            self.charger_tableau = True
         self.request.session['parametres_filtre'] = self.filtre.parametres
     
     @property
@@ -89,17 +87,25 @@ class ContexteRecherche():
     
     def selection_epci(self):
         self.request.session['epci'] = int(self.request.POST['epci'])
+        if self.request.session['epci'] == 0:
+            self.charger_tableau = False
+            return
         self.request.session['titre'] = Epci.objects.get(pk = self.request.session['epci']).nom
         codes_insee = [str(c.code) for c in Commune.objects.filter(epci = self.request.session['epci'])]
         self.request.session['mutations'] = self.calcul_mutations(codes_insee)
         self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
+        self.charger_tableau = True
     
     def selection_commune(self):
         self.request.session['commune'] = int(self.request.POST['commune'])
+        if self.request.session['commune'] == 0:
+            self.charger_tableau = False
+            return
         self.request.session['titre'] = Commune.objects.get(pk = self.request.session['commune']).nom
         codes_insee = [str(Commune.objects.get(pk = self.request.session['commune']).code),]
         self.request.session['mutations'] = self.calcul_mutations(codes_insee)
         self.filtre.definir_modalites(Mutations(self.request.session).as_objet())
+        self.charger_tableau = True 
     
     def initialisation(self):
         self.request.session.pop('departement', None)

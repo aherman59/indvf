@@ -1,7 +1,9 @@
 from django.conf.urls import url, include
 from django.contrib import admin
+from main.views import views
 
 urlpatterns = [
+    url(r'^$', views.applications, name='start'),
     url(r'^import/', include('importdvf.urls', namespace='import')),
     url(r'^main/', include('main.urls', namespace='main')),
     url(r'^indicateur/', include('indicateur.urls', namespace='indicateur')),
