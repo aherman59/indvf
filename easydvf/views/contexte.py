@@ -21,6 +21,7 @@ from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 
 from .mutation import Mutations
 
+
 class ContexteRecherche():
     
     def __init__(self, request):
