@@ -3,11 +3,19 @@
 
 {% block contenu %}
 
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+
 <div class="panel panel-default">
 
     <div class="panel-heading">
 	    <h3 class="panel-title"><i class="fa fa-search"></i> Territoire</h3>
     </div>
+ 
     <div class="panel-body">
 
 

@@ -19,9 +19,10 @@
 
 from django.contrib import admin
 
-from main.models import Departement, Epci, Commune, Territoire
+from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 # Register your models here.
 
+admin.site.register(ConfigurationBDD)
 admin.site.register(Departement)
 admin.site.register(Epci)
 admin.site.register(Commune)

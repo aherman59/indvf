@@ -18,9 +18,11 @@
 '''
 
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from collections import namedtuple
 from main.views.contexte import recuperer_metadonnees_applications_disponibles
 from main.views.contexte import ContexteConfigBDD
+from indvf.settings import MODE_SERVEUR
 
 def applications(request):
     Appli = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
@@ -32,12 +34,16 @@ def credits(request):
     return render(request, 'credits.html')
 
 def configuration_bdd(request):
-    contexte_configuration = ContexteConfigBDD(request)
-    if contexte_configuration.retour:
+    if not MODE_SERVEUR or request.user.is_staff:
+        contexte_configuration = ContexteConfigBDD(request)
+        if contexte_configuration.retour:
+            return redirect('main:applications')
+        context = {'formulaire': contexte_configuration.formulaire, 
+                   'formulaire_selection' : contexte_configuration.formulaire_selection,
+                   'id_config' : contexte_configuration.id_config, 
+                   'config_active': contexte_configuration.config_active,
+                   'verif_config': contexte_configuration.verif_bdd_active,}
+        return render(request, 'configuration_bdd.html', context)
+    else:
+        messages.add_message(request, messages.INFO, "Accès impossible - Contacter l'administrateur")
         return redirect('main:applications')
-    context = {'formulaire': contexte_configuration.formulaire, 
-               'formulaire_selection' : contexte_configuration.formulaire_selection,
-               'id_config' : contexte_configuration.id_config, 
-               'config_active': contexte_configuration.config_active,
-               'verif_config': contexte_configuration.verif_bdd_active,}
-    return render(request, 'configuration_bdd.html', context)

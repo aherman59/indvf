@@ -20,10 +20,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.contrib import messages
 
 from pg.pgbasics import *
 from main.territoire import integration 
 from .contexte import ContexteIndicateur, ContexteConfigIndicateur
+from indvf.settings import MODE_SERVEUR
 
 '''
 PAGE AFFICHAGE INDICATEURS
@@ -60,13 +62,17 @@ def indicateurs(request):
 
 @login_required
 def configuration_indicateur(request):
-    contexte_configuration = ContexteConfigIndicateur(request)
-    if contexte_configuration.annulation:
+    if not MODE_SERVEUR or request.user.is_staff:
+        contexte_configuration = ContexteConfigIndicateur(request)
+        if contexte_configuration.annulation:
+            return redirect('indicateur:indicateurs')
+        context = {'formulaire': contexte_configuration.formulaire, 
+                   'formulaire_selection' : contexte_configuration.formulaire_selection,
+                   'id_indicateur' : contexte_configuration.id_indicateur, }
+        return render(request, 'configuration_indicateur.html', context)
+    else:
+        messages.add_message(request, messages.INFO, "Accès impossible - Contacter l'administrateur")
         return redirect('indicateur:indicateurs')
-    context = {'formulaire': contexte_configuration.formulaire, 
-               'formulaire_selection' : contexte_configuration.formulaire_selection,
-               'id_indicateur' : contexte_configuration.id_indicateur, }
-    return render(request, 'configuration_indicateur.html', context)
 
 """
 
