@@ -124,7 +124,7 @@ Cependant, il subsistera toujours un risque d'erreur.
 
 Quel que soit l'analyse effectuée, il faut garder à l'esprit que des typologies et des segmentations ont été intégrées dans la base de données pour catégoriser assez rapidement les mutations, les biens ou les propriétaires. Elles ne répondent pas à tous les besoins mais elles limitent les principaux écueils décrits ci-dessus lors de l'utilisation de DVF+/DV3F. Elles peuvent faciliter le travail pour des besoins d'analyse rapide de certains segments de marché ou vous conforter dans la construction de vos propres méthodes d'analyse. 
 
-### DocDV3F, votre nouvelle bible
+### DocDV3F, votre nouveau livre de chevet
 
 Dans DV3F, il est souvent facile de trouver ce que l’on veut observer mais il faut bien connaître les définitions des variables pour ne pas se méprendre. Le logement, par exemple : pour DV3F, c’est une maison ou un appartement quelle que soit son occupation (même une activité). Ce n’est pas la même définition que dans une base comme Filocom (logement occupé par de l’habitation). 
 
