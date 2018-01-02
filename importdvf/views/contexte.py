@@ -259,7 +259,7 @@ class ContexteImportAjax():
         commune = communes[indice]
         proxy = self.session['proxy']
         success, msg = cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire', proxy = proxy)
-        if not success:
+        if not success and not msg.startswith('Problème requêtage ou code INSEE incorrect'):
             return self.code_erreur('cada2')
         
         if nb_communes == (indice + 1):

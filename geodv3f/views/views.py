@@ -36,6 +36,7 @@ termes.
 '''
 
 import json
+import re
 from pg.pgbasics import *
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -45,6 +46,7 @@ from .contexte import ContexteCarto
 from .geomutation import Centre
 from .geomutation import GeoMutations
 from .geomutation import DetailMutation
+from .geomutation import RechercheParcelle
 
 from geodv3f.api_adresse import RechercheAdresse
 
@@ -93,13 +95,20 @@ def requete_adresse(request):
     '''
     requete ajax pour le traitement de l'adresse
     '''
+    
+    regex_parcelle = r"^[0-9AB]{8}[0-9A-Z]{2}[0-9]{4}$" # Motif d'un identifiant de parcelle
+    
     adresse = request.GET['adresse']
     if not adresse:
         reponse = {'erreur': True}
     else:
-        recherche = RechercheAdresse()
-        recherche.texte(adresse)
-        resultat = recherche.meilleure_adresse
+        if re.match(regex_parcelle, adresse): # cas ou il s'agit d'un numéro de parcelle
+            recherche = RechercheParcelle(request.session, adresse)
+            resultat = recherche.resultat
+        else: # recherche sur l'api BAN
+            recherche = RechercheAdresse()
+            recherche.texte(adresse)
+            resultat = recherche.meilleure_adresse
         if resultat:
             reponse = {'x':resultat.x, 'y':resultat.y, 'erreur': False}
         else:

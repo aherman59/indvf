@@ -36,6 +36,7 @@ termes.
 '''
 
 from datetime import datetime
+from collections import namedtuple
 import json
 from pg.pgbasics import *
 
@@ -232,7 +233,21 @@ class Centre():
     def as_text(self):
         return '[' + str(self.x) + ', ' + str(self.y) + ']'
 
-  
+
+class RechercheParcelle():
+    
+    def __init__(self, session, idpar):
+        self.idpar = idpar
+        self.resultat = self.calcul(session)
+    
+    def calcul(self, session):
+        resultat = RequeteurGeoDV3F(session).recuperer_centroide(self.idpar)
+        if len(resultat) == 0:
+            return None
+        Coords = namedtuple('Coords', ['x', 'y'])
+        return Coords(*resultat[0])
+    
+    
 class RequeteurGeoDV3F(PgOutils):
     
     def __init__(self, session, script = None):
@@ -241,6 +256,10 @@ class RequeteurGeoDV3F(PgOutils):
     
     @select_sql
     def recuperer_point_central(self, limit):
+        pass
+    
+    @select_sql
+    def recuperer_centroide(self, idpar):
         pass
     
     def recuperer_mutations_avec_geometrie(self, champ_geometrie, emprise, epsg='2154'):

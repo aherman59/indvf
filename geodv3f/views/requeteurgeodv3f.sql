@@ -2,7 +2,12 @@
 SELECT avg(st_x(geomloc)::numeric), avg(st_y(geomloc)::numeric)
 FROM (SELECT geomloc from dvf.disposition_parcelle
 WHERE geomloc IS NOT NULL
-LIMIT {0}) t
+LIMIT {0}) t;
+
+## RECUPERER_CENTROIDE
+SELECT st_x(st_transform(geomloc, 4326))::numeric, st_y(st_transform(geomloc, 4326))::numeric 
+FROM dvf.disposition_parcelle 
+WHERE idpar = '{0}' AND geomloc IS NOT NULL;
 
 ## RECUPERER_MUTATIONS_DV3F_AVEC_GEOMETRIE
 SELECT idmutation, 

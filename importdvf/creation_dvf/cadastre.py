@@ -91,7 +91,7 @@ class Cadastre(PgOutils):
             if reussite:
                 return True, 'Pas de parcelles récupérées pour commune ' + code_insee + ' ou parcelles déjà existantes.'
             else:
-                return False, 'Problème requêtage ou code INSEE incorrect'
+                return False, 'Problème requêtage ou code INSEE incorrect (' + code_insee + ')' 
         
     def inserer_multi_parcelles(self, schema, table, valeurs, epsg = '2154'):
         #geompar = 'st_transform(ST_SetSRID(ST_PolygonFromText(%s), 4326), {0})'.format(epsg)
