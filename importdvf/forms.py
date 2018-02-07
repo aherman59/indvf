@@ -49,7 +49,7 @@ class ConfigForm(forms.Form):
     port = forms.CharField(label='Port', max_length = 8, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"5432"}))
     chemin_dossier = forms.CharField(label='Dossier données DVF', widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':os.getcwd()}))
     geolocaliser = forms.BooleanField(required = False, label='Géométries (1)', widget = forms.CheckboxInput(attrs={'class':"checkbox",}))
-    proxy = forms.CharField(label='Proxy (1)', validators=[URLValidator], required=False, max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"http://proxy.example.fr - laisser vide dans un premier temps"}))
+    proxy = forms.CharField(label='Proxy (1)', validators=[URLValidator], required=False, max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"proxy.example.fr:8080 - laisser vide dans un premier temps"}))
     effacer_schemas_existants = forms.BooleanField(required = False, label='Effacer schemas (2)', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
 
     def clean(self):

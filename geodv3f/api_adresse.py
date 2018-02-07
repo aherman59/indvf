@@ -43,8 +43,9 @@ class RechercheAdresse():
     URL_SEARCH = 'http://api-adresse.data.gouv.fr/search/?{0}'
     URL_REVERSE = 'http://api-adresse.data.gouv.fr/reverse/?{0}'
     
-    def __init__(self):
-        self.reponse = None 
+    def __init__(self, proxy=None):
+        self.reponse = None
+        self.proxy = proxy 
    
     @property
     def nb_resultats(self):
@@ -68,7 +69,10 @@ class RechercheAdresse():
         donnees = None
         params = urllib.parse.urlencode({'q': recherche})
         try:
-            with urllib.request.urlopen(url = self.URL_SEARCH.format(params)) as reponse:
+            req = urllib.request.Request(self.URL_SEARCH.format(params))
+            if self.proxy:
+                req.set_proxy(self.proxy, 'http')
+            with urllib.request.urlopen(req) as reponse:
                 donnees = reponse.read().decode('utf-8')
                 donnees = json.loads(donnees)
         except Exception as e:
@@ -80,7 +84,10 @@ class RechercheAdresse():
         donnees = None
         params = urllib.parse.urlencode({'lon': longitude, 'lat':latitude})
         try:
-            with urllib.request.urlopen(url = self.URL_REVERSE.format(params)) as reponse:
+            req = urllib.request.Request(url = self.URL_REVERSE.format(params))
+            if self.proxy:
+                req.set_proxy(self.proxy, 'http')
+            with urllib.request.urlopen(req) as reponse:
                 donnees = reponse.read().decode('utf-8')
                 donnees = json.loads(donnees)
         except Exception as e:
@@ -159,7 +166,7 @@ class Adresse():
         
 if __name__ == '__main__':
     import sys
-    recherche = RechercheAdresse()
+    recherche = RechercheAdresse(proxy='direct.proxy.i2:8080')
     recherche.coordonnees(2.37, 48.357)
     print(recherche.adresses)
     print(recherche.meilleure_adresse.geom)

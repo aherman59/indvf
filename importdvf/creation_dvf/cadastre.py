@@ -141,16 +141,12 @@ class Cadastre(PgOutils):
         entites = None
         departement = code_insee[:2] if not code_insee.startswith('97') else code_insee[:3]
         try:
-            if not proxy:
-                with urllib.request.urlopen(url = self.url_commune.format(code_insee, departement)) as reponse:
-                    donnees = gzip.decompress(reponse.read()).decode('utf-8')
-                    entites = json.loads(donnees)
-            else:
-                proxies = {'http': proxy, 'https':proxy}
-                opener = urllib.request.FancyURLopener(proxies)
-                with opener.open(self.url_commune.format(code_insee, departement)) as reponse:
-                    donnees = gzip.decompress(reponse.read()).decode('utf-8')
-                    entites = json.loads(donnees)               
+            req = urllib.request.Request(self.url_commune.format(code_insee, departement))
+            if proxy:
+                req.set_proxy(proxy, 'http')
+            with urllib.request.urlopen(req) as reponse:
+                donnees = gzip.decompress(reponse.read()).decode('utf-8')
+                entites = json.loads(donnees)                         
         except Exception as e:
             print(e)
             return False, None
