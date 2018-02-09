@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main',
     'importdvf',
     'indicateur',
+    'indicateur_v2',
     'easydvf',
     'docdv3f',
     'tutodvf',

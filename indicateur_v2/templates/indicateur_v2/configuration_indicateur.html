@@ -1,0 +1,55 @@
+{% extends "base_indicateur.html" %}
+{% load staticfiles %}
+
+{% block contenu %}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Paramétrage des indicateurs</h3>
+    </div>
+    <div class="panel-body">
+        {% if formulaire.non_field_errors %}
+        {% for error in formulaire.non_field_errors %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>            
+        {% endfor %}
+        {% endif %}
+
+        <form  class ="form-horizontal" id="form_select" onChange="submit();" action="{% url 'indicateur_v2:configuration_indicateur' %}" method="post">
+            {% csrf_token %}        
+            <div class="form-group">
+                <label for="{{field.name}}" class="col-sm-2 control-label">{{formulaire_selection.selection.label_tag}}</label>
+                <div class="col-sm-10">
+                    {{formulaire_selection.selection}}
+                </div>
+            </div>
+        </form>
+
+        
+        <form class="form-horizontal" id="form_indicateur" action="{% url 'indicateur_v2:configuration_indicateur' %}" method="post">
+
+            {% csrf_token %}
+            <input type = "hidden" name="selection_indicateur" value="{{id_indicateur}}"/>
+            {% for field in formulaire %}
+            <div class="form-group">
+                <label for="{{field.name}}" class="col-sm-2 control-label">{{field.label_tag}}</label>
+                <div class="col-sm-10">
+                    {{field}}
+                    {% if field.errors %}
+                    <div class="alert alert-danger" role="alert">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" name ="creation" class="btn btn-default">Créer/modifier cet indicateur</button>                    
+                    {% if id_indicateur != 0 %}<button type="submit" name ="suppression" class="btn btn-default">Supprimer cet indicateur</button>{% endif %}
+                    <button type="submit" name ="annulation" class="btn btn-default">Retour</button>                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

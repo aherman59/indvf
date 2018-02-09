@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^import/', include('importdvf.urls', namespace='import')),
     url(r'^main/', include('main.urls', namespace='main')),
     url(r'^indicateur/', include('indicateur.urls', namespace='indicateur')),
+    url(r'^indicateur_v2/', include('indicateur_v2.urls', namespace='indicateur_v2')),
     url(r'^recherche/', include('easydvf.urls', namespace='easydvf')),
     url(r'^doc/', include('docdv3f.urls', namespace='docdv3f')),
     url(r'^tuto/', include('tutodvf.urls', namespace='tutodvf')),

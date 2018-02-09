@@ -1,0 +1,208 @@
+{% extends "indicateur_v2/base_indicateur.html" %}
+{% load staticfiles %}
+
+{% block contenu %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-search"></i> Territoire</h3>
+    </div>
+ 
+    <div class="panel-body">
+
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-circle-o-notch fa-lg"></i> Département</label>
+                <div class="col-sm-8">
+                    <form role="Departement" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" id="departement" name="departement" onChange="submit()">
+                                    {% for departement in departements %}
+                                    <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
+                                    {% endfor %}
+			                    </select> 
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_departement"><i class="fa fa-search fa-lg"></i></button>
+		                        <button type="submit" class="btn btn-default" name="ajout_departement"><i class="fa fa-cart-plus fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class ="col-sm-2">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuration <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+			                    <li><a href="#">Territoires personnalisés (à venir)...</a></li>
+			                    <li role="separator" class="divider"></li>
+			                    <li><a href="{% url 'indicateur_v2:configuration_indicateur' %}">Indicateurs...</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-map-signs fa-lg"></i> Epci</label>
+                <div class="col-sm-8">
+                    <form role="Epci" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='epci'>
+                                	<option value="0">Sélectionner un EPCI...</option>
+                                    {% for epci in epcis %}
+                                    <option value="{{ epci.pk }}" {% if request.session.epci == epci.pk %}selected{% endif %}>{{ epci }}</option>
+                                    {% endfor %}
+			                    </select>
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_epci"><i class="fa fa-search fa-lg"></i></button>
+		                        <button type="submit" class="btn btn-default" name="ajout_epci"><i class="fa fa-cart-plus fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><i class="fa fa-building fa-lg"></i> Commune</label>
+                <div class="col-sm-8">
+                    <form role="Commune" method="post">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <div class = "col-sm-10">
+                                <select class="form-control selecteur" name='commune'>
+                                	<option value="0">Sélectionner une commune...</option>
+                                	{% for commune in communes %}
+                                    <option value="{{ commune.pk }}" {% if request.session.commune == commune.pk %}selected{% endif %}>{{ commune }}</option>
+                                    {% endfor %}
+			                    </select>
+                            </div>
+                            <div class = "col-sm-2">
+		                        <button type="submit" class="btn btn-default" name="voir_commune"><i class="fa fa-search fa-lg"></i></button>
+		                        <button type="submit" class="btn btn-default" name="ajout_commune"><i class="fa fa-cart-plus fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+	    <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Indicateurs</h3>
+    </div>
+ 
+    <div class="panel-body">
+    <div class="col-sm-4">
+    	<label class="control-label"><i class="fa fa-home fa-lg"></i></label>
+		<select class="selectpicker" name="selection-typologie" title="Typologies" multiple>
+			<optgroup label="Niveau 1">
+			    <option value="1">BATI</option>
+			    <option value="2">NON BATI</option>
+			 </optgroup>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<select class="selectpicker" name="selection-indicateur" title="Indicateurs" multiple>
+			<optgroup label="Indicateurs quantitatifs">
+			    <option value="nbtrans">Nombre de transaction</option>
+			    <option value="total">Montant total</option>
+			 </optgroup>
+			<optgroup label="Indicateurs de prix">
+			    <option value="med">Prix Médian</option>
+			    <option value="pq">Premier quartile de prix</option>
+			    <option value="dq">Dernier quartile de prix</option>
+			 </optgroup>
+			 <optgroup label="Indicateurs de surface">
+			    <option value="surfmed">Surface médiane</option>
+			    <option value="surftot">Surface totale</option>
+			 </optgroup>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<select class="selectpicker" name="selection-indicateurs" title="Filtres" multiple>
+			<optgroup label="Niveau 1">
+			    <option value="1">BATI</option>
+			    <option value="2">NON BATI</option>
+			 </optgroup>
+		</select>
+	</div>
+ 	</div>
+
+</div>
+
+{% if charger_indicateur %}
+
+<div class="row page-header" id="resultats">
+        <h3><i class="fa fa-search"></i> Résultats pour {{titre|safe}}<small> 
+        <a href="{% url 'indicateur_v2:indicateurs_csv' %}" alt="Export CSV" title="Export CSV">	
+		<span class="fa-stack fa-lg">
+		<i class="fa fa-circle fa-stack-1x"></i>
+		<i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
+		</span>
+		</a></small></h3>
+</div>
+
+<div class="alert alert-warning" role="alert"><i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+Les indicateurs ou les résultats présentés ci-dessous donnent des tendances brutes, n'ayant pas 
+fait l'objet de corrections ou d'analyses fines. Ils s'appuient sur une typologie qui peut comporter 
+des erreurs de classification de certains biens (en particulier sur le non-bâti). Il est donc recommandé 
+d'utiliser ces résultats avec prudence.
+</div>
+
+{% for i in indicateursDVF %}
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+	        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> {{i.nom}}</h3>
+        </div>
+        <div class="panel-body">
+        	{% if i.graph %}
+            <div class = "col-xs-12 col-sm-6 vcenter">
+                <figure style="width: 480px; height: 250px;" id="{{i.idgraph}}"></figure>
+            </div><!--
+            --><div class = "col-xs-12 col-sm-6 vcenter">
+                {{i.tableau|safe}}
+            </div>
+            {% else %}
+            <i>Cet indicateur n'a pas pu être calculé.</i>
+            {% endif %}
+        </div>
+    </div>
+		  <script>
+	   	 	 var data = {{i.graph|safe}};	   	 	 
+    	 	 var chart = new xChart('{{i.type_graph}}', data, '#{{i.idgraph}}');
+		  </script>
+{% endfor %}
+
+{% endif %}
+
+<script type="text/javascript">
+
+$("form").submit(function(){
+	$("body").css("cursor", "wait");
+});
+
+$("select#departement").change(function(){
+		$("body").css("cursor", "wait");
+});
+</script>
+
+{% endblock %}
