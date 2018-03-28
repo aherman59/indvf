@@ -106,7 +106,7 @@ def requete_adresse(request):
             recherche = RechercheParcelle(request.session, adresse)
             resultat = recherche.resultat
         else: # recherche sur l'api BAN
-            recherche = RechercheAdresse()
+            recherche = RechercheAdresse(proxy='direct.proxy.i2:8080')
             recherche.texte(adresse)
             resultat = recherche.meilleure_adresse
         if resultat:

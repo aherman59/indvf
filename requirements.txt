@@ -1,4 +1,4 @@
-django==1.9.2
-./modules/pg-0.1.7.zip
-./modules/dvf_plus-0.2.0.zip
+django>=2.0
+./modules/pg-0.1.8.zip
+./modules/dvf_plus-0.2.2.zip
 markdown

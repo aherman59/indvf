@@ -120,6 +120,7 @@
 		</select>
 	</div>
 	<div class="col-sm-4">
+		<label class="control-label"><i class="fa fa-bar-chart fa-lg"></i></label>
 		<select class="selectpicker" name="selection-indicateur" title="Indicateurs" multiple>
 			<optgroup label="Indicateurs quantitatifs">
 			    <option value="nbtrans">Nombre de transaction</option>
@@ -137,7 +138,8 @@
 		</select>
 	</div>
 	<div class="col-sm-4">
-		<select class="selectpicker" name="selection-indicateurs" title="Filtres" multiple>
+		<label class="control-label"><i class="fa fa-filter fa-lg"></i></label>
+		<select class="selectpicker" name="selection-filtre" title="Filtres" multiple>
 			<optgroup label="Niveau 1">
 			    <option value="1">BATI</option>
 			    <option value="2">NON BATI</option>
@@ -197,6 +199,18 @@ d'utiliser ces résultats avec prudence.
 <script type="text/javascript">
 
 $("form").submit(function(){
+	var params = [
+					{name: 'typologies', value: $("select[name=selection-typologie]").val()},
+					{name: 'indicateurs', value: $("select[name=selection-indicateur]").val()},
+					{name: 'filtres', value: $("select[name=selection-filtre]").val()},
+				 ];
+	$(this).append($.map(params, function (param) {
+        return   $('<input>', {
+            type: 'hidden',
+            name: param.name,
+            value: param.value
+        })
+    }));
 	$("body").css("cursor", "wait");
 });
 

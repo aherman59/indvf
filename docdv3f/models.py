@@ -36,7 +36,7 @@ termes.
 '''
 
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from outils import markdown2html
 from main.configuration import integrer_liens_doc_variables, integrer_liens_tuto
 
@@ -96,7 +96,7 @@ class Variable(models.Model):
     contrainte = models.CharField(max_length = 3, null = True, blank=True)
     table_pour_creation = models.CharField(max_length = 50, null = True, blank=True)
     description_simplifiee = models.TextField(null=True, blank=True)
-    description = models.ForeignKey(DescriptionVariable, null = True)
+    description = models.ForeignKey(DescriptionVariable, null = True, on_delete=models.PROTECT)
     
     def __str__(self):
         return self.nom + ' (' + self.table_associee + ')'
@@ -152,7 +152,7 @@ class ValeurVariable(models.Model):
     depuis_version = models.CharField(max_length = 20)
     jusque_version = models.CharField(max_length = 20, null = True, blank=True)
     detail = models.TextField(null = True)
-    description = models.ForeignKey(DescriptionVariable, null = True)
+    description = models.ForeignKey(DescriptionVariable, null = True, on_delete=models.PROTECT)
     
     def __str__(self):
         return self.valeur + ' (' + str(self.description) + ')'
