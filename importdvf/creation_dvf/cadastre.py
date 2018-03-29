@@ -126,7 +126,10 @@ class Cadastre(PgOutils):
             for parcelle in entites['features']:
                 if parcelle['geometry']['type'] == 'Polygon':
                     idpar = departement + str(parcelle['properties']['id'][2:])
-                    surface = str(parcelle['properties']['contenance'] or 0)
+                    if 'contenance' not in parcelle['properties']:
+                        surface = 0
+                    else:
+                        surface = str(parcelle['properties']['contenance']) or 0
                     coordonnees = parcelle['geometry']['coordinates'][0]
                     parcelles.append(nt_parcelle(departement, idpar, surface, coordonnees))
         return reussite, parcelles
@@ -141,12 +144,13 @@ class Cadastre(PgOutils):
         entites = None
         departement = code_insee[:2] if not code_insee.startswith('97') else code_insee[:3]
         try:
-            req = urllib.request.Request(self.url_commune.format(code_insee, departement))
+            url = self.url_commune.format(code_insee, departement)
+            req = urllib.request.Request(url)
             if proxy:
                 req.set_proxy(proxy, 'http')
             with urllib.request.urlopen(req) as reponse:
                 donnees = gzip.decompress(reponse.read()).decode('utf-8')
-                entites = json.loads(donnees)                         
+                entites = json.loads(donnees)
         except Exception as e:
             print(e)
             return False, None
