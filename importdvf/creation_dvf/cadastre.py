@@ -148,6 +148,7 @@ class Cadastre(PgOutils):
             req = urllib.request.Request(url)
             if proxy:
                 req.set_proxy(proxy, 'http')
+                req.set_proxy(proxy, 'https')
             with urllib.request.urlopen(req) as reponse:
                 donnees = gzip.decompress(reponse.read()).decode('utf-8')
                 entites = json.loads(donnees)
