@@ -8,13 +8,17 @@
 </div>
 <table class="table-bordered table-striped table-condensed" width="100%">
 	<tr>
-		<th>N°</th>
-		<th>Nom</th>
-		<th>Description</th>
-		<th>Type</th>		
-		<th>DVF+</th>
-		<th>DV3F</th>
-		<th>Contr.</th>
+		<th rowspan="2">N°</th>
+		<th rowspan="2">Nom</th>
+		<th rowspan="2">Description</th>
+		<th rowspan="2">Type</th>		
+		<th rowspan="2">DVF+</th>
+		<th colspan="2">DV3F</th>
+		<th rowspan="2">Contr.</th>
+	</tr>
+	<tr>
+		<th>v1</th>
+		<th>v2</th>
 	</tr>
 	{% for variable in variables %}
 	<tr>
@@ -23,8 +27,9 @@
 		<td>{{variable.description_simplifiee}}</td>
 		<td>{{variable.type_fr}}</td>
 		<td class="text-center">{% if variable.modele == 'DVF+ et DV3F' %}X{% else %} {% endif %}</td>
-		<td class="text-center">{% if variable.modele == 'DVF+ et DV3F' or variable.modele == 'DV3F' %}X{% else %} {% endif %}</td>
-		<td class="text-center">{{variable.contrainte}}</td>
+		<td class="text-center">{% if variable.start_version <= 1 and variable.end_version >= 1 %}X{% else %} {% endif %}</td>
+		<td class="text-center">{% if variable.start_version <= 2 and variable.end_version >= 2 %}X{% else %} {% endif %}</td>
+		<td class="text-center">{% if variable.contrainte %}{{variable.contrainte}}{% else %} {% endif %}</td>
 	</tr>
 	{% endfor %}
 </table>

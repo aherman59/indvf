@@ -145,7 +145,22 @@ class Variable(models.Model):
     def modele(self):
         if self.code_modele < 3:
             return 'DVF+ et DV3F'
-        return 'DV3F' 
+        return 'DV3F'
+    
+    @property
+    def start_version(self):
+        if self.depuis_version == 'beta':
+            return 0
+        return int(self.depuis_version)
+    
+    @property
+    def end_version(self):
+        if self.jusque_version == 'beta':
+            return 0
+        if not self.jusque_version or self.jusque_version == '':
+            return 9999 
+        return int(self.jusque_version)
+               
                 
 class ValeurVariable(models.Model):
     valeur = models.CharField(max_length = 255)
