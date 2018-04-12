@@ -17,8 +17,8 @@
 	    	<table class="table table-striped" width = "100 %">
             	{% for item in fiche.list|dictsort:'numero' %}
 			<tr>
-				<td>{{ item.numero }}</td>				
-				<td width="95%"><a href="{{item.lien}}">{{ item.titre }}</a></td>								
+				<td><i class="fa fa-graduation-cap"> {{ item.numero }}</i></td>				
+				<td width="85%"><a href="{{item.lien}}">{{ item.titre }}</a></td>								
 			</tr>	
 				{% endfor %}
 			</table> 
