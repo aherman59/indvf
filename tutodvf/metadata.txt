@@ -1,6 +1,6 @@
 nom=TutoDVF 
 description=Application tutorielle pour démarrer avec DVF et les bases de données DVF+ et DV3F 
-version=1.0
+version=2.0
 classe_fa=fa fa-graduation-cap 
 image = img/tutoriel.jpg 
 url=tutodvf:accueil

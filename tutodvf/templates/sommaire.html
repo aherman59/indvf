@@ -11,13 +11,13 @@
 {% for fiche in fiches_list %}
     <div class="panel panel-default">
 	    <div class="panel-heading">
-		    <h3 class="panel-title"><i class="fa fa-file-text-o"></i> {{ fiche.grouper }}</h3>
+		    <h3 class="panel-title"><i class="far fa-file-alt"></i> {{ fiche.grouper }}</h3>
 	    </div>
 	    <div class="panel-body">
 	    	<table class="table table-striped" width = "100 %">
             	{% for item in fiche.list|dictsort:'numero' %}
 			<tr>
-				<td><i class="fa fa-graduation-cap"> {{ item.numero }}</i></td>				
+				<td><i class="fas fa-graduation-cap"></i> {{ item.numero }}</td>				
 				<td width="85%"><a href="{{item.lien}}">{{ item.titre }}</a></td>								
 			</tr>	
 				{% endfor %}
