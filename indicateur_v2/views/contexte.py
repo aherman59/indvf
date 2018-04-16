@@ -54,7 +54,6 @@ class ContexteIndicateur():
             self.configuration_initiale()
             self.charger_indicateur = False
         elif 'voir_departement' in self.request.POST: # choix d'un nouveau département
-            print(self.request.POST)
             self.selection_departement(ajout=False)
         elif 'voir_epci' in self.request.POST: # choix d'un nouvel epci
             self.selection_epci(ajout=False)
@@ -104,6 +103,12 @@ class ContexteIndicateur():
         if mise_a_zero:
             return Territoire.objects.territoire_comparaison_reinitialise()
         return Territoire.objects.territoire_comparaison()
+    
+    @property
+    def typologies(self):
+        if 'typologies' in self.request.POST:
+            return self.request.POST.getlist('typologies')
+        return ['1']
     
     @property
     def indicateurs(self):

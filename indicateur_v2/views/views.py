@@ -62,13 +62,13 @@ def indicateurs(request):
     
     # integration des territoires si la base ne contient pas encore les entités départ./epci/communes
     integration.integrer_territoires()
-    print(request.POST)
     contexte_indicateur = ContexteIndicateur(request)
     if not contexte_indicateur.success:
         return redirect('main:configuration_bdd')    
     
     request.session = contexte_indicateur.request.session
-           
+    for typo in contexte_indicateur.typologies:
+        print(typo)       
     context = {'departements' : contexte_indicateur.departements, 
                'epcis' : contexte_indicateur.epcis, 
                'communes' : contexte_indicateur.communes, 
