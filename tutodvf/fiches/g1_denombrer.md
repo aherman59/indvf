@@ -47,9 +47,9 @@ Le code @@mutation|idmutinvar@@ est la combinaison des codes utilisés par les s
 
 ### Cas Pratiques
 
-@TUTO@g1_denombrer_exos|Cas pratique 1 : Dénombrer les mutation à partir de AppDVF|cas-pratique-1-denombrer-les-mutations-a-partir-de-appdvf@TUTO@ 
+@TUTO@g1_denombrer_exos|Cas pratique 1 : Dénombrer les mutations à partir de AppDVF|cas-pratique-1-denombrer-les-mutations-a-partir-de-appdvf@TUTO@ 
 
-@TUTO@g1_denombrer_exos|Cas pratique 2 : Dénombrer les mutation dans PostgreSQL/Postgis|cas-pratique-2-denombrer-les-mutations-dans-postgresqlpostgis@TUTO@  
+@TUTO@g1_denombrer_exos|Cas pratique 2 : Dénombrer les mutations dans PostgreSQL/Postgis|cas-pratique-2-denombrer-les-mutations-dans-postgresqlpostgis@TUTO@  
 
 
 
@@ -78,31 +78,40 @@ Un local est différencié, par la DGFiP, en 4 catégories selon sa forme physiq
 
 ![*Formes physiques d'un local*](ressources/forme_physique_local.png "Formes physiques d'un local")
 
+La notion de logement regroupe les locaux de type maison ou appartement. En ce qui concerne l'activité, les activités primaires ne sont pas observées mais il est possible, via DV3F, de différencier les activités secondaires et tertiaires. 
 
-En ce qui concerne l'activité, les activités primaires ne sont pas observées. Via les Fichiers fonciers, il est possible de différencier les activités secondaires et tertiaires. 
 
-La notion de logement regroupe les locaux de type maison ou appartement.
+Cette différenciation de la forme physique est très fiable. Une nomenclature plus fine est disponible dans la table local (@@local|ffcnatloc@@). 
 
-Globalement, l'ensemble sont très fiables et concordantes. Les derniers variables issues des Fichiers fonciers sont à privilégier lorsqu'il s'agit de travailler sur une analyse fine faisant appel à d'autres variables également issues des Fichiers fonciers (notion d'ancienneté, par exemple). 
+### Identification du local
+
+
+Dans DVF+/DV3F, chaque ligne de la table _local_ représente l'état d'un local lors de sa mutation à laquelle on affecte un identifiant @@local|iddispoloc@@. 
+
+Il existe également l'identifiant fiscal du local @@local|idloc@@, invariant dans le temps et indépendant de la mutation, qui correspond aussi à l'identifiant des Fichiers fonciers (idlocal). C'est cet identifiant qui est remonté au niveau de la table _mutation_. 
+
+Ainsi, une mutation peut comporter 0, 1 ou plusieurs locaux mutés qui seront référencés dans la variable @@mutation|l_idlocmut@@ grâce à cet identifiant fiscal. Il est important de noter que ce reférencement peut parfois être incomplet du fait d'un temps de latence. Celui touche principalement les VEFA. 
+
+### Dénombrement des locaux
+
+Dans la table mutation, des informations agrégées permettent de faciliter les décomptes et identifications des locaux ayant muté, selon leur forme physique ou, pour les logements, selon leur nombre de pièces et/ou leur ancienneté. 
+
+### Cas Pratiques
+
+
 
 ```variables
 @-@Variables associées@-@
-Local : @@local|codtyploc@@, @@local|libtyploc@@, @@local|ffctyploc@@, @@local|ffltyploc@@, @@local|ffcnatloc@@ et @@local|fflnatloc@@
-Mutation : @@mutation|nblocmai@@, @@mutation|nblocapt@@, @@mutation|nblocdep@@, @@mutation|nblocact@@, @@mutation|ffnblocmai@@, @@mutation|ffnblocapt@@, @@mutation|ffnblocdep@@, @@mutation|ffnblocact@@, @@mutation|ffnbactsec@@ et @@mutation|ffnbactter@@ 
+Local : @@local|idloc@@, @@local|iddispoloc@@, @@local|codtyploc@@, @@local|libtyploc@@, @@local|ffctyploc@@, @@local|ffltyploc@@, @@local|ffcnatloc@@ et @@local|fflnatloc@@
+Mutation : @@mutation|nblocmut@@, @@mutation|l_idlocmut@@, @@mutation|nblocmai@@, @@mutation|nblocapt@@, @@mutation|nblocdep@@, @@mutation|nblocact@@, @@mutation|nbmai1pp@@, @@mutation|nbmai2pp@@, @@mutation|nbmai3pp@@, @@mutation|nbmai4pp@@, @@mutation|nbmai5pp@@, @@mutation|nbapt1pp@@, @@mutation|nbapt2pp@@, @@mutation|nbapt3pp@@, @@mutation|nbapt4pp@@, @@mutation|nbapt5pp@@, @@mutation|nblocanc@@, @@mutation|nblocrecen@@, @@mutation|nblocneuf@@, @@mutation|ffnblocmai@@, @@mutation|ffnblocapt@@, @@mutation|ffnblocdep@@, @@mutation|ffnblocact@@, @@mutation|ffnbactsec@@ et @@mutation|ffnbactter@@ 
 
 ```
 
-### Identification et décompte de locaux
-
-Dans DVF+/DV3F, chaque ligne de la table _local_ représente l'état d'un local lors de sa mutation. Chaque local est identifiée par un identifiant @@local|iddispoloc@@ (valeur entière) et est rattachée à sa mutation par la variable @@local|idmutation@@.
-
-Dans cette table _local_, on retrouve les variables liées à l'identité du local : @@local|idloc@@ qui est composé du code Insee de la commune auquel il apparaît et de la variable  @@local|identloc@@
-
-Dans la table mutation, des informations agrégées permettent de faciliter les décomptes et identifications des locaux ayant muté : @@mutation|nblocmut@@ et @@mutation|l_idlocmut@@.
-
-Attention, la présence du local dans DVF+/DV3F peut prendre parfois un certain temps. C'est ce qu'on appelle le temps de latence. Ainsi, pour les locaux neufs ou en VEFA, il est possible que ces derniers ne soient pas encore identifiés.
-
-Par ailleurs, on peut constater un nombre non négligeable de mutations DVF qui ont au moins un local non présent dans les Fichiers fonciers. Ces manques concernent principalement les cas de VEFA et les mutations après le dernier millésime des Fichiers fonciers disponible. Si on s'attreint à travailler sur une période en accord avec les Fichiers fonciers, alors le taux d'erreur devient marginal, sauf pour les VEFA. Il est possible de s'appuyer sur la variable @@mutation|rapatffloc@@ de la table _mutation_ pour savoir si les informations issues des Fichiers fonciers ont bien été rapatriées. 
+ 
 
 ## Dénombrer les parcelles
+
+
+## A recaser!!!!
+Par ailleurs, on peut constater un nombre non négligeable de mutations DVF qui ont au moins un local non présent dans les Fichiers fonciers. Ces manques concernent principalement les cas de VEFA et les mutations après le dernier millésime des Fichiers fonciers disponible. Si on s'attreint à travailler sur une période en accord avec les Fichiers fonciers, alors le taux d'erreur devient marginal, sauf pour les VEFA. Il est possible de s'appuyer sur la variable @@mutation|rapatffloc@@ de la table _mutation_ pour savoir si les informations issues des Fichiers fonciers ont bien été rapatriées.
 
