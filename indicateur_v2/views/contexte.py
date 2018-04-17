@@ -36,8 +36,9 @@ termes.
 '''
 
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
-from indicateur_v2.models import Indicateur, ResultatIndicateur
+from indicateur_v2.models import ResultatIndicateur
 from indicateur_v2.forms import IndicateurForm, SelectIndicateurForm
+from indicateur_v2.indicateurs import GestionnaireIndicateurs
 from indicateur_v2.indicateurs import indicateurs_actifs_format_xcharts
 from indicateur_v2.indicateurs import indicateurs_actifs_format_csv
 
@@ -107,14 +108,39 @@ class ContexteIndicateur():
     @property
     def typologies(self):
         if 'typologies' in self.request.POST:
-            return self.request.POST.getlist('typologies')
+            typos = self.request.POST.get('typologies')
+            if ',' in typos:
+                return typos.split(',')
+            elif len(typos) > 0:
+                return [typos]                
         return ['1']
+    
+    @property
+    def filtres(self):
+        if 'filtres' in self.request.POST:
+            filtres = self.request.POST.get('filtres').split(',')
+            if ',' in filtres:
+                return filtres.split(',')
+            elif len(filtres) > 0:
+                return [filtres]  
+        return []
+    
+    @property
+    def types_indicateur(self):
+        if 'indicateurs' in self.request.POST:
+            indicateurs = self.request.POST.get('indicateurs').split(',')
+            if ',' in indicateurs:
+                return indicateurs.split(',')
+            elif len(indicateurs) > 0:
+                return [indicateurs]
+        return ['nbtrans']
     
     @property
     def indicateurs(self):
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
-            return indicateurs_actifs_format_xcharts(territoires, self.config_active)
+            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur)
+            return indicateurs_actifs_format_xcharts(territoires, gestionnaire, self.config_active)
         return []
     
     @property

@@ -107,7 +107,7 @@ Pour obtenir la répartition des locaux ayant muté selon leur forme physique su
 SELECT 
 	sum(nblocmut) as nombre_de_locaux,
 	sum(nblocmai) as nombre_de_maisons,
-	sum(nblocapt) as nombre_de_appartements,
+	sum(nblocapt) as nombre_d_appartements,
 	sum(nblocmai + nblocapt) as nombre_de_logements,
 	sum(nblocdep) as nombre_de_dependance,
 	sum(nblocact) as nombre_de_locaux_activites,
@@ -120,7 +120,7 @@ WHERE coddep = '59';
 SELECT 
 	count(*) as nombre_de_locaux,
 	sum(CASE WHEN codtyploc = 1 THEN 1 ELSE 0 END) AS nombre_de_maisons,
-	sum(CASE WHEN codtyploc = 2 THEN 1 ELSE 0 END) as nombre_de_appartements,
+	sum(CASE WHEN codtyploc = 2 THEN 1 ELSE 0 END) as nombre_d_appartements,
 	sum(CASE WHEN codtyploc IN (1, 2) THEN 1 ELSE 0 END) as nombre_de_logements,
 	sum(CASE WHEN codtyploc = 3 THEN 1 ELSE 0 END) as nombre_de_dependance,
 	sum(CASE WHEN codtyploc = 4 THEN 1 ELSE 0 END) as nombre_de_locaux_activites,
@@ -145,15 +145,30 @@ FROM dvf.mutation
 WHERE coddep = '59';
 
 -- via la table local
+SELECT 
+	count(*) AS nombre_appartement_moins_de_3_pieces
+FROM
+(
+	SELECT DISTINCT ON (idmutation, idloc) *
+	FROM dvf.local
+	WHERE coddep = '59'
+)t
+WHERE codtyploc = 2 AND nbpprinc IN (0, 1, 2);
 ```
 
 
 ### Dénombrer les appartements T3 anciens
 
-Pour obtenir le nombre d'appartements de moins de 3 pièces principales (strictement) ayant muté sur le département du Nord (59) :
+Pour obtenir le nombre d'appartements anciens de type T3 ayant muté sur le département du Nord (59) :
 
 ```sql
-SELECT sum(nbapt1pp + nbapt2pp) as nombre_appartement_moins_de_3_pieces
-FROM dvf.mutation
-WHERE coddep = '59';
+SELECT 
+	count(*) AS nombre_T3_ancien
+FROM
+(
+	SELECT DISTINCT ON (idmutation, idloc) *
+	FROM dvf.local
+	WHERE coddep = '59'
+)t
+WHERE codtyploc = 2 AND nbpprinc = 3 AND anciennete = 'ancien';
 ```

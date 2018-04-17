@@ -35,13 +35,15 @@ termes.
 
 '''
 
+from collections import namedtuple
+
 from main.models import Departement, Epci, Commune, Territoire
-from indicateur_v2.models import Indicateur, ResultatIndicateur
+from indicateur_v2.models import ResultatIndicateur
 
 from pg.pgbasics import *
 
-def indicateurs_actifs_format_xcharts(territoires, config_active):
-        indicateurs_actifs = Indicateur.objects.indicateurs_actifs_tries()
+def indicateurs_actifs_format_xcharts(territoires, gestionnaire, config_active):
+        indicateurs_actifs = gestionnaire.indicateurs_actifs()
         indicateursDVF = []
         for num, indicateur in enumerate(indicateurs_actifs):
             indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
@@ -52,6 +54,34 @@ def indicateurs_actifs_format_xcharts(territoires, config_active):
                  'nom'        : indic_dvf.titre + indic_dvf.unite(prefixe=True),}            
             indicateursDVF.append(i)
         return indicateursDVF
+
+
+class GestionnaireIndicateurs:
+        
+    def _init_(self, typologies, filtres, types_indicateur):
+        self.typologies = typologies
+        self.filtres = filtres
+        self.types_indicateur = types_indicateur
+    
+    def indicateurs_actifs(self):
+        indicateurs = []
+        for type_indicateur in self.types_indicateur:
+            for typologie in self.typologies:
+                for filtre in self.filtres:
+                    indicateurs.append(Indicateur(type_indicateur, typologie, filtre))
+        return indicateurs
+    
+class Indicateur:
+    
+    def __init__(self, type, typologie, filtre):
+        self.type = type
+        self.typologie = typologie
+        self.filtre = filtre
+    
+    @property
+    def nom(self):
+        pass
+        
 
 def indicateurs_actifs_format_csv(territoires, config_active):
         indicateurs_actifs = Indicateur.objects.indicateurs_actifs_tries()

@@ -67,15 +67,16 @@ def indicateurs(request):
         return redirect('main:configuration_bdd')    
     
     request.session = contexte_indicateur.request.session
-    for typo in contexte_indicateur.typologies:
-        print(typo)       
-    context = {'departements' : contexte_indicateur.departements, 
-               'epcis' : contexte_indicateur.epcis, 
-               'communes' : contexte_indicateur.communes, 
-               'indicateursDVF' : contexte_indicateur.indicateurs,
-               'titre': contexte_indicateur.titre,
-               'charger_indicateur': contexte_indicateur.charger_indicateur}
-    return render(request, 'indicateur_v2/indicateurs.html', context)
+    print(contexte_indicateur.typologies)
+    print(contexte_indicateur.types_indicateur)
+    print(contexte_indicateur.filtres)       
+    #context = {'departements' : contexte_indicateur.departements, 
+    #           'epcis' : contexte_indicateur.epcis, 
+    #           'communes' : contexte_indicateur.communes, 
+    #           'indicateursDVF' : contexte_indicateur.indicateurs,
+    #           'titre': contexte_indicateur.titre,
+    #           'charger_indicateur': contexte_indicateur.charger_indicateur}
+    return render(request, 'indicateur_v2/indicateurs.html', locals())
     
 
 @login_required

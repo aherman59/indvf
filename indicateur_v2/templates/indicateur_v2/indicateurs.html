@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <div class = "col-sm-10">
                                 <select class="form-control selecteur" id="departement" name="departement" onChange="submit()">
-                                    {% for departement in departements %}
+                                    {% for departement in contexte_indicateur.departements %}
                                     <option value="{{ departement.pk }}" {% if request.session.departement == departement.pk %}selected{% endif %}>{{ departement }}</option>
                                     {% endfor %}
 			                    </select> 
@@ -62,7 +62,7 @@
                             <div class = "col-sm-10">
                                 <select class="form-control selecteur" name='epci'>
                                 	<option value="0">Sélectionner un EPCI...</option>
-                                    {% for epci in epcis %}
+                                    {% for epci in contexte_indicateur.epcis %}
                                     <option value="{{ epci.pk }}" {% if request.session.epci == epci.pk %}selected{% endif %}>{{ epci }}</option>
                                     {% endfor %}
 			                    </select>
@@ -84,7 +84,7 @@
                             <div class = "col-sm-10">
                                 <select class="form-control selecteur" name='commune'>
                                 	<option value="0">Sélectionner une commune...</option>
-                                	{% for commune in communes %}
+                                	{% for commune in contexte_indicateur.communes %}
                                     <option value="{{ commune.pk }}" {% if request.session.commune == commune.pk %}selected{% endif %}>{{ commune }}</option>
                                     {% endfor %}
 			                    </select>
@@ -112,7 +112,7 @@
     <div class="panel-body">
     <div class="col-sm-4">
     	<label class="control-label"><i class="fa fa-home fa-lg"></i></label>
-		<select class="selectpicker" name="selection-typologie" title="Typologies" multiple>
+		<select class="selectpicker" name="selection-typologie" multiple>
 			<optgroup label="Niveau 1">
 			    <option value="1">BATI</option>
 			    <option value="2">NON BATI</option>
@@ -121,7 +121,7 @@
 	</div>
 	<div class="col-sm-4">
 		<label class="control-label"><i class="fa fa-bar-chart fa-lg"></i></label>
-		<select class="selectpicker" name="selection-indicateur" title="Indicateurs" multiple>
+		<select class="selectpicker" name="selection-indicateur" multiple>
 			<optgroup label="Indicateurs quantitatifs">
 			    <option value="nbtrans">Nombre de transaction</option>
 			    <option value="total">Montant total</option>
@@ -139,7 +139,7 @@
 	</div>
 	<div class="col-sm-4">
 		<label class="control-label"><i class="fa fa-filter fa-lg"></i></label>
-		<select class="selectpicker" name="selection-filtre" title="Filtres" multiple>
+		<select class="selectpicker" name="selection-filtre" multiple>
 			<optgroup label="Niveau 1">
 			    <option value="1">BATI</option>
 			    <option value="2">NON BATI</option>
@@ -150,10 +150,10 @@
 
 </div>
 
-{% if charger_indicateur %}
+{% if contexte_indicateur.charger_indicateur %}
 
 <div class="row page-header" id="resultats">
-        <h3><i class="fa fa-search"></i> Résultats pour {{titre|safe}}<small> 
+        <h3><i class="fa fa-search"></i> Résultats pour {{contexte_indicateur.titre|safe}}<small> 
         <a href="{% url 'indicateur_v2:indicateurs_csv' %}" alt="Export CSV" title="Export CSV">	
 		<span class="fa-stack fa-lg">
 		<i class="fa fa-circle fa-stack-1x"></i>
@@ -169,7 +169,7 @@ des erreurs de classification de certains biens (en particulier sur le non-bâti
 d'utiliser ces résultats avec prudence.
 </div>
 
-{% for i in indicateursDVF %}
+{% for i in contexte_indicateur.indicateursDVF %}
     <div class="panel panel-default">
 
         <div class="panel-heading">
