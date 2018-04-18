@@ -98,6 +98,18 @@ FROM dvf.mutation
 WHERE coddep = '59' AND nbcomm = 1 AND l_codinsee[1] = '59350';
 ```
 
+Dans le cas précédent, les mutations concernant 2 ou plusieurs communes dont Lille sont exclues. Pour obtenir le nombre de locaux ayant muté sur la commune de Lille (code insee : 59350) sans prendre en compte les locaux des autres communes :
+
+```sql
+SELECT count(*)
+FROM 
+(
+	SELECT DISTINCT idmutation, idloc
+	FROM dvf.local
+	WHERE substring(idpar, 1, 5) = '59350'
+)t;
+```
+
 ### Dénombrer selon la forme physique du local
 
 Pour obtenir la répartition des locaux ayant muté selon leur forme physique sur le département du Nord (59) :
@@ -172,3 +184,113 @@ FROM
 )t
 WHERE codtyploc = 2 AND nbpprinc = 3 AND anciennete = 'ancien';
 ```
+
+### Dénombrer les mutations d'un local déterminé
+
+Pour lister toutes les mutations qui concernent le local ayant l'identifiant 595400649993 :
+
+```sql
+SELECT *
+FROM dvf.mutation
+WHERE coddep='59' AND '595400649993' = ANY(l_idlocmut);
+```
+
+Pour compter toutes les mutations qui concernent le local ayant l'identifiant 595400649993 :
+
+```sql
+SELECT count(*)
+FROM dvf.mutation
+WHERE coddep='59' AND '595400649993' = ANY(l_idlocmut);
+```
+
+### Notion thématique associée
+
+@TUTO@g1_denombrer|Dénombrer les locaux|denombrer-les-locaux@TUTO@
+
+
+## Cas pratique 5 : Dénombrer les parcelles à partir de AppDVF
+(à venir)
+
+## Cas pratique 6 : Dénombrer les parcelles dans PostgreSQL/PostGIS
+
+### Dénombrer sur un département
+
+Pour obtenir le nombre de parcelles ayant muté sur le département du Nord (59) :
+
+```sql
+-- via la table mutation
+SELECT sum(nbparmut) as nombre_de_parcelles_mutees
+FROM dvf.mutation 
+WHERE coddep = '59';
+
+-- via la table disposition_parcelle (mode avancé)
+SELECT count(*) as nombre_de_parcelles_mutees
+FROM
+(
+	SELECT DISTINCT idmutation, idpar
+	FROM dvf.disposition_parcelle
+	WHERE coddep = '59' AND parcvendue IS TRUE
+)t;
+```
+
+Pour obtenir le nombre de parcelles concernées par une mutation sur le département du Nord (59) :
+
+```sql
+-- via la table mutation
+SELECT sum(nbpar) as nombre_de_parcelles_concernees
+FROM dvf.mutation 
+WHERE coddep = '59';
+
+-- via la table disposition_parcelle (mode avancé)
+SELECT count(*) as nombre_de_parcelles_concernees
+FROM
+(
+	SELECT DISTINCT idmutation, idpar
+	FROM dvf.disposition_parcelle
+	WHERE coddep = '59'
+)t;
+```
+
+### Dénombrer sur une commune
+
+Pour obtenir le nombre de parcelles mutées dont les mutations concernent exclusivement la commune de Lille (code insee : 59350) :
+
+```sql
+SELECT sum(nbparmut) AS nombre_de_parcelles_mutees
+FROM dvf.mutation
+-- il est préférable de préciser le coddep pour réduire le temps de réponse 
+WHERE coddep = '59' AND nbcomm = 1 AND l_codinsee[1] = '59350';
+```
+
+Pour obtenir le nombre de parcelles mutées sur la commune de Lille (code insee : 59350) :
+
+```sql
+SELECT count(*) AS nombre_de_parcelles_mutees
+FROM 
+(
+	SELECT DISTINCT idmutation, idpar
+	FROM dvf.disposition_parcelle
+	WHERE coddep || codcomm = '59350' AND parcvendue IS TRUE
+)t;
+```
+
+### Dénombrer les mutations qui concerne une parcelle déterminée
+
+Pour lister toutes les mutations qui concernent la parcelle ayant l'identifiant 59183540AL0328 :
+
+```sql
+SELECT *
+FROM dvf.mutation
+WHERE coddep='59' AND '59183540AL0328' = ANY(l_idpar);
+```
+
+Pour compter toutes les mutations qui concernent la parcelle ayant l'identifiant 59183540AL0328 :
+
+```sql
+SELECT count(*)
+FROM dvf.mutation
+WHERE coddep='59' AND '59183540AL0328' = ANY(l_idpar);
+
+### Notion thématique associée
+
+@TUTO@g1_denombrer|Dénombrer les parcelles|denombrer-les-parcelles@TUTO@

@@ -17,7 +17,7 @@
 	    	<table class="table table-striped" width = "100 %">
             	{% for item in fiche.list|dictsort:'numero' %}
 			<tr>
-				<td><i class="fas fa-graduation-cap"></i> {{ item.numero }}</td>				
+				<td>{% if "Cas pratiques" in item.titre %}&nbsp;<i class="far fa-clipboard"></i>&nbsp;{% else %}<i class="fas fa-graduation-cap"></i>{% endif %} {{ item.numero }}</td>				
 				<td width="85%"><a href="{{item.lien}}">{{ item.titre }}</a></td>								
 			</tr>	
 				{% endfor %}

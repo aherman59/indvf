@@ -36,7 +36,7 @@ Toutes les mutations sont enregistrées à l’exception :
 
 ### Identification de la mutation
 
-Dans DVF+/DV3F, chaque ligne de la table mutation correspond à une mutation de DVF. Chaque mutation est identifiée par deux identifiants uniques:
+Dans DVF+/DV3F, chaque ligne de la table _mutation_ correspond à une mutation de DVF. Chaque mutation est identifiée par deux identifiants uniques:
 
 * @@mutation|idmutation@@, valeur entière générée lors de la création de la base, 
 * @@mutation|idmutinvar@@, composé du code du service de la publicité foncière enregistré (@@mutation|codservch@@) et de la référence du document (@@mutation|refdoc@@) produit lors de cet enregistrement. 
@@ -90,28 +90,79 @@ Dans DVF+/DV3F, chaque ligne de la table _local_ représente l'état d'un local 
 
 Il existe également l'identifiant fiscal du local @@local|idloc@@, invariant dans le temps et indépendant de la mutation, qui correspond aussi à l'identifiant des Fichiers fonciers (idlocal). C'est cet identifiant qui est remonté au niveau de la table _mutation_. 
 
-Ainsi, une mutation peut comporter 0, 1 ou plusieurs locaux mutés qui seront référencés dans la variable @@mutation|l_idlocmut@@ grâce à cet identifiant fiscal. Il est important de noter que ce reférencement peut parfois être incomplet du fait d'un temps de latence. Celui touche principalement les VEFA. 
+Ainsi, une mutation peut comporter 0, 1 ou plusieurs locaux mutés qui seront référencés dans la variable @@mutation|l_idlocmut@@ grâce à cet identifiant fiscal. Il est important de noter que ce reférencement peut parfois être incomplet du fait d'un temps de latence. Celui touche principalement les locaux vendus en VEFA. 
 
 ### Dénombrement des locaux
 
-Dans la table mutation, des informations agrégées permettent de faciliter les décomptes et identifications des locaux ayant muté, selon leur forme physique ou, pour les logements, selon leur nombre de pièces et/ou leur ancienneté. 
+Dans la table _mutation_, des informations agrégées permettent de faciliter les décomptes et identifications des locaux ayant muté, selon leur forme physique ou, pour les logements, selon leur nombre de pièces et/ou leur ancienneté. 
 
 ### Cas Pratiques
 
+@TUTO@g1_denombrer_exos|Cas pratique 3 : Dénombrer les locaux à partir de AppDVF|cas-pratique-3-denombrer-les-locaux-a-partir-de-appdvf@TUTO@ 
+
+@TUTO@g1_denombrer_exos|Cas pratique 4 : Dénombrer les locaux dans PostgreSQL/Postgis|cas-pratique-4-denombrer-les-locaux-dans-postgresqlpostgis@TUTO@
 
 
 ```variables
 @-@Variables associées@-@
 Local : @@local|idloc@@, @@local|iddispoloc@@, @@local|codtyploc@@, @@local|libtyploc@@, @@local|ffctyploc@@, @@local|ffltyploc@@, @@local|ffcnatloc@@ et @@local|fflnatloc@@
 Mutation : @@mutation|nblocmut@@, @@mutation|l_idlocmut@@, @@mutation|nblocmai@@, @@mutation|nblocapt@@, @@mutation|nblocdep@@, @@mutation|nblocact@@, @@mutation|nbmai1pp@@, @@mutation|nbmai2pp@@, @@mutation|nbmai3pp@@, @@mutation|nbmai4pp@@, @@mutation|nbmai5pp@@, @@mutation|nbapt1pp@@, @@mutation|nbapt2pp@@, @@mutation|nbapt3pp@@, @@mutation|nbapt4pp@@, @@mutation|nbapt5pp@@, @@mutation|nblocanc@@, @@mutation|nblocrecen@@, @@mutation|nblocneuf@@, @@mutation|ffnblocmai@@, @@mutation|ffnblocapt@@, @@mutation|ffnblocdep@@, @@mutation|ffnblocact@@, @@mutation|ffnbactsec@@ et @@mutation|ffnbactter@@ 
-
 ```
 
  
 
 ## Dénombrer les parcelles
 
+### Définition d'une parcelle
 
-## A recaser!!!!
-Par ailleurs, on peut constater un nombre non négligeable de mutations DVF qui ont au moins un local non présent dans les Fichiers fonciers. Ces manques concernent principalement les cas de VEFA et les mutations après le dernier millésime des Fichiers fonciers disponible. Si on s'attreint à travailler sur une période en accord avec les Fichiers fonciers, alors le taux d'erreur devient marginal, sauf pour les VEFA. Il est possible de s'appuyer sur la variable @@mutation|rapatffloc@@ de la table _mutation_ pour savoir si les informations issues des Fichiers fonciers ont bien été rapatriées.
+La définition d'une parcelle est la suivante : 
+
+>> « Portion de terrain d’un seul tenant, situé dans un même lieu-dit, appartenant à un même propriétaire ou à une même indivision 
+>> et constituant une unité foncière indépendante selon l’agencement donné à la propriété. Le numérotage parcellaire est effectué,
+>> à l’origine, sans interruption et par sections. Toute parcelle nouvelle ou modifiée reçoit un nouveau numéro pris à la 
+>> suite du dernier attribué dans la section ; le numéro de la parcelle primitive n’est jamais réutilisé mais il permet 
+>> de localiser la nouvelle parcelle créée qui fait référence à la parcelle primitive ». 
+
+### Notion de parcelles mutées / parcelles concernées
+
+Lorsque la propriété pleine et entière de la parcelle est transférée lors de la mutation, alors la parcelle est dite "mutée". 
+Le prix de la vente comprend la propriété de ce bien.
+
+Une parcelle est dite "concernée" si elle est :
+
+* soit une parcelle mutée,
+* soit une parcelle qui ne subit aucun transfert total de propriété mais dont la propriété d'au moins un bien présent sur celle-ci 
+est transférée lors de la mutation (les cas les plus fréquents sont les ventes d'appartements).
+
+![*Parcelles mutées/concernées*](ressources/parcelle_mutee_concernee.png "Parcelles mutées/concernées")
+
+
+### Identification de la parcelle
+
+La parcelle est référencée par un code alpha-numérique se composant du code insee du département (@@disposition_parcelle|coddep@@), de la commune (@@disposition_parcelle|codcomm@@), d'un préfixe de trois chiffres (@@disposition_parcelle|prefsect@@), du numéro de la section cadastral sur 2 caractères (@@disposition_parcelle|nosect@@), et de 4 chiffres désignant le numéro de la parcelle (@@disposition_parcelle|noplan@@).
+
+Elle peut changer d’occupation mais pas de contour. Si le contour doit être modifié, alors la parcelle est remplacée par une autre parcelle. 
+D'un point vue cadastral, cela se traduit par un changement d'identifiant.
+
+Dans DVF+/DV3F, chaque ligne de la table _disposition_parcelle_ représente une "disposition-parcelle", c'est-à-dire l'état d'une parcelle lors qu'elle mute ou qu'elle est concernée par une vente. Chaque disposition-parcelle est identifiée par un identifiant @@disposition_parcelle|iddispopar@@ (valeur entière) et est rattachée à sa mutation par la variable @@disposition_parcelle|idmutation@@.
+
+Ainsi, une mutation peut comporter 0, 1 ou plusieurs parcelles concernées et/ou mutées qui seront référencées respectivement dans les variables @@mutation|l_idpar@@ et @@mutation|l_idparmut@@.
+
+### Dénombrement des parcelles
+
+Dans la table mutation, des informations agrégées permettent de faciliter les décomptes et identifications des parcelles ayant muté ou simplement concernées par la mutation. 
+
+### Cas Pratiques
+
+@TUTO@g1_denombrer_exos|Cas pratique 5 : Dénombrer les parcelles à partir de AppDVF|cas-pratique-5-denombrer-les-parcelles-a-partir-de-appdvf@TUTO@ 
+
+@TUTO@g1_denombrer_exos|Cas pratique 6 : Dénombrer les parcelles dans PostgreSQL/Postgis|cas-pratique-6-denombrer-les-parcelles-dans-postgresqlpostgis@TUTO@
+
+
+```variables
+@-@Variables associées@-@
+Disposition_parcelle : @@disposition_parcelle|idpar@@, @@disposition_parcelle|iddispopar@@, @@disposition_parcelle|parcvendue@@, @@disposition_parcelle|coddep@@, @@disposition_parcelle|codcomm@@
+Mutation : @@mutation|nbpar@@, @@mutation|l_idpar@@, @@mutation|nbparmut@@ et @@mutation|l_idparmut@@   
+``` 
+
 
