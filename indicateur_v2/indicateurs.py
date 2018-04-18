@@ -42,6 +42,20 @@ from indicateur_v2.models import ResultatIndicateur
 
 from pg.pgbasics import *
 
+TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions'),
+                                     ('total', 'Montant total'),],
+                    'Prix' : [('med', 'Prix médian'),
+                              ('pq', 'Premier quartile de prix'),
+                              ('dq', 'Dernier quartile de prix'),],
+                    'Surface' : [('surfmed', 'Surface médiane'),
+                                 ('surftot', 'Surface totale'),],
+                    }
+
+FILTRES = [('A', 'Adjudication'),
+           ('E', 'Echange'),
+           ('T', 'Transfert'),
+           ]
+
 def indicateurs_actifs_format_xcharts(territoires, gestionnaire, config_active):
         indicateurs_actifs = gestionnaire.indicateurs_actifs()
         indicateursDVF = []

@@ -118,22 +118,22 @@ class ContexteIndicateur():
     @property
     def filtres(self):
         if 'filtres' in self.request.POST:
-            filtres = self.request.POST.get('filtres').split(',')
+            filtres = self.request.POST.get('filtres')
             if ',' in filtres:
                 return filtres.split(',')
             elif len(filtres) > 0:
                 return [filtres]  
-        return []
+        return ['E']
     
     @property
     def types_indicateur(self):
         if 'indicateurs' in self.request.POST:
-            indicateurs = self.request.POST.get('indicateurs').split(',')
+            indicateurs = self.request.POST.get('indicateurs')
             if ',' in indicateurs:
                 return indicateurs.split(',')
             elif len(indicateurs) > 0:
                 return [indicateurs]
-        return ['nbtrans']
+        return ['nbtrans', 'total']
     
     @property
     def indicateurs(self):

@@ -123,27 +123,28 @@
 		<label class="control-label"><i class="fa fa-bar-chart fa-lg"></i></label>
 		<select class="selectpicker" name="selection-indicateur" multiple>
 			<optgroup label="Indicateurs quantitatifs">
-			    <option value="nbtrans">Nombre de transaction</option>
-			    <option value="total">Montant total</option>
+			    {% for type in types_indicateur.Quantitatif %}
+				<option value="{{type.0}}"{% if type.0 in contexte_indicateur.types_indicateur %} selected{% endif %}>{{type.1}}</option>
+			    {% endfor %}
 			 </optgroup>
 			<optgroup label="Indicateurs de prix">
-			    <option value="med">Prix Médian</option>
-			    <option value="pq">Premier quartile de prix</option>
-			    <option value="dq">Dernier quartile de prix</option>
+				{% for type in types_indicateur.Prix %}
+				<option value="{{type.0}}"{% if type.0 in contexte_indicateur.types_indicateur %} selected{% endif %}>{{type.1}}</option>
+			    {% endfor %}
 			 </optgroup>
 			 <optgroup label="Indicateurs de surface">
-			    <option value="surfmed">Surface médiane</option>
-			    <option value="surftot">Surface totale</option>
+				{% for type in types_indicateur.Surface %}
+				<option value="{{type.0}}"{% if type.0 in contexte_indicateur.types_indicateur %} selected{% endif %}>{{type.1}}</option>
+			    {% endfor %}
 			 </optgroup>
 		</select>
 	</div>
 	<div class="col-sm-4">
 		<label class="control-label"><i class="fa fa-filter fa-lg"></i></label>
 		<select class="selectpicker" name="selection-filtre" multiple>
-			<optgroup label="Niveau 1">
-			    <option value="1">BATI</option>
-			    <option value="2">NON BATI</option>
-			 </optgroup>
+			    {% for filtre in filtres %}
+				<option value="{{filtre.0}}"{% if filtre.0 in contexte_indicateur.filtres %} selected{% endif %}>{{filtre.1}}</option>
+			    {% endfor %}
 		</select>
 	</div>
  	</div>
