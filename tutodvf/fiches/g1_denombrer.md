@@ -47,9 +47,9 @@ Le code @@mutation|idmutinvar@@ est la combinaison des codes utilisés par les s
 
 ### Cas Pratiques
 
-@TUTO@g1_denombrer_exos|Cas pratique 1 : Dénombrer les mutations à partir de AppDVF|cas-pratique-1-denombrer-les-mutations-a-partir-de-appdvf@TUTO@ 
+@TUTO@g1_denombrer_exos|Cas pratique D1 : Dénombrer les mutations à partir de AppDVF|cas-pratique-d1-denombrer-les-mutations-a-partir-de-appdvf@TUTO@ 
 
-@TUTO@g1_denombrer_exos|Cas pratique 2 : Dénombrer les mutations dans PostgreSQL/Postgis|cas-pratique-2-denombrer-les-mutations-dans-postgresqlpostgis@TUTO@  
+@TUTO@g1_denombrer_exos|Cas pratique D2 : Dénombrer les mutations dans PostgreSQL/Postgis|cas-pratique-d2-denombrer-les-mutations-dans-postgresqlpostgis@TUTO@  
 
 
 
@@ -98,9 +98,9 @@ Dans la table _mutation_, des informations agrégées permettent de faciliter le
 
 ### Cas Pratiques
 
-@TUTO@g1_denombrer_exos|Cas pratique 3 : Dénombrer les locaux à partir de AppDVF|cas-pratique-3-denombrer-les-locaux-a-partir-de-appdvf@TUTO@ 
+@TUTO@g1_denombrer_exos|Cas pratique D3 : Dénombrer les locaux à partir de AppDVF|cas-pratique-d3-denombrer-les-locaux-a-partir-de-appdvf@TUTO@ 
 
-@TUTO@g1_denombrer_exos|Cas pratique 4 : Dénombrer les locaux dans PostgreSQL/Postgis|cas-pratique-4-denombrer-les-locaux-dans-postgresqlpostgis@TUTO@
+@TUTO@g1_denombrer_exos|Cas pratique D4 : Dénombrer les locaux dans PostgreSQL/Postgis|cas-pratique-d4-denombrer-les-locaux-dans-postgresqlpostgis@TUTO@
 
 
 ```variables
@@ -154,9 +154,9 @@ Dans la table mutation, des informations agrégées permettent de faciliter les 
 
 ### Cas Pratiques
 
-@TUTO@g1_denombrer_exos|Cas pratique 5 : Dénombrer les parcelles à partir de AppDVF|cas-pratique-5-denombrer-les-parcelles-a-partir-de-appdvf@TUTO@ 
+@TUTO@g1_denombrer_exos|Cas pratique D5 : Dénombrer les parcelles à partir de AppDVF|cas-pratique-d5-denombrer-les-parcelles-a-partir-de-appdvf@TUTO@ 
 
-@TUTO@g1_denombrer_exos|Cas pratique 6 : Dénombrer les parcelles dans PostgreSQL/Postgis|cas-pratique-6-denombrer-les-parcelles-dans-postgresqlpostgis@TUTO@
+@TUTO@g1_denombrer_exos|Cas pratique D6 : Dénombrer les parcelles dans PostgreSQL/Postgis|cas-pratique-d6-denombrer-les-parcelles-dans-postgresqlpostgis@TUTO@
 
 
 ```variables

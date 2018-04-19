@@ -9,12 +9,12 @@ Contact: dv3f@cerema.fr
 
 [TOC]
 
-## Cas pratique 1 : Dénombrer les mutations à partir de AppDVF
+## Cas pratique D1 : Dénombrer les mutations à partir de AppDVF
 
 (à venir)
 
 
-## Cas pratique 2 : Dénombrer les mutations dans PostgreSQL/PostGIS
+## Cas pratique D2 : Dénombrer les mutations dans PostgreSQL/PostGIS
 
 ### Dénombrer sur un département
 
@@ -61,10 +61,10 @@ WHERE coddep = '59' AND  l_codinsee && ARRAY['59350', '59009']::VARCHAR[];
 
 
 
-## Cas pratique 3 : Dénombrer les locaux à partir de AppDVF
+## Cas pratique D3 : Dénombrer les locaux à partir de AppDVF
 (à venir)
 
-## Cas pratique 4 : Dénombrer les locaux dans PostgreSQL/PostGIS
+## Cas pratique D4 : Dénombrer les locaux dans PostgreSQL/PostGIS
 
 ### Dénombrer sur un département
 
@@ -208,10 +208,10 @@ WHERE coddep='59' AND '595400649993' = ANY(l_idlocmut);
 @TUTO@g1_denombrer|Dénombrer les locaux|denombrer-les-locaux@TUTO@
 
 
-## Cas pratique 5 : Dénombrer les parcelles à partir de AppDVF
+## Cas pratique D5 : Dénombrer les parcelles à partir de AppDVF
 (à venir)
 
-## Cas pratique 6 : Dénombrer les parcelles dans PostgreSQL/PostGIS
+## Cas pratique D6 : Dénombrer les parcelles dans PostgreSQL/PostGIS
 
 ### Dénombrer sur un département
 
@@ -274,7 +274,7 @@ FROM
 )t;
 ```
 
-### Dénombrer les mutations qui concerne une parcelle déterminée
+### Dénombrer les mutations qui concernent une parcelle déterminée
 
 Pour lister toutes les mutations qui concernent la parcelle ayant l'identifiant 59183540AL0328 :
 

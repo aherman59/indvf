@@ -78,3 +78,28 @@ ORDER BY anneemut, trimestremut;
 ### Notion thématique associée
 
 @TUTO@g2_situer|Situer dans le temps|situer-dans-le-temps@TUTO@
+
+
+## Cas pratique S3 : Situer les mutations à partir de AppDVF
+
+### Via GeoDV3F
+
+(à venir)
+
+### Via QGis - ExportDVF
+
+(à venir)
+
+## Cas pratique S4 : Situer les mutations dans PostgreSQL/PostGIS
+
+### Trouver une mutation à partir d'une adresse
+
+(à venir)
+
+### Retrouver les adresses associées à une mutation
+
+(à venir)
+
+### Retrouver les mutations présentes dans un périmètre géographique déterminé
+
+(à venir)

@@ -32,7 +32,6 @@ Pour la version 2 de DV3F, il est conseillé de travailler sur la période 2010-
 
 ```variables
 @-@Variables associées@-@
-
 Mutation, Local, Disposition_parcelle : @@mutation|anneemut@@, @@mutation|moismut@@ et @@mutation|datemut@@ 
 Disposition_parcelle : @@disposition_parcelle|datemutpre@@, @@disposition_parcelle|datemutsui@@, @@disposition_parcelle|l_idmutpre@@ et @@disposition_parcelle|l_idmutsui@@
 Local : @@local|datemutpre@@, @@local|datemutsui@@, @@local|l_idmutpre@@ et @@local|l_idmutsui@@  
@@ -57,5 +56,30 @@ Des géométries sont présentes dans trois tables de DV3F :
 * dans la table _local_ : le localisant de la parcelle sur laquelle se situe le local au moment de la vente est restitué par @@local|geomloc@@ ;
 * dans la table _mutation_ : la variable @@mutation|geomparmut@@ correspond au contour de l'ensemble des parcelles ayant muté, la variable @@mutation|geomloc@@ correspond aux localisants des parcelles sur lesquels se situent les locaux mutés et la variable @@mutation|geompar@@ correspond au contour de l'ensemble des parcelles concernées.
 
-### Sites distants
+(IMAGE A AJOUTER)
+
+## Adresse dans DV3F
+
+Les adresses sont présentes dans la donnée source DVF mais leur rattachement à la parcelle ou au local n'est pas précisé. Elles sont disponibles dans la table _adresse_ et rattachées aux locaux et aux parcelles via les tables de passage _adresse_local_ et _adresse_dispoparc_.
+
+Pour faciliter l'identification de l'adresse des biens dans DV3F, celles-ci ont été directement rapatriées des Fichiers fonciers dans les tables _local_ et _disposition_parcelle_. C'est cette solution qui est à privilégier.
+
+### Cas pratiques
+
+@TUTO@g1_denombrer_exos|Cas pratique D2 : Dénombrer les mutations dans PostgreSQL/Postgis|cas-pratique-d2-denombrer-les-mutations-dans-postgresqlpostgis@TUTO@
+
+@TUTO@g1_denombrer_exos|Cas pratique D6 : Dénombrer les mutations qui concernent une parcelle déterminée|denombrer-les-mutations-qui-concernent-une-parcelle-determinee@TUTO@
+
+@TUTO@g2_situer_exos|Cas pratique S3 : Situer les mutations à partir de AppDVF|cas-pratique-s3-situer-les-mutations-a-partir-de-appdvf@TUTO@
+
+@TUTO@g2_situer_exos|Cas pratique S4 : Situer les mutations dans PostgreSQL/PostGIS|cas-pratique-s4-situer-les-mutations-dans-postgresqlpostgis@TUTO@
+
+```variables
+@-@Variables associées@-@
+Adresse : @@adresse|novoie@@, @@adresse|btq@@, @@adresse|typvoie@@, @@adresse|voie@@, @@adresse|codepostal@@, @@adresse|commune@@
+Mutation : @@mutation|geoparmut@@, @@mutation|geompar@@, @@mutation|geomloc@@, @@mutation|coddep@@, @@mutation|l_codinsee@@, @@mutation|l_idpar@@, @@mutation|l_idparmut@@
+Disposition_parcelle : @@disposition_parcelle|geompar@@, @@disposition_parcelle|geomloc@@, @@disposition_parcelle|coddep@@, @@disposition_parcelle|idpar@@,
+@@disposition_parcelle|ffcodinsee@@, @@disposition_parcelle|ffcommune@@, @@disposition_parcelle|ffnovoie@@, @@disposition_parcelle|ffbtq@@, @@disposition_parcelle|ffvoie@@
+Local : @@local|geomloc@@, @@local|idpar@@, @@local|ffcodinsee@@, @@local|ffcommune@@, @@local|ffnovoie@@, @@local|ffbtq@@, @@local|ffvoie@@
+``` 
 
