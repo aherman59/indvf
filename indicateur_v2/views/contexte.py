@@ -39,7 +39,7 @@ from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 from indicateur_v2.models import ResultatIndicateur
 from indicateur_v2.forms import IndicateurForm, SelectIndicateurForm
 from indicateur_v2.indicateurs import GestionnaireIndicateurs
-from indicateur_v2.indicateurs import indicateurs_actifs_format_xcharts
+from indicateur_v2.indicateurs import indicateurs_format_xcharts
 from indicateur_v2.indicateurs import indicateurs_actifs_format_csv
 
 class ContexteIndicateur():
@@ -140,7 +140,7 @@ class ContexteIndicateur():
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
             gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur)
-            return indicateurs_actifs_format_xcharts(territoires, gestionnaire, self.config_active)
+            return indicateurs_format_xcharts(territoires, gestionnaire, self.config_active)
         return []
     
     @property

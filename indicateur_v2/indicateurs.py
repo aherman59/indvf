@@ -41,22 +41,22 @@ from main.models import Departement, Epci, Commune, Territoire
 from indicateur_v2.models import ResultatIndicateur
 
 from pg.pgbasics import *
+from uuid import lib
 
-TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions'),
-                                     ('total', 'Montant total'),],
-                    'Prix' : [('med', 'Prix médian'),
-                              ('pq', 'Premier quartile de prix'),
-                              ('dq', 'Dernier quartile de prix'),],
-                    'Surface' : [('surfmed', 'Surface médiane'),
-                                 ('surftot', 'Surface totale'),],
+TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions', 'mutations'),
+                                     ('total', 'Montant total', '€'),],
+                    'Prix' : [('med', 'Prix médian', '€'),
+                              ('pq', 'Premier quartile de prix', '€'),
+                              ('dq', 'Dernier quartile de prix', '€'),],
+                    'Surface' : [('surfmed', 'Surface médiane', 'm2'),
+                                 ('surftot', 'Surface totale', 'm2'),],
                     }
 
 FILTRES = [('A', 'Adjudication'),
            ('E', 'Echange'),
-           ('T', 'Transfert'),
-           ]
+           ('T', 'Transfert'),]
 
-def indicateurs_actifs_format_xcharts(territoires, gestionnaire, config_active):
+def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
         indicateurs_actifs = gestionnaire.indicateurs_actifs()
         indicateursDVF = []
         for num, indicateur in enumerate(indicateurs_actifs):
@@ -81,21 +81,44 @@ class GestionnaireIndicateurs:
         indicateurs = []
         for type_indicateur in self.types_indicateur:
             for typologie in self.typologies:
-                for filtre in self.filtres:
-                    indicateurs.append(Indicateur(type_indicateur, typologie, filtre))
+                indicateurs.append(Indicateur(type_indicateur, typologie, self.filtres))
         return indicateurs
     
 class Indicateur:
     
-    def __init__(self, type, typologie, filtre):
+    def __init__(self, type, typologie, filtres):
         self.type = type
         self.typologie = typologie
-        self.filtre = filtre
+        self.filtres = filtres
     
     @property
     def nom(self):
-        pass
-        
+        return self.type_libelle + ' pour ' + self.typologie_libelle
+    
+    @property
+    def unite(self):
+        for _, types in TYPES_INDICATEUR.items():
+            for (abbr, libelle, unite) in types:
+                if abbr == self.type:
+                    return unite
+        return None
+    
+    @property
+    def periode(self):
+        return 'a'
+    
+    @property
+    def type_libelle(self):
+        for _, types in TYPES_INDICATEUR.items():
+            for (abbr, libelle, unite) in types:
+                if abbr == self.type:
+                    return libelle
+        return None
+    
+    @property
+    def typologie_libelle(self):
+        return self.typologie
+    
 
 def indicateurs_actifs_format_csv(territoires, config_active):
         indicateurs_actifs = Indicateur.objects.indicateurs_actifs_tries()
