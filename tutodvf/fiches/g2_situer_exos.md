@@ -94,11 +94,56 @@ ORDER BY anneemut, trimestremut;
 
 ### Trouver une mutation à partir d'une adresse
 
-(à venir)
+Pour récupérer les mutations qui concernent le boulevard Victor Hugo à Lille (code insee : 59350) :
+
+```sql
+SELECT DISTINCT * 
+FROM dvf.mutation
+WHERE coddep = '59' AND idmutation IN (
+	SELECT idmutation FROM dvf.local WHERE coddep ='59' AND ffcodinsee = '59350' AND ffvoie LIKE '%BD%VICTOR%HUGO'	
+	UNION 
+	SELECT idmutation FROM dvf.disposition_parcelle WHERE coddep ='59'  AND ffcodinsee = '59350' AND ffvoie LIKE '%BD%VICTOR%HUGO' 
+	);
+```
 
 ### Retrouver les adresses associées à une mutation
 
-(à venir)
+Pour récupérer les adresses correspondant à la mutation dont l'identifiant est 123456:
+
+```
+SELECT DISTINCT COALESCE(ffnovoie::VARCHAR, '') || 
+		COALESCE(ffbtq, '') || ' ' || 
+		COALESCE(ffvoie, '') || ' ' || 
+		COALESCE(ffcommune, '') AS adresse
+FROM dvf.local WHERE idmutation = 123456	
+
+UNION 
+
+SELECT DISTINCT COALESCE(ffnovoie::VARCHAR, '') || 
+		COALESCE(ffbtq, '') || ' ' || 
+		COALESCE(ffvoie, '') || ' ' || 
+		COALESCE(ffcommune, '') AS adresse
+FROM dvf.disposition_parcelle WHERE idmutation = 123456	 
+```
+
+Pour récupérer les adresses présentes dans la source DVF correspondant à la mutation dont l'identifiant est 123456:
+
+```
+SELECT COALESCE(novoie::VARCHAR, '') || 
+		COALESCE(btq, '') || ' ' || 
+		COALESCE(typvoie, '') || ' ' || 
+		COALESCE(voie, '') || ' ' || 
+		COALESCE(codepostal, '') || ' ' || 
+		COALESCE(commune, '') AS adresse
+FROM dvf.adresse a
+JOIN
+(
+	SELECT idadresse AS idadresse FROM dvf.adresse_dispoparc WHERE idmutation = 123456
+	UNION
+	SELECT idadresse FROM dvf.adresse_local WHERE idmutation = 123456
+) t
+ON a.idadresse = t.idadresse;
+```
 
 ### Retrouver les mutations présentes dans un périmètre géographique déterminé
 

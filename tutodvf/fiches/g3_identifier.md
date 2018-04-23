@@ -71,7 +71,22 @@ Local : @@local|codtypproa@@, @@local|codtypprov@@
 
 ## Adapter l'analyse à l'aide des rôles
 
-###
+### Le rôle dans DV3F
 
-###
+Une notion de "rôle" a été créé pour venir en complément de la typologie des propriétaires. Elle doit permettre de repérer un mode d'intervention de l'acheteur ou du vendeur sur les marchés fonciers et immobiliers qui pourrait s'apparenter à une catégories d'acteurs spécifique.
 
+Le rôle se base uniquement sur des informations liées à la mutation en elle-même (évolution des biens, articles CGI, etc.) tandis que la typologie de propriétaires se base uniquement sur les informations liées au propriétaire. Autrement dit, une même personne morale peut avoir plusieurs rôles dans DV3F. Par exemple, une collectivité (classée comme telle dans la typologie) peut parfois avoir un rôle d’aménageur même si ce n'est pas sa mission principale.
+
+Dans la table mutation, deux indicateurs ont ainsi été créés pour caractériser ces différents rôles : 
+* rolev, pour le vendeur, 
+* rolea pour l'acheteur. 
+
+### Cas Pratiques
+
+
+
+```variables
+@-@Variables associées@-@
+Mutation : @@mutation|rolea@@, @@mutation|rolev@@
+Acheteur_vendeur : @@acheteur_vendeur|nbroleop@@, @@acheteur_vendeur|nbroleoa@@, @@acheteur_vendeur|nbroleos@@, @@acheteur_vendeur|nbrolena@@, @@acheteur_vendeur|nbrolenf@@
+```
