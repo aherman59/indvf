@@ -137,7 +137,7 @@ class ConfigurationBDD(models.Model):
         if self.type_bdd == 'DVF+':
             return self.controleur_bdd().est_une_base_DVF_plus()
         if self.type_bdd == 'DV3F':
-            return self.controleur_bdd().est_une_base_DV3F()
+            return self.controleur_bdd().est_une_base_DV3F()[0]
     
     def est_une_geobase(self):
         try:

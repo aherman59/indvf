@@ -26,7 +26,20 @@ Pour plus d'informations sur le rapatriement des acheteurs-vendeurs : @TUTO@rapa
 
 Il est possible que plusieurs acheteurs-vendeurs (@@acheteur_vendeur|idachvend@@) correspondent dans la réalité à une même structure acheteuse ou vendeuse (si, par exemple, le nom ou la catégorie juridique n'est pas exactement le même). Une liaison entre ces identifiants est proposée à travers la variable @@acheteur_vendeur|identite@@.
 
-[TABLEAU A AJOUTER]
+| idachvend | ffnomprop | ffsiren | identite | nbidassoc |
+|---------|--------------|---------|------------|-------|
+| 2005968 | STE PLOMBIER DAINVILLE | 0123456789 | grp_nat0000456 | 3 |
+| 2006416 | PLOMBIER DAINVILLE | | grp_nat0000456 | 3 |
+| 2006417 | PLOMBIER DAINVILLE | 0123456789 | grp_nat0000456 | 3 |
+| 2001096 | COMMUNE DE GRISELLES | | | 1 |
+| 2004351 | OPH BELLE VIE | 478170103 | grp_nat0000732 | 3 |
+| 2004352 | OFFICE PUBLIC DE L HABITAT | 478170103 | grp_nat0000732 | 3 |
+| 2004353 | OFFICE PUBLIC DE L HABITAT | 478170103 | grp_nat0000732	| 3 |
+| 2001550 | COMMUNE DE ARRAS | | | 1 |
+| 2000094 | ARCANTA CHANTRAINE | 323347062 | | 1 |
+
+
+
 
 ### Cas Pratiques
 

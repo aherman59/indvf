@@ -50,7 +50,7 @@ class IndicateurManager(models.Manager):
         indicateur_choisi = self.get(pk = id_indicateur)
         indicateur_choisi.delete()
         
-    
+   
 class Indicateur(models.Model):
     
     TYPOLOGIE = (('999','Tout type de mutation'),

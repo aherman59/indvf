@@ -37,21 +37,21 @@ class ControleBDD(PgOutils):
                               'nbpprinc', 'sbati', 'coddep', 'datemut', 'anneemut', 'moismut', 'nbmutjour', 'nbmutannee', 'datemutpre',
                                'l_idmutpre', 'datemutsui', 'l_idmutsui']
     
-    CHAMPS_MUTATION_DV3F = ['l_idv', 'l_nomv', 'codtypprov', 'fiabmaxv', 'l_ida', 'l_noma', 'codtypproa', 'fiabmaxa', 'ffsparc', 'ffsterr',
+    CHAMPS_MUTATION_DV3F_V1 = ['l_idv', 'l_nomv', 'codtypprov', 'fiabmaxv', 'l_ida', 'l_noma', 'codtypproa', 'fiabmaxa', 'ffsparc', 'ffsterr',
                              'l_ffdcnt', 'nbpardisp', 'nbparapp', 'ffnblocmai', 'ffnblocapt', 'ffnblocdep', 'ffnblocact', 'ffnbactsec', 
                              'ffnbactter', 'ffnbloch', 'nblocanc', 'nblocrecen', 'nblocneuf', 'ffancstmin', 'ffancstmax', 'ffnbloc1pp',
                               'ffnbloc2pp', 'ffnbloc3pp', 'ffnbloc4pp', 'ffnbloc5pp', 'ffnbpgarag', 'ffnbpterra', 'ffnbppisci', 'ffnbpcav',
                                'nblocdisp', 'nblocapp', 'ffsbati', 'ffshab', 'ffsdep', 'ffspro', 'occupation', 'codtypbien', 'libtypbien',
                                 'rapatffloc', 'rapatffpar', 'geomlocmut', 'geomparmut', 'geompar']
     
-    CHAMPS_DISPOSITION_PARCELLE_DV3F = ['ffidcpv', 'fiabilitev', 'l_idv', 'nbdroiprov', 'l_nomv', 'nbdroigesv', 'l_nomgesv', 'codtypprov',
+    CHAMPS_DISPOSITION_PARCELLE_DV3F_V1 = ['ffidcpv', 'fiabilitev', 'l_idv', 'nbdroiprov', 'l_nomv', 'nbdroigesv', 'l_nomgesv', 'codtypprov',
                                          'ffidcpa', 'fiabilitea', 'l_ida', 'nbdroiproa', 'l_noma', 'nbdroigesa', 'l_nomgesa', 'codtypproa', 'ffdatemut',
                                           'exactffdvf', 'stabilitep', 'ffcodinsee', 'ffcommune', 'ffnovoie', 'ffbtq', 'ffvoie', 'fftyppdl',
                                            'ffsparc', 'ffsterr', 'ffdcnt01', 'ffdcnt02', 'ffdcnt03', 'ffdcnt04', 'ffdcnt05', 'ffdcnt06', 'ffdcnt07',
                                             'ffdcnt08', 'ffdcnt09', 'ffdcnt10', 'ffdcnt11', 'ffdcnt12', 'ffdcnt13', 'ffdcntsol', 'ffdcntagri', 'ffdcntnat',
                                              'ffparcbati', 'ffanref', 'ffanvend', 'ffanach', 'geomloc', 'geompar', 'srcgeom', 'parcvect']
     
-    CHAMPS_LOCAL_DV3F = ['ffidcpv', 'fiabilitev', 'l_idv', 'nbdroiprov', 'l_nomv', 'nbdroigesv', 'l_nomgesv',
+    CHAMPS_LOCAL_DV3F_V1 = ['ffidcpv', 'fiabilitev', 'l_idv', 'nbdroiprov', 'l_nomv', 'nbdroigesv', 'l_nomgesv',
                           'codtypprov', 'ffidcpa', 'fiabilitea', 'l_ida', 'nbdroiproa', 'l_noma', 'nbdroigesa',
                            'l_nomgesa', 'codtypproa', 'ffdatemut', 'exactffdvf', 'ffancst', 'anciennete', 'ffidbat',
                             'ffcodinsee', 'ffcommune', 'ffnovoie', 'ffbtq', 'ffvoie', 'fftyppdl', 'ffclascad',
@@ -61,12 +61,56 @@ class ControleBDD(PgOutils):
                                'ffnbpsam', 'ffnbpcha', 'ffnbpcu8', 'ffnbpcu9', 'ffnbpsea', 'ffnbpann',
                                  'ffnbpprinc', 'ffnbpgarag', 'ffnbpagrem', 'ffnbpterra', 'ffnbppisci',
                                   'ffnbpcav', 'ffanref', 'ffanvend', 'ffanach', 'geomloc', 'srcgeom', 'parcvect']
-
+    
+    CHAMPS_MUTATION_DV3F_V2 = ['l_idv', 'l_nomv', 'codtypprov', 'fiabmaxv', 'l_ida', 'l_noma', 
+                            'codtypproa', 'fiabmaxa', 'ffsparc', 'ffsterr', 'l_ffdcnt', 'nbpardisp', 
+                            'nbparapp', 'ffnblocmai', 'ffnblocapt', 'ffnblocdep', 'ffnblocact', 'ffnbactsec', 
+                            'ffnbactter', 'ffnbloch', 'ffnblogsoc', 'nblocanc', 'nblocrecen', 'nblocneuf', 
+                            'ffancstmin', 'ffancstmax', 'ffnbloc1pp', 'ffnbloc2pp', 'ffnbloc3pp', 'ffnbloc4pp', 
+                            'ffnbloc5pp', 'ffnbpdep', 'ffnbpgarag', 'ffnbpterra', 'ffnbppisci', 'ffnbpaut', 
+                            'nblocdisp', 'nblocapp', 'batiment', 'ffsbati', 'ffshab', 'ffsdep', 'ffspro', 
+                            'nbcstloc', 'nbcstsoc', 'nbcstmai', 'nbcstapt', 'nbcstact', 'l_idcstloc', 'nbcstloc4', 
+                            'nbcstsoc4', 'nbcstmai4', 'nbcstapt4', 'nbcstact4', 'l_idcstloc4', 'codtypbien', 
+                            'libtypbien', 'rapatffloc', 'rapatffpar', 'rapatgeom', 'nbsite', 'nbsite1km', 
+                            'geomlocmut', 'geomparmut', 'geompar', 'rolev', 'rolea', 'filtre', 'tab', 'devenir']
+    
+    CHAMPS_DISPOSITION_PARCELLE_DV3F_V2 = ['ffidcpv', 'fiabilitev', 'l_idv', 'nbdroiprov', 'l_nomv', 'nbdroigesv', 'l_nomgesv', 
+                                           'codtypprov', 'ffidcpa', 'fiabilitea', 'l_ida', 'nbdroiproa', 'l_noma', 'nbdroigesa', 
+                                           'l_nomgesa', 'codtypproa', 'ffdatemut', 'exactffdvf', 'stabilitep', 'ffcodinsee', 'ffcommune', 
+                                           'ffnovoie', 'ffbtq', 'ffvoie', 'fftyppdl', 'ffsparc', 'ffsterr', 'ffdcnt01', 'ffdcnt02', 
+                                           'ffdcnt03', 'ffdcnt04', 'ffdcnt05', 'ffdcnt06', 'ffdcnt07', 'ffdcnt08', 'ffdcnt09', 'ffdcnt10', 
+                                           'ffdcnt11', 'ffdcnt12', 'ffdcnt13', 'ffdcntsol', 'ffdcntagri', 'ffdcntnat', 'ffparcbati',
+                                            'nbcstloc', 'nbcstsoc', 'nbcstmai', 'nbcstapt', 'nbcstact', 'l_idcstloc', 'nbcstloc4',
+                                             'nbcstsoc4', 'nbcstmai4', 'nbcstapt4', 'nbcstact4', 'l_idcstloc4', 'ffanref', 'ffanvend',
+                                              'ffanach', 'geomloc', 'geompar', 'srcgeom', 'parcvect']
+    
+    CHAMPS_LOCAL_DV3F_V2 = ['ffidcpv', 'fiabilitev', 'l_idv', 'nbdroiprov', 'l_nomv', 'nbdroigesv', 'l_nomgesv', 'codtypprov',
+                             'ffidcpa', 'fiabilitea', 'l_ida', 'nbdroiproa', 'l_noma', 'nbdroigesa', 'l_nomgesa', 'codtypproa',
+                              'ffdatemut', 'exactffdvf', 'ffancst', 'anciennete', 'ffidbat', 'ffetage', 'ffnbetage', 'ffcodinsee',
+                               'ffcommune', 'ffnovoie', 'ffbtq', 'ffvoie', 'fftyppdl', 'ffclascad', 'ffvalloc', 'ffcodeval',
+                                'fflibeval', 'ffcchgeval', 'ffdchgeval', 'stabilitel', 'ffctyploc', 'ffltyploc', 'ffcnatloc', 'fflnatloc',
+                                 'ffbureau', 'ffcodnacev', 'fflibnacev', 'ffcodnacea', 'fflibnacea', 'fflochab', 'fflogsoc', 'fflhvacv',
+                                  'ffoccv', 'ffocca', 'ffshab', 'ffsdep', 'ffspro', 'ffsbati', 'ffnbpsam', 'ffnbpcha', 'ffnbpcu8',
+                                   'ffnbpcu9', 'ffnbpsea', 'ffnbpann', 'ffnbpprinc', 'ffnbpdep', 'ffnbpgarag', 'ffnbpagrem', 'ffnbpterra',
+                                    'ffnbppisci', 'ffnbpaut', 'ffmatmur', 'ffmattoit', 'ffanref', 'ffanvend', 'ffanach', 'geomloc',
+                                     'srcgeom', 'parcvect']
 
 
     def __init__(self, hote, base, port, utilisateur, motdepasse, script = 'sorties/tmp.sql'):
         super().__init__(hote, base, port, utilisateur, motdepasse, script)
+        self._version = None
 
+    @property    
+    def version_DV3F(self):
+        '''
+        retourne la version si c'est une base DV3F
+        retourne -1 sinon
+        '''
+        if not self._version:
+            success, version = self.est_une_base_DV3F()
+            return version
+        return self._version
+    
     def est_une_base_DVF_plus(self):
         if not self.a_schemas_principaux():
             return False
@@ -79,13 +123,17 @@ class ControleBDD(PgOutils):
         return True
     
     def est_une_base_DV3F(self):
+        '''
+        retourne True et le numéro de version si c'est une base DV3F
+        retourne False et -1 si ce n'est pas le cas
+        '''
         if not self.est_une_base_DVF_plus():
-            return False
+            return False, -1
         if not self.a_les_tables_dv3f():
-            return False
-        if not self.a_les_champs_dv3f():
-            return False
-        return True
+            return False, -1
+        success, version = self.a_les_champs_dv3f()
+        self._version = version
+        return success, version
 
     def a_schemas_principaux(self):
         schemas = self.lister_schemas()
@@ -120,10 +168,19 @@ class ControleBDD(PgOutils):
         return self._comparaison_champs(correspondance)
     
     def a_les_champs_dv3f(self):
-        correspondance = {'mutation' : self.CHAMPS_MUTATION_DV3F, 
-                          'disposition_parcelle' : self.CHAMPS_DISPOSITION_PARCELLE_DV3F,
-                          'local' : self.CHAMPS_LOCAL_DV3F}
-        return self._comparaison_champs(correspondance)
+        ## TEST VERSION 1
+        correspondance_v1 = {'mutation' : self.CHAMPS_MUTATION_DV3F_V1, 
+                          'disposition_parcelle' : self.CHAMPS_DISPOSITION_PARCELLE_DV3F_V1,
+                          'local' : self.CHAMPS_LOCAL_DV3F_V1}
+        if self._comparaison_champs(correspondance_v1):
+            return True, 1
+        ## TEST VERSION 2
+        correspondance_v2 = {'mutation' : self.CHAMPS_MUTATION_DV3F_V2, 
+                          'disposition_parcelle' : self.CHAMPS_DISPOSITION_PARCELLE_DV3F_V2,
+                          'local' : self.CHAMPS_LOCAL_DV3F_V2}
+        if self._comparaison_champs(correspondance_v2):
+            return True, 2
+        return False, -1
     
     def a_les_champs_geometriques(self):
         correspondance = {'mutation' : ['geompar', 'geomparmut', 'geomlocmut'], 

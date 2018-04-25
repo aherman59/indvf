@@ -58,6 +58,7 @@ FILTRES = [('A', 'Adjudication'),
 
 def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
         indicateurs_actifs = gestionnaire.indicateurs_actifs()
+        print(indicateurs_actifs)
         indicateursDVF = []
         for num, indicateur in enumerate(indicateurs_actifs):
             indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
@@ -72,7 +73,7 @@ def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
 
 class GestionnaireIndicateurs:
         
-    def _init_(self, typologies, filtres, types_indicateur):
+    def __init__(self, typologies, filtres, types_indicateur):
         self.typologies = typologies
         self.filtres = filtres
         self.types_indicateur = types_indicateur
@@ -90,10 +91,22 @@ class Indicateur:
         self.type = type
         self.typologie = typologie
         self.filtres = filtres
+        
+    @property
+    def id(self):
+        return 1
+    
+    @property
+    def code_typo(self):
+        return self.typologie
     
     @property
     def nom(self):
         return self.type_libelle + ' pour ' + self.typologie_libelle
+
+    @property
+    def variable(self):
+        return 'valeurfonc'
     
     @property
     def unite(self):
@@ -108,6 +121,14 @@ class Indicateur:
         return 'a'
     
     @property
+    def annee_debut(self):
+        return 2010
+    
+    @property
+    def annee_fin(self):
+        return 2015
+    
+    @property
     def type_libelle(self):
         for _, types in TYPES_INDICATEUR.items():
             for (abbr, libelle, unite) in types:
@@ -116,8 +137,16 @@ class Indicateur:
         return None
     
     @property
+    def type_indic(self):
+        return 'somme'
+    
+    @property
     def typologie_libelle(self):
         return self.typologie
+    
+    @property
+    def type_graphe(self):
+        return 'bar'
     
 
 def indicateurs_actifs_format_csv(territoires, config_active):

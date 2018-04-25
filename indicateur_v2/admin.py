@@ -37,7 +37,3 @@ termes.
 
 from django.contrib import admin
 
-from indicateur_v2.models import  Indicateur 
-# Register your models here.
-
-admin.site.register(Indicateur)
