@@ -37,6 +37,8 @@ termes.
 import os
 from collections import namedtuple
 
+from indvf.settings import ACTIVATED_APPS
+
 from main.configuration import BASE_DIR
 from main.forms import ConfigBDDForm
 from main.forms import SelectConfigBDDForm
@@ -47,19 +49,30 @@ from indicateur.models import ResultatIndicateur
 def recuperer_metadonnees_applications_disponibles():
     applis = []
     Appli = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])    
-    for racine, repertoires, fichiers in os.walk(BASE_DIR):
-        for fichier in fichiers:
-            if fichier.lower() == 'metadata.txt':
-                with open(os.path.join(racine, fichier), 'rt', encoding ='utf-8') as f:
-                    meta ={}
-                    for ligne in f:
-                        if '=' in ligne:
-                            attribut = ligne.split('=')[0]
-                            valeur = ligne.split('=')[1]
-                            meta[attribut.strip()] = valeur.strip()
-                applis.append(Appli(**meta))
+    for app in ACTIVATED_APPS:
+        for racine, repertoires, fichiers in os.walk(os.path.join(BASE_DIR, app)):
+            for fichier in fichiers:
+                if fichier.lower() == 'metadata.txt':
+                    with open(os.path.join(racine, fichier), 'rt', encoding ='utf-8') as f:
+                        meta ={}
+                        for ligne in f:
+                            if '=' in ligne:
+                                attribut = ligne.split('=')[0]
+                                valeur = ligne.split('=')[1]
+                                meta[attribut.strip()] = valeur.strip()
+                    applis.append(Appli(**meta))
     return applis
 
+
+def is_version_complete():
+    '''
+    Renvoie Vrai si les applications actives correspondent pour au moins l'une d'elles à des applications AppDVF de la version locale
+    Renvoie Faux s'il s'agit uniquement d'une affichage de la documentation et du tutoriel (notamment pour la version web)
+    '''
+    for app in ACTIVATED_APPS:
+        if app not in ['main', 'docdv3f', 'tutodvf']:
+            return True
+    return False
 
 class ContexteConfigBDD():
     

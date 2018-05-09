@@ -160,6 +160,11 @@ class Variable(models.Model):
         if not self.jusque_version or self.jusque_version == '':
             return 9999 
         return int(self.jusque_version)
+    
+    def is_in_version(self, version):
+        if self.start_version <= version and self.end_version >= version:
+            return True
+        return False
                
                 
 class ValeurVariable(models.Model):

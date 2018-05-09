@@ -92,8 +92,22 @@ def doc_table_csv(request, table):
     if table not in nom_tables_permises:
         raise Http404('Table inexistante')             
     variables = Variable.objects.filter(table_associee = table).order_by('position')    
-    entete = ['Table', 'Position', 'Nom', 'Description', 'Modèle', 'Contrainte']
-    lignes = [(v.table_associee, v.position, v.nom, v.description_simplifiee, v.modele, v.contrainte) for v in variables]        
+    entete = ['Table', 
+              'Position', 
+              'Nom', 
+              'Description', 
+              'Modèle', 
+              'DV3F v1', 
+              'DV3F v2', 
+              'Contrainte']
+    lignes = [(v.table_associee, 
+               v.position, 
+               v.nom, 
+               v.description_simplifiee, 
+               v.modele,
+               'X' if v.is_in_version(1) else '',
+               'X' if v.is_in_version(2) else '', 
+               v.contrainte) for v in variables]        
     return reponse_csv('{0}.csv'.format(table), lignes, entete)
 
 def reponse_csv(nom_fichier, lignes, entete = None):

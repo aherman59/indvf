@@ -36,10 +36,15 @@ termes.
 '''
 
 from django import template
-from main.views.contexte import recuperer_metadonnees_applications_disponibles 
+from main.views.contexte import recuperer_metadonnees_applications_disponibles
+from main.views.contexte import is_version_complete 
 
 register = template.Library()
 
 @register.simple_tag
 def applications_disponibles():
     return recuperer_metadonnees_applications_disponibles()
+    
+@register.simple_tag
+def version_complete():
+    return is_version_complete()

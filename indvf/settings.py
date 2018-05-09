@@ -50,6 +50,18 @@ INSTALLED_APPS = [
     'exportdvf',
 ]
 
+ACTIVATED_APPS = [
+    'main',
+    'importdvf',
+    'docdv3f',
+    'tutodvf',
+    'geodv3f',
+    'indicateur',
+    'indicateur_v2',
+    'easydvf',
+    'exportdvf',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
