@@ -32,7 +32,10 @@ Toutes les mutations sont enregistrées à l’exception :
 * des transferts de propriétés ne faisant pas l'objet d'un acte notarié tels que les ventes de part de SCI et certaines ventes de public à public,
 * des mutations dites « complexes » dans l'enregistrement auprès de la DGFiP : celles-ci correspondent, en général, soit à des ventes de parcelles ayant de très grandes copropriétés soit à des ventes avec un litige.
 
-![*Mutation "complexe"*](ressources/mutation_complexe.jpg "Mutation complexe") 
+Dans l'illustration ci-dessous, la parcelle entourée en rouge est concernée par des ventes mais cela n'a pas été retranscrit dans DV3F (mutation complexe):
+
+![*Mutation "complexe"*](ressources/mutation_complexe.jpg "Mutation complexe")
+
 
 ### Identification de la mutation
 

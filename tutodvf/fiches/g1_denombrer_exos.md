@@ -290,6 +290,7 @@ Pour compter toutes les mutations qui concernent la parcelle ayant l'identifiant
 SELECT count(*)
 FROM dvf.mutation
 WHERE coddep='59' AND '59183540AL0328' = ANY(l_idpar);
+```
 
 ### Notion thématique associée
 

@@ -144,3 +144,45 @@ WHERE coddep = '59'
 ### Notion thématique associée
 
 @TUTO@g3_identifier|Repérer les catégories d'acteurs|reperer-les-categories-dacteurs@TUTO@
+
+
+## Cas Pratique I3 : Fiabiliser l'analyse des modes d'action des acteurs sur les marchés
+
+### Améliorer le repérage de certains modes d'action à l'aide des roles
+
+Pour lister très largement les ventes qui concernent la promotion immobilière entre 2010 et 2015 sur le département du Nord (59) : 
+
+```sql
+SELECT sum(nblocmai + nblocapt) as nombre_de_logements
+FROM dvf.mutation 
+WHERE coddep = '59'
+	AND anneemut >= 2010 AND anneemut <= 2015 
+	AND ((codtypprov LIKE '%F6%' AND fiabmaxv IS TRUE) 
+			OR rolev = 'Op') ; 
+```
+
+Pour fiabiliser le nombre de logements achetés par un organisme de logement social entre 2010 et 2015 sur le département du Nord (59) : 
+
+```sql
+SELECT sum(nblocmai + nblocapt) as nombre_de_logements
+FROM dvf.mutation 
+WHERE coddep = '59'
+	AND anneemut >= 2010 AND anneemut <= 2015 
+	AND ((codtypproa LIKE '%F1%' AND fiabmaxa IS TRUE)
+		OR rolea = 'Os'); 
+```
+
+Pour lister les ventes suite à aménagement de parcelle par une structure supposée professionnelle entre 2010 et 2015 sur le département du Nord (59) : 
+
+```sql
+SELECT *
+FROM dvf.mutation 
+WHERE coddep = '59'
+	AND anneemut >= 2010 AND anneemut <= 2015 
+	AND ((codtypprov LIKE '%F5%' AND fiabmaxv IS TRUE)
+		OR (rolev = 'Oa' AND codtypprov NOT LIKE '%G%' AND codtypprov NOT LIKE '%X0%' AND fiabmaxv IS TRUE)); 
+```
+
+### Notion thématique associée
+
+@TUTO@g3_identifier|Adapter l'analyse à l'aide des rôles|adapter-lanalyse-a-laide-des-roles@TUTO@

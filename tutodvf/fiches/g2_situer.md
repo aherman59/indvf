@@ -13,7 +13,7 @@ Contact: dv3f@cerema.fr
  
 La date de mutation est le jour de la date de signature de l'acte notarié. 
 
-C'est une donnée essentielle car les prix d'un même bien vendus en 2004 et 2014 ne sont pas comparables.
+C'est une donnée essentielle car les prix d'un même bien vendu en 2004 et 2014 ne sont pas comparables.
 
 ### Choix de la période d'observation
 
@@ -56,7 +56,9 @@ Des géométries sont présentes dans trois tables de DV3F :
 * dans la table _local_ : le localisant de la parcelle sur laquelle se situe le local au moment de la vente est restitué par @@local|geomloc@@ ;
 * dans la table _mutation_ : la variable @@mutation|geomparmut@@ correspond au contour de l'ensemble des parcelles ayant muté, la variable @@mutation|geomloc@@ correspond aux localisants des parcelles sur lesquels se situent les locaux mutés et la variable @@mutation|geompar@@ correspond au contour de l'ensemble des parcelles concernées.
 
-(IMAGE A AJOUTER)
+Dans l'illustration ci-dessous, on retrouve, délimitées par des pointillés rouges, les géométries de toutes les parcelles vendues ou sur lesquelles un bien a été vendu (@@mutation|geompar@@). Lorsque la parcelle a été vendue, elle est ici colorée en vert (@@mutation|geomparmut@@). Lorsque qu'au moins un local a été vendu sur la parcelle, le localisant de la parcelle est représenté par un rond vert (@@mutation|geomlocmut@@). 
+
+![*Géométries*](ressources/geometrie_mutation.png "Géométries")
 
 ## Adresse dans DV3F
 

@@ -59,7 +59,7 @@ Local : @@local|l_ida@@, @@local|l_idv@@, @@local|l_noma@@, @@local|l_nomv@@, @@
 
 Outre la catégorie de personne physique (X0), DV3F propose aussi de classer les propriétaires « personne morale » pour constituer des groupes homogènes. Le schéma ci-dessous présente les différentes catégories existantes. 
 
-[SCHEMA]
+![*Typologie propriétaire*](ressources/typo_proprio.png "Typologie Propriétaire")
 
 Cette classification permet de faciliter l'identification de certaines logiques d'acteurs. Pour ne pas démultiplier les indicateurs, il a été décidé d'en proposer un seul alliant type de structure (par exemple, région, organisme de logement social, etc.) et champ d’action de la structure : réseau, route, eau, etc.
 
@@ -86,17 +86,18 @@ Local : @@local|codtypproa@@, @@local|codtypprov@@
 
 ### Le rôle dans DV3F
 
-Une notion de "rôle" a été créé pour venir en complément de la typologie des propriétaires. Elle doit permettre de repérer un mode d'intervention de l'acheteur ou du vendeur sur les marchés fonciers et immobiliers qui pourrait s'apparenter à une catégories d'acteurs spécifique.
+Une notion de "rôle" a été créé pour venir en complément de la typologie des propriétaires. Elle doit permettre de repérer un mode d'intervention de l'acheteur ou du vendeur sur les marchés fonciers et immobiliers qui pourrait s'apparenter à une catégorie d'acteurs spécifique.
 
 Le rôle se base uniquement sur des informations liées à la mutation en elle-même (évolution des biens, articles CGI, etc.) tandis que la typologie de propriétaires se base uniquement sur les informations liées au propriétaire. Autrement dit, une même personne morale peut avoir plusieurs rôles dans DV3F. Par exemple, une collectivité (classée comme telle dans la typologie) peut parfois avoir un rôle d’aménageur même si ce n'est pas sa mission principale.
 
 Dans la table mutation, deux indicateurs ont ainsi été créés pour caractériser ces différents rôles : 
-* rolev, pour le vendeur, 
-* rolea pour l'acheteur. 
+
+* @@mutation|rolev@@, pour le vendeur, 
+* @@mutation|rolea@@ pour l'acheteur. 
 
 ### Cas Pratiques
 
-
+@TUTO@g3_identifier_exos|Cas pratique I3 : Fiabiliser l'analyse des modes d'action des acteurs sur les marchés|cas-pratique-i3-fiabiliser-lanalyse-des-modes-daction-des-acteurs-sur-les-marches@TUTO@
 
 ```variables
 @-@Variables associées@-@
