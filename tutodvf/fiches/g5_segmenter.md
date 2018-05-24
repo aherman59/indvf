@@ -136,3 +136,13 @@ Un TAB est souvent un terrain non bâti, mais il peut être bâti au préalable.
 L'indicateur permettant d'utiliser ce segment est @@mutation|segmtab@@.
 
 Une fiche spécifique sera prochainement élaborée sur ce sujet.
+
+
+### Cas pratiques
+
+@TUTO@g5_segmenter_exos|Cas pratique O2 : Observer des segments dans PostgreSQL/PostGIS|cas-pratique-o2-observer-des-segments-dans-postgresqlpostgis@TUTO@
+
+```variables
+@-@Variables associées@-@
+Mutation : @@mutation|codtypbien@@, @@mutation|libtypbien@@, @@mutation|filtre@@, @@mutation|devenir@@, @@mutation|codtypprov@@, @@mutation|codtypproa@@, @@mutation|segmtab@@
+``` 

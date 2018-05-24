@@ -1,5 +1,5 @@
 Titre: Construire des indicateurs de prix à partir de DVF+
-Theme: Méthode
+Theme: OLD
 Numero: 4
 Auteurs: Antoine Herman, Magali Journet - Cerema
 MAJ: 27/04/2016
@@ -97,7 +97,8 @@ CREATE VIEW dvf.typologie_bien AS(
 
 ### Création d'une fonction médiane
 
-La fonction permettant de renvoyer une médiane, très utile en analyse de prix, n'existe pas dans les versions de PostgreSQL antérieures à la 9.4. 
+La fonction permettant de renvoyer une médiane, très utile en analyse de prix, n'existe pas dans les versions de PostgreSQL antérieures à la 9.4.
+ 
 Par conséquent, il faut d'abord définir plusieurs fonctions dans le schéma _dvf_.
   
 

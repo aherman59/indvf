@@ -1,6 +1,6 @@
 Titre: Description du modèle DV3F
-Theme: Tutoriel
-Numero: 3
+Theme: Choix méthodologiques dans DV3F
+Numero: 2
 Auteurs: Antoine Herman - Cerema
 MAJ: 08/12/2016
 Contact: dv3f@cerema.fr

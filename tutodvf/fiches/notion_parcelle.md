@@ -1,5 +1,5 @@
 Titre: Faites le tour de la parcelle...
-Theme: Tutoriel
+Theme: OLD
 Numero: 6
 Auteurs: Magali Journet, Antoine Herman - Cerema
 MAJ: 31/08/2016

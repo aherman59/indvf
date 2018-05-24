@@ -1,5 +1,5 @@
 Titre: Faites le tour des locaux...
-Theme: Tutoriel
+Theme: OLD
 Numero: 7
 Auteurs: Magali Journet, Antoine Herman - Cerema
 MAJ: 24/10/2016
