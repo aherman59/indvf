@@ -15,7 +15,7 @@ function styleLocal(code_unicode, couleur, taille_px){
 	return new ol.style.Style({
 		text: new ol.style.Text({
 			text: code_unicode,
-			font: 'normal ' + taille_px +'px FontAwesome',
+			font: 'normal normal ' + taille_px +' 14 "Font Awesome 5 Free"',
 			textBaseline: 'Bottom',
 			fill: new ol.style.Fill({
 				color: couleur,
@@ -32,11 +32,15 @@ var styles_parcelles = {
 		'33': styleParcelle('#333300', 'rgba(51, 51, 0, 0.2)'),
 		'34': styleParcelle('#333300', 'rgba(51, 51, 0, 0.2)'),
 		// Maison
-		'132': styleParcelle('#0066CC', 'rgba(0, 102, 204, 0.2)'),
+		'1110': styleParcelle('#0066CC', 'rgba(0, 102, 204, 0.2)'),
+		'1111': styleParcelle('#0066CC', 'rgba(0, 102, 204, 0.2)'),
+		'1112': styleParcelle('#0066CC', 'rgba(0, 102, 204, 0.2)'),
+		'1113': styleParcelle('#0066CC', 'rgba(0, 102, 204, 0.2)'),
+		'1114': styleParcelle('#0066CC', 'rgba(0, 102, 204, 0.2)'),
 		// Maisons
 		'131': styleParcelle('#660033', 'rgba(102, 0, 51, 0.2)'),		
 		// Appart - ne doit pas servir à priori 
-		'122': styleParcelle('#FF8000', 'rgba(255, 128, 0, 0.2)'),
+		'12110': styleParcelle('#FF8000', 'rgba(255, 128, 0, 0.2)'),
 		// Apparts
 		'121': styleParcelle('#990000', 'rgba(153, 0, 0, 0.2)'),
 		// Industriel/Commercial
@@ -63,13 +67,21 @@ var styles_parcelles = {
 
 var styles_locaux = {
 		// Appart
-		'122': styleLocal('\uf1ad', '#FF8000', '14'),
+		'12110': styleLocal('\uf1ad', '#FF8000', '14'),
+		'12111': styleLocal('\uf1ad', '#FF8000', '14'),
+		'12112': styleLocal('\uf1ad', '#FF8000', '14'),
+		'12113': styleLocal('\uf1ad', '#FF8000', '14'),
+		'12114': styleLocal('\uf1ad', '#FF8000', '14'),
 		// Apparts
 		'121': styleLocal('\uf1ad', '#990000', '14'),
 		// Vefa - Appart(s)
 		'32': styleLocal('\uf1ad', '#333300', '14'),
 		// Maison
-		'132': styleLocal('\uf015', '#0066CC', '18'),
+		'1110': styleLocal('\uf015', '#0066CC', '900'),
+		'1111': styleLocal('\uf015', '#0066CC', '900'),
+		'1112': styleLocal('\uf015', '#0066CC', '900'),
+		'1113': styleLocal('\uf015', '#0066CC', '900'),
+		'1114': styleLocal('\uf015', '#0066CC', '900'),
 		// Maisons
 		'131': styleLocal('\uf015', '#660033', '18'),
 		// Vefa - Maison(s)

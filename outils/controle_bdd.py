@@ -72,7 +72,7 @@ class ControleBDD(PgOutils):
                             'nbcstloc', 'nbcstsoc', 'nbcstmai', 'nbcstapt', 'nbcstact', 'l_idcstloc', 'nbcstloc4', 
                             'nbcstsoc4', 'nbcstmai4', 'nbcstapt4', 'nbcstact4', 'l_idcstloc4', 'codtypbien', 
                             'libtypbien', 'rapatffloc', 'rapatffpar', 'rapatgeom', 'nbsite', 'nbsite1km', 
-                            'geomlocmut', 'geomparmut', 'geompar', 'rolev', 'rolea', 'filtre', 'tab', 'devenir']
+                            'geomlocmut', 'geomparmut', 'geompar', 'rolev', 'rolea', 'filtre', 'segmtab', 'devenir']
     
     CHAMPS_DISPOSITION_PARCELLE_DV3F_V2 = ['ffidcpv', 'fiabilitev', 'l_idv', 'nbdroiprov', 'l_nomv', 'nbdroigesv', 'l_nomgesv', 
                                            'codtypprov', 'ffidcpa', 'fiabilitea', 'l_ida', 'nbdroiproa', 'l_noma', 'nbdroigesa', 
