@@ -135,6 +135,8 @@ Un TAB est souvent un terrain non bâti, mais il peut être bâti au préalable.
 
 L'indicateur permettant d'utiliser ce segment est @@mutation|segmtab@@.
 
+![*TAB*](ressources/tab.png "TAB")
+
 Une fiche spécifique sera prochainement élaborée sur ce sujet.
 
 

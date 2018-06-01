@@ -81,11 +81,14 @@ Dans DV3F, la notion de surface réelle bâtie (@@mutation|sbati@@),est la somme
 
 Le détail des différentes composantes de surface selon l'occupation est disponible.
 
+
 #### Surface Carrez
 
 La surface privative ou surface Carrez doit être mentionnée dans le cadre d'une vente comprenant un lot de copropriété.  Elle se définit comme la superficie des planchers des locaux clos et couverts après déduction des surfaces occupées par les murs, cloisons, marches et cages d'escaliers, gaines, embrasures de portes et de fenêtres.
 
 Elle ne comptabilise ni les surfaces dont la hauteur sous plafond est inférieure à 1,80m ni les surfaces de pièces de moins de 8 m². Cette surface est disponible pour les 5 premiers lots d'une mutation dans DVF mais n'est pas disponible pour les locaux (@@lot|scarrez@@).
+
+![*Surfaces d'un local*](ressources/surface_local.png "Surfaces d'un local")
 
 ```variables
 @-@Variables associées@-@

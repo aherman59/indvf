@@ -43,8 +43,8 @@ from main.configuration import integrer_liens_doc_variables, integrer_liens_tuto
 
 class RepertoireTuto():
     
-    THEMES = {'Bien démarrer avec DV3F': 'A', 'Mise en place de DVF+/DV3F': 'B', 'Choix méthodologiques dans DV3F' : 'C', 
-              'Usages avancés de DV3F' : 'D', 'OLD' : 'E'}
+    THEMES = {'Bien démarrer avec DV3F': 'A', 'Plus loin avec DV3F':'B', 'Mise en place de DVF+/DV3F': 'C', 'Choix méthodologiques dans DV3F' : 'D', 
+              'Usages avancés de DV3F' : 'E', 'OLD' : 'F'}
     
     def __init__(self, repertoire):
         if not os.path.isdir(repertoire):

@@ -30,7 +30,7 @@ WHERE coddep = '59'
 Pour pré-repérer les ventes de maisons destinées à la démolition pour de la construction dense dans le département du Nord (59) :
 
 ```sql
-SELECT avg(sterr)
+SELECT *
 FROM dvf.mutation 
 WHERE coddep = '59'
 	AND codtypbien = '111%'
