@@ -35,6 +35,8 @@ termes.
 
 '''
 
+from pg.pgbasics import PgOutils
+
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 from indicateur_v2.models import ResultatIndicateur
 from indicateur_v2.forms import IndicateurForm, SelectIndicateurForm
@@ -190,8 +192,7 @@ class ContexteIndicateur():
         self.request.session.pop('departement', None)
         self.request.session['epci'] = 0
         self.request.session['commune'] = 0
-
-
+        
 class ContexteConfigIndicateur():
     
     def __init__(self, request):

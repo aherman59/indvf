@@ -41,7 +41,6 @@ from main.models import Departement, Epci, Commune, Territoire
 from indicateur_v2.models import ResultatIndicateur
 
 from pg.pgbasics import *
-from uuid import lib
 
 TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions', 'mutations'),
                                      ('total', 'Montant total', '€'),],
@@ -56,12 +55,17 @@ FILTRES = [('A', 'Adjudication'),
            ('E', 'Echange'),
            ('T', 'Transfert'),]
 
+TYPOLOGIE = {'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
+             'Niv2' : [('11', 'Maison'), ('12', 'Appartement'), ('13', 'Dépendance')],
+             }
+
+
 def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
         indicateurs_actifs = gestionnaire.indicateurs_actifs()
-        print(indicateurs_actifs)
         indicateursDVF = []
         for num, indicateur in enumerate(indicateurs_actifs):
             indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
+            print(indic_dvf)
             i = {'idgraph'    : 'graph' + str(num),
                  'type_graph' : indicateur.type_graphe,
                  'graph'      : indic_dvf.graphique,
@@ -102,7 +106,7 @@ class Indicateur:
     
     @property
     def nom(self):
-        return self.type_libelle + ' pour ' + self.typologie_libelle
+        return self.type_libelle + ' pour la catégorie ' + self.code_typo +  ' - ' + self.typologie_libelle 
 
     @property
     def variable(self):
@@ -142,8 +146,12 @@ class Indicateur:
     
     @property
     def typologie_libelle(self):
-        return self.typologie
-    
+        for niv, typ in TYPOLOGIE.items():
+            for t in typ:
+                if t[0] == self.code_typo:
+                    return t[1]
+        return None
+     
     @property
     def type_graphe(self):
         return 'bar'
@@ -180,6 +188,7 @@ class IndicateurDVF():
         resultat_indicateur = Resultat(self.indicateur)
         for t in self.territoires:
             resultat = resultat_indicateur.resultat_en_base(t, self.config_active)
+            print('Resultat', resultat)
             if resultat is None:
                 return None
             resultats.append(resultat)
@@ -260,12 +269,13 @@ class Resultat():
     
     def resultat_en_base(self, territoire, config_active):
         id_indicateur = self.indicateur.id
-        if not ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id, territoire.type()):
+        if not ResultatIndicateur.objects.resultat_as_tuple(self.indicateur, territoire.id, territoire.type()):
             resultat = self.calcul(territoire, config_active)
             if resultat is None:
                 return None
             self.sauvegarde(resultat, territoire)
-        return ResultatIndicateur.objects.resultat_as_tuple(id_indicateur, territoire.id, territoire.type())
+        print(ResultatIndicateur.objects.resultat_as_tuple(self.indicateur, territoire.id, territoire.type()))
+        return ResultatIndicateur.objects.resultat_as_tuple(self.indicateur, territoire.id, territoire.type())
     
     def calcul(self, territoire, config_active):
         codes_insee = territoire.codes_insee
@@ -375,7 +385,7 @@ class RequeteurInDVF(PgOutils):
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
     
     def condition(self, indicateur):
-        condition = '' if indicateur.code_typo == '999' else " WHERE codtypbien='{0}' ".format(indicateur.code_typo)
+        condition = '' if indicateur.code_typo == '999' else " WHERE codtypbien LIKE '{0}%' ".format(indicateur.code_typo)
         try:
             denominateur = indicateur.variable.split('/')[1]
             condition_denominateur = ' {0} != 0 '.format(denominateur)

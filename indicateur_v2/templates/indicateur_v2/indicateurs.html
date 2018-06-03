@@ -114,8 +114,14 @@
     	<label class="control-label"><i class="fa fa-home fa-lg"></i></label>
 		<select class="selectpicker" name="selection-typologie" multiple>
 			<optgroup label="Niveau 1">
-			    <option value="1">BATI</option>
-			    <option value="2">NON BATI</option>
+			    {% for type in typologie.Niv1 %}
+			    <option value="{{type.0}}"{% if type.0 in contexte_indicateur.typologies %} selected{% endif %}>{{type.1}}</option>
+			    {% endfor %}
+			 </optgroup>
+			 <optgroup label="Niveau 2">
+			    {% for type in typologie.Niv2 %}
+			    <option value="{{type.0}}"{% if type.0 in contexte_indicateur.typologies %} selected{% endif %}>{{type.1}}</option>
+			    {% endfor %}
 			 </optgroup>
 		</select>
 	</div>

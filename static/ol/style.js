@@ -13,14 +13,23 @@ function styleParcelle(couleur_trait, couleur_plein){
 
 function styleLocal(code_unicode, couleur, taille_px){
 	return new ol.style.Style({
+		/*
 		text: new ol.style.Text({
-			text: code_unicode,
-			font: 'normal normal ' + taille_px +' 14 "Font Awesome 5 Free"',
+			text: 'O',
+			font: '' + taille_px +'px helvetica,sans-serif',
 			textBaseline: 'Bottom',
 			fill: new ol.style.Fill({
 				color: couleur,
 			})
 		})
+		*/
+		text: new ol.style.Text({
+	         font: '12px Arial,sans-serif',
+	         text: 'i',
+	         fill: new ol.style.Fill({
+					color: couleur,
+				}),
+	       })
 	})
 }
 
@@ -77,11 +86,11 @@ var styles_locaux = {
 		// Vefa - Appart(s)
 		'32': styleLocal('\uf1ad', '#333300', '14'),
 		// Maison
-		'1110': styleLocal('\uf015', '#0066CC', '900'),
-		'1111': styleLocal('\uf015', '#0066CC', '900'),
-		'1112': styleLocal('\uf015', '#0066CC', '900'),
-		'1113': styleLocal('\uf015', '#0066CC', '900'),
-		'1114': styleLocal('\uf015', '#0066CC', '900'),
+		'1110': styleLocal('T', '#0066CC', '10'),
+		'1111': styleLocal('T', '#0066CC', '10'),
+		'1112': styleLocal('T', '#0066CC', '10'),
+		'1113': styleLocal('T', '#0066CC', '10'),
+		'1114': styleLocal('T', '#0066CC', '10'),
 		// Maisons
 		'131': styleLocal('\uf015', '#660033', '18'),
 		// Vefa - Maison(s)

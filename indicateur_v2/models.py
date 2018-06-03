@@ -104,11 +104,11 @@ class Indicateur(models.Model):
 
 class ResultatIndicateurManager(models.Manager):
     
-    def resultat_as_tuple(self, id_indicateur, id_territoire, type_territoire):
-        resultats = self.filter(id_indicateur = id_indicateur).filter(id_territoire = id_territoire).filter(type_territoire=type_territoire)
+    def resultat_as_tuple(self, indicateur, id_territoire, type_territoire):
+        resultats = self.filter(id_indicateur = indicateur.id).filter(id_territoire = id_territoire).filter(type_territoire=type_territoire)
+        print(resultats)
         if len(resultats) == 0:
             return None
-        indicateur = Indicateur.objects.get(pk=id_indicateur)
         annee_debut = indicateur.annee_debut
         annee_fin = indicateur.annee_fin
         if indicateur.periode == 'ma':
