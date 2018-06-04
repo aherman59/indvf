@@ -125,7 +125,7 @@ class ContexteIndicateur():
                 return filtres.split(',')
             elif len(filtres) > 0:
                 return [filtres]  
-        return ['E']
+        return ['0']
     
     @property
     def types_indicateur(self):

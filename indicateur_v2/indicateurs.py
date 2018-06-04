@@ -42,18 +42,31 @@ from indicateur_v2.models import ResultatIndicateur
 
 from pg.pgbasics import *
 
-TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions', 'mutations'),
-                                     ('total', 'Montant total', '€'),],
-                    'Prix' : [('med', 'Prix médian', '€'),
-                              ('pq', 'Premier quartile de prix', '€'),
-                              ('dq', 'Dernier quartile de prix', '€'),],
-                    'Surface' : [('surfmed', 'Surface médiane', 'm2'),
-                                 ('surftot', 'Surface totale', 'm2'),],
+TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions', 'mutations', '1'),
+                                     ('total', 'Montant total', '€', '2'),],
+                    'Prix' : [('med', 'Prix médian', '€', '3'),
+                              ('pq', 'Premier quartile de prix', '€', '4'),
+                              ('dq', 'Dernier quartile de prix', '€', '5'),],
+                    'Surface' : [('surfmed', 'Surface médiane', 'm2', '6'),
+                                 ('surftot', 'Surface totale', 'm2', '7'),],
                     }
 
 FILTRES = [('A', 'Adjudication'),
+           ('B', 'Appartement avec terrain'),
+           ('D', 'Double vente'),
            ('E', 'Echange'),
-           ('T', 'Transfert'),]
+           ('H', 'Vente à 0 ou 1 euro'),
+           ('L', 'Bien exceptionnel'),
+           ('M', 'Multi-site (1km)'),
+           ('S', 'Logement social'),
+           ('T', 'Transfert'),
+           ('X', 'Expropriation'),
+           ('1', 'Terrain bati >1ha/local'),
+           ('5', 'Terrain bati >5ha/local'),
+           ('0', 'Aucun filtre appliqué'),
+           ]
+
+
 
 TYPOLOGIE = {'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
              'Niv2' : [('11', 'Maison'), ('12', 'Appartement'), ('13', 'Dépendance')],
@@ -65,7 +78,6 @@ def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
         indicateursDVF = []
         for num, indicateur in enumerate(indicateurs_actifs):
             indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
-            print(indic_dvf)
             i = {'idgraph'    : 'graph' + str(num),
                  'type_graph' : indicateur.type_graphe,
                  'graph'      : indic_dvf.graphique,
@@ -98,7 +110,10 @@ class Indicateur:
         
     @property
     def id(self):
-        return 1
+        id_type = self.get_type_indicateur('id').ljust(3, '0')
+        id_typologie = self.typologie.rjust(6, '0')
+        id_fltr = self.id_filtre()
+        return int(id_type + id_typologie + id_fltr)
     
     @property
     def code_typo(self):
@@ -110,15 +125,20 @@ class Indicateur:
 
     @property
     def variable(self):
-        return 'valeurfonc'
+        if self.type == 'nbtrans':
+            return 'idmutation'
+        elif self.type in ('total', 'med', 'pq', 'dq'):
+            return 'valeurfonc'
+        elif self.type in ('surfmed', 'surftot'):
+            return 'sbati'
     
     @property
     def unite(self):
-        for _, types in TYPES_INDICATEUR.items():
-            for (abbr, libelle, unite) in types:
-                if abbr == self.type:
-                    return unite
-        return None
+        return self.get_type_indicateur('unite')
+    
+    @property
+    def type_libelle(self):
+        return self.get_type_indicateur('libelle')
     
     @property
     def periode(self):
@@ -131,18 +151,15 @@ class Indicateur:
     @property
     def annee_fin(self):
         return 2015
-    
-    @property
-    def type_libelle(self):
-        for _, types in TYPES_INDICATEUR.items():
-            for (abbr, libelle, unite) in types:
-                if abbr == self.type:
-                    return libelle
-        return None
-    
+          
     @property
     def type_indic(self):
-        return 'somme'
+        if self.type in ('total', 'surftot'):
+            return 'somme'
+        elif self.type in ('nbtrans'):
+            return 'compte'
+        elif self.type in ('med'):
+            return 'mediane_10'
     
     @property
     def typologie_libelle(self):
@@ -155,6 +172,27 @@ class Indicateur:
     @property
     def type_graphe(self):
         return 'bar'
+    
+    def get_type_indicateur(self, champ):
+        for _, types in TYPES_INDICATEUR.items():
+            for (abbr, libelle, unite, id) in types:
+                if abbr == self.type:
+                    if champ == 'unite':
+                        return unite
+                    elif champ == 'id':
+                        return id
+                    elif champ == 'libelle':
+                        return libelle
+        return None
+    
+    def id_filtre(self):
+        id = ''
+        for (abbr, libelle) in FILTRES:
+            if abbr in self.filtres:
+                id += '1'
+            else:
+                id += '0'
+        return str(int(id, 2))
     
 
 def indicateurs_actifs_format_csv(territoires, config_active):
@@ -188,7 +226,6 @@ class IndicateurDVF():
         resultat_indicateur = Resultat(self.indicateur)
         for t in self.territoires:
             resultat = resultat_indicateur.resultat_en_base(t, self.config_active)
-            print('Resultat', resultat)
             if resultat is None:
                 return None
             resultats.append(resultat)
@@ -274,7 +311,6 @@ class Resultat():
             if resultat is None:
                 return None
             self.sauvegarde(resultat, territoire)
-        print(ResultatIndicateur.objects.resultat_as_tuple(self.indicateur, territoire.id, territoire.type()))
         return ResultatIndicateur.objects.resultat_as_tuple(self.indicateur, territoire.id, territoire.type())
     
     def calcul(self, territoire, config_active):
