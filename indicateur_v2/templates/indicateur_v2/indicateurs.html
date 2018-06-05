@@ -110,9 +110,23 @@
     </div>
  
     <div class="panel-body">
+    
+    <div class="alert alert-success" role="alert"><i class="fas fa-info-circle" aria-hidden="true"></i>
+    Les indicateurs sélectionnés sont calculés :
+    	<ul>
+    	<li>pour chacun des types de biens retenus</li>
+    	<li>sur l'ensemble des mutations </li>
+    	<li>par année ou sur un période multi-annuelle</li>
+    	</ul>
+    </div>
+    
+    
     <div class="col-sm-4">
     	<label class="control-label"><i class="fa fa-home fa-lg"></i></label>
 		<select class="selectpicker" name="selection-typologie" multiple>
+				{% for type in typologie.Niv0 %}
+				<option value="{{type.0}}"{% if type.0 in contexte_indicateur.typologies %} selected{% endif %}>{{type.1}}</option>
+				{% endfor %}
 			<optgroup label="Niveau 1">
 			    {% for type in typologie.Niv1 %}
 			    <option value="{{type.0}}"{% if type.0 in contexte_indicateur.typologies %} selected{% endif %}>{{type.1}}</option>

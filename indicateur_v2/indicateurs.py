@@ -51,24 +51,25 @@ TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions', 'mutat
                                  ('surftot', 'Surface totale', 'm2', '7'),],
                     }
 
-FILTRES = [('A', 'Adjudication'),
+FILTRES = [('0', 'Mutation sans spécificité'),
+           ('A', 'Adjudication'),
            ('B', 'Appartement avec terrain'),
-           ('D', 'Double vente'),
+           ('D', 'Mutation dont un bien est vendu 2 fois le même jour'),
            ('E', 'Echange'),
            ('H', 'Vente à 0 ou 1 euro'),
            ('L', 'Bien exceptionnel'),
            ('M', 'Multi-site (1km)'),
            ('S', 'Logement social'),
-           ('T', 'Transfert'),
+           ('T', 'Transfert entre opérateur social'),
            ('X', 'Expropriation'),
            ('1', 'Terrain bati >1ha/local'),
            ('5', 'Terrain bati >5ha/local'),
-           ('0', 'Aucun filtre appliqué'),
            ]
 
 
 
-TYPOLOGIE = {'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
+TYPOLOGIE = {'Niv0' : [('999', 'Tout type de mutation')],
+             'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
              'Niv2' : [('11', 'Maison'), ('12', 'Appartement'), ('13', 'Dépendance')],
              }
 
@@ -171,7 +172,12 @@ class Indicateur:
      
     @property
     def type_graphe(self):
-        return 'bar'
+        if self.type in ('nbtrans', 'total', 'surfmed', 'surftot'):
+            return 'bar'
+        elif self.type in ('med', 'pq', 'dq'):
+            return 'line-dotted'
+        else:
+            return 'bar'
     
     def get_type_indicateur(self, champ):
         for _, types in TYPES_INDICATEUR.items():
@@ -421,11 +427,14 @@ class RequeteurInDVF(PgOutils):
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
     
     def condition(self, indicateur):
-        condition = '' if indicateur.code_typo == '999' else " WHERE codtypbien LIKE '{0}%' ".format(indicateur.code_typo)
+        condition = 'WHERE '
+        condition += "(" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
+        if indicateur.code_typo != '999':
+            condition += " AND codtypbien LIKE '{0}%'".format(indicateur.code_typo)
         try:
             denominateur = indicateur.variable.split('/')[1]
-            condition_denominateur = ' {0} != 0 '.format(denominateur)
-            return 'WHERE ' + condition_denominateur if not condition else condition + 'AND' + condition_denominateur
+            condition_denominateur = ' {0} != 0'.format(denominateur)
+            return condition + 'AND' + condition_denominateur
         except IndexError as e:
             return condition
     
