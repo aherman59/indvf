@@ -131,7 +131,7 @@
 	                <i class="fa fa-sort-asc" tri="id"></i> id <i class="fa fa-sort-desc" tri="id_desc"></i>
                 </th>                
                 <th class="text-center">
-	                <i class="fa fa-sort-asc" tri="datemut"></i> Date de mutation <i class="fa fa-sort-desc" tri="datemut_desc"></i>
+	                <a class="tri" tri="datemut"><i class="fa fa-sort-asc" tri="datemut"></i></a> Date de mutation <a class="tri" tri="datemut_desc"><i class="fa fa-sort-desc" tri="datemut_desc"></i></a>
                 </th>
                 <th class="text-center">
 	                <i class="fa fa-sort-asc" tri="valeurfonc"></i> Valeur Foncière (€) <i class="fa fa-sort-desc" tri="valeurfonc_desc"></i>
@@ -146,7 +146,7 @@
 	                <i class="fa fa-sort-asc" tri="sterr"></i> Surf. terrain (m2) <i class="fa fa-sort-desc" tri="sterr_desc"></i>
                 </th>
                 <th class="text-center">
-	                <i class="fa fa-sort-asc" tri="nbparmut"></i> Parcelles vendues <i class="fa fa-sort-desc" tri="nbparmut_desc"></i>
+	                <a class="tri" tri="nbparmut"><i class="fa fa-sort-asc"></i></a> Parcelles vendues <a class="tri" tri="nbparmut_desc"><i class="fa fa-sort-desc"></i></a>
                 </th>
                 <th></th>
             </tr>
@@ -187,7 +187,7 @@ $('form input').keydown(function (e) {
     }
 });
 
-$('[class*="fa-sort"]').on("click",function() {
+$('[class*="tri"]').on("click",function() {
   var tri = $(this).attr('tri');  
   $.ajax({
        url : '/recherche/modification_affichage_table/' + tri + '/1',
