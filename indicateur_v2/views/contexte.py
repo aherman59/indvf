@@ -115,7 +115,7 @@ class ContexteIndicateur():
                 return typos.split(',')
             elif len(typos) > 0:
                 return [typos]                
-        return ['1']
+        return ['11', '12']
     
     @property
     def filtres(self):
@@ -126,6 +126,23 @@ class ContexteIndicateur():
             elif len(filtres) > 0:
                 return [filtres]  
         return ['0']
+    
+    @property
+    def devenirs(self):
+        if 'devenirs' in self.request.POST:
+            devenirs = self.request.POST.get('devenirs')
+            if ',' in devenirs:
+                return devenirs.split(',')
+            elif len(devenirs) > 0:
+                return [devenirs]  
+        return ['S']
+    
+    @property
+    def periodicite(self):
+        if 'annee' in self.request.POST:
+            periode = self.request.POST.get('annee')
+            return periode
+        return 'a'
     
     @property
     def types_indicateur(self):
@@ -141,7 +158,7 @@ class ContexteIndicateur():
     def indicateurs(self):
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
-            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur)
+            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite)
             return indicateurs_format_xcharts(territoires, gestionnaire, self.config_active)
         return []
     

@@ -66,11 +66,81 @@ FILTRES = [('0', 'Mutation sans spécificité'),
            ('5', 'Terrain bati >5ha/local'),
            ]
 
-
+DEVENIRS = [('S', 'Inchangé'),
+            ('CD', 'Construction avec démolition'),
+            ('C', 'Construction'),]
 
 TYPOLOGIE = {'Niv0' : [('999', 'Tout type de mutation')],
              'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
-             'Niv2' : [('11', 'Maison'), ('12', 'Appartement'), ('13', 'Dépendance')],
+             'Niv2' : [('11', 'Maison'), ('12', 'Appartement'), ('13', 'Dépendance'),
+                       ('14', 'Activité'), ('15', 'Bâti mixte'), ('10', 'Bâti-indéterminé'),
+                       ('21', 'Terrain type TAB'), ('22', 'Terrain artificialisé'),
+                       ('23', 'Terrain naturel'), ('20', 'Terrain non bâti indéterminé')],
+             'Niv3' : [('111', "Une maison"),
+                       ('112', "Des maisons"),
+                       ('110', "Maison indéterminee"),                       
+                       ('121', "Un appartement"),
+                       ('122', "Deux appartements"),
+                       ('123', "Des appartements dans le meme immeuble"),
+                       ('120', "Appartement indétermine"),                       
+                       ('131', "Une dependance"),
+                       ('132', "Des dependances"),
+                       ('141', "Activite primaire"),
+                       ('142', "Activite secondaire"),
+                       ('143', "Activite tertiaire"),
+                       ('149', "Activite mixte"),
+                       ('140', "Activite indeterminee"),
+                       ('151', "Bâti mixte - logements"),
+                       ('152', "Bâti mixte - logement/activite"),
+                       ('101', "Bâti - indéterminé : vefa sans descriptif"),
+                       ('102', "Bâti - indéterminé: vente avec volume(s)"),
+                       ('221', "Terrain d'agrement"),
+                       ('222', "Terrain d'extraction"),
+                       ('223', "Terrain de type reseau"),
+                       ('229', "Terrain artificialise mixte"),
+                       ('231', "Terrain agricole"),
+                       ('232', "Terrain forestier"),('233', "Terrain landes et eaux"),
+                       ('239', "Terrain naturel mixte")],
+             'Niv4' : [('1111', 'Une maison vefa ou neuve'), 
+                       ('1112', 'Une maison récente'), 
+                       ('1113', 'Une maison ancienne'), 
+                       ('1114', 'Une maison à usage professionnel'), 
+                       ('1110', 'Une maison age indéterminé'), 
+                       ('1211', 'Un appartement vefa ou neuf'), 
+                       ('1212', 'Un appartement récent'), 
+                       ('1213', 'Un appartement ancien'), 
+                       ('1214', 'Un appartement à usage professionnel'),
+                       ('1210', 'Un appartement âge indéterminé'),  
+                       ('1221', 'Deux appartements vefa ou neufs'), 
+                       ('1222', 'Deux appartements recents'), 
+                       ('1223', 'Deux appartements anciens'), 
+                       ('1224', 'Deux appartements à usage professionnel'), 
+                       ('1229', 'Deux appartements à usage mixte'), 
+                       ('1220', 'Deux appartements indéterminés'), 
+                       ('1311', 'Un garage'), 
+                       ('1312', 'Une dépendance autre'), 
+                       ('2311', 'Terrain viticole'), 
+                       ('2312', 'Terrain verger'), 
+                       ('2313', 'Terrain de type terre et pré'), 
+                       ('2319', 'Terrain agricole mixte')],
+             'Niv5' : [('12111', 'Un appartement vefa ou neuf T1'), 
+                       ('12112', 'Un appartement vefa ou neuf T2'), 
+                       ('12113', 'Un appartement vefa ou neuf T3'), 
+                       ('12114', 'Un appartement vefa ou neuf T4'), 
+                       ('12115', 'Un appartement vefa ou neuf T5 ou +'),
+                       ('12110', 'Un appartement vefa ou neuf nombre de pièces indéterminé'),  
+                       ('12121', 'Un appartement recent T1'), 
+                       ('12122', 'Un appartement recent T2'), 
+                       ('12123', 'Un appartement recent T3'), 
+                       ('12124', 'Un appartement recent T4'), 
+                       ('12125', 'Un appartement recent T5 ou +'), 
+                       ('12120', 'Un appartement récent nombre de pièces indéterminé'), 
+                       ('12131', 'Un appartement ancien T1'), 
+                       ('12132', 'Un appartement ancien T2'), 
+                       ('12133', 'Un appartement ancien T3'), 
+                       ('12134', 'Un appartement ancien T4'), 
+                       ('12135', 'Un appartement ancien T5 ou +'),
+                       ('12130', 'Un appartement ancien nombre de pièces indéterminé'), ]
              }
 
 
@@ -90,31 +160,37 @@ def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
 
 class GestionnaireIndicateurs:
         
-    def __init__(self, typologies, filtres, types_indicateur):
+    def __init__(self, typologies, filtres, types_indicateur, devenirs, periodicite):
         self.typologies = typologies
         self.filtres = filtres
         self.types_indicateur = types_indicateur
+        self.devenirs = devenirs
+        self.periodicite = periodicite
     
     def indicateurs_actifs(self):
         indicateurs = []
         for type_indicateur in self.types_indicateur:
             for typologie in self.typologies:
-                indicateurs.append(Indicateur(type_indicateur, typologie, self.filtres))
+                indicateurs.append(Indicateur(type_indicateur, typologie, self.filtres, self.devenirs, self.periodicite))
         return indicateurs
     
 class Indicateur:
     
-    def __init__(self, type, typologie, filtres):
+    def __init__(self, type, typologie, filtres, devenirs, periodicite):
         self.type = type
         self.typologie = typologie
         self.filtres = filtres
+        self.devenirs = devenirs
+        self.periodicite = periodicite
         
     @property
     def id(self):
         id_type = self.get_type_indicateur('id').ljust(3, '0')
         id_typologie = self.typologie.rjust(6, '0')
         id_fltr = self.id_filtre()
-        return int(id_type + id_typologie + id_fltr)
+        id_dev = self.id_devenir()
+        id_periode = '1' if self.periodicite == 'a' else '0'
+        return int(id_type + id_typologie + id_fltr + id_dev + id_periode)
     
     @property
     def code_typo(self):
@@ -143,7 +219,7 @@ class Indicateur:
     
     @property
     def periode(self):
-        return 'a'
+        return self.periodicite
     
     @property
     def annee_debut(self):
@@ -195,6 +271,15 @@ class Indicateur:
         id = ''
         for (abbr, libelle) in FILTRES:
             if abbr in self.filtres:
+                id += '1'
+            else:
+                id += '0'
+        return str(int(id, 2))
+    
+    def id_devenir(self):
+        id = ''
+        for (abbr, libelle) in DEVENIRS:
+            if abbr in self.devenirs:
                 id += '1'
             else:
                 id += '0'
@@ -429,6 +514,7 @@ class RequeteurInDVF(PgOutils):
     def condition(self, indicateur):
         condition = 'WHERE '
         condition += "(" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
+        condition += "AND (" + " OR ".join(["devenir LIKE '{0}%'".format(f) for f in indicateur.devenirs]) + ")"
         if indicateur.code_typo != '999':
             condition += " AND codtypbien LIKE '{0}%'".format(indicateur.code_typo)
         try:

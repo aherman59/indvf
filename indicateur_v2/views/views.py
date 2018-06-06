@@ -44,7 +44,7 @@ from pg.pgbasics import *
 from main.territoire import integration 
 from .contexte import ContexteIndicateur, ContexteConfigIndicateur
 from indvf.settings import MODE_SERVEUR
-from indicateur_v2.indicateurs import TYPES_INDICATEUR, FILTRES, TYPOLOGIE
+from indicateur_v2.indicateurs import TYPES_INDICATEUR, FILTRES, TYPOLOGIE, DEVENIRS
 
 '''
 PAGE AFFICHAGE INDICATEURS
@@ -63,7 +63,7 @@ def indicateurs(request):
     
     # integration des territoires si la base ne contient pas encore les entités départ./epci/communes
     integration.integrer_territoires()
-    types_indicateur, filtres, typologie = TYPES_INDICATEUR, FILTRES, TYPOLOGIE
+    types_indicateur, filtres, typologie, devenirs = TYPES_INDICATEUR, FILTRES, TYPOLOGIE, DEVENIRS
     contexte_indicateur = ContexteIndicateur(request)
     if not contexte_indicateur.success:
         return redirect('main:configuration_bdd')
