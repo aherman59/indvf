@@ -44,7 +44,7 @@ from main.configuration import integrer_liens_doc_variables, integrer_liens_tuto
 class RepertoireTuto():
     
     THEMES = {'Bien démarrer avec DV3F': 'A', 'Plus loin avec DV3F':'B', 'Mise en place de DVF+/DV3F': 'C', 'Choix méthodologiques dans DV3F' : 'D', 
-              'Usages avancés de DV3F' : 'E', 'OLD' : 'F'}
+              'Usages avancés de DV3F' : 'E'}
     
     def __init__(self, repertoire):
         if not os.path.isdir(repertoire):
@@ -87,7 +87,7 @@ class RepertoireTuto():
                 yield FicheTuto(self.repertoire, fichier)
     
     def _fiches_valides(self, fiches):    
-        return (fiche for fiche in fiches if fiche.est_valide)        
+        return (fiche for fiche in fiches if fiche.est_valide and fiche.theme != 'OLD')        
     
     def _trier_fiches(self, fiches):
         fiches = sorted(fiches, key=lambda x: x.numero) # tri par numero
