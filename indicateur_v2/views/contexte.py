@@ -145,6 +145,15 @@ class ContexteIndicateur():
         return 'a'
     
     @property
+    def an_min_max(self):
+        if 'an_min_max' in self.request.POST:
+            an_min_max = self.request.POST.get('an_min_max')
+            print(an_min_max)
+            if ',' in an_min_max:
+                return sorted([int(a) for a in an_min_max.split(',')])
+        return [2010, 2017]
+    
+    @property
     def types_indicateur(self):
         if 'indicateurs' in self.request.POST:
             indicateurs = self.request.POST.get('indicateurs')
@@ -158,7 +167,7 @@ class ContexteIndicateur():
     def indicateurs(self):
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
-            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite)
+            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite, self.an_min_max)
             return indicateurs_format_xcharts(territoires, gestionnaire, self.config_active)
         return []
     

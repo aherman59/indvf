@@ -46,9 +46,16 @@ TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions', 'mutat
                                      ('total', 'Montant total', '€', '2'),],
                     'Prix' : [('med', 'Prix médian', '€', '3'),
                               ('pq', 'Premier quartile de prix', '€', '4'),
-                              ('dq', 'Dernier quartile de prix', '€', '5'),],
-                    'Surface' : [('surfmed', 'Surface médiane', 'm2', '6'),
-                                 ('surftot', 'Surface totale', 'm2', '7'),],
+                              ('dq', 'Dernier quartile de prix', '€', '5'),
+                              ('moy', 'Prix moyen', '€', '9')],
+                    'Prix_m2_bati' : [('med_m2_bati', 'Prix médian au m2 de surface bâtie', '€/m2 bati', '8'),
+                                      ('moy_m2_bati', 'Prix moyen au m2 de surface bâtie', '€/m2 bati', '10'),],
+                    'Prix_m2_terr' : [('med_m2_terr', 'Prix médian au m2 de terrain', '€/m2 terrain', '11'),
+                                      ('moy_m2_terr', 'Prix moyen au m2 de terrain', '€/m2 terrain', '12'),],
+                    'Surface' : [('surfmed_bati', 'Surface médiane de bâti', 'm2', '6'),
+                                 ('surftot_bati', 'Surface totale de bâti', 'm2', '7'),
+                                 ('surfmed_terr', 'Surface médiane de terrain', 'm2', '13'),
+                                 ('surftot_terr', 'Surface totale de terrain', 'm2', '14'),],
                     }
 
 FILTRES = [('0', 'Mutation sans spécificité'),
@@ -68,7 +75,9 @@ FILTRES = [('0', 'Mutation sans spécificité'),
 
 DEVENIRS = [('S', 'Inchangé'),
             ('CD', 'Construction avec démolition'),
-            ('C', 'Construction'),]
+            ('C', 'Construction'),
+            ('A', 'Aménagement'),
+            ('M', 'Transformation potentielle')]
 
 TYPOLOGIE = {'Niv0' : [('999', 'Tout type de mutation')],
              'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
@@ -160,37 +169,41 @@ def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
 
 class GestionnaireIndicateurs:
         
-    def __init__(self, typologies, filtres, types_indicateur, devenirs, periodicite):
+    def __init__(self, typologies, filtres, types_indicateur, devenirs, periodicite, an_min_max):
         self.typologies = typologies
         self.filtres = filtres
         self.types_indicateur = types_indicateur
         self.devenirs = devenirs
         self.periodicite = periodicite
+        self.an_min_max = an_min_max
     
     def indicateurs_actifs(self):
         indicateurs = []
         for type_indicateur in self.types_indicateur:
             for typologie in self.typologies:
-                indicateurs.append(Indicateur(type_indicateur, typologie, self.filtres, self.devenirs, self.periodicite))
+                indicateurs.append(Indicateur(type_indicateur, typologie, self.filtres, self.devenirs, self.periodicite, self.an_min_max))
         return indicateurs
     
 class Indicateur:
     
-    def __init__(self, type, typologie, filtres, devenirs, periodicite):
+    def __init__(self, type, typologie, filtres, devenirs, periodicite, an_min_max):
         self.type = type
         self.typologie = typologie
         self.filtres = filtres
         self.devenirs = devenirs
         self.periodicite = periodicite
+        self.an_min_max = an_min_max
         
     @property
     def id(self):
-        id_type = self.get_type_indicateur('id').ljust(3, '0')
-        id_typologie = self.typologie.rjust(6, '0')
+        id_type = self.get_type_indicateur('id').ljust(2, '0')
+        id_typologie = self.typologie.rjust(5, '0')
         id_fltr = self.id_filtre()
         id_dev = self.id_devenir()
         id_periode = '1' if self.periodicite == 'a' else '0'
-        return int(id_type + id_typologie + id_fltr + id_dev + id_periode)
+        id_annee_min = str(self.annee_debut - 2000)
+        id_annee_max = str(self.annee_fin - 2000)
+        return int(id_type + id_typologie + id_fltr + id_dev + id_periode + id_annee_min + id_annee_max)
     
     @property
     def code_typo(self):
@@ -204,9 +217,15 @@ class Indicateur:
     def variable(self):
         if self.type == 'nbtrans':
             return 'idmutation'
-        elif self.type in ('total', 'med', 'pq', 'dq'):
+        elif self.type in ('total', 'med', 'moy', 'pq', 'dq'):
             return 'valeurfonc'
-        elif self.type in ('surfmed', 'surftot'):
+        elif self.type in ('med_m2_bati', 'moy_m2_bati'):
+            return 'valeurfonc/sbati'
+        elif self.type in ('med_m2_terr', 'moy_m2_terr'):
+            return 'valeurfonc/sterr'
+        elif self.type in ('surfmed_terr', 'surftot_terr'):
+            return 'sterr'
+        elif self.type in ('surfmed_bati', 'surftot_bati'):
             return 'sbati'
     
     @property
@@ -223,20 +242,26 @@ class Indicateur:
     
     @property
     def annee_debut(self):
-        return 2010
+        return self.an_min_max[0]
     
     @property
     def annee_fin(self):
-        return 2015
+        return self.an_min_max[1]
           
     @property
     def type_indic(self):
-        if self.type in ('total', 'surftot'):
+        if self.type in ('total', 'surftot_terr', 'surftot_bati'):
             return 'somme'
         elif self.type in ('nbtrans'):
             return 'compte'
-        elif self.type in ('med'):
-            return 'mediane_10'
+        elif self.type in ('med', 'surfmed_terr', 'surfmed_bati', 'med_m2_bati', 'med_m2_terr'):
+            return 'mediane'
+        elif self.type in ('moy', 'moy_m2_bati', 'moy_m2_terr'):
+            return 'moyenne'
+        elif self.type in ('pq'):
+            return 'pq'
+        elif self.type in ('dq'):
+            return 'dq'
     
     @property
     def typologie_libelle(self):
@@ -248,9 +273,9 @@ class Indicateur:
      
     @property
     def type_graphe(self):
-        if self.type in ('nbtrans', 'total', 'surfmed', 'surftot'):
+        if self.type in ('nbtrans', 'total', 'surftot_terr', 'surftot_bati'):
             return 'bar'
-        elif self.type in ('med', 'pq', 'dq'):
+        elif self.type in ('med', 'moy', 'pq', 'dq', 'surfmed_terr', 'surfmed_bati', 'med_m2_terr', 'med_m2_bati', 'moy_m2_terr', 'moy_m2_bati'):
             return 'line-dotted'
         else:
             return 'bar'
@@ -450,8 +475,14 @@ class RequeteurInDVF(PgOutils):
                             ('somme', 'a')     : self.calculer_somme_par_annee,
                             ('compte', 'ma')   : self.compter_multi_annee,
                             ('compte', 'a')    : self.compter_par_annee,
-                            ('mediane_10','ma'): self.calculer_mediane_10_multi_annee,
-                            ('mediane_10','a') : self.calculer_mediane_10_par_annee,
+                            ('mediane','ma'): self.calculer_mediane_multi_annee,
+                            ('mediane','a') : self.calculer_mediane_par_annee,
+                            ('moyenne','ma'): self.calculer_moyenne_multi_annee,
+                            ('moyenne','a') : self.calculer_moyenne_par_annee,
+                            ('pq','ma'): self.calculer_pq_multi_annee,
+                            ('pq','a') : self.calculer_pq_par_annee,
+                            ('dq','ma'): self.calculer_dq_multi_annee,
+                            ('dq','a') : self.calculer_dq_par_annee,
                             }
         parametres_indicateur = (indicateur.type_indic, indicateur.periode)
         return FONCTIONS_CALCUL[parametres_indicateur](indicateur, codes_insee)
@@ -498,13 +529,55 @@ class RequeteurInDVF(PgOutils):
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
 
     @select_sql_avec_modification_args
-    def calculer_mediane_10_par_annee(self, indicateur, codes_insee):
+    def calculer_mediane_par_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
         code_typo = self.condition(indicateur)
         return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
     
     @select_sql_avec_modification_args
-    def calculer_mediane_10_multi_annee(self, indicateur, codes_insee):
+    def calculer_mediane_multi_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition(indicateur)
+        annee_debut = indicateur.annee_debut
+        annee_fin = indicateur.annee_fin
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
+    
+    @select_sql_avec_modification_args
+    def calculer_moyenne_par_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition(indicateur)
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
+    
+    @select_sql_avec_modification_args
+    def calculer_moyenne_multi_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition(indicateur)
+        annee_debut = indicateur.annee_debut
+        annee_fin = indicateur.annee_fin
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
+    
+    @select_sql_avec_modification_args
+    def calculer_pq_par_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition(indicateur)
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
+    
+    @select_sql_avec_modification_args
+    def calculer_pq_multi_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition(indicateur)
+        annee_debut = indicateur.annee_debut
+        annee_fin = indicateur.annee_fin
+        return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
+    
+    @select_sql_avec_modification_args
+    def calculer_dq_par_annee(self, indicateur, codes_insee):
+        variable = indicateur.variable
+        code_typo = self.condition(indicateur)
+        return variable, "'" + "', '".join(codes_insee) + "'", code_typo, self.variables_typobien
+    
+    @select_sql_avec_modification_args
+    def calculer_dq_multi_annee(self, indicateur, codes_insee):
         variable = indicateur.variable
         code_typo = self.condition(indicateur)
         annee_debut = indicateur.annee_debut

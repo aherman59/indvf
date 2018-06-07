@@ -40,7 +40,7 @@
                         </div>
                     </form>
                 </div>
-                <div class ="col-sm-2">
+                <!--<div class ="col-sm-2">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuration <span class="caret"></span></a>
@@ -51,7 +51,7 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label"><i class="fas fa-map-signs fa-lg"></i> Epci</label>
@@ -111,14 +111,16 @@
  
     <div class="panel-body">
     
-    <div class="alert alert-success" role="alert"><i class="fas fa-info-circle" aria-hidden="true"></i>
-    Les indicateurs sélectionnés sont calculés :
-    	<ul>
-    	<li>pour chacun des types de biens retenus</li>
-    	<li>sur l'ensemble des mutations retenues</li>
-    	<li>selon les devenirs des biens sélectionnés</li>
-    	<li>par année ou sur un période multi-annuelle</li>
-    	</ul>
+    <p><div class="alert alert-success" role="alert"><i class="fas fa-info-circle" aria-hidden="true"></i>
+    Différents indicateurs sont proposés (dénombrement, médiane de prix, etc.) sur des périodes annuelles ou pluriannuelles (avec choix de l'intervalle temporel). 
+    Pour observer au plus juste les marchés fonciers et immobiliers, il est conseillé de regarder un segment précis du marché.</p>
+	Les critères suivants sont proposés :
+	<ul>
+    	<li>une typologie de bien,</li>
+		<li>l’évincement possible de certaines mutations,</li>
+		<li>le devenir du bien après la vente (l'usage recherché)</li>
+	</ul>
+	   
     </div>
     
     <div class="row">
@@ -136,6 +138,16 @@
 			<option value="{{type.0}}"{% if type.0 in contexte_indicateur.types_indicateur %} selected{% endif %}>{{type.1}}</option>
 		    {% endfor %}
 		 </optgroup>
+		 <optgroup label="Indicateurs de prix au m2 de bâti (pour les logements)">
+			{% for type in types_indicateur.Prix_m2_bati %}
+			<option value="{{type.0}}"{% if type.0 in contexte_indicateur.types_indicateur %} selected{% endif %}>{{type.1}}</option>
+		    {% endfor %}
+		 </optgroup>
+		  <optgroup label="Indicateurs de prix au m2 de terrain (pour les terrains nus)">
+			{% for type in types_indicateur.Prix_m2_terr %}
+			<option value="{{type.0}}"{% if type.0 in contexte_indicateur.types_indicateur %} selected{% endif %}>{{type.1}}</option>
+		    {% endfor %}
+		 </optgroup>
 		 <optgroup label="Indicateurs de surface">
 			{% for type in types_indicateur.Surface %}
 			<option value="{{type.0}}"{% if type.0 in contexte_indicateur.types_indicateur %} selected{% endif %}>{{type.1}}</option>
@@ -143,8 +155,49 @@
 		 </optgroup>
 	</select>
 	</div>
-    
-    <div class="col-sm-4">
+	
+	<div class="col-sm-4">
+	<label class="control-label"><i class="far fa-calendar-alt fa-lg"></i></label>
+	<select class="selectpicker" name="selection-annee">
+			<option value="ma"{% if contexte_indicateur.periodicite == 'ma' %} selected{% endif %}>Multi-année</option>
+			<option value="a"{% if contexte_indicateur.periodicite == 'a' %} selected{% endif %}>Annuel</option>
+		    
+	</select>
+	</div>
+	
+	<div class="col-sm-4">
+	<label class="control-label"><i class="far fa-calendar-alt fa-lg"></i></label>
+	<select class="selectpicker" name="selection-an-min-max" multiple>
+		<optgroup label="Année min." data-max-options="1">
+			<option value="2010"{% if contexte_indicateur.an_min_max.0 == 2010 %} selected{% endif %}>2010</option>
+			<option value="2011"{% if contexte_indicateur.an_min_max.0 == 2011 %} selected{% endif %}>2011</option>
+			<option value="2012"{% if contexte_indicateur.an_min_max.0 == 2012 %} selected{% endif %}>2012</option>
+			<option value="2013"{% if contexte_indicateur.an_min_max.0 == 2013 %} selected{% endif %}>2013</option>
+			<option value="2014"{% if contexte_indicateur.an_min_max.0 == 2014 %} selected{% endif %}>2014</option>
+			<option value="2015"{% if contexte_indicateur.an_min_max.0 == 2015 %} selected{% endif %}>2015</option>
+			<option value="2016"{% if contexte_indicateur.an_min_max.0 == 2016 %} selected{% endif %}>2016</option>
+			<option value="2017"{% if contexte_indicateur.an_min_max.0 == 2017 %} selected{% endif %}>2017</option>
+		</optgroup>
+		<optgroup label="Année max." data-max-options="1">
+			<option value="2010"{% if contexte_indicateur.an_min_max.1 == 2010 %} selected{% endif %}>2010</option>
+			<option value="2011"{% if contexte_indicateur.an_min_max.1 == 2011 %} selected{% endif %}>2011</option>
+			<option value="2012"{% if contexte_indicateur.an_min_max.1 == 2012 %} selected{% endif %}>2012</option>
+			<option value="2013"{% if contexte_indicateur.an_min_max.1 == 2013 %} selected{% endif %}>2013</option>
+			<option value="2014"{% if contexte_indicateur.an_min_max.1 == 2014 %} selected{% endif %}>2014</option>
+			<option value="2015"{% if contexte_indicateur.an_min_max.1 == 2015 %} selected{% endif %}>2015</option>
+			<option value="2016"{% if contexte_indicateur.an_min_max.1 == 2016 %} selected{% endif %}>2016</option>
+			<option value="2017"{% if contexte_indicateur.an_min_max.1 == 2017 %} selected{% endif %}>2017</option>
+		</optgroup>        
+	</select>
+	</div>
+        
+	</div>
+	
+	<div style="margin: 5px;"></div>
+	
+	<div class="row">
+	
+	<div class="col-sm-4">
     	<label class="control-label"><i class="fa fa-home fa-lg"></i></label>
 		<select class="selectpicker" name="selection-typologie" multiple>
 			<optgroup label="Niveau 0">
@@ -189,13 +242,7 @@
 		</select>
 	</div>
 	
-	</div>
-	
-	<div style="margin: 5px;"></div>
-	
-	<div class="row">
-	
-	<div class="col-sm-4 col-md-offset-2">
+	<div class="col-sm-4">
 	<label class="control-label"><i class="fas fa-question fa-lg"></i></label>
 	<select class="selectpicker" name="selection-devenir" multiple>
 		    {% for devenir in devenirs %}
@@ -204,14 +251,6 @@
 	</select>
 	</div>
 	
-	<div class="col-sm-4">
-	<label class="control-label"><i class="far fa-calendar-alt fa-lg"></i></label>
-	<select class="selectpicker" name="selection-annee">
-			<option value="ma"{% if contexte_indicateur.periodicite == 'ma' %} selected{% endif %}>Multi-année</option>
-			<option value="a"{% if contexte_indicateur.periodicite == 'a' %} selected{% endif %}>Annuel</option>
-		    
-	</select>
-	</div>
 	
 	</div>
 	
@@ -274,6 +313,7 @@ $("form").submit(function(){
 					{name: 'filtres', value: $("select[name=selection-filtre]").val()},
 					{name: 'devenirs', value: $("select[name=selection-devenir]").val()},
 					{name: 'annee', value: $("select[name=selection-annee]").val()},
+					{name: 'an_min_max', value: $("select[name=selection-an-min-max]").val()},
 				 ];
 	$(this).append($.map(params, function (param) {
         return   $('<input>', {
