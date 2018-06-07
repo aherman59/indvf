@@ -175,7 +175,8 @@ class ContexteIndicateur():
     def indicateurs_csv(self):
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
-            return indicateurs_actifs_format_csv(territoires, self.config_active)
+            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite, self.an_min_max)
+            return indicateurs_actifs_format_csv(territoires, gestionnaire, self.config_active)
         return []
     
     @property

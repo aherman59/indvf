@@ -166,6 +166,18 @@ def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
             indicateursDVF.append(i)
         return indicateursDVF
 
+def indicateurs_actifs_format_csv(territoires, gestionnaire, config_active):
+        indicateurs_actifs = gestionnaire.indicateurs_actifs()
+        indicateursDVF = []
+        for num, indicateur in enumerate(indicateurs_actifs):
+            indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
+            i = {'unite'  : indic_dvf.unite(prefixe=False),
+                 'donnees': indic_dvf.donnees,
+                 'territoires' : [t.nom for t in indic_dvf.territoires],
+                 'nom'    : indic_dvf.titre,}            
+            indicateursDVF.append(i)
+        return indicateursDVF 
+
 
 class GestionnaireIndicateurs:
         
@@ -311,17 +323,7 @@ class Indicateur:
         return str(int(id, 2))
     
 
-def indicateurs_actifs_format_csv(territoires, config_active):
-        indicateurs_actifs = Indicateur.objects.indicateurs_actifs_tries()
-        indicateursDVF = []
-        for num, indicateur in enumerate(indicateurs_actifs):
-            indic_dvf = IndicateurDVF(indicateur, territoires, config_active)
-            i = {'unite'  : indic_dvf.unite(prefixe=False),
-                 'donnees': indic_dvf.donnees,
-                 'territoires' : [t.nom for t in indic_dvf.territoires],
-                 'nom'    : indic_dvf.titre,}            
-            indicateursDVF.append(i)
-        return indicateursDVF 
+
 
 class IndicateurDVF():
 
