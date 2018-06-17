@@ -49,7 +49,6 @@ class ConfigForm(forms.Form):
     port = forms.CharField(label='Port', max_length = 8, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"5432"}))
     chemin_dossier = forms.CharField(label='Dossier données DVF', widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':os.getcwd()}))
     geolocaliser = forms.BooleanField(required = False, label='Géométries (1)', widget = forms.CheckboxInput(attrs={'class':"checkbox",}))
-    proxy = forms.CharField(label='Proxy (1)', validators=[URLValidator], required=False, max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"proxy.example.fr:8080"}))
     effacer_schemas_existants = forms.BooleanField(required = False, label='Effacer schemas (2)', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
 
     def clean(self):
@@ -61,7 +60,6 @@ class ConfigForm(forms.Form):
         port = cleaned_data.get('port') or ''
         chemin_dossier = cleaned_data.get('chemin_dossier') or ''
         geolocaliser = cleaned_data.get('geolocaliser') or False 
-        proxy = cleaned_data.get('proxy') or None
         
         # test acces à la bdd
         test_connexion, msg_erreur = controle_bdd.tentative_connexion(hote, bdd, utilisateur, mdp, port)

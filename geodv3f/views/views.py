@@ -50,6 +50,8 @@ from .geomutation import RechercheParcelle
 
 from geodv3f.api_adresse import RechercheAdresse
 
+from main.models import ProxyUser
+
 @login_required
 def carto(request):
     '''
@@ -106,7 +108,7 @@ def requete_adresse(request):
             recherche = RechercheParcelle(request.session, adresse)
             resultat = recherche.resultat
         else: # recherche sur l'api BAN
-            recherche = RechercheAdresse(proxy='direct.proxy.i2:8080')
+            recherche = RechercheAdresse(proxy=ProxyUser.objects.recuperer_proxy(request.user))
             recherche.texte(adresse)
             resultat = recherche.meilleure_adresse
         if resultat:

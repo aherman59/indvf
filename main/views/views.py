@@ -38,9 +38,14 @@ termes.
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from collections import namedtuple
+
 from main.views.contexte import recuperer_metadonnees_applications_disponibles
 from main.views.contexte import ContexteConfigBDD
+from main.models import ProxyUser
+
 from indvf.settings import MODE_SERVEUR
+
+from django.contrib.auth.decorators import login_required
 
 def applications(request):
     Appli = namedtuple('Application', ['nom', 'description','version', 'classe_fa', 'image', 'url'])
@@ -65,3 +70,10 @@ def configuration_bdd(request):
     else:
         messages.add_message(request, messages.INFO, "Accès impossible - Contacter l'administrateur")
         return redirect('main:applications')
+
+
+@login_required
+def definir_proxy(request):    
+    ProxyUser.objects.definir_proxy(request.user, 'direct.proxy.i2:8000')
+    return redirect('main:applications')
+    

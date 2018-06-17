@@ -64,7 +64,6 @@ class ContexteImport():
             self.session['parametres_connexion'] = self.formulaire.recuperer_donnees_connexion()
             self.session['effacer_schemas_existants'] = self.formulaire.cleaned_data['effacer_schemas_existants']
             self.session['geolocaliser'] = self.formulaire.cleaned_data['geolocaliser']
-            self.session['proxy'] = self.formulaire.cleaned_data['proxy']
             self.session['communes_a_geolocaliser'] = None
             return True
         else:
@@ -257,7 +256,7 @@ class ContexteImportAjax():
         
         cadastre = self.objet_cadastre
         commune = communes[indice]
-        proxy = self.session['proxy']
+        proxy = ProxyUser.objects.recuperer_proxy(self.request.user)
         success, msg = cadastre.inserer_parcelles_communales(commune, 'cadastre', 'parcellaire', proxy = proxy)
         if not success and not msg.startswith('Problème requêtage ou code INSEE incorrect'):
             return self.code_erreur('cada2')

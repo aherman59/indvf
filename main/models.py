@@ -37,8 +37,39 @@ termes.
 
 from collections import namedtuple
 from django.db import models
+from django.contrib.auth.models import User
 
 from outils import controle_bdd
+
+class ProxyManager(models.Manager):
+    '''
+    Manager des proxy
+    '''
+    
+    def definir_proxy(self, utilisateur, proxy):
+        proxyuser = self.filter(user=utilisateur)
+        if len(proxyuser) == 1:
+            proxyuser[0].proxy = proxy
+            proxyuser[0].save()
+        else:
+            self.create(user=utilisateur, proxy=proxy)
+    
+    def recuperer_proxy(self, utilisateur):
+        proxyuser = self.filter(user=utilisateur)
+        if len(proxyuser) == 1:
+            return proxyuser.proxy if proxyuser.proxy != '' else None
+        return None
+    
+
+class ProxyUser(models.Model):
+    '''
+    Pour associer un proxy à chaque utilisateur
+    '''    
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    proxy = models.TextField(max_length=500, blank=True)
+    
+    objects = ProxyManager()
+
 
 class ConfigurationManager(models.Manager):
     '''
