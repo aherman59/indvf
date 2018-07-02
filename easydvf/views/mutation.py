@@ -146,14 +146,17 @@ class Mutation():
         self.nblot = mutation[12]
         self.nbvolmut = mutation[13]
         self._l_nomv = mutation[14] if self.dv3f else None
-        self._l_noma = mutation[15] if self.dv3f else None                                                     
+        self._l_noma = mutation[15] if self.dv3f else None
+        self._codtypprov = mutation[16] if self.dv3f else None
+        self._codtypproa = mutation[17] if self.dv3f else None                                                      
     
     def as_tuple(self):
         return (self.id, self.datemut, self.anneemut, 
                 self.valeurfonc, self.sbati, self.sterr, 
                 self.nblocmut, self.nbparmut, 
                 self.codtypbien, self.libtypbien,
-                self.codservch, self.refdoc, self.nblot, self.nbvolmut, self.l_nomv, self.l_noma)
+                self.codservch, self.refdoc, self.nblot, self.nbvolmut, 
+                self.l_nomv, self.l_noma, self.codtypprov, self.codtypproa)
     
     @property
     def datemut(self):
@@ -188,6 +191,18 @@ class Mutation():
         if not self._l_noma:
             return '--' if not self.dv3f else 'Non rapatrié'
         return ', '.join(self._l_noma).replace('_X_', 'Personne physique anonymisée')
+    
+    @property
+    def codtypprov(self):
+        if not self._codtypprov:
+            return ''
+        return '(Typologie : {0})'.format(self._codtypprov)
+    
+    @property
+    def codtypproa(self):
+        if not self._codtypproa:
+            return ''
+        return '(Typologie : {0})'.format(self._codtypproa)
         
 class Local():
     

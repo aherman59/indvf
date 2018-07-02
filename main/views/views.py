@@ -73,7 +73,12 @@ def configuration_bdd(request):
 
 
 @login_required
-def definir_proxy(request):    
-    ProxyUser.objects.definir_proxy(request.user, 'direct.proxy.i2:8000')
-    return redirect('main:applications')
+def definir_proxy(request):
+    context = {'recup_proxy' : ProxyUser.objects.recuperer_proxy(request.user)}
+    if 'validation' in request.POST:
+        proxy = request.POST['proxy']
+        ProxyUser.objects.definir_proxy(request.user, proxy)
+        return redirect('main:applications')
+    return render(request, 'chgmt_proxy.html', context)    
+    
     

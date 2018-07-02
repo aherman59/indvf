@@ -1,0 +1,27 @@
+{% extends "base_main.html" %}
+{% load staticfiles %}
+
+{% block contenu %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Configuration du proxy</h3>
+    </div>
+    <div class="panel-body">
+               
+        <form class="form-horizontal" id="form_proxy" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="lbl_proxy" class="col-sm-offset-3 col-sm-2 control-label">Proxy</label>
+                <div class="col-sm-3"><input type="text" class="form-control" name="proxy" id="proxy" placeholder="direct.proxy.i2:8080" {% if recup_proxy %}value="{{recup_proxy}}"{% endif %}></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-2">
+                    <button type="submit" name ="validation" class="btn btn-default">Configurer</button>                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

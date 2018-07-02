@@ -117,7 +117,9 @@ class GeoMutation():
         self.nbvolmut = mutation[13]
         self.geometrie = mutation[14]
         self._l_nomv = mutation[15] if self.dv3f else None
-        self._l_noma = mutation[16] if self.dv3f else None                                                     
+        self._l_noma = mutation[16] if self.dv3f else None
+        self._codtypprov = mutation[17] if self.dv3f else None
+        self._codtypproa = mutation[18] if self.dv3f else None                                                    
     
     def as_tuple(self):
         return (self.id, self.datemut, self.anneemut, 
@@ -125,7 +127,8 @@ class GeoMutation():
                 self.nblocmut, self.nbparmut, 
                 self.codtypbien, self.libtypbien,
                 self.codservch, self.refdoc, self.nblot, self.nbvolmut, 
-                self.geometrie, self.l_nomv, self.l_noma)
+                self.geometrie, self.l_nomv, self.l_noma, 
+                self.codtypprov, self.codtypproa)
     
     def as_geojson(self):
         entite = {}
@@ -160,6 +163,18 @@ class GeoMutation():
         if not self._l_noma:
             return '--' if not self.dv3f else 'Non rapatrié'
         return ', '.join(self._l_noma).replace('_X_', 'Personne physique anonymisée')
+    
+    @property
+    def codtypprov(self):
+        if not self._codtypprov:
+            return ''
+        return '(Typologie : {0})'.format(self._codtypprov)
+    
+    @property
+    def codtypproa(self):
+        if not self._codtypproa:
+            return ''
+        return '(Typologie : {0})'.format(self._codtypproa) 
     
     @property
     def datemut(self):

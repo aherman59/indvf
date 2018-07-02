@@ -31,7 +31,9 @@ SELECT 	idmutation,
 	   	nblot, 
 	   	nbvolmut,
 		l_nomv::TEXT[],
-		l_noma::TEXT[]
+		l_noma::TEXT[],
+		codtypprov,
+		coptypproa
 FROM dvf.mutation
 WHERE l_codinsee && ARRAY['{0}']::VARCHAR[];
 

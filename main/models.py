@@ -57,7 +57,7 @@ class ProxyManager(models.Manager):
     def recuperer_proxy(self, utilisateur):
         proxyuser = self.filter(user=utilisateur)
         if len(proxyuser) == 1:
-            return proxyuser.proxy if proxyuser.proxy != '' else None
+            return proxyuser[0].proxy if proxyuser[0].proxy != '' else None
         return None
     
 

@@ -25,7 +25,9 @@ SELECT idmutation,
 	   	nbvolmut,
 		ST_ASGEOJSON({0}),
 		l_nomv::TEXT[],
-		l_noma::TEXT[]
+		l_noma::TEXT[],
+		codtypprov,
+		codtypproa
 FROM dvf.mutation 
 WHERE {0} IS NOT NULL 
 AND {0} && ST_MAKEENVELOPE({1}, {2}, {3}, {4}, {5});
