@@ -196,13 +196,17 @@ class Mutation():
     def codtypprov(self):
         if not self._codtypprov:
             return ''
+        if self._codtypprov.startswith('(Typologie'): # si reconstitution par as_tuple()
+            return self._codtypprov        
         return '(Typologie : {0})'.format(self._codtypprov)
     
     @property
     def codtypproa(self):
         if not self._codtypproa:
             return ''
-        return '(Typologie : {0})'.format(self._codtypproa)
+        if self._codtypproa.startswith('(Typologie'): # si reconstitution par as_tuple()
+            return self._codtypproa
+        return '(Typologie : {0})'.format(self._codtypproa) 
         
 class Local():
     

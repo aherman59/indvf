@@ -150,7 +150,7 @@ class GeoMutation():
     
     @property
     def l_nomv(self):
-        if isinstance(self._l_nomv, str):
+        if isinstance(self._l_nomv, str): # si reconstitution par as_tuple()
             return self._l_nomv
         if not self._l_nomv:
             return '--' if not self.dv3f else 'Non rapatrié'
@@ -158,7 +158,7 @@ class GeoMutation():
     
     @property
     def l_noma(self):
-        if isinstance(self._l_noma, str):
+        if isinstance(self._l_noma, str): # si reconstitution par as_tuple()
             return self._l_noma
         if not self._l_noma:
             return '--' if not self.dv3f else 'Non rapatrié'
@@ -168,12 +168,16 @@ class GeoMutation():
     def codtypprov(self):
         if not self._codtypprov:
             return ''
+        if self._codtypprov.startswith('(Typologie'): # si reconstitution par as_tuple()
+            return self._codtypprov        
         return '(Typologie : {0})'.format(self._codtypprov)
     
     @property
     def codtypproa(self):
         if not self._codtypproa:
             return ''
+        if self._codtypproa.startswith('(Typologie'): # si reconstitution par as_tuple()
+            return self._codtypproa
         return '(Typologie : {0})'.format(self._codtypproa) 
     
     @property
