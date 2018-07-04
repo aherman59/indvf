@@ -87,7 +87,7 @@ DV3F propose, pour cela, un indicateur unique, @@mutation|filtre@@, qui alerte s
 | B | Mutation d'un appartement avec terrain |
 | D | Mutation dont au moins un des biens a été vendu une deuxième fois le même jour |
 | E | Mutation de type Echange |
-| H | Mutation le prix est null, 0 ou 1 euro |
+| H | Mutation dont le prix est null, 0 ou 1 euro |
 | L | Mutation comportant un bien exceptionnel parmi : logement de plus de 8 pièces strictement, maison de plus de 300m2 de surface bâtie, appartement de plus de 200m2 de surface batie |
 | M | Mutation de plusieurs biens distancés de 1km ou appartenant à plusieurs communes |
 | S | Transfert de propriétés entre deux opérateurs de logement social |
