@@ -7,6 +7,210 @@ FROM dvf.mutation
 WHERE geompar IS NOT NULL
 
 ## GENERER_VUES_QGIS
+
+DROP VIEW IF EXISTS dvf.localtypo CASCADE;
+CREATE OR REPLACE VIEW dvf.mutationtypo as
+select a.*, 
+niv1, libniv1, niv2, libniv2, niv3, libniv3, niv4, libniv4, niv5, libniv5,
+ CASE
+            WHEN a.sterr > 0::numeric THEN round(a.valeurfonc / a.sterr, 2)
+            ELSE NULL::numeric
+        END as e_m2_terr,
+ CASE
+            WHEN a.sbati > 0::numeric THEN round(a.valeurfonc / a.sbati, 2)
+            ELSE NULL::numeric
+        END as e_m2_bati,
+ CASE
+            WHEN (COALESCE(a.sbatmai, 0::numeric) + COALESCE(a.sbatapt, 0::numeric)) > 0::numeric THEN round(a.valeurfonc / (COALESCE(a.sbatmai, 0::numeric) + COALESCE(a.sbatapt, 0::numeric)), 2)
+            ELSE NULL::numeric
+        END as e_m2_bat_h,
+a.l_codinsee[1] as idcom
+ from dvf.mutation a, dvf_annexe.ann_typologie b 
+where a.codtypbien=b.codtypbien;
+
+
+DROP VIEW IF EXISTS dvf.localtypo CASCADE;
+CREATE OR REPLACE VIEW dvf.localtypo AS 
+ SELECT local.iddispoloc,
+    local.iddispopar,
+    local.idpar,
+    local.idmutation,
+    local.idloc,
+    local.identloc,
+    local.codtyploc,
+    local.libtyploc,
+    local.nbpprinc,
+    local.sbati,
+    local.coddep,
+    local.datemut,
+    local.anneemut,
+    local.moismut,
+    local.nbmutjour,
+    local.nbmutannee,
+    local.datemutpre,
+    local.l_idmutpre::text,
+    local.datemutsui,
+    local.l_idmutsui::text,
+    local.ffidcpv,
+    local.fiabilitev,
+    local.l_idv::text,
+    local.nbdroiprov,
+    local.l_nomv::text,
+    local.nbdroigesv,
+    local.l_nomgesv::text,
+    local.codtypprov,
+    local.ffidcpa,
+    local.fiabilitea,
+    local.l_ida::text,
+    local.nbdroiproa,
+    local.l_noma::text,
+    local.nbdroigesa,
+    local.l_nomgesa::text,
+    local.codtypproa,
+    local.ffdatemut,
+    local.exactffdvf,
+    local.ffancst,
+        CASE
+            WHEN local.ffancst <> 0 AND local.ffancst <> '-1'::integer AND (date_part('year'::text, local.datemut) - local.ffancst::double precision) <= 1::double precision THEN 'neuf'::text
+            WHEN local.ffancst <> 0 AND local.ffancst <> '-1'::integer AND (date_part('year'::text, local.datemut) - local.ffancst::double precision) < 5::double precision THEN 'recent'::text
+            WHEN local.ffancst <> 0 AND local.ffancst <> '-1'::integer AND (date_part('year'::text, local.datemut) - local.ffancst::double precision) >= 5::double precision THEN 'ancien'::text
+            WHEN mutation.vefa THEN 'neuf'::text
+            WHEN (date_part('year'::text, local.datemutpre) - local.anneemut::double precision) >= 5::double precision THEN 'ancien'::text
+            ELSE 'non defini'::text
+        END AS anciennete,
+    local.ffidbat,
+    local.ffcodinsee,
+    local.ffcommune,
+    local.ffnovoie,
+    local.ffbtq,
+    local.ffvoie,
+    local.fftyppdl,
+    local.ffclascad,
+    local.ffvalloc,
+    local.ffcodeval,
+    local.fflibeval,
+    local.ffcchgeval,
+    local.ffdchgeval,
+    local.stabilitel,
+    local.ffctyploc,
+    local.ffltyploc,
+    local.ffcnatloc,
+    local.fflnatloc,
+    local.ffcodnacea,
+    local.fflibnacea,
+    local.fflochab,
+    local.ffoccv,
+    local.ffocca,
+    local.ffshab,
+    local.ffsdep,
+    local.ffspro,
+    local.ffsbati,
+    local.ffnbpsam,
+    local.ffnbpcha,
+    local.ffnbpcu8,
+    local.ffnbpcu9,
+    local.ffnbpsea,
+    local.ffnbpann,
+    local.ffnbpprinc,
+    local.ffnbpgarag,
+    local.ffnbpagrem,
+    local.ffnbpterra,
+    local.ffnbppisci,
+    local.ffnbpaut,
+    local.ffanref,
+    local.ffanvend,
+    local.ffanach,
+    st_multi(local.geomloc)::geometry(MultiPoint,2154) AS geomloc,
+    local.srcgeom,
+    local.parcvect,
+    mutation.sterr,
+    mutation.segmtab,
+    mutation.codtypbien,
+    mutation.libtypbien,
+    mutation.nblocmut,
+    mutation.libnatmut,
+    mutation.nbdispo,
+    mutation.nbcomm,
+    mutation.l_codinsee,
+    mutation.nblocmai,
+    mutation.nblocapt,
+    mutation.nblocdep,
+    mutation.nblocact,
+    mutation.sbatact,
+    mutation.l_idlocmut::text,
+    mutation.nbsuf,
+    mutation.nbparmut,
+    mutation.l_idparmut::text,
+    mutation.l_idpar::text,
+    mutation.refdoc,
+    mutation.codservch,
+    mutation.l_artcgi::text,
+    mutation.nbartcgi,
+    mutation.valeurfonc,
+    CASE
+                WHEN mutation.sterr > 0::numeric THEN round(mutation.valeurfonc / mutation.sterr, 2)
+                ELSE NULL::numeric
+            END as e_m2_terr,
+    CASE
+                WHEN mutation.sbati > 0::numeric THEN round(mutation.valeurfonc / mutation.sbati, 2)
+                ELSE NULL::numeric
+            END as e_m2_bati,
+    CASE
+                WHEN (COALESCE(mutation.sbatmai, 0::numeric) + COALESCE(mutation.sbatapt, 0::numeric)) > 0::numeric THEN round(mutation.valeurfonc / (COALESCE(mutation.sbatmai, 0::numeric) + COALESCE(mutation.sbatapt, 0::numeric)), 2)
+                ELSE NULL::numeric
+            END as e_m2_bat_h,
+    --mutation.occupation,
+    mutation.l_dcnt::text,
+    (mutation.nblocmut - mutation.nblocdep) = 1 AS localseul,
+        CASE
+            WHEN local.ffancst < 1915 THEN ']avant 1914]'::text
+            WHEN local.ffancst < 1954 THEN ']1914,1953]'::text
+            WHEN local.ffancst < 1975 THEN ']1953,1974]'::text
+            WHEN local.ffancst < 1991 THEN ']1974,1990]'::text
+            WHEN local.ffancst < 2001 THEN ']1990,2000]'::text
+            WHEN mutation.vefa IS NOT NULL THEN '[après 2000['::text
+            WHEN local.ffancst IS NULL THEN NULL::text
+            ELSE NULL::text
+        END::character varying(14) AS periode_const,
+    typo.niv2,
+    typo.libniv2,
+    typo.niv3,
+    typo.libniv3,
+    typo.niv4,
+    typo.libniv4,
+    typo.niv5,
+    typo.libniv5,
+    mutation.filtre,
+    mutation.devenir,
+    "substring"(local.idpar::text, 1, 5) AS idcom
+    /*,
+    st_x(st_centroid(
+        CASE
+            WHEN st_isempty(local.geomloc) THEN NULL::geometry
+            ELSE local.geomloc
+        END)) AS xbati,
+    st_y(st_centroid(
+        CASE
+            WHEN st_isempty(local.geomloc) THEN NULL::geometry
+            ELSE local.geomloc
+        END)) AS ybati,
+    st_x(st_transform(st_centroid(
+        CASE
+            WHEN st_isempty(local.geomloc) THEN NULL::geometry
+            ELSE local.geomloc
+        END), 4326)) AS xbati_4326,
+    st_y(st_transform(st_centroid(
+        CASE
+            WHEN st_isempty(local.geomloc) THEN NULL::geometry
+            ELSE local.geomloc
+        END), 4326)) AS ybati_4326
+    */
+   FROM dvf.mutation,
+    dvf.local, dvf_annexe.ann_typologie as typo
+  WHERE local.idmutation = mutation.idmutation and local.coddep=mutation.coddep
+  AND mutation.codtypbien=typo.codtypbien;
+
+
 /* 
 Ajout vues pour l'analyse et la visualisation sous Qgis
 */
@@ -16,6 +220,7 @@ Ajout vues pour l'analyse et la visualisation sous Qgis
 -- renommage de certains champs dont le nom exécédait 10 car
 -- passage en st-multi de toutes les géométries
 
+/*
 DROP VIEW IF EXISTS dvf.mutationtypo CASCADE;
 CREATE OR REPLACE VIEW dvf.mutationtypo AS 
  SELECT mutation.idmutation,
@@ -914,3 +1119,4 @@ CREATE OR REPLACE VIEW dvf.mutationtypo_geomparmut AS
     mutationtypo.ybati_4326
    FROM dvf.mutationtypo;
  
+*/

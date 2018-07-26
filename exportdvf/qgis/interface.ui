@@ -72,7 +72,7 @@ p, li { white-space: pre-wrap; }
       <string>typologie des biens</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="typologie1">
+    <widget class="QLineEdit" name="libniv1">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -82,10 +82,10 @@ p, li { white-space: pre-wrap; }
       </rect>
      </property>
      <property name="text">
-      <string>typologie1</string>
+      <string>libniv1</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="typologie2">
+    <widget class="QLineEdit" name="libniv2">
      <property name="geometry">
       <rect>
        <x>160</x>
@@ -95,7 +95,7 @@ p, li { white-space: pre-wrap; }
       </rect>
      </property>
      <property name="text">
-      <string>typologie2</string>
+      <string>libniv2</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="valeurfonc">
@@ -435,7 +435,7 @@ p, li { white-space: pre-wrap; }
       <string>e_m2_terr</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="typologie3">
+    <widget class="QLineEdit" name="libniv3">
      <property name="geometry">
       <rect>
        <x>310</x>
@@ -445,10 +445,10 @@ p, li { white-space: pre-wrap; }
       </rect>
      </property>
      <property name="text">
-      <string>typologie3</string>
+      <string>libniv3</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="typologie4">
+    <widget class="QLineEdit" name="libniv4">
      <property name="geometry">
       <rect>
        <x>470</x>
@@ -458,7 +458,7 @@ p, li { white-space: pre-wrap; }
       </rect>
      </property>
      <property name="text">
-      <string>typologie4</string>
+      <string>libniv4</string>
      </property>
     </widget>
    </widget>
