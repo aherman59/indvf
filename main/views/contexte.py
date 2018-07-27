@@ -44,7 +44,7 @@ from main.forms import ConfigBDDForm
 from main.forms import SelectConfigBDDForm
 from main.models import ConfigurationBDD
 
-from indicateur.models import ResultatIndicateur
+from indicateur_v2.models import ResultatIndicateur
 
 def recuperer_metadonnees_applications_disponibles():
     applis = []

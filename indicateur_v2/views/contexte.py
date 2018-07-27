@@ -39,7 +39,6 @@ from pg.pgbasics import PgOutils
 
 from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
 from indicateur_v2.models import ResultatIndicateur
-from indicateur_v2.forms import IndicateurForm, SelectIndicateurForm
 from indicateur_v2.indicateurs import GestionnaireIndicateurs
 from indicateur_v2.indicateurs import indicateurs_format_xcharts
 from indicateur_v2.indicateurs import indicateurs_actifs_format_csv
@@ -220,56 +219,3 @@ class ContexteIndicateur():
         self.request.session['epci'] = 0
         self.request.session['commune'] = 0
         
-class ContexteConfigIndicateur():
-    
-    def __init__(self, request):
-        self.request = request
-        self.formulaire = IndicateurForm()
-        self.formulaire_selection = SelectIndicateurForm()
-        self.id_indicateur = 0
-        self.annulation = False
-        self.main()
-    
-    def main(self):
-        if 'selection' in self.request.POST: # modification de la selection
-            if self.request.POST['selection'] != '':
-                id_indicateur = int(self.request.POST['selection'])
-                self.modification_selection(id_indicateur)
-        elif 'annulation' in self.request.POST: # annulation
-            self.annulation = True
-        elif 'suppression' in self.request.POST: # suppression de la selection
-            id_indicateur = int(self.request.POST['selection_indicateur'])
-            self.suppression(id_indicateur)
-        elif 'creation' in self.request.POST: # creation ou modification de l'indicateur
-            id_indicateur = int(self.request.POST['selection_indicateur'])
-            if id_indicateur == 0:
-                self.creation()
-            else:
-                self.modification(id_indicateur)
-    
-    def modification_selection(self, id_indicateur):
-        self.id_indicateur = id_indicateur
-        indicateur = Indicateur.objects.get(pk = self.id_indicateur)
-        self.formulaire = IndicateurForm(instance = indicateur)
-        self.formulaire_selection = SelectIndicateurForm(initial = {'selection' : self.id_indicateur })
-
-    def suppression(self, id_indicateur):
-        Indicateur.objects.supprimer(id_indicateur)
-        ResultatIndicateur.objects.supprimer_resultats(id_indicateur)
-    
-    def creation(self):
-        indicateurform = IndicateurForm(self.request.POST)
-        if indicateurform.is_valid():
-            indicateurform.save()
-        else:
-            self.formulaire = indicateurform
-    
-    def modification(self, id_indicateur):
-        indicateur_choisi = Indicateur.objects.get(pk = id_indicateur)
-        indicateurform = IndicateurForm(self.request.POST, instance = indicateur_choisi)
-        if indicateurform.is_valid():       
-            indicateurform.save()
-            ResultatIndicateur.objects.supprimer_resultats(id_indicateur)
-        else:
-            self.id_indicateur = id_indicateur
-            self.formulaire = indicateurform        

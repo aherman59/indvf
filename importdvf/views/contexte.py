@@ -50,12 +50,13 @@ from importdvf.creation_dvf.cadastre import GeomDVF
 from main.configuration import BASE_DIR
 from importdvf.forms import ConfigForm
 
+from main.models import ProxyUser
 
 class ContexteImport():
     
     def __init__(self, request):
         self.session = request.session
-        self.formulaire = ConfigForm(request.POST)
+        self.formulaire = ConfigForm(request.POST, request=request)
     
     @property
     def success(self):

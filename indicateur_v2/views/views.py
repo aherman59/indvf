@@ -42,9 +42,9 @@ from django.contrib import messages
 
 from pg.pgbasics import *
 from main.territoire import integration 
-from .contexte import ContexteIndicateur, ContexteConfigIndicateur
+from .contexte import ContexteIndicateur
 from indvf.settings import MODE_SERVEUR
-from indicateur_v2.indicateurs import TYPES_INDICATEUR, FILTRES, TYPOLOGIE, DEVENIRS
+from indicateur_v2.indicateurs import TYPES_INDICATEUR, FILTRES, TYPOLOGIE_DV3F, TYPOLOGIE_DVF_PLUS, DEVENIRS
 
 '''
 PAGE AFFICHAGE INDICATEURS
@@ -63,27 +63,16 @@ def indicateurs(request):
     
     # integration des territoires si la base ne contient pas encore les entités départ./epci/communes
     integration.integrer_territoires()
-    types_indicateur, filtres, typologie, devenirs = TYPES_INDICATEUR, FILTRES, TYPOLOGIE, DEVENIRS
     contexte_indicateur = ContexteIndicateur(request)
     if not contexte_indicateur.success:
         return redirect('main:configuration_bdd')
     request.session = contexte_indicateur.request.session
+    
+    types_indicateur, filtres, devenirs = TYPES_INDICATEUR, FILTRES, DEVENIRS
+    typologie = TYPOLOGIE_DVF_PLUS if contexte_indicateur.config_active.type_bdd == 'DVF+' else TYPOLOGIE_DV3F
+        
     return render(request, 'indicateur_v2/indicateurs.html', locals())
     
-
-@login_required
-def configuration_indicateur(request):
-    if not MODE_SERVEUR or request.user.is_staff:
-        contexte_configuration = ContexteConfigIndicateur(request)
-        if contexte_configuration.annulation:
-            return redirect('indicateur_v2:indicateurs')
-        context = {'formulaire': contexte_configuration.formulaire, 
-                   'formulaire_selection' : contexte_configuration.formulaire_selection,
-                   'id_indicateur' : contexte_configuration.id_indicateur, }
-        return render(request, 'indicateur_v2/configuration_indicateur.html', context)
-    else:
-        messages.add_message(request, messages.INFO, "Accès impossible - Contacter l'administrateur")
-        return redirect('indicateur_v2:indicateurs')
 
 """
 

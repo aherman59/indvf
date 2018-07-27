@@ -40,18 +40,7 @@
                         </div>
                     </form>
                 </div>
-                <!--<div class ="col-sm-2">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuration <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-			                    <li><a href="#">Territoires personnalisés (à venir)...</a></li>
-			                    <li role="separator" class="divider"></li>
-			                    <li><a href="{% url 'indicateur_v2:configuration_indicateur' %}">Indicateurs...</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>-->
+                
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label"><i class="fas fa-map-signs fa-lg"></i> Epci</label>
@@ -117,8 +106,8 @@
 	Les critères suivants sont proposés :
 	<ul>
     	<li>une typologie de bien,</li>
-		<li>l’évincement possible de certaines mutations,</li>
-		<li>le devenir du bien après la vente (l'usage recherché)</li>
+		<li>l’évincement possible de certaines mutations (DV3F uniquement),</li>
+		<li>le devenir du bien après la vente ou l'usage recherché (DV3F uniquement)</li>
 	</ul>
 	   
     </div>
@@ -235,7 +224,7 @@
 	
 	<div class="col-sm-4">
 		<label class="control-label"><i class="fa fa-filter fa-lg"></i></label>
-		<select class="selectpicker" name="selection-filtre" multiple>
+		<select class="selectpicker" name="selection-filtre" multiple {% if contexte_indicateur.config_active.type_bdd == 'DVF+' %}disabled{% endif %}>
 			    {% for filtre in filtres %}
 				<option value="{{filtre.0}}"{% if filtre.0 in contexte_indicateur.filtres %} selected{% endif %}>{{filtre.1}}</option>
 			    {% endfor %}
@@ -244,7 +233,7 @@
 	
 	<div class="col-sm-4">
 	<label class="control-label"><i class="fas fa-question fa-lg"></i></label>
-	<select class="selectpicker" name="selection-devenir" multiple>
+	<select class="selectpicker" name="selection-devenir" multiple {% if contexte_indicateur.config_active.type_bdd == 'DVF+' %}disabled{% endif %}>
 		    {% for devenir in devenirs %}
 			<option value="{{devenir.0}}"{% if devenir.0 in contexte_indicateur.devenirs %} selected{% endif %}>{{devenir.1}}</option>
 		    {% endfor %}

@@ -40,6 +40,7 @@ from django.core.validators import URLValidator
 import os
 from outils import controle_bdd
 from .creation_dvf.cadastre import Cadastre
+from main.models import ProxyUser
 
 class ConfigForm(forms.Form):
     hote = forms.CharField(label='Hôte', max_length = 255, widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':"localhost"}))
@@ -50,6 +51,11 @@ class ConfigForm(forms.Form):
     chemin_dossier = forms.CharField(label='Dossier données DVF', widget = forms.TextInput(attrs={'class':"form-control", 'placeholder':os.getcwd()}))
     geolocaliser = forms.BooleanField(required = False, label='Géométries (1)', widget = forms.CheckboxInput(attrs={'class':"checkbox",}))
     effacer_schemas_existants = forms.BooleanField(required = False, label='Effacer schemas (2)', widget = forms.CheckboxInput(attrs={'class':"checkbox"}))
+
+    def __init__(self, *args, **kwargs):
+        # Définit un self.request pour pouvoir récupérer le proxy du User dans la méthode clean()
+        self.request = kwargs.pop('request', None)
+        super(ConfigForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(ConfigForm, self).clean()
@@ -69,9 +75,9 @@ class ConfigForm(forms.Form):
         # test acces aux données cadastre si demande d'intégration des géométries
         if geolocaliser:
             cada = Cadastre(hote, bdd, port, utilisateur, mdp)
-            reussite, donnees = cada.recuperer_donnees_json_commune('59001', proxy = proxy)
+            reussite, donnees = cada.recuperer_donnees_json_commune('59001', proxy = ProxyUser.objects.recuperer_proxy(self.request.user))
             if not reussite:
-                msg_erreur = "Le test de récupération des données géométriques a échoué."
+                msg_erreur = "Le test de récupération des données géométriques a échoué. Pensez à configurer le proxy"
                 self.add_error('__all__', msg_erreur)      
 
         if ' ' in bdd:

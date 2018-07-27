@@ -79,7 +79,7 @@ DEVENIRS = [('S', 'Inchangé'),
             ('A', 'Aménagement'),
             ('M', 'Transformation potentielle')]
 
-TYPOLOGIE = {'Niv0' : [('999', 'Tout type de mutation')],
+TYPOLOGIE_DV3F = {'Niv0' : [('999', 'Tout type de mutation')],
              'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
              'Niv2' : [('11', 'Maison'), ('12', 'Appartement'), ('13', 'Dépendance'),
                        ('14', 'Activité'), ('15', 'Bâti mixte'), ('10', 'Bâti-indéterminé'),
@@ -150,6 +150,39 @@ TYPOLOGIE = {'Niv0' : [('999', 'Tout type de mutation')],
                        ('12134', 'Un appartement ancien T4'), 
                        ('12135', 'Un appartement ancien T5 ou +'),
                        ('12130', 'Un appartement ancien nombre de pièces indéterminé'), ]
+             }
+
+TYPOLOGIE_DVF_PLUS = {'Niv0' : [('999', 'Tout type de mutation')],
+             'Niv1' : [('1', 'Bâti'), ('2', 'Non bâti')],
+             'Niv2' : [('11', 'Maison'), ('12', 'Appartement'), ('13', 'Dépendance'),
+                       ('14', 'Activité'), ('15', 'Bâti mixte'), ('10', 'Bâti-indéterminé'),
+                       ('21', 'Terrain type TAB'), ('22', 'Terrain artificialisé'),
+                       ('23', 'Terrain naturel'), ('20', 'Terrain non bâti indéterminé')],
+             'Niv3' : [('111', "Une maison"),
+                       ('112', "Des maisons"),
+                       ('110', "Maison indéterminee"),                       
+                       ('121', "Un appartement"),
+                       ('122', "Deux appartements"),
+                       ('120', "Appartement indétermine"),                       
+                       ('131', "Une dependance"),
+                       ('132', "Des dependances"),                      
+                       ('151', "Bâti mixte - logements"),
+                       ('152', "Bâti mixte - logement/activite"),
+                       ('101', "Bâti - indéterminé : vefa sans descriptif"),
+                       ('102', "Bâti - indéterminé: vente avec volume(s)"),
+                       ('221', "Terrain d'agrement"),
+                       ('222', "Terrain d'extraction"),
+                       ('223', "Terrain de type reseau"),
+                       ('229', "Terrain artificialise mixte"),
+                       ('231', "Terrain agricole"),
+                       ('232', "Terrain forestier"),
+                       ('233', "Terrain landes et eaux"),
+                       ('239', "Terrain naturel mixte")],
+             'Niv4' : [('2311', 'Terrain viticole'), 
+                       ('2312', 'Terrain verger'), 
+                       ('2313', 'Terrain de type terre et pré'), 
+                       ('2319', 'Terrain agricole mixte')],
+             'Niv5' : []
              }
 
 
@@ -277,7 +310,7 @@ class Indicateur:
     
     @property
     def typologie_libelle(self):
-        for niv, typ in TYPOLOGIE.items():
+        for niv, typ in TYPOLOGIE_DV3F.items():
             for t in typ:
                 if t[0] == self.code_typo:
                     return t[1]
@@ -587,11 +620,12 @@ class RequeteurInDVF(PgOutils):
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
     
     def condition(self, indicateur):
-        condition = 'WHERE '
-        condition += "(" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
-        condition += "AND (" + " OR ".join(["devenir LIKE '{0}%'".format(f) for f in indicateur.devenirs]) + ")"
+        condition = ''
         if indicateur.code_typo != '999':
-            condition += " AND codtypbien LIKE '{0}%'".format(indicateur.code_typo)
+            condition += "WHERE codtypbien LIKE '{0}%'".format(indicateur.code_typo)
+        if self.type_base == 'DV3F':
+            condition += " AND (" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
+            condition += " AND (" + " OR ".join(["devenir LIKE '{0}%'".format(f) for f in indicateur.devenirs]) + ")"        
         try:
             denominateur = indicateur.variable.split('/')[1]
             condition_denominateur = ' {0} != 0'.format(denominateur)

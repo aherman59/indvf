@@ -41,20 +41,23 @@ import os
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from importdvf.forms import ConfigForm
 
 from .contexte import ContexteImportAjax
 from .contexte import ContexteImport
 
+@login_required
 def formulaire_configuration(request):
     '''
     Permet de générer la page formulaire servant à renseigner 
     les paramètres de connexion à la base de données
     '''
-    formulaire = ConfigForm()
+    formulaire = ConfigForm(request=request)
     return _afficher_formulaire(request, formulaire)
 
+@login_required
 def etape_import(request, etape):
     '''
     Permet d'afficher la page avec la barre de progression liées aux étapes d'importation des données dans la base
@@ -68,7 +71,6 @@ def etape_import(request, etape):
     'effacer_schemas_existants' : booleen précisant si les schemas existants doivent être effacés avant import
     'geolocaliser' : boolean précisant si  il faut récupérer les parcelles sur cadastre.api.gouv.fr
     'commune_a_geolocaliser' : liste des codes insee des communes dont il faut récupérer la géolocalisation
-    'proxy' : proxy renseigné par l'utilisateur
     '''       
     
     # Etape initiale - Enregistrement des données dans la session       
@@ -96,7 +98,7 @@ def etape_import(request, etape):
             data = {'erreur':True}               
         return HttpResponse(json.dumps(data), content_type='application/json')
                 
-
+@login_required
 def erreur(request):
     '''
     Permet d'afficher une page d'erreur
@@ -105,16 +107,19 @@ def erreur(request):
         return _afficher_msg(request, request.session['erreur'], err=True)
     return _afficher_formulaire(request, ConfigForm())
 
+@login_required
 def fin_import(request):
     '''
     Permet d'afficher la page de fin d'importation
     '''
     return _afficher_msg(request, "L'import des données DVF dans la base DVF+ est achevé.", err=False)
 
+@login_required
 def _afficher_formulaire(request, formulaire):   
     context = {'etape':'0', 'formulaire':formulaire}
     return render(request, 'formulaire_configuration.html', context)
 
+@login_required
 def _afficher_msg(request, msg, err):
     context = {'msg': msg, 'err': err}
     return render(request, 'msg_import.html', context)
