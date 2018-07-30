@@ -82,100 +82,198 @@ ON a.idadresse = t.idadresse
 
 ## _CODTYPBIEN
 CASE 
-	WHEN libnatmut = 'Echange' THEN '7' -- ON MET UNE CATEGORIE A PART POUR LES ECHANGES
-	WHEN libnatmut = 'Expropriation' THEN '9' -- ON MET UNE CATEGORIE A PART POUR LES EXPROPRIATIONS
-	WHEN libnatmut = 'Adjudication' THEN '8' -- ON MET UNE CATEGORIE A PART POUR LES ADJUDICATIONS
-	WHEN nbvolmut > 0 THEN '4' -- VOLUME
-	WHEN vefa IS TRUE THEN -- VEFA
+-- BATI (1)
+	WHEN nblocmut > 0 or vefa IS TRUE OR nbvolmut > 0 THEN	
 		CASE 
-			WHEN nblocact > 0 AND nblocapt = 0 AND nblocmai = 0 THEN '31'
-			WHEN nblocapt > 0 AND nblocmai = 0 AND nblocact = 0 THEN '32'
-			WHEN nblocmai > 0 AND nblocapt = 0 AND nblocact = 0 THEN '33'
-			ELSE '34'
-		END
-	WHEN nblocmut = 0 THEN -- NON BATI
-		CASE
-			WHEN l_artcgi && ARRAY['1594D*2','257-7-1*3','278 sexies I.1','691bis', '1594OGA']::VARCHAR[]  THEN '25'
-			WHEN l_artcgi && ARRAY['1137']::VARCHAR[] THEN '212'
-			WHEN l_artcgi && ARRAY['1594FQE', '1594FQE I', '1594FQE II', '1594FQD', '1594FQG']::VARCHAR[] THEN '213'
-			WHEN libnatmut = 'Vente terrain à bâtir' THEN '25'
-			WHEN l_dcnt[10] = sterr THEN '25'                 
-			WHEN l_dcnt[6] + l_dcnt[8] = sterr THEN '211'                
-			WHEN l_dcnt[5] = sterr THEN '212'                
-			WHEN l_dcnt[1] + l_dcnt[2] + l_dcnt[3] + l_dcnt[4] = sterr THEN '213'                
-			WHEN l_dcnt[7] + l_dcnt[9] + l_dcnt[11] + l_dcnt[12] + l_dcnt[13] = sterr THEN '221'                
-			ELSE '231'
-			-- IL N'Y A PAS de "NON BATI - NON DETERMINE" 
-		END
-	WHEN nblocmut > 0 THEN -- BATI
-		CASE
-			WHEN l_artcgi && ARRAY['1594Ibis']::VARCHAR[] AND (nblocapt > 0 OR nblocmai > 0) THEN '111' -- correspond à la catégorie HABITAT/ECO de la typologie GNDVF
-			WHEN l_artcgi && ARRAY['1594FQE', '1594FQE I', '1594FQE II', '1594FQD', '1594FQG']::VARCHAR[] THEN '141'
-			WHEN l_artcgi && ARRAY['1137']::VARCHAR[] THEN '145'                            
-			-- QUESTION SUR LES MUTATIONS POUR LESQUELS IL Y A UN LOCAL VENDU ET DES ARTICLES CGI OU UN LIBELLE DE NATURE DE MUTATION CORRESPONDANT A DES TAB
-			WHEN nblocact > 0 THEN
+		-- BATI - INDETERMINE (10) : ventes avec volume ou vefa sans information sur le local
+			WHEN (nblocmut = 0 AND vefa IS TRUE) OR nbvolmut > 0 THEN 
 				CASE 
-					WHEN nblocapt > 0 OR nblocmai > 0 OR nblocdep > 0 THEN '111'  -- correspond à la catégorie HABITAT/ECO de la typologie GNDVF
-					WHEN nblocapt = 0 AND nblocmai = 0 AND nblocdep = 0 THEN '112' 
+				-- BATI - INDETERMINE : vente avec volume(s) (102)
+					WHEN nbvolmut > 0 THEN '102'
+				-- BATI - INDETERMINE : Vefa sans descriptif (101) 
+					WHEN (nblocmut = 0 AND vefa IS TRUE) THEN '101'
+				-- Ne doit pas exister
+					ELSE '100'
 				END
-			WHEN nblocdep > 0 AND nblocapt = 0 AND nblocmai = 0 AND nblocact = 0 THEN '142'
-			WHEN nblocapt > 0 AND nblocmai > 0 AND nblocact = 0 THEN '143' -- correspond à la catégorie HABITAT MIXTE de la typologie GNDVF
-			WHEN sbati < 9 THEN '144'
-			WHEN nblocmai > 1 AND nblocapt = 0 AND nblocact = 0 THEN '131'
-			WHEN nblocmai > 0 AND nblocapt = 0 AND nblocact = 0 THEN '132'
-			WHEN nblocapt > 1 AND nblocmai = 0 AND nblocact = 0 THEN '121'
-			WHEN nblocapt > 0 AND nblocmai = 0 AND nblocact = 0 THEN '122'
-			ELSE '144'
+		-- MAISON (11)
+			WHEN nblocmai > 0 and nblocapt = 0 AND nblocact = 0 THEN
+				CASE
+				-- MAISON - INDETERMINEE : la surface batie est inférieure à 9 m2 (110)
+					WHEN nblocmai = 1 AND sbati < 9 THEN '110'
+				-- MAISON INDIVIDUELLE (vendue seule) (111)
+					WHEN nblocmai = 1 THEN '111'						
+				-- MAISONS INDIVIDUELLES (112) 
+					WHEN nblocmai > 1 THEN '112'
+					ELSE 'PROBLEME'
+				END
+
+		-- APPARTEMENT (12)
+			WHEN nblocapt > 0 and nblocmai = 0 AND nblocact = 0 THEN
+				CASE
+				-- 1 APPARTEMENT (121)
+					WHEN nblocapt = 1 AND sbati > 9 THEN '121'					
+				-- 2 APPARTEMENTS (122)
+					WHEN nblocapt = 2 THEN '122'
+				-- APPARTEMENTS INDETERMINES (1 appartement de - de 9 m2 / plusieurs apparts dans plusieurs bâtiments / non rapatriement des Fichiers fonciers) (120)
+					ELSE '120'
+				END
+		-- DEPENDANCE (13)
+			WHEN nblocdep > 0 AND nblocapt = 0 and nblocmai = 0 AND nblocact = 0 THEN
+				CASE 
+				-- UNE DEPENDANCE (131)
+					WHEN nblocdep = 1 THEN '131'
+				-- DEPENDANCES (132)
+					WHEN nblocdep > 1 THEN '132'
+					ELSE 'PROBLEME'
+				END
+		-- ACTIVITE (14)
+			WHEN nblocact > 0 AND nblocapt = 0 and nblocmai = 0  THEN '14'
+		-- MIXTE BATI (15)
+			-- MIXTE - LOGEMENTS (151)
+			WHEN nblocact = 0 AND nblocmai > 0 AND nblocapt > 0 THEN '151'
+			-- MIXTE - LOGEMENT/ACTIVITE (152)
+			WHEN nblocact >0 AND (nblocmai > 0 OR nblocapt > 0) THEN '152'
+			ELSE 'PROBLEME'
+		END 
+-- NON BATI (2)
+	ELSE 
+		CASE
+		-- TERRAINS DE TYPE TAB (21)
+			WHEN l_dcnt[10] > 0 
+				OR libnatmut = 'Vente terrain à bâtir' 
+				OR l_artcgi && ARRAY['1594D*2','257-7-1*3','278 sexies I.1','691bis', '1594OGA']::VARCHAR[] 				
+				THEN '21'
+		-- TERRAINS ARTIFICIALISES (22)
+			WHEN l_dcnt[7] + l_dcnt[9] + l_dcnt[11] + l_dcnt[12] + l_dcnt[13] = sterr THEN
+				CASE
+				-- TERRAINS AGREEMENTS (221)
+					WHEN  l_dcnt[9] + l_dcnt[11] = sterr THEN '221'
+				-- TERRAINS D'EXTRACTION (222)
+					WHEN  l_dcnt[7] = sterr THEN '222'
+				-- TERRAINS DE TYPE RESEAU (223)
+					WHEN  l_dcnt[12] = sterr THEN '223'
+				-- TERRAINS ARTIFICIALISES MIXTES (229)
+					ELSE '229'
+				END 
+		-- TERRAINS NATURELS (23)
+			WHEN l_dcnt[1] + l_dcnt[2] + l_dcnt[3] + l_dcnt[4] + l_dcnt[5] + l_dcnt[6] + l_dcnt[8] = sterr THEN
+			-- TERRAINS AGRICOLES (231)
+				CASE
+				-- TERRAINS VITICOLES (2311)
+					WHEN  l_dcnt[4] >= sterr * 0.25 THEN '2311'
+				-- TERRAINS VERGERS (2312)
+					WHEN  l_dcnt[3] >= sterr * 0.35 THEN '2312'
+				-- TERRAINS DE TYPE TERRES ET PRES (2313)
+					WHEN  l_dcnt[1] + l_dcnt[2] >= sterr * 0.40 THEN '2313'
+				-- TERRAINS AGRICOLES MIXTES (2319)
+					WHEN l_dcnt[1] + l_dcnt[2] +  l_dcnt[3] + l_dcnt[4] >= sterr * 0.40 THEN '2319'
+			-- TERRAINS FORESTIERS (232)
+					WHEN  l_dcnt[5] > sterr * 0.60 THEN '232'
+			-- TERRAINS LANDES ET EAUX (233)
+					WHEN  l_dcnt[6] + l_dcnt[8] > sterr * 0.60 THEN '233'
+			-- TERRAINS NATURELS MIXTES (239)
+					ELSE '239'
+				END
+		-- TERRAINS NON BATIS INDETERMINES (20)
+			ELSE '20' 
 		END
-	ELSE '0'
-	END AS codtypbien
+	END as codtypbien
 
 ## _LIBTYPBIEN
 CASE 
-		WHEN libnatmut = 'Echange' THEN 'ECHANGE DE BIENS' -- ON MET UNE CATEGORIE A PART POUR LES ECHANGES
-		WHEN libnatmut = 'Expropriation' THEN 'EXPROPRIATION' -- ON MET UNE CATEGORIE A PART POUR LES EXPROPRIATIONS
-		WHEN libnatmut = 'Adjudication' THEN 'ADJUDICATION' -- ON MET UNE CATEGORIE A PART POUR LES ADJUDICATIONS
-		WHEN nbvolmut > 0 THEN 'VOLUME' -- VOLUME
-		WHEN vefa IS TRUE THEN -- VEFA
-			CASE 
-				WHEN nblocact > 0 AND nblocapt = 0 AND nblocmai = 0 THEN 'VEFA - INDUSTRIEL ET COMMERCIAL'
-				WHEN nblocapt > 0 AND nblocmai = 0 AND nblocact = 0 THEN 'VEFA - APPART'
-				WHEN nblocmai > 0 AND nblocapt = 0 AND nblocact = 0 THEN 'VEFA - MAISON'
-				ELSE 'VEFA - NON DETERMINE'
-			END
-		WHEN nblocmut = 0 THEN -- NON BATI
-			CASE
-				WHEN l_artcgi && ARRAY['1594D*2','257-7-1*3','278 sexies I.1','691bis', '1594OGA']::VARCHAR[]  THEN 'NON BATI - TERRAINS A BATIR'
-				WHEN l_artcgi && ARRAY['1137']::VARCHAR[] THEN 'NON BATI - TERRAINS FORESTIERS'
-				WHEN l_artcgi && ARRAY['1594FQE', '1594FQE I', '1594FQE II', '1594FQD', '1594FQG']::VARCHAR[] THEN 'NON BATI - TERRAINS AGRICOLES'
-				WHEN libnatmut = 'Vente terrain à bâtir' THEN 'NON BATI - TERRAINS A BATIR'
-				WHEN l_dcnt[10] = sterr THEN 'NON BATI - TERRAINS A BATIR'                 
-				WHEN l_dcnt[6] + l_dcnt[8] = sterr THEN 'NON BATI - TERRAINS NATURELS'                
-				WHEN l_dcnt[5] = sterr THEN 'NON BATI - TERRAINS FORESTIERS'                
-				WHEN l_dcnt[1] + l_dcnt[2] + l_dcnt[3] + l_dcnt[4] = sterr THEN 'NON BATI - TERRAINS AGRICOLES'                
-				WHEN l_dcnt[7] + l_dcnt[9] + l_dcnt[11] + l_dcnt[12] + l_dcnt[13] = sterr THEN 'NON BATI - TERRAINS ARTIFICIALISES'                
-				ELSE 'NON BATI - TERRAINS MIXTES'
-				-- IL N'Y A PAS de "NON BATI - NON DETERMINE" 
-			END
-		WHEN nblocmut > 0 THEN -- BATI
-			CASE
-				WHEN l_artcgi && ARRAY['1594Ibis']::VARCHAR[] AND (nblocapt > 0 OR nblocmai > 0) THEN 'BATI - LOGEMENT/INDUSTRIEL ET COMMERCIAL' -- correspond à la catégorie HABITAT/ECO de la typologie GNDVF
-				WHEN l_artcgi && ARRAY['1594FQE', '1594FQE I', '1594FQE II', '1594FQD', '1594FQG']::VARCHAR[] THEN 'BATI - BIEN AGRICOLE'
-				WHEN l_artcgi && ARRAY['1137']::VARCHAR[] THEN 'BATI - BIEN FORESTIER'                            
-				-- QUESTION SUR LES MUTATIONS POUR LESQUELS IL Y A UN LOCAL VENDU ET DES ARTICLES CGI OU UN LIBELLE DE NATURE DE MUTATION CORRESPONDANT A DES TAB
-				WHEN nblocact > 0 THEN
-					CASE 
-						WHEN nblocapt > 0 OR nblocmai > 0 OR nblocdep > 0 THEN 'BATI - LOGEMENT/INDUSTRIEL ET COMMERCIAL'  -- correspond à la catégorie HABITAT/ECO de la typologie GNDVF
-						WHEN nblocapt = 0 AND nblocmai = 0 AND nblocdep = 0 THEN 'BATI - INDUSTRIEL ET COMMERCIAL' 
-					END
-				WHEN nblocdep > 0 AND nblocapt = 0 AND nblocmai = 0 AND nblocact = 0 THEN 'BATI - DEPENDANCE LOGEMENT'
-				WHEN nblocapt > 0 AND nblocmai > 0 AND nblocact = 0 THEN 'BATI - LOGEMENT MIXTE' -- correspond à la catégorie HABITAT MIXTE de la typologie GNDVF
-				WHEN sbati < 9 THEN 'BATI - BATI INDEFINI'
-				WHEN nblocmai > 1 AND nblocapt = 0 AND nblocact = 0 THEN 'BATI - MAISONS'
-				WHEN nblocmai > 0 AND nblocapt = 0 AND nblocact = 0 THEN 'BATI - MAISON'
-				WHEN nblocapt > 1 AND nblocmai = 0 AND nblocact = 0 THEN 'BATI - APPARTS'
-				WHEN nblocapt > 0 AND nblocmai = 0 AND nblocact = 0 THEN 'BATI - APPART'
-				ELSE 'BATI - NON DETERMINE'
-			END
-		ELSE 'NON DETERMINE'
-	END AS libtypbien
+-- BATI (1)
+	WHEN nblocmut > 0 or vefa IS TRUE OR nbvolmut > 0 THEN	
+		CASE 
+		-- BATI - INDETERMINE (10) : ventes avec volume ou vefa sans information sur le local
+			WHEN (nblocmut = 0 AND vefa IS TRUE) OR nbvolmut > 0 THEN 
+				CASE 
+				-- BATI - INDETERMINE : vente avec volume(s) (102)
+					WHEN nbvolmut > 0 THEN 'BATI - INDETERMINE : Vente avec volume(s)'
+				-- BATI - INDETERMINE : Vefa sans descriptif (101) 
+					WHEN (nblocmut = 0 AND vefa IS TRUE) THEN 'BATI - INDETERMINE : Vefa sans descriptif'
+				-- Ne doit pas exister
+					ELSE '100'
+				END
+		-- MAISON (11)
+			WHEN nblocmai > 0 and nblocapt = 0 AND nblocact = 0 THEN
+				CASE
+				-- MAISON - INDETERMINEE : la surface batie est inférieure à 9 m2 (110)
+					WHEN nblocmai = 1 AND sbati < 9 THEN 'MAISON - INDETERMINEE'
+				-- MAISON INDIVIDUELLE (vendue seule) (111)
+					WHEN nblocmai = 1 THEN 'UNE MAISON'						
+				-- MAISONS INDIVIDUELLES (112) 
+					WHEN nblocmai > 1 THEN 'DES MAISONS'
+					ELSE 'PROBLEME'
+				END
+
+		-- APPARTEMENT (12)
+			WHEN nblocapt > 0 and nblocmai = 0 AND nblocact = 0 THEN
+				CASE
+				-- 1 APPARTEMENT (121)
+					WHEN nblocapt = 1 AND sbati > 9 THEN 'UN APPARTEMENT'					
+				-- 2 APPARTEMENTS (122)
+					WHEN nblocapt = 2 THEN 'DEUX APPARTEMENTS'
+				-- APPARTEMENTS INDETERMINES (1 appartement de - de 9 m2 / plusieurs apparts dans plusieurs bâtiments / non rapatriement des Fichiers fonciers) (120)
+					ELSE 'APPARTEMENT INDETERMINE'
+				END
+		-- DEPENDANCE (13)
+			WHEN nblocdep > 0 AND nblocapt = 0 and nblocmai = 0 AND nblocact = 0 THEN
+				CASE 
+				-- UNE DEPENDANCE (131)
+					WHEN nblocdep = 1 THEN 'UNE DEPENDANCE'
+				-- DEPENDANCES (132)
+					WHEN nblocdep > 1 THEN 'DES DEPENDANCES'
+					ELSE 'PROBLEME'
+				END
+		-- ACTIVITE (14)
+			WHEN nblocact > 0 AND nblocapt = 0 and nblocmai = 0  THEN 'ACTIVITE'
+		-- MIXTE BATI (15)
+			-- MIXTE - LOGEMENTS (151)
+			WHEN nblocact = 0 AND nblocmai > 0 AND nblocapt > 0 THEN 'BATI MIXTE - LOGEMENTS'
+			-- MIXTE - LOGEMENT/ACTIVITE (152)
+			WHEN nblocact >0 AND (nblocmai > 0 OR nblocapt > 0) THEN 'BATI MIXTE - LOGEMENT/ACTIVITE'
+			ELSE 'PROBLEME'
+		END 
+-- NON BATI (2)
+	ELSE 
+		CASE
+		-- TERRAINS DE TYPE TAB (21)
+			WHEN l_dcnt[10] > 0 
+				OR libnatmut = 'Vente terrain à bâtir' 
+				OR l_artcgi && ARRAY['1594D*2','257-7-1*3','278 sexies I.1','691bis', '1594OGA']::VARCHAR[] 				
+				THEN 'TERRAIN DE TYPE TAB'
+		-- TERRAINS ARTIFICIALISES (22)
+			WHEN l_dcnt[7] + l_dcnt[9] + l_dcnt[11] + l_dcnt[12] + l_dcnt[13] = sterr THEN
+				CASE
+				-- TERRAINS AGREEMENTS (221)
+					WHEN  l_dcnt[9] + l_dcnt[11] = sterr THEN 'TERRAIN D''AGREMENT'
+				-- TERRAINS D'EXTRACTION (222)
+					WHEN  l_dcnt[7] = sterr THEN 'TERRAIN D''EXTRACTION'
+				-- TERRAINS DE TYPE RESEAU (223)
+					WHEN  l_dcnt[12] = sterr THEN 'TERRAIN DE TYPE RESEAU'
+				-- TERRAINS ARTIFICIALISES MIXTES (229)
+					ELSE 'TERRAIN ARTIFICIALISE MIXTE'
+				END 
+		-- TERRAINS NATURELS (23)
+			WHEN l_dcnt[1] + l_dcnt[2] + l_dcnt[3] + l_dcnt[4] + l_dcnt[5] + l_dcnt[6] + l_dcnt[8] = sterr THEN
+			-- TERRAINS AGRICOLES (231)
+				CASE
+				-- TERRAINS VITICOLES (2311)
+					WHEN  l_dcnt[4] >= sterr * 0.25 THEN 'TERRAIN VITICOLE'
+				-- TERRAINS VERGERS (2312)
+					WHEN  l_dcnt[3] >= sterr * 0.35 THEN 'TERRAIN VERGER'
+				-- TERRAINS DE TYPE TERRES ET PRES (2313)
+					WHEN  l_dcnt[1] + l_dcnt[2] >= sterr * 0.40 THEN 'TERRAIN DE TYPE TERRE ET PRE'
+				-- TERRAINS AGRICOLES MIXTES (2319)
+					WHEN l_dcnt[1] + l_dcnt[2] +  l_dcnt[3] + l_dcnt[4] >= sterr * 0.40 THEN 'TERRAIN AGRICOLE MIXTE'
+			-- TERRAINS FORESTIERS (232)
+					WHEN  l_dcnt[5] > sterr * 0.60 THEN 'TERRAIN FORESTIER'
+			-- TERRAINS LANDES ET EAUX (233)
+					WHEN  l_dcnt[6] + l_dcnt[8] > sterr * 0.60 THEN 'TERRAIN LANDES ET EAUX'
+			-- TERRAINS NATURELS MIXTES (239)
+					ELSE 'TERRAIN NATUREL MIXTE'
+				END
+		-- TERRAINS NON BATIS INDETERMINES (20)
+			ELSE 'TERRAIN NON BATIS INDETERMINE'
+		END
+	END as libtypbien
