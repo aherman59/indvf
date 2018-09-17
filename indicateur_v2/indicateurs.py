@@ -467,7 +467,7 @@ class Resultat():
     def calcul(self, territoire, config_active):
         codes_insee = territoire.codes_insee
         c = RequeteurInDVF(*(config_active.parametres_bdd()), type_base=config_active.type_bdd, script = 'sorties/script_indvf.sql')
-        c.creer_aggregat_mediane_10()
+        #c.creer_aggregat_mediane_10()
         resultat = c.calcul(self.indicateur, codes_insee)
         c.deconnecter()
         return resultat
