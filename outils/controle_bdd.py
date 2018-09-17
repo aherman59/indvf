@@ -196,6 +196,10 @@ class ControleBDD(PgOutils):
                     return False
         return True
     
+    @select_sql
+    def tester_fonctions_aggregats(self):
+        pass
+    
     def schemas_departementaux(self):
         return self.lister_schemas_commencant_par('dvf_d')
     

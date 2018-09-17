@@ -90,7 +90,7 @@ par ce [lien](http://piece-jointe-carto.developpement-durable.gouv.fr/NAT004/DTe
 |ffocca| ccthp | code d'occupation du local sous l'acheteur|
 |ffshab| stoth | surface totale des pièces d'habitation|
 |ffsdep| stotdsueic + stotd | surface totale des pièces type dépendance intégrées ou non au local|
-|ffspro| stotp | surface totale des pièces type activité (ou professionnelle)|
+|ffspro| sprobati (stotp avant 2017) | surface totale des pièces type activité (ou professionnelle)|
 |ffsbati| spevtot | surface de l'ensemble des pièces du local|
 |ffnbpsam| dnbsam | nombre de pièces type salle à manger|
 |ffnbpcha| dnbcha | nombre de pièces type chambre|

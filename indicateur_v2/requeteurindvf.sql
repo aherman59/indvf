@@ -197,56 +197,56 @@ CASE
 	END as libtypbien
 
 ## CREER_AGGREGAT_MEDIANE_10
-CREATE OR REPLACE FUNCTION centile(anyarray, integer)
+CREATE OR REPLACE FUNCTION dvf.centile(anyarray, integer)
   RETURNS anyelement AS
 $BODY$  
   SELECT t[$2/100.0 * array_upper($1,1) + 0.5] FROM (SELECT ARRAY(SELECT unnest($1) ORDER BY 1) as t) t1;
 $BODY$
   LANGUAGE sql;
 
-CREATE OR REPLACE FUNCTION mediane_0(anyarray)
+CREATE OR REPLACE FUNCTION dvf.mediane_0(anyarray)
   RETURNS anyelement AS
 $BODY$  
-  SELECT centile($1, 50);
+  SELECT dvf.centile($1, 50);
 $BODY$
   LANGUAGE sql;
   
-CREATE OR REPLACE FUNCTION premier_quartile_0(anyarray)
+CREATE OR REPLACE FUNCTION dvf.premier_quartile_0(anyarray)
   RETURNS anyelement AS
 $BODY$  
-  SELECT centile($1, 25);
+  SELECT dvf.centile($1, 25);
 $BODY$
   LANGUAGE sql;
   
-CREATE OR REPLACE FUNCTION dernier_quartile_0(anyarray)
+CREATE OR REPLACE FUNCTION dvf.dernier_quartile_0(anyarray)
   RETURNS anyelement AS
 $BODY$  
-  SELECT centile($1, 75);
+  SELECT dvf.centile($1, 75);
 $BODY$
   LANGUAGE sql;
 
-DROP AGGREGATE IF EXISTS mediane(NUMERIC);
-CREATE aggregate mediane(NUMERIC)
+DROP AGGREGATE IF EXISTS dvf.mediane(NUMERIC);
+CREATE aggregate dvf.mediane(NUMERIC)
 (
 sfunc = array_append,
 stype = NUMERIC[],
-finalfunc = mediane_0
+finalfunc = dvf.mediane_0
 );
 
-DROP AGGREGATE IF EXISTS premier_quartile(NUMERIC);
-CREATE aggregate premier_quartile(NUMERIC)
+DROP AGGREGATE IF EXISTS dvf. premier_quartile(NUMERIC);
+CREATE aggregate dvf.premier_quartile(NUMERIC)
 (
 sfunc = array_append,
 stype = NUMERIC[],
-finalfunc = premier_quartile_0
+finalfunc = dvf.premier_quartile_0
 );
 
-DROP AGGREGATE IF EXISTS dernier_quartile(NUMERIC);
-CREATE aggregate dernier_quartile(NUMERIC)
+DROP AGGREGATE IF EXISTS dvf.dernier_quartile(NUMERIC);
+CREATE aggregate dvf.dernier_quartile(NUMERIC)
 (
 sfunc = array_append,
 stype = NUMERIC[],
-finalfunc = dernier_quartile_0
+finalfunc = dvf.dernier_quartile_0
 );
 
 
@@ -289,7 +289,7 @@ FROM (
 {4};
 
 ## CALCULER_MEDIANE_PAR_ANNEE
-SELECT anneemut, mediane({0}) 
+SELECT anneemut, dvf.mediane({0}) 
 FROM (
 	SELECT * {3} 
 	FROM dvf.mutation 
@@ -318,7 +318,7 @@ FROM (
 GROUP BY anneemut;
 
 ## CALCULER_MEDIANE_MULTI_ANNEE
-SELECT mediane({0}) 
+SELECT dvf.mediane({0}) 
 FROM (
 	SELECT * {5}
 	FROM dvf.mutation
@@ -327,7 +327,7 @@ FROM (
 {4};
 
 ## CALCULER_PQ_PAR_ANNEE
-SELECT anneemut, premier_quartile({0}) 
+SELECT anneemut, dvf.premier_quartile({0}) 
 FROM (
 	SELECT * {3} 
 	FROM dvf.mutation 
@@ -337,7 +337,7 @@ FROM (
 GROUP BY anneemut;
 
 ## CALCULER_PQ_MULTI_ANNEE
-SELECT premier_quartile({0}) 
+SELECT dvf.premier_quartile({0}) 
 FROM (
 	SELECT * {5}
 	FROM dvf.mutation
@@ -346,7 +346,7 @@ FROM (
 {4};
 
 ## CALCULER_DQ_PAR_ANNEE
-SELECT anneemut, dernier_quartile({0}) 
+SELECT anneemut, dvf.dernier_quartile({0}) 
 FROM (
 	SELECT * {3} 
 	FROM dvf.mutation 
@@ -356,7 +356,7 @@ FROM (
 GROUP BY anneemut;
 
 ## CALCULER_DQ_MULTI_ANNEE
-SELECT dernier_quartile({0}) 
+SELECT dvf.dernier_quartile({0}) 
 FROM (
 	SELECT * {5}
 	FROM dvf.mutation

@@ -623,6 +623,8 @@ class RequeteurInDVF(PgOutils):
         condition = ''
         if indicateur.code_typo != '999':
             condition += "WHERE codtypbien LIKE '{0}%'".format(indicateur.code_typo)
+        else:
+            condition += 'WHERE codtypbien IS NOT NULL'
         if self.type_base == 'DV3F':
             condition += " AND (" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
             condition += " AND (" + " OR ".join(["devenir LIKE '{0}%'".format(f) for f in indicateur.devenirs]) + ")"        

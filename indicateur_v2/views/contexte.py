@@ -146,8 +146,7 @@ class ContexteIndicateur():
     @property
     def an_min_max(self):
         if 'an_min_max' in self.request.POST:
-            an_min_max = self.request.POST.get('an_min_max')
-            print(an_min_max)
+            an_min_max = self.request.POST.get('an_min_max')            
             if ',' in an_min_max:
                 return sorted([int(a) for a in an_min_max.split(',')])
         return [2010, 2017]

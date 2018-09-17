@@ -100,49 +100,64 @@ WHERE coddep = '59'
 
 ### Définir une fonction médiane (pour version PostgreSQL inférieur à 9.4):
 
-Depuis la version 9.4 de PostgreSQL, une fonction médiane est disponible : percentile_disc
+Depuis la version 9.4 de PostgreSQL, une fonction, permettant notamment le calcul de la médiane, est disponible : percentile_disc
 
-Cette fonction reste complexe. Il est vous est proposé une autre fonction ci-dessous qui peut être utilisée à la place de percentile_disc ou pour les versions antérieures à la 9.4. Cette fonction est à créer une seule fois (pour la base de données) puis reste utilisable par la suite.   
+Cette fonction reste complexe. Il est vous est proposé trois fonctions ci-dessous qui peuvent être utilisées à la place de percentile_disc ou pour les versions antérieures à la 9.4. Ces fonctions (dvf.mediane, dvf.premier_quartile et dvf.dernier_quartile) sont à créer une seule fois (pour la base de données) puis reste utilisable par la suite. 
+
+Nota : Ces fonctions doivent être présentes pour l'utilisation du module InDVF.  
 
 
 ```sql
 CREATE OR REPLACE FUNCTION dvf.centile(anyarray, integer)
   RETURNS anyelement AS
-$BODY$
-  /*
-   Retourne le n-ième centile des valeurs du tableau (trié ou non)
-
-   exemples : 
-    SELECT dvf.centile(ARRAY[10,20,30,40,50], 50)
-    >> 30
-
-    SELECT dvf.centile(ARRAY[21,20,100,70,49,13,52,60], 10)
-    >> 13
-  */
+$BODY$  
   SELECT t[$2/100.0 * array_upper($1,1) + 0.5] FROM (SELECT ARRAY(SELECT unnest($1) ORDER BY 1) as t) t1;
 $BODY$
   LANGUAGE sql;
-  
+
 CREATE OR REPLACE FUNCTION dvf.mediane_0(anyarray)
   RETURNS anyelement AS
-$BODY$
-  /*
-   Retourne la médiane des valeurs du tableau (trié ou non)
-
-   exemple : 
-    SELECT dvf.mediane_0(ARRAY[10,40,30,20,50])
-    >> 30
-  */
+$BODY$  
   SELECT dvf.centile($1, 50);
 $BODY$
   LANGUAGE sql;
   
+CREATE OR REPLACE FUNCTION dvf.premier_quartile_0(anyarray)
+  RETURNS anyelement AS
+$BODY$  
+  SELECT dvf.centile($1, 25);
+$BODY$
+  LANGUAGE sql;
+  
+CREATE OR REPLACE FUNCTION dvf.dernier_quartile_0(anyarray)
+  RETURNS anyelement AS
+$BODY$  
+  SELECT dvf.centile($1, 75);
+$BODY$
+  LANGUAGE sql;
+
 DROP AGGREGATE IF EXISTS dvf.mediane(NUMERIC);
 CREATE aggregate dvf.mediane(NUMERIC)
 (
 sfunc = array_append,
 stype = NUMERIC[],
 finalfunc = dvf.mediane_0
+);
+
+DROP AGGREGATE IF EXISTS dvf. premier_quartile(NUMERIC);
+CREATE aggregate dvf.premier_quartile(NUMERIC)
+(
+sfunc = array_append,
+stype = NUMERIC[],
+finalfunc = dvf.premier_quartile_0
+);
+
+DROP AGGREGATE IF EXISTS dvf.dernier_quartile(NUMERIC);
+CREATE aggregate dvf.dernier_quartile(NUMERIC)
+(
+sfunc = array_append,
+stype = NUMERIC[],
+finalfunc = dvf.dernier_quartile_0
 );
 ```
 

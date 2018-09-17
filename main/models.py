@@ -177,6 +177,15 @@ class ConfigurationBDD(models.Model):
         except Exception as e:
             print(e)
             return False
+    
+    def a_les_fonctions_aggregats(self):
+        try:
+            resultat = self.controleur_bdd().tester_fonctions_aggregats()
+            if resultat:
+                return True
+        except Exception as e:
+            print(e)
+            return False
 
     def departements_disponibles(self):
         controleurbdd = self.controleur_bdd()
