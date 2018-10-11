@@ -46,7 +46,7 @@ class ContexteCarto():
         self.main()
     
     def main(self):
-        if self.request.method != 'POST' and self.request.get_full_path() == '/geo/': # page démarrage
+        if self.request.method != 'POST' and self.request.get_full_path() == '/dv3f/geo/': # page démarrage
             self.configuration_initiale()        
     
     @property

@@ -28,6 +28,7 @@ Les niveaux d'agrégation géographiques proposés correspondent aux contours ad
 * Commune
 
 Les niveaux d'agrégation temporels proposés sont les suivants:
+
 * annuels
 * tri-annuels (décalé de un an)
 
@@ -107,9 +108,40 @@ Pour exemple, l'indicateur du prix médian des ventes de maison ancienne (1113) 
 
 ## Construction des indicateurs
 
+### Choix méthodologiques retenus
+
+La consitution des indicateurs repose sur le principe de segmentation décrit dans la fiche @TUTO@g5_segmenter|La segmentation de marché dans DV3F|la-segmentation-de-marche-dans-dv3f@TUTO@.
+
+Pour l'ensemble des indicateurs, les critères retenus pour constituer les échantillons sont les suivants :
+
+* sélection du type de bien vendu à partir de la typologie de bien à l'aide de la variable @@mutation|codtypbien@@,
+* sélection de la période à partir de l'année de mutation à l'aide de la variable @@mutation|anneemut@@,
+* sélection du périmètre géographique à partir du code de la commune @@mutation|l_codinsee@@.
+
+Pour les indicateurs de prix, des critères plus fins sont également retenus :
+ 
+* éviction des mutations aux conditions de vente particulières : @@mutation|filtre@@ = '0',
+* usage inchangé à l'issue de la vente : @@mutation|devenir@@ = 'S'
+
+Pour exemple, le calcul du prix médian des ventes de maisons anciennes sur Lille en 2014 correspond à une rêquete de type :
+
+```sql
+SELECT dvf.mediane(valeurfonc) as pxmedian_1113
+FROM dvf.mutation
+WHERE codtypbien LIKE '1113%'
+	 AND anneemut = 2014
+	 AND l_codinsee[1] = '59350' AND nbcomm = 1
+	 AND filtre = '0'
+	 AND devenir = 'S'
+```
+
 ### Echantillon minimal pour le calcul du prix
 
+Pour le calcul des prix, les indicateurs sont calculés uniquement lorsque l'échantillon contient :
 
-### Choix méthodologiques retenus
+* 11 mutations lors du calcul d'une médiane,
+* 22 mutations lors du calcul du premier ou du dernier quartile. 
+
+
 
 

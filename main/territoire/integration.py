@@ -45,9 +45,9 @@ from main.models import Departement, Epci, Commune
 def integrer_territoires():
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     fichier_departement_insee = os.path.join(BASE_DIR, 'main/territoire/doc_insee/departement.csv')
-    fichier_epci_insee = os.path.join(BASE_DIR,'main/territoire/doc_insee/epci2016.csv')
-    fichier_commune_insee = os.path.join(BASE_DIR,'main/territoire/doc_insee/code_insee_france2016.txt')
-    fichier_historique_commune = os.path.join(BASE_DIR,'main/territoire/doc_insee/historiq2016.txt')
+    fichier_epci_insee = os.path.join(BASE_DIR,'main/territoire/doc_insee/epci2017.csv')
+    fichier_commune_insee = os.path.join(BASE_DIR,'main/territoire/doc_insee/code_insee_france2017.txt')
+    fichier_historique_commune = os.path.join(BASE_DIR,'main/territoire/doc_insee/historiq2017.txt')
     if len(Departement.objects.all()) == 0:
         integrer_departements(fichier_departement_insee)
     if len(Epci.objects.all()) == 0:

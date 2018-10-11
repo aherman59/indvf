@@ -36,6 +36,7 @@ termes.
 '''
 
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib import messages
 from collections import namedtuple
 
@@ -43,7 +44,7 @@ from main.views.contexte import recuperer_metadonnees_applications_disponibles
 from main.views.contexte import ContexteConfigBDD
 from main.models import ProxyUser
 
-from indvf.settings import MODE_SERVEUR
+from indvf.settings import MODE_SERVEUR, BASE_DIR
 
 from django.contrib.auth.decorators import login_required
 
@@ -79,6 +80,12 @@ def definir_proxy(request):
         proxy = request.POST['proxy']
         ProxyUser.objects.definir_proxy(request.user, proxy)
         return redirect('main:applications')
-    return render(request, 'chgmt_proxy.html', context)    
+    return render(request, 'chgmt_proxy.html', context)
+
+@login_required
+def dump(request):
+    import os
+    os.system(os.path.join(BASE_DIR, 'dumpdata.sh'))
+    return HttpResponse('Dump terminé')    
     
     

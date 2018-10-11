@@ -39,6 +39,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib import messages
+from django.db import transaction
 
 from pg.pgbasics import *
 from main.territoire import integration 
@@ -50,6 +51,7 @@ from indicateur_v2.indicateurs import TYPES_INDICATEUR, FILTRES, TYPOLOGIE_DV3F,
 PAGE AFFICHAGE INDICATEURS
 ''' 
 
+@transaction.atomic
 @login_required
 def indicateurs(request):
     '''

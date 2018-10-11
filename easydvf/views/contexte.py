@@ -50,7 +50,7 @@ class ContexteRecherche():
         self.main()
     
     def main(self):
-        if self.request.method != 'POST' and self.request.get_full_path() == '/recherche/': # page démarrage
+        if self.request.method != 'POST' and self.request.get_full_path() == '/dv3f/recherche/': # page démarrage
             self.configuration_initiale()
         elif 'departement' in self.request.POST: # changement de département
             self.selection_departement()

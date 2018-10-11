@@ -52,7 +52,7 @@ class ContexteIndicateur():
         self.main()
     
     def main(self):
-        if self.request.method != 'POST' and self.request.get_full_path() == '/indicateur_v2/': # page démarrage
+        if self.request.method != 'POST' and self.request.get_full_path() == '/dv3f/indicateur_v2/': # page démarrage
             self.configuration_initiale()
             self.charger_indicateur = False
         elif 'voir_departement' in self.request.POST: # choix d'un nouveau département

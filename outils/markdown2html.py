@@ -23,7 +23,7 @@ def integrer_titre_variables_associees(txt_html):
 
 def convertir_html_brut_en_html_bootstrap(html_brut):
     html_bootstrap = ameliorer_tableaux_avec_bootstrap(html_brut)
-    html_bootstrap = html_bootstrap.replace('ressources/', '/static/img/tutodvf/')
+    html_bootstrap = html_bootstrap.replace('ressources/', '/dv3f/static/img/tutodvf/')
     html_bootstrap = integrer_titre_variables_associees(html_bootstrap)
     html_bootstrap = centrer_images_avec_bootstrap(html_bootstrap)
     return html_bootstrap

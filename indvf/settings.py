@@ -139,13 +139,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/dv3f/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root/')
+STATIC_ROOT = '/staticfiles_dv3f'
 
 STATICFILES_DIRS = (
  os.path.join(BASE_DIR, 'static/'),
 )
 
-LOGIN_URL = '/main/connexion/'
+LOGIN_URL = '/dv3f/main/connexion/'
 
