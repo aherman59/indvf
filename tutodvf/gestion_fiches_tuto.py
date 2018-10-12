@@ -90,7 +90,7 @@ class RepertoireTuto():
         return (fiche for fiche in fiches if fiche.est_valide and fiche.theme != 'OLD')        
     
     def _trier_fiches(self, fiches):
-        fiches = sorted(fiches, key=lambda x: x.numero) # tri par numero
+        fiches = sorted(fiches, key=lambda x: x.classement) # tri par numero
         return sorted(fiches, key=lambda x: self.THEMES[x.theme]) # tri par rubrique
     
     def _position(self, nom_fiche):
@@ -123,6 +123,12 @@ class FicheTuto():
     @property
     def numero(self):
         return self._numero
+    
+    @property
+    def classement(self):
+        if self.nom_fiche.endswith('exos'):
+            return str(int(self._numero) * 10 + 1)
+        return str(int(self._numero) * 10)
     
     @property
     def auteurs(self):
