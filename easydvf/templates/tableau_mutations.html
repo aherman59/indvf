@@ -232,7 +232,7 @@ $('form input').keydown(function (e) {
 $('.sort').on("click",function() {
   var tri = $(this).attr('tri');  
   $.ajax({
-       url : '/recherche/modification_affichage_table/' + tri + '/1',
+       url : '/dv3f/recherche/modification_affichage_table/' + tri + '/1',
        type : 'GET',
        dataType : 'html',
        success : function(code_html, statut){       
@@ -254,7 +254,7 @@ $('li').on("click", function() {
   {% endif %}
   
   $.ajax({
-       url : '/recherche/modification_affichage_table/{{tri}}/' + page,
+       url : '/dv3f/recherche/modification_affichage_table/{{tri}}/' + page,
        type : 'GET',
        dataType : 'html',
        success : function(code_html, statut){       
@@ -266,7 +266,7 @@ $('li').on("click", function() {
 // changements sur les filtres
 function recuperer_donnees_filtrees(form){
 	$.ajax({
-	       url : '/recherche/modification_affichage_table/{{tri}}/1',
+	       url : '/dv3f/recherche/modification_affichage_table/{{tri}}/1',
 	       type : 'POST',
 	       dataType : 'html',
 	       data : $(form).serialize(),
@@ -296,7 +296,7 @@ $('#input_valeur_max').on("change", function() {
 $('.mutation').on("click", function() {
   var identifiant = this.id;
   $.ajax({
-       url : '/recherche/detail/' + this.id,
+       url : '/dv3f/recherche/detail/' + this.id,
        type : 'GET',
        dataType : 'html',
        success : function(code_html, statut){           

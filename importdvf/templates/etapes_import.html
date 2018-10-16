@@ -34,12 +34,12 @@
         });
         $('.vide').click(function(event, etape) {            
             if (etape == undefined) etape = '1';
-             $.getJSON('/import/step/' + etape, function(data) {
+             $.getJSON('/dv3f/import/step/' + etape, function(data) {
              		   if (etape == '9999') {
-             			   window.location.href = '/import/fin_import';
+             			   window.location.href = '/dv3f/import/fin_import';
              		   }             		   
              		   else {
-	                       if (data.erreur) window.location.href = '/import/erreur';
+	                       if (data.erreur) window.location.href = '/dv3f/import/erreur';
 	                       $('#description_etape').html(data.description);
 	                       $('#pourcentage').html(data.pourcentage + ' %');
 	                       $('#barre_progression').css('width', data.pourcentage + '%');
