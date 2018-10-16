@@ -232,7 +232,10 @@ class Epci(models.Model):
     @property
     def codes_insee(self):
         communes = Commune.objects.filter(epci = self)
-        return [c.code for c in communes]
+        codes = []
+        for c in communes:
+            codes += c.codes_insee
+        return codes
         
 class Commune(models.Model):
     nom = models.CharField(max_length=100)
@@ -253,7 +256,8 @@ class Commune(models.Model):
     
     @property
     def codes_insee(self):
-        return [self.code]
+        communes_absorbees = Commune.objects.filter(commune_absorbante = self.code)
+        return [self.code] +[c.code for c in communes_absorbees]
 
 class TerritoireManager(models.Manager):
     
