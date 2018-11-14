@@ -42,7 +42,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^$', views.applications, name='applications'),
-    url(r'^connexion/$', auth_views.login, {'template_name': 'connexion.html'}, name='connexion'),
+    url(r'^connexion/$', auth_views.login, {'template_name': 'connexion.html', 'redirect_field_name':'/dv3f/main'}, name='connexion'),
     url(r'^deconnexion/$', auth_views.logout, {'next_page': '/dv3f/main/'}, name='deconnexion'),
     url(r'^changement_mdp/$', auth_views.password_change, {'template_name': 'chgmt_mdp.html', 'post_change_redirect': '/dv3f/main/'}, name='changement_mdp'),
     url(r'^config_bdd$', views.configuration_bdd, name = 'configuration_bdd'),

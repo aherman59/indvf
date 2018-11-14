@@ -1,6 +1,6 @@
 nom=DocDV3F 
 description=Application donnant accès aux documentations DVF+ et DV3F 
-version=1.0
+version=2.0
 classe_fa=fa fa-book 
 image = img/documentation.jpg 
 url=docdv3f:accueil_doc

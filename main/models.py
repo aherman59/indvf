@@ -186,6 +186,15 @@ class ConfigurationBDD(models.Model):
         except Exception as e:
             print(e)
             return False
+    
+    def a_les_vues_qgis(self):
+        try:
+            resultat = self.controleur_bdd().tester_vues_qgis()
+            if resultat:
+                return True
+        except Exception as e:
+            print(e)
+            return False
 
     def departements_disponibles(self):
         controleurbdd = self.controleur_bdd()
@@ -202,6 +211,10 @@ class ConfigurationBDD(models.Model):
         communes = controleurbdd.lister_codes_insee_commune(departement.upper())
         epcis = Commune.objects.filter(code__in=communes).filter(code_actualite__in=['1', '2', '5']).values_list('epci', flat=True)
         return Epci.objects.filter(pk__in = epcis).order_by('nom')
+    
+    def annees_min_max(self):
+        controleurbdd = self.controleur_bdd()
+        return [int(controleurbdd.annee_min()), int(controleurbdd.annee_max())]
 
 class Departement(models.Model):
     nom = models.CharField(max_length=100)

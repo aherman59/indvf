@@ -10,18 +10,16 @@ function styleParcelle(couleur_trait, couleur_plein){
 		})
 	});
 }
-
 function styleLocal(code_unicode, couleur, taille_px){
-	return new ol.style.Style({
-		text: new ol.style.Text({
-			text: code_unicode,
-			font: 'normal ' + taille_px +'px FontAwesome',
-			textBaseline: 'Bottom',
-			fill: new ol.style.Fill({
-				color: couleur,
-			})
-		})
-	})
+	return new ol.style.Style({        
+        text: new ol.style.Text({
+          text: code_unicode,
+          font: 'normal ' + taille_px + 'px FontAwesome',
+          fill: new ol.style.Fill({
+            color: couleur
+          }),         
+        })
+      });
 }
 
 // définition Styles 
@@ -74,9 +72,9 @@ var fct_styleParcellaire = function(feature) {
 };
 
 var fct_styleParcelles = function(feature) {
-	return styles_parcelles[feature.get('codtypbien').substring(0,2)]
+	return styles_parcelles[feature.get('codtypbien').substring(0,2)];
 };
 
 var fct_styleLocaux = function(feature) {
-	return styles_locaux[feature.get('codtypbien').substring(0,2)]
+	return styles_locaux[feature.get('codtypbien').substring(0,2)];
 };

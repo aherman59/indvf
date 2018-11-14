@@ -149,7 +149,7 @@ class ContexteIndicateur():
             an_min_max = self.request.POST.get('an_min_max')            
             if ',' in an_min_max:
                 return sorted([int(a) for a in an_min_max.split(',')])
-        return [2010, 2017]
+        return [2013,2016]
     
     @property
     def types_indicateur(self):

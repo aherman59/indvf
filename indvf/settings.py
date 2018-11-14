@@ -56,7 +56,7 @@ ACTIVATED_APPS = [
     'docdv3f',
     'tutodvf',
     'geodv3f',
-    'indicateur',
+    #'indicateur',
     'indicateur_v2',
     'easydvf',
     'exportdvf',
@@ -148,4 +148,4 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_URL = '/dv3f/main/connexion/'
-
+LOGIN_REDIRECT_URL = '/dv3f/main/'

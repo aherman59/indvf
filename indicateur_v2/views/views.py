@@ -72,6 +72,7 @@ def indicateurs(request):
     
     types_indicateur, filtres, devenirs = TYPES_INDICATEUR, FILTRES, DEVENIRS
     typologie = TYPOLOGIE_DVF_PLUS if contexte_indicateur.config_active.type_bdd == 'DVF+' else TYPOLOGIE_DV3F
+    annees = list(range(contexte_indicateur.config_active.annees_min_max()[0], contexte_indicateur.config_active.annees_min_max()[1] + 1))
     if not contexte_indicateur.config_active.a_les_fonctions_aggregats():
         msg_erreur = """La base de données ne possède pas les fonctions d'aggrégats dvf.mediane, dvf.premier_quartile et dvf.dernier_quartile.
                         <br>Pour les créer, vous devez demander à l'administrateur de la base de données d'exécuter les requêtes détaillées <a href="/dv3f/tuto/g6_observer_exos#definir-une-fonction-mediane-pour-version-postgresql-inferieur-a-94">ici</a>.

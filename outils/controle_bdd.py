@@ -200,11 +200,23 @@ class ControleBDD(PgOutils):
     def tester_fonctions_aggregats(self):
         pass
     
+    @select_sql
+    def tester_vues_qgis(self):
+        pass
+    
     def schemas_departementaux(self):
         return self.lister_schemas_commencant_par('dvf_d')
     
     @select_sql_champ_unique
     def lister_codes_insee_commune(self, departement):
+        pass
+    
+    @select_sql_valeur_unique
+    def annee_min(self):
+        pass
+    
+    @select_sql_valeur_unique
+    def annee_max(self):
         pass
     
     def tester_variable_mutation(self, variable):

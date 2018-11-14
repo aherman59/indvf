@@ -2,9 +2,16 @@
 {% load staticfiles %}
      
 {% block contenu %}
+
 <div class="page-header">
 <h3>Sommaire</h3>
 </div>
+
+    {% if not mode_internet %}
+    <div class="alert alert-success" role="alert">
+	   Pour obtenir le tutoriel le plus à jour, cliquez <a href="http://doc-datafoncier.cerema.fr/dv3f/tuto" target="_blank">ici</a>.
+    </div>
+    {% endif %}
 
 {% regroup fiches by theme as fiches_list %}
 

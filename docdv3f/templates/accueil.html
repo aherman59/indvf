@@ -7,6 +7,12 @@
 <h3>Tables</h3>
 </div>
 
+    {% if not mode_internet %}
+    <div class="alert alert-success" role="alert">
+	   Pour obtenir la documentation la plus à jour, cliquez <a href="http://doc-datafoncier.cerema.fr/dv3f/doc" target="_blank">ici</a>.
+    </div>
+    {% endif %}
+
 {% for groupe_table in tables %}
 <div class="panel panel-default">
     <div class="panel-heading">

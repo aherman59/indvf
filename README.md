@@ -1,6 +1,6 @@
 # AppDVF
 
-License : GNU GPL v3
+License : Cecill
 
 ## Description
 
@@ -10,6 +10,6 @@ Il est composé de différents modules autonomes capables de construire ou d'exp
 
 ## Version
 
-0.1 dev
+2.0
 
 

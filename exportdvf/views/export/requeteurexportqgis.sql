@@ -10,7 +10,7 @@ WHERE geompar IS NOT NULL
 
 DROP VIEW IF EXISTS dvf.localtypo CASCADE;
 CREATE OR REPLACE VIEW dvf.mutationtypo as
-select a.*, 
+SELECT a.*, 
 niv1, libniv1, niv2, libniv2, niv3, libniv3, niv4, libniv4, niv5, libniv5,
  CASE
             WHEN a.sterr > 0::numeric THEN round(a.valeurfonc / a.sterr, 2)
@@ -25,8 +25,8 @@ niv1, libniv1, niv2, libniv2, niv3, libniv3, niv4, libniv4, niv5, libniv5,
             ELSE NULL::numeric
         END as e_m2_bat_h,
 a.l_codinsee[1] as idcom
- from dvf.mutation a, dvf_annexe.ann_typologie b 
-where a.codtypbien=b.codtypbien;
+ FROM dvf.mutation a, dvf_annexe.ann_typologie b 
+WHERE a.codtypbien=b.codtypbien;
 
 
 DROP VIEW IF EXISTS dvf.localtypo CASCADE;

@@ -36,6 +36,14 @@ Dans l'illustration ci-dessous, la parcelle entourée en rouge est concernée pa
 
 ![*Mutation "complexe"*](ressources/mutation_complexe.jpg "Mutation complexe")
 
+<div class="embed-responsive embed-responsive-4by3">
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true">
+    <source src="/dv3f/static/img/tutodvf/Indvf.mp4" type="video/mp4">
+  </video>
+</figure>
+</div>
+
 
 ### Identification de la mutation
 

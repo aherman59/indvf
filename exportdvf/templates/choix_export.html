@@ -2,19 +2,20 @@
 {% load staticfiles %}
  
 {% block contenu %}
-    <div class="panel panel-default">
+
+   <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Choix de l'export</h3>
         </div>
         <div class="panel-body">
            <div class="media">
 			  <div class="media-left media-middle">
-					<a href="{% url 'exportdvf:projet_qgis' %}">
+					{% if not messages %}<a href="{% url 'exportdvf:projet_qgis' %}">{% endif %}
 					  <img class="media-object" width="64px" src="{% static 'img/exportdvf/logo_qgis.png' %}" alt="logo_qgis">
-					</a>
+					{% if not messages %}</a>{% endif %}
 			  </div>
 				  <div class="media-body">
-				    <h4 class="media-heading"><a href="{% url 'exportdvf:projet_qgis' %}">Projet QGis</a></h4>
+				    <h4 class="media-heading">{% if not messages %}<a href="{% url 'exportdvf:projet_qgis' %}">{% endif %}Projet QGis{% if not messages %}</a>{% endif %}</h4>
 				     Un projet QGis "prêt à l'emploi", configuré pour se connecter à la base DV3F active.
 				     <br/><i>Nécessite QGis 2.14 ou ></i>
 				  </div>
@@ -22,6 +23,12 @@
         </div>
         <div class="vide"></div>
     </div>
+    
+    {% if messages %}
+	    {% for message in messages %}
+	    <div class="alert alert-danger" role="alert">{{ message|safe }}</div>
+	    {% endfor %}
+	{% endif %}
 
 {% endblock %}
 

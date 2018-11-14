@@ -132,7 +132,7 @@ class GeoMutation():
     
     def as_geojson(self):
         entite = {}
-        entite['type'] = 'feature'
+        entite['type'] = 'Feature'
         entite['id'] = self.id
         entite['properties'] = {
                                 'idmutation' : self.id, 

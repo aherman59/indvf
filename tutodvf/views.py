@@ -38,7 +38,7 @@ termes.
 import os
 import re
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 
 from main.configuration import BASE_DIR
@@ -47,9 +47,9 @@ from .gestion_fiches_tuto import RepertoireTuto
 REPERTOIRE_FICHES = os.path.join(BASE_DIR, 'tutodvf', 'fiches')
 
 def accueil(request):
+    mode_internet = True if 'doc-datafoncier' in request.build_absolute_uri() else False
     fiches = RepertoireTuto(REPERTOIRE_FICHES).fiches        
-    context = {'fiches' : fiches}
-    return render(request, 'sommaire.html', context)
+    return render(request, 'sommaire.html', locals())
 
 def fiche(request, nom_fiche):
     repertoire = RepertoireTuto(REPERTOIRE_FICHES)

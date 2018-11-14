@@ -51,7 +51,8 @@ from .models import integration_donnees_variables
 
 def accueil_doc(request):
     #integration_donnees_variables()
-    context = {'tables' : TABLES}
+    mode_internet = True if 'doc-datafoncier' in request.build_absolute_uri() else False
+    context = {'tables' : TABLES, 'mode_internet': mode_internet}
     return render(request, 'accueil.html', context)
 
 def doc_table(request, table):
