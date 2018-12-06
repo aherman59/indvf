@@ -269,8 +269,10 @@
 {% if contexte_indicateur.charger_indicateur %}
 
 <div class="row page-header" id="resultats">
-        <h3><i class="fa fa-search"></i> Résultats pour {{contexte_indicateur.titre|safe}}<small> 
-        <a href="{% url 'indicateur_v2:indicateurs_csv' %}" alt="Export CSV" title="Export CSV">	
+<form role="export_csv" method="post" action="{% url 'indicateur_v2:indicateurs_csv' %}">
+           {% csrf_token %}<h3><i class="fa fa-search"></i> Résultats pour {{contexte_indicateur.titre|safe}}<small>
+                	<a onclick="$(this).closest('form').submit()" alt="Export CSV" title="Export CSV">
+        </form>	
 		<span class="fa-stack fa-lg">
 		<i class="fa fa-circle fa-stack-1x"></i>
 		<i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
