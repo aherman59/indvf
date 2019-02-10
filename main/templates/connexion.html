@@ -7,8 +7,14 @@
     <div class="panel-heading">
         <h3 class="panel-title">Connexion</h3>
     </div>
+       
     <div class="panel-body">
-               
+        {% if form.errors %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">{{error}}</div>
+            {% endfor %}
+        {% endif %}            
+        
         <form class="form-horizontal" id="form_connexion" method="post">
 
             {% csrf_token %}

@@ -35,18 +35,9 @@ termes.
 
 '''
 
-from django.conf.urls import url
-
-from .views import views
-from django.contrib.auth import views as auth_views
-
-urlpatterns = [
-    url(r'^$', views.applications, name='applications'),
-    url(r'^connexion/$', auth_views.LoginView.as_view(template_name='connexion.html', redirect_field_name='/dv3f/main'), name='connexion'),
-    url(r'^deconnexion/$', auth_views.LogoutView.as_view(next_page='/dv3f/main/'), name='deconnexion'),
-    url(r'^changement_mdp/$', auth_views.PasswordChangeView.as_view(template_name='chgmt_mdp.html', success_url='/dv3f/main/'), name='changement_mdp'),
-    url(r'^config_bdd$', views.configuration_bdd, name = 'configuration_bdd'),
-    url(r'^proxy$', views.definir_proxy, name='definir_proxy'),
-    url(r'^credits$', views.credits, name = 'credits'),
-    url(r'^dump$', views.dump, name = 'dump'),
-]
+class PersoManager():
+    
+    def __init__(self):
+        pass
+    
+    

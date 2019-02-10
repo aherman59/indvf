@@ -180,7 +180,7 @@
         
 	</div>
 	
-	<div style="margin: 5px;"></div>
+	<div style="margin: 20px;"></div>
 	
 	<div class="row">
 	
@@ -257,13 +257,26 @@
 	<button class="btn" id="devenir-select-all" alt="Sélectionner tout" title="Sélectionner tout" {% if contexte_indicateur.config_active.type_bdd == 'DVF+' %}disabled{% endif %}>
 		<i class="fas fa-check"></i>
 	</button>
+	</div>	
+	
 	</div>
 	
 	
-	</div>
+	<div style="margin: 8px;"></div>
+		
+    <div class="row">
+       <div class="col-sm-6 col-sm-offset-3">
+           <label class="control-label"><i class="fas fa-user-circle fa-lg"></i></label>
+            <select class="selectpicker" data-width="95%" name="selection-perso" title="Choisir une condition personnalisée" multiple {% if contexte_indicateur.config_active.type_bdd == 'DVF+' %}disabled{% endif %}>
+                <option value="A">filtre URBA4</option>
+                <option value="B">filtre URBA4 2</option>
+                <option value="C">filtre URBA4 3</option>
+            </select>
+       </div>
+    </div>
 	
  	</div>
-
+ 	
 </div>
 
 {% if contexte_indicateur.charger_indicateur %}
@@ -324,6 +337,7 @@ $("form").submit(function(){
 					{name: 'devenirs', value: $("select[name=selection-devenir]").val()},
 					{name: 'annee', value: $("select[name=selection-annee]").val()},
 					{name: 'an_min_max', value: $("select[name=selection-an-min-max]").val()},
+					{name: 'perso', value: $("select[name=selection-perso]").val()},
 				 ];
 	$(this).append($.map(params, function (param) {
         return   $('<input>', {

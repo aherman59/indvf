@@ -77,7 +77,7 @@ ROOT_URLCONF = 'indvf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,7 +144,7 @@ STATIC_URL = '/dv3f/static/'
 STATIC_ROOT = '/staticfiles_dv3f'
 
 STATICFILES_DIRS = (
- os.path.join(BASE_DIR, 'static/'),
+ os.path.join(BASE_DIR, 'static'),
 )
 
 LOGIN_URL = '/dv3f/main/connexion/'

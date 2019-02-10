@@ -137,6 +137,16 @@ class ContexteIndicateur():
         return ['S']
     
     @property
+    def conditions_perso(self):
+        if 'perso' in self.request.POST:
+            perso = self.request.POST.get('perso')
+            if ',' in perso:
+                return perso.split(',')
+            elif len(perso) > 0:
+                return [perso]
+        return []
+    
+    @property
     def periodicite(self):
         if 'annee' in self.request.POST:
             periode = self.request.POST.get('annee')
@@ -165,7 +175,7 @@ class ContexteIndicateur():
     def indicateurs(self):
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
-            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite, self.an_min_max)
+            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite, self.an_min_max, self.conditions_perso)
             return indicateurs_format_xcharts(territoires, gestionnaire, self.config_active)
         return []
     

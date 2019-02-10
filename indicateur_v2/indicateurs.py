@@ -214,49 +214,69 @@ def indicateurs_actifs_format_csv(territoires, gestionnaire, config_active):
 
 class GestionnaireIndicateurs:
         
-    def __init__(self, typologies, filtres, types_indicateur, devenirs, periodicite, an_min_max):
+    def __init__(self, typologies, filtres, types_indicateur, devenirs, periodicite, an_min_max, conditions_perso):
         self.typologies = typologies
         self.filtres = filtres
         self.types_indicateur = types_indicateur
         self.devenirs = devenirs
         self.periodicite = periodicite
         self.an_min_max = an_min_max
+        self.conditions_perso = conditions_perso
     
     def indicateurs_actifs(self):
         indicateurs = []
         for type_indicateur in self.types_indicateur:
             for typologie in self.typologies:
-                indicateurs.append(Indicateur(type_indicateur, typologie, self.filtres, self.devenirs, self.periodicite, self.an_min_max))
+                indicateurs.append(Indicateur.from_filtre_standard(type_indicateur, typologie, self.filtres, self.devenirs, self.periodicite, self.an_min_max))
+            for condition_perso in self.conditions_perso:
+                indicateurs.append(Indicateur.from_fitre_perso(type_indicateur, condition_perso, self.periodicite, self.an_min_max))
         return indicateurs
     
 class Indicateur:
     
-    def __init__(self, type, typologie, filtres, devenirs, periodicite, an_min_max):
+    def __init__(self, type, typologie, filtres, devenirs, periodicite, an_min_max, condition_perso):
         self.type = type
         self.typologie = typologie
         self.filtres = filtres
         self.devenirs = devenirs
         self.periodicite = periodicite
         self.an_min_max = an_min_max
+        self.condition_perso = condition_perso
+        self.indicateur_standard = False if condition_perso is not None else True
+    
+    @classmethod
+    def from_filtre_standard(cls, type, typologie, filtres, devenirs, periodicite, an_min_max):
+        return cls(type, typologie, filtres, devenirs, periodicite, an_min_max, None)
+    
+    @classmethod
+    def from_fitre_perso(cls, type, condition_perso, periodicite, an_min_max):
+        return cls(type, None, None, None, periodicite, an_min_max, condition_perso)
         
     @property
     def id(self):
-        id_type = self.get_type_indicateur('id').ljust(2, '0')
-        id_typologie = self.typologie.rjust(5, '0')
-        id_fltr = self.id_filtre()
-        id_dev = self.id_devenir()
-        id_periode = '1' if self.periodicite == 'a' else '0'
-        id_annee_min = str(self.annee_debut - 2000)
-        id_annee_max = str(self.annee_fin - 2000)
-        return int(id_type + id_typologie + id_fltr + id_dev + id_periode + id_annee_min + id_annee_max)
+        if self.indicateur_standard:
+            id_type = self.get_type_indicateur('id').ljust(2, '0')
+            id_periode = '1' if self.periodicite == 'a' else '0'
+            id_annee_min = str(self.annee_debut - 2000)
+            id_annee_max = str(self.annee_fin - 2000)
+            id_typologie = self.typologie.rjust(5, '0')
+            id_fltr = self.id_filtre()
+            id_dev = self.id_devenir()            
+            return int(id_type + id_typologie + id_fltr + id_dev + id_periode + id_annee_min + id_annee_max)
+        return 1 # on affecte l'id 1 pour les indicateurs non standards
     
     @property
     def code_typo(self):
-        return self.typologie
+        if self.indicateur_standard:
+            return self.typologie
+        return None
     
     @property
     def nom(self):
-        return self.type_libelle + ' pour la catégorie ' + self.code_typo +  ' - ' + self.typologie_libelle 
+        if self.indicateur_standard:
+            return self.type_libelle + ' pour la catégorie ' + self.code_typo +  ' - ' + self.typologie_libelle
+        else:
+            return self.type_libelle + ' pour ' + self.condition_perso 
 
     @property
     def variable(self):
@@ -456,13 +476,16 @@ class Resultat():
         self.indicateur = indicateur
     
     def resultat_en_base(self, territoire, config_active):
-        id_indicateur = self.indicateur.id
+        id_indicateur = self.indicateur.id 
+        if not self.indicateur.indicateur_standard: # on supprime les résultats temporaires stockés si indicateur perso
+            ResultatIndicateur.objects.supprimer_resultats(id_indicateur)
         if not ResultatIndicateur.objects.resultat_as_tuple(self.indicateur, territoire.id, territoire.type()):
             resultat = self.calcul(territoire, config_active)
             if resultat is None:
                 return None
             self.sauvegarde(resultat, territoire)
         return ResultatIndicateur.objects.resultat_as_tuple(self.indicateur, territoire.id, territoire.type())
+            
     
     def calcul(self, territoire, config_active):
         codes_insee = territoire.codes_insee
@@ -620,18 +643,41 @@ class RequeteurInDVF(PgOutils):
         return variable, "'" + "', '".join(codes_insee) + "'", annee_debut, annee_fin, code_typo, self.variables_typobien
     
     def condition(self, indicateur):
-        condition = ''
-        if indicateur.code_typo != '999':
-            condition += "WHERE codtypbien LIKE '{0}%'".format(indicateur.code_typo)
+        if indicateur.indicateur_standard:
+            condition = ''
+            if indicateur.code_typo != '999':
+                condition += "WHERE codtypbien LIKE '{0}%'".format(indicateur.code_typo)
+            else:
+                condition += 'WHERE codtypbien IS NOT NULL'
+            if self.type_base == 'DV3F':
+                condition += " AND (" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
+                condition += " AND (" + " OR ".join(["devenir LIKE '{0}%'".format(f) for f in indicateur.devenirs]) + ")"        
+            try:
+                denominateur = indicateur.variable.split('/')[1]
+                condition_denominateur = ' {0} != 0'.format(denominateur)
+                return condition + 'AND' + condition_denominateur
+            except IndexError as e:
+                return condition
         else:
-            condition += 'WHERE codtypbien IS NOT NULL'
-        if self.type_base == 'DV3F':
-            condition += " AND (" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
-            condition += " AND (" + " OR ".join(["devenir LIKE '{0}%'".format(f) for f in indicateur.devenirs]) + ")"        
-        try:
-            denominateur = indicateur.variable.split('/')[1]
-            condition_denominateur = ' {0} != 0'.format(denominateur)
-            return condition + 'AND' + condition_denominateur
-        except IndexError as e:
+            condition= """
+            WHERE devenir = 'S'
+            AND filtre IN ('0', '1')
+            AND nbcomm = 1
+            AND (
+                (-- Maisons
+                    codtypbien LIKE '11%'
+                    AND codtypbien NOT IN ('110', '1110', '1114')
+                )
+            
+                OR    (-- Apparts
+                    ((codtypbien LIKE '122%' AND nbsite = 1)  --MAJ suite visio Urba4 : à remplacer par un filtre de distance
+                    OR (codtypbien LIKE '122%' AND nbsite > 1 AND nblocdep > 0)  --MAJ suite visio Urba4 : à remplacer par un filtre de distance
+                    OR codtypbien = '1210'        
+                    OR codtypbien LIKE '1211%'
+                    OR codtypbien LIKE '1212%'
+                    OR codtypbien LIKE '1213%')
+                    AND codtypbien NOT IN ('1224', '1229')
+                )
+            )
+            """
             return condition
-    
