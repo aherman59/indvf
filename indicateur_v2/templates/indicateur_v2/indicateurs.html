@@ -112,6 +112,10 @@
 	   
     </div>
     
+    <div class="page-header">       
+        <h5>Définition des indicateurs</h5>  
+    </div>
+        
     <div class="row">
     
     <div class="col-sm-4">
@@ -181,6 +185,12 @@
 	</div>
 	
 	<div style="margin: 20px;"></div>
+    
+    <div class="page-header">       
+        <h5>Choix des segments</h5>	
+	</div>
+	
+	<h6>Critères courants</h6>
 	
 	<div class="row">
 	
@@ -263,14 +273,16 @@
 	
 	
 	<div style="margin: 8px;"></div>
+
+    <h6>Critères personnalisés</h6>
 		
     <div class="row">
-       <div class="col-sm-6 col-sm-offset-3">
+       <div class="col-sm-12">
            <label class="control-label"><i class="fas fa-user-circle fa-lg"></i></label>
             <select class="selectpicker" data-width="95%" name="selection-perso" title="Choisir une condition personnalisée" multiple {% if contexte_indicateur.config_active.type_bdd == 'DVF+' %}disabled{% endif %}>
-                <option value="A">filtre URBA4</option>
-                <option value="B">filtre URBA4 2</option>
-                <option value="C">filtre URBA4 3</option>
+                {% for condition in persomanager.conditions_perso %}
+                <option value="{{condition.identifiant}}"{% if condition.identifiant in contexte_indicateur.conditions_perso %} selected{% endif %}>{{condition.nom}}</option>
+                {% endfor %}
             </select>
        </div>
     </div>

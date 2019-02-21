@@ -41,6 +41,7 @@ from main.models import Departement, Epci, Commune, Territoire
 from indicateur_v2.models import ResultatIndicateur
 
 from pg.pgbasics import *
+from indicateur_v2.filtres_perso import PersoManager
 
 TYPES_INDICATEUR = {'Quantitatif': [('nbtrans', 'Nombre de transactions', 'mutations', '1'),
                                      ('total', 'Montant total', '€', '2'),],
@@ -185,6 +186,8 @@ TYPOLOGIE_DVF_PLUS = {'Niv0' : [('999', 'Tout type de mutation')],
              'Niv5' : []
              }
 
+PERSOMANAGER = PersoManager()
+
 
 def indicateurs_format_xcharts(territoires, gestionnaire, config_active):
         indicateurs_actifs = gestionnaire.indicateurs_actifs()
@@ -229,7 +232,7 @@ class GestionnaireIndicateurs:
             for typologie in self.typologies:
                 indicateurs.append(Indicateur.from_filtre_standard(type_indicateur, typologie, self.filtres, self.devenirs, self.periodicite, self.an_min_max))
             for condition_perso in self.conditions_perso:
-                indicateurs.append(Indicateur.from_fitre_perso(type_indicateur, condition_perso, self.periodicite, self.an_min_max))
+                indicateurs.append(Indicateur.from_filtre_perso(type_indicateur, condition_perso, self.periodicite, self.an_min_max))
         return indicateurs
     
 class Indicateur:
@@ -249,7 +252,7 @@ class Indicateur:
         return cls(type, typologie, filtres, devenirs, periodicite, an_min_max, None)
     
     @classmethod
-    def from_fitre_perso(cls, type, condition_perso, periodicite, an_min_max):
+    def from_filtre_perso(cls, type, condition_perso, periodicite, an_min_max):
         return cls(type, None, None, None, periodicite, an_min_max, condition_perso)
         
     @property
@@ -276,7 +279,7 @@ class Indicateur:
         if self.indicateur_standard:
             return self.type_libelle + ' pour la catégorie ' + self.code_typo +  ' - ' + self.typologie_libelle
         else:
-            return self.type_libelle + ' pour ' + self.condition_perso 
+            return self.type_libelle + ' pour ' + PERSOMANAGER.get_condition_by_id(self.condition_perso).nom 
 
     @property
     def variable(self):
@@ -659,25 +662,5 @@ class RequeteurInDVF(PgOutils):
             except IndexError as e:
                 return condition
         else:
-            condition= """
-            WHERE devenir = 'S'
-            AND filtre IN ('0', '1')
-            AND nbcomm = 1
-            AND (
-                (-- Maisons
-                    codtypbien LIKE '11%'
-                    AND codtypbien NOT IN ('110', '1110', '1114')
-                )
-            
-                OR    (-- Apparts
-                    ((codtypbien LIKE '122%' AND nbsite = 1)  --MAJ suite visio Urba4 : à remplacer par un filtre de distance
-                    OR (codtypbien LIKE '122%' AND nbsite > 1 AND nblocdep > 0)  --MAJ suite visio Urba4 : à remplacer par un filtre de distance
-                    OR codtypbien = '1210'        
-                    OR codtypbien LIKE '1211%'
-                    OR codtypbien LIKE '1212%'
-                    OR codtypbien LIKE '1213%')
-                    AND codtypbien NOT IN ('1224', '1229')
-                )
-            )
-            """
+            condition = PERSOMANAGER.get_condition_by_id(indicateur.condition_perso).condition
             return condition

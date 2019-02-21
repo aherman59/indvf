@@ -35,9 +35,59 @@ termes.
 
 '''
 
+import os
+from main.configuration import BASE_DIR
+
+
 class PersoManager():
     
+    FICHIER_CONDITIONS = os.path.join(BASE_DIR, 'indicateur_v2', 'CONDITIONS.sql')
+    
     def __init__(self):
-        pass
+        self.conditions_perso = self.charger_conditions()
+    
+    def charger_conditions(self):
+        requete_sql = {}
+        with open(self.FICHIER_CONDITIONS, 'rt', encoding = 'UTF-8') as f:
+            lignes = f.readlines()
+            clef = None
+            for ligne in lignes:
+                if ligne.strip().startswith('##'):
+                    clef = ligne.strip()[2:].strip()
+                    requete_sql[clef] = ''
+                    continue
+                requete_sql[clef] = requete_sql[clef] + ligne
+        
+        pos = 1
+        conditions = []
+        for clef, requete in requete_sql.items():
+            condition = ConditionPerso(self.identifiant(pos), clef, requete)
+            if condition.is_valid():
+                conditions.append(condition)
+                pos += 1
+        return conditions
+    
+    def get_condition_by_id(self, identifiant):
+        for condition in self.conditions_perso:
+            if condition.identifiant == identifiant:
+                return condition
+        return None
+          
+    def identifiant(self, position):
+        alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        return alpha[position-1]
+   
     
     
+class ConditionPerso():
+    
+    def __init__(self, identifiant, nom, condition):
+        self.identifiant = identifiant
+        self.nom = nom
+        self.condition = condition
+    
+    def is_valid(self):
+        '''
+        A faire évoluer
+        '''
+        return True

@@ -113,7 +113,9 @@ class ContexteIndicateur():
             if ',' in typos:
                 return typos.split(',')
             elif len(typos) > 0:
-                return [typos]                
+                return [typos]
+            elif len(self.conditions_perso) > 0:
+                return []                 
         return ['11', '12']
     
     @property
@@ -183,7 +185,7 @@ class ContexteIndicateur():
     def indicateurs_csv(self):
         territoires = self.territoire().lister_entites_administratives()
         if len(territoires) and self.charger_indicateur:
-            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite, self.an_min_max)
+            gestionnaire = GestionnaireIndicateurs(self.typologies, self.filtres, self.types_indicateur, self.devenirs, self.periodicite, self.an_min_max, self.conditions_perso)
             return indicateurs_actifs_format_csv(territoires, gestionnaire, self.config_active)
         return []
     
