@@ -37,10 +37,10 @@ termes.
 
 from django.contrib import admin
 
-from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire
-# Register your models here.
+from main.models import ConfigurationBDD, Departement, Epci, Commune, Territoire, ProxyUser
 
 admin.site.register(ConfigurationBDD)
+admin.site.register(ProxyUser)
 admin.site.register(Departement)
 admin.site.register(Epci)
 admin.site.register(Commune)

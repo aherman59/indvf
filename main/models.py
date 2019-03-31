@@ -69,6 +69,9 @@ class ProxyUser(models.Model):
     proxy = models.TextField(max_length=500, blank=True)
     
     objects = ProxyManager()
+    
+    def __str__(self):
+        return self.user.username +'('+ self.user.first_name + ' ' + self.user.last_name + ')'
 
 
 class ConfigurationManager(models.Manager):
