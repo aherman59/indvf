@@ -187,6 +187,11 @@ class ControleBDD(PgOutils):
                           'disposition_parcelle' : ['geompar', 'geomloc'],
                           'local' : ['geomloc'],}
         return self._comparaison_champs(correspondance)
+    
+    def a_les_champs_typologie(self):
+        correspondance = {'mutation' : ['codtypbien', 'libtypbien'], 
+                          }
+        return self._comparaison_champs(correspondance)
         
     def _comparaison_champs(self, correspondance):
         for schema in ['dvf'] + self.schemas_departementaux():

@@ -492,7 +492,7 @@ class Resultat():
     
     def calcul(self, territoire, config_active):
         codes_insee = territoire.codes_insee
-        c = RequeteurInDVF(*(config_active.parametres_bdd()), type_base=config_active.type_bdd, script = 'sorties/script_indvf.sql')
+        c = RequeteurInDVF(config_active, script = 'sorties/script_indvf.sql')
         #c.creer_aggregat_mediane_10()
         resultat = c.calcul(self.indicateur, codes_insee)
         c.deconnecter()
@@ -527,9 +527,9 @@ class Resultat():
     
 class RequeteurInDVF(PgOutils):
     
-    def __init__(self, hote, base, port, utilisateur, motdepasse, type_base = None, script = None):
-        super().__init__(hote, base, port, utilisateur, motdepasse, script)
-        self.type_base = type_base
+    def __init__(self, config_active, script = None):
+        super().__init__(*(config_active.parametres_bdd()), script=script)
+        self.config_active = config_active
     
     def calcul(self, indicateur, codes_insee):
         FONCTIONS_CALCUL = {('somme', 'ma')    : self.calculer_somme_multi_annee,
@@ -550,12 +550,11 @@ class RequeteurInDVF(PgOutils):
     
     @property
     def variables_typobien(self):
-        if self.type_base == 'DV3F':
-            return ''
-        elif self.type_base == 'DVF+':
+        if self.config_active.type_bdd == 'DVF+' and not self.config_active.a_les_champs_typologie():
             codtypbien = self.requete_sql['_CODTYPBIEN']
             libtypbien = self.requete_sql['_LIBTYPBIEN']
             return ', ' + codtypbien + ', ' + libtypbien
+        return ''
     
     @requete_sql    
     def creer_aggregat_mediane_10(self):
@@ -652,7 +651,7 @@ class RequeteurInDVF(PgOutils):
                 condition += "WHERE codtypbien LIKE '{0}%'".format(indicateur.code_typo)
             else:
                 condition += 'WHERE codtypbien IS NOT NULL'
-            if self.type_base == 'DV3F':
+            if self.config_active.type_bdd == 'DV3F':
                 condition += " AND (" + " OR ".join(["filtre LIKE '%{0}%'".format(f) for f in indicateur.filtres]) + ")"
                 condition += " AND (" + " OR ".join(["devenir LIKE '{0}%'".format(f) for f in indicateur.devenirs]) + ")"        
             try:

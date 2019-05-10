@@ -67,7 +67,10 @@ var fct_styleParcellaire = function(feature) {
 			color: 'gray',
 			lineDash: [4],
 			width: 1.25
-		})
+		}),
+		fill: new ol.style.Fill({
+			color: 'rgba(0, 0, 0, 0)', // le 4eme 0 cest l opacite mais important pour permettre la selection         
+		}),
 	})
 };
 

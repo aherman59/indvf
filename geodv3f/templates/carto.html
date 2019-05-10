@@ -99,6 +99,7 @@ var geomparmutLayer = new ol.layer.Vector({
     style: fct_styleParcelles,
     maxResolution:1.5
 });
+
 var geomlocmutLayer = new ol.layer.Vector({
     source: sourceGeometrie('geomlocmut'),
     style: fct_styleLocaux,
@@ -181,7 +182,7 @@ var selectionParcelle = new ol.interaction.Select({
 				color: 'rgba(255, 0, 0, 0.4)'
 			})
 		}); },
-	//layers: [geomparLayer]
+	layers: [geomparLayer]
 });
 map.addInteraction(selectionParcelle);
 

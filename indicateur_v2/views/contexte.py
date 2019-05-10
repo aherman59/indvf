@@ -116,7 +116,7 @@ class ContexteIndicateur():
                 return [typos]
             elif len(self.conditions_perso) > 0:
                 return []                 
-        return ['11', '12']
+        return ['11','12']
     
     @property
     def filtres(self):

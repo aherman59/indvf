@@ -86,3 +86,4 @@ ALTER TABLE {0}.disposition_parcelle ADD CONSTRAINT enforce_geotype_parcelle_geo
 ALTER TABLE {0}.local ADD CONSTRAINT enforce_dims_local_geomloc CHECK (st_ndims(geomloc) = 2);
 ALTER TABLE {0}.local ADD CONSTRAINT enforce_geotype_local_geomloc CHECK (geometrytype(geomloc) = 'POINT'::text OR geomloc IS NULL);
 --ALTER TABLE {0}.local ADD CONSTRAINT enforce_srid_local_geomloc CHECK (st_srid(geomloc) = 2154);
+

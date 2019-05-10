@@ -181,6 +181,14 @@ class ConfigurationBDD(models.Model):
             print(e)
             return False
     
+    def a_les_champs_typologie(self):
+        try:
+            reussite = self.controleur_bdd().a_les_champs_typologie()
+            return reussite
+        except Exception as e:
+            print(e)
+            return False
+    
     def a_les_fonctions_aggregats(self):
         try:
             resultat = self.controleur_bdd().tester_fonctions_aggregats()

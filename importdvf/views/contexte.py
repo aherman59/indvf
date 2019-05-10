@@ -38,10 +38,12 @@ termes.
 import os
 
 from dvf_plus.controle import RepertoireDonneesDVF
+from dvf_plus.controle import ajout_no_ligne
 from dvf_plus.traitement import BASE_SQLITE
 from dvf_plus.traitement import FICHIERS_ANNEXES
 from dvf_plus.traitement.dvfclass import DVF
 from dvf_plus.traitement.dvfclass import DVF_PLUS
+from dvf_plus.traitement.geomclass import ComplementDVFPlus
 from dvf_plus.general import _code_erreur
 
 from importdvf.creation_dvf.cadastre import Cadastre
@@ -145,9 +147,12 @@ class ContexteImportAjax():
         
         dvf = self.objet_dvf       
         fichier = self.session['fichiers_sources'][indice]
+        ajout_no_ligne(fichier, './_tmp')
         table_src = 'tmp_' + str(indice)       
-        if not dvf.importer(fichier, table_src, recherche_differentielle=True):
+        if not dvf.importer('./_tmp', table_src, recherche_differentielle=False):
            return self.code_erreur('dvf2', fichier)
+        if os.path.exists('./_tmp'):
+            os.remove('./_tmp') 
         
         if  nb_fichiers == (indice + 1):
             self.definition_etape_suivante(400, 50,'Intégration dans DVF du fichier {0}'.format(self.session['fichiers_sources'][0]))
@@ -167,8 +172,11 @@ class ContexteImportAjax():
             dvf.ecrire_entete_log()
         fichier = self.session['fichiers_sources'][indice]
         table_src = 'tmp_' + str(indice)
+        success, _ = dvf.creer_table_source_departementale(table_src, '00', decoup_departement=False)
+        if not success:
+            return self.code_erreur('dvf3')
         dvf.ecrire_entete_table_import_dans_log('{0}'.format(table_src))
-        if not dvf.maj_tables_avec('{0}'.format(table_src)):
+        if not dvf.maj_tables_avec('{0}_d00'.format(table_src)):
             return self.code_erreur('dvf3')
                     
         if  nb_fichiers == (indice + 1):
@@ -219,6 +227,12 @@ class ContexteImportAjax():
         if not dvf_plus.transformation_tables_dvf():
             return self.code_erreur('dvf_plus2')
         self.message = 'Renommage et création des index de tables effectués.'
+        # complement typologie
+        complement_dvf_plus = self.objet_complement_dvf_plus
+        complement_dvf_plus.creer_table_annexe_typo()
+        complement_dvf_plus.creer_champs_typo_biens()
+        complement_dvf_plus.ajouter_commentaires_champs_typo()
+        complement_dvf_plus.mise_a_jour_typologie_mutation()
         if not self.session['geolocaliser']:
             self.definition_etape_suivante(9999, 100, 'Fin du traitement')
         else:
@@ -306,6 +320,14 @@ class ContexteImportAjax():
         dvf_plus = DVF_PLUS(*parametres_connexion, departements=departements, script=script_sql)
         dvf_plus.charger_gestionnaire_depuis_sqlite(BASE_SQLITE)
         return dvf_plus
+    
+    @property
+    def objet_complement_dvf_plus(self):
+        parametres_connexion = self.session['parametres_connexion']
+        departements = self.session['departements']
+        script_sql = os.path.join(BASE_DIR, 'sorties/script_dvf_plus.sql')
+        complement_dvf_plus = ComplementDVFPlus(*parametres_connexion, departements=departements, script=script_sql)
+        return complement_dvf_plus
     
     @property
     def objet_cadastre(self):
